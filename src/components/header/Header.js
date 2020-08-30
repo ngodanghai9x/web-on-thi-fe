@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import './styles/Header.css';
+import './styles/Header.scss';
 
 class Header extends React.Component {
   constructor(props) {
@@ -12,10 +12,13 @@ class Header extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className='header'>
+        <div className='header d-flex'>
           <img className='header-logo' src='../../images/logo.png' alt='logo' />
           <div className='lop-10'>
             Luyện thi vào lớp 10
+            <div className='lop-10-dropdown'>
+              abc
+            </div>
           </div>
           <div className='dai-hoc'>
             Luyện thi THPT Quốc Gia

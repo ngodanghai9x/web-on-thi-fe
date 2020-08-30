@@ -1,0 +1,27 @@
+.header {
+  // display: flex;
+  width: 100%;
+  background:#e4e4e4;
+  justify-content: space-between;
+  .header-logo {
+    height: 40px;
+    width: auto;
+  }
+  .lop-10 {
+    color: red;
+    .lop-10-dropdown {
+      display: none;
+    }
+    &:hover {
+      .lop-10-dropdown {
+        display: block;
+      }
+    }
+  }
+  .avatar {
+    img {
+      height: 40px;
+      width: auto;
+    }
+  }
+}
