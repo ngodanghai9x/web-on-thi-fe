@@ -7,24 +7,43 @@ class Header extends React.Component {
     super(props);
     this.state = {};
   }
+  componentDidMount() {
+
+  }
 
 
   render() {
+    const { dropdown10 } = this.state;
     return (
       <React.Fragment>
-        <div className='header d-flex'>
-          <img className='header-logo' src='../../images/logo.png' alt='logo' />
-          <div className='lop-10'>
-            Luyện thi vào lớp 10
-            <div className='lop-10-dropdown'>
-              abc
+        <div className='header container-fluid'>
+          <div className='container d-flex'>
+            <div className='wrapper-logo-route d-flex'>
+              <img className='header-logo' src='../../images/logo.png' alt='logo' />
+              <div className='route lop-10' 
+                // onMouseEnter={() => this.setState({ dropdown10: true})}
+                // onMouseLeave={() => this.setState({ dropdown10: false})}
+                >
+                Luyện thi vào lớp 10
+                <div className='lop-10-dropdown dropdown'>
+                  <div className='dropdown-item'>
+                    <a href='#'>hgsalkh klsahglsah ahgslk</a>
+                  </div>
+                  <div className='dropdown-item'>
+                    <a href='#'>hgsalkh klsahglsah ahgslk</a>
+                  </div>
+                  <div className='dropdown-item'>
+                    <a href='#'>hgsalkh klsahglsah ahgslk</a>
+                  </div>
+                </div>
+              </div>
+              <div className='route dai-hoc'>
+                Luyện thi THPT Quốc Gia
+          </div>
             </div>
-          </div>
-          <div className='dai-hoc'>
-            Luyện thi THPT Quốc Gia
-          </div>
-          <div className='avatar'>
-            <img src='../../images/default-avatar.jpg' alt='avatar' />
+            <div className='avatar'>
+              <img src='../../images/default-avatar.jpg' alt='avatar' />
+            </div>
           </div>
         </div>
       </React.Fragment>
@@ -33,9 +52,9 @@ class Header extends React.Component {
 }
 
 
-// const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, ownProps) => {
 
-// };
+};
 
-// export default connect(mapStateToProps)(Content);
-export default Header;
+export default connect(mapStateToProps)(Header);
+// export default Header;
