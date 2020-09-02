@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as CommonIcon from '../icons/common';
+
 import './styles/Breadcumb.scss';
 
 class Breadcumb extends React.Component {
@@ -11,15 +13,18 @@ class Breadcumb extends React.Component {
 
 
   render() {
-    const subjects = ['Toán Học', 'Ngữ Văn', 'Hóa Học'];
     return (
       <React.Fragment>
         <div className='my-breadcumb'>
           <div className='header-content'>
             <div className='container'>
-              <a href='#'>Trang chủ</a>
+              <Link exact to='/'>Trang chủ</Link>
               {` / `}
-              <a href='#'>Home</a>
+              <Link exact to='/lop-10/'>Luyện thi vào lớp 10</Link>
+              {` / `}
+              <Link exact to='/lop-10/toan'>Toán Học</Link>
+              {` / `}
+              <Link>Đề luyện thi THPT Quốc gia 2020 môn Toán - Đề số 1</Link>
             </div>
           </div>
         </div>

@@ -10,13 +10,22 @@ class ChooseSubjects extends React.Component {
     this.state = {};
   }
 
+  getTitle = pathname => {
+    if (pathname.includes('lop-10')) {
+      return 'LUYỆN THI VÀO LỚP 10';
+    }
+    if (pathname.includes('dai-hoc')) {
+      return 'LUYỆN THI THPT QUỐC GIA';
+    }
+    return null;
+  }
 
   render() {
-    const subjects = ['Toán Học', 'Ngữ Văn', 'Hóa Học'];
+    const { location } = this.props;
     return (
       <React.Fragment>
         <h2 className='title-center'>
-          LUYỆN THI VÀO LỚP 10
+          {this.getTitle(location.pathname)}
         </h2>
         <div className='row choose-subjects'>
           <div className='col-lg-9 col-md-12'>

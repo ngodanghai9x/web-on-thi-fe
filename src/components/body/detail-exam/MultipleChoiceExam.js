@@ -7,7 +7,11 @@ class MultipleChoiceExam extends React.Component {
     super(props);
     this.state = {};
   }
-
+  
+  componentDidMount() {
+    const { match } = this.props;
+    const { subjects } = match.params; // type, môn học
+  }
 
   render() {
     const subjects = ['Toán Học', 'Ngữ Văn', 'Hóa Học'];

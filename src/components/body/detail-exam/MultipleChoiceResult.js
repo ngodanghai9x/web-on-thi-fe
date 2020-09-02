@@ -8,6 +8,10 @@ class MultipleChoiceResult extends React.Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    const { match } = this.props;
+    const { subjects } = match.params; // type, môn học
+  }
 
   render() {
     const subjects = ['Toán Học', 'Ngữ Văn', 'Hóa Học'];

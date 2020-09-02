@@ -13,7 +13,6 @@ class Content extends React.Component {
 
 
   render() {
-    const subjects = ['Toán Học', 'Ngữ Văn', 'Hóa Học'];
     return (
       <React.Fragment>
           <div className='body content'>

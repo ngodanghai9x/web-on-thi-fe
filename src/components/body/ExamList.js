@@ -1,14 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from '../icons/common';
-import './styles/ExamList.scss';
 import Ads from '../common/Ads';
 import CompletedExam from '../common/CompletedExam';
+import { getInfo } from '../../actions/common/getInfo';
+
+import './styles/ExamList.scss';
 
 class ExamList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentDidMount() {
+    const { match, location } = this.props;
+    const { subject } = match.params; // type, môn học
   }
 
   renderExam = (exams) => {
@@ -43,6 +50,9 @@ class ExamList extends React.Component {
 
 
   render() {
+    const { match, location } = this.props;
+    const { subject } = match.params; // type, môn học
+    const info = getInfo(location.pathname, subject);
     const subjects = ['Toán Học', 'Ngữ Văn', 'Hóa Học'];
     return (
       <React.Fragment>
@@ -56,7 +66,7 @@ class ExamList extends React.Component {
           </div>
 
           <h2 className='title-center'>
-            LUYỆN THI THPT QUỐC GIA NGỮ VĂN ONLINE
+            {`${info.title} ${info.subject} ONLINE`}
           </h2>
 
           <div className='main-content row'>

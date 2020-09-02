@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from '../icons/common';
 import './styles/Home.scss';
+import { Link, Redirect } from 'react-router-dom';
 
 class Home extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class Home extends React.Component {
 
 
   render() {
-    const subjects = ['Toán Học', 'Ngữ Văn', 'Hóa Học'];
+    const { location } = this.props;
     return (
       <React.Fragment>
         <h2 className='title-center'>
@@ -19,19 +20,19 @@ class Home extends React.Component {
         </h2>
         <div className='home'>
           <div className='img-btn d-flex'>
-            <div className='img-btn-item d-table'>
+            <div className='img-btn-item d-table' onClick={() => window.location.pathname = `${location.pathname}lop-10`}>
               <div className='d-table-cell'>
                 Ôn thi
-              <br />
-              vào lớp 10
-              </div>
+                  <br />
+                  vào lớp 10
+                </div>
             </div>
-            <div className='img-btn-item d-table'>
+            <div className='img-btn-item d-table' onClick={() => window.location.pathname = `${location.pathname}dai-hoc`}>
               <div className='d-table-cell'>
                 Luyện đề
-                <br />
-                THPT Quốc Gia
-              </div>
+                  <br />
+                  THPT Quốc Gia
+                </div>
             </div>
           </div>
 
@@ -46,7 +47,7 @@ class Home extends React.Component {
                 <button type="button" class="btn btn-info">Anh</button>
               </div>
             </div>
-            <div className='content' style={{ padding: '15px 20px'}}>
+            <div className='content' style={{ padding: '15px 20px' }}>
               <h4>Các đề được quan tâm nhiều nhất</h4>
               <div className='item'>
                 > Trắc nghiệm ôn tập kiến thức bài Căn thức bậc hai
@@ -54,7 +55,7 @@ class Home extends React.Component {
               <div className='item'>
                 > Trắc nghiệm ôn tập kiến thức bài Căn thức bậc hai
               </div>
-              <p className='more' style={{ textAlign: 'right', margin: 0}}>Xem thêm ></p>
+              <p className='more' style={{ textAlign: 'right', margin: 0 }}>Xem thêm ></p>
             </div>
           </div>
         </div>
