@@ -1,14 +1,18 @@
 .header {
   background: #fff;
-  height: 50px;
   border-bottom: 1px solid #ddd;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  // background-image: url("https://image.freepik.com/free-photo/hand-painted-watercolor-background-with-sky-clouds-shape_24972-1095.jpg");
+  // background-size: cover;
+  // height: 50px;
+  // margin-bottom: 50px;
   // -webkit-box-shadow: 0px 2px 10px 0px rgba(50, 50, 50, 0.5);
   // -moz-box-shadow: 0px 2px 10px 0px rgba(50, 50, 50, 0.5);
   // box-shadow: 0px 2px 10px 0px rgba(50, 50, 50, 0.5);
-  // position: fixed;
-  // top: 0;
-  // left: 0;
-  // right: 0;
   .container {
     justify-content: space-between;
     .wrapper-logo-route {
@@ -22,6 +26,7 @@
         margin: auto 10px;
         position: relative;
         font-size: 17px;
+        font-weight: 500;
         height: 50px;
         display: flex;
         align-items: center;

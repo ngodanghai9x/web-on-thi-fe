@@ -1,0 +1,21 @@
+.ads {
+  display: flex;
+  flex-flow: column;
+  small {
+    text-transform: capitalize;
+    color: #9d9d9d;
+    margin: 7px 0;
+  }
+  img {
+    max-width: 220px;
+    max-height: 230px;
+    margin-bottom: 15px;
+  }
+  .exam-suggestion {
+    border: 1px solid #c4c4c4;
+    border-radius: 4px;
+    padding: 8px 11px;
+    font-size: 13.5px;
+    
+  }
+}

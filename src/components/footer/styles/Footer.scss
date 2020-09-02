@@ -1,0 +1,116 @@
+.footer-wrapper {
+	background-image: url("https://image.freepik.com/free-photo/hand-painted-watercolor-background-with-sky-clouds-shape_24972-1095.jpg");
+	padding: 20px 0 50px 0;
+	background-size: cover;
+	border: 1px solid #c4c4c4;
+	margin-top: 20px;
+	// * {
+	// 	box-sizing: border-box;
+	// }
+
+	// @media (min-width: 992px) {
+	// 	.container {
+	// 		width: 970px;
+	// 	}
+	// 	.support {
+	// 		width: 25%;
+	// 	}
+	// }
+
+	// @media (min-width: 768px) {
+	// 	.container {
+	// 		width: 750px;
+	// 	}
+	// }
+
+	// @media (min-width: 1200px) {
+	// 	.container {
+	// 		width: 1170px;
+	// 	}
+	// }
+
+	// body {
+	// 	color: #333;
+	// 	font-family: "Open Sans", "Helvetica Neue", sans-serif;
+	// 	line-height: 1.42;
+	// 	font-size: 14px;
+	// }
+
+	.footer-wapper {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 40px;
+	}
+
+	.container {
+		/* display: flex; */
+		/* border-top: 1px solid #011; */
+		padding-left: 15px;
+		padding-right: 15px;
+		margin-right: auto;
+		margin-left: auto;
+	}
+
+	.social_media {
+		display: flex;
+	}
+
+	.item {
+		width: 40px;
+		height: 40px;
+		border-radius: 100px;
+		border: 1px solid #ccc;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 30px;
+		text-decoration: none;
+		margin-left: 7px;
+	}
+
+	a {
+		color: #337ab7;
+		background-color: transparent;
+		text-decoration: none;
+		color: black;
+	}
+
+	.logo img {
+		height: 70px;
+		width: auto;
+	}
+
+	div {
+		display: block;
+	}
+
+	img {
+		vertical-align: middle;
+		border: 0;
+	}
+
+	.logo {
+		display: flex;
+	}
+
+	.logo .infor {
+		display: flex;
+		align-items: flex-end;
+		margin-left: 10px;
+		color: #a6a6a6;
+	}
+
+	.support-item {
+		display: block;
+		margin: 8px 0;
+	}
+
+	.contact-item {
+		display: flex;
+		margin: 8px;
+	}
+
+	b {
+		font-weight: 700px;
+	}
+}

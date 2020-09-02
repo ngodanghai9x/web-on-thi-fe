@@ -1,0 +1,40 @@
+.exam-list {
+  .path-button {
+    margin: 14px 0;
+    justify-content: center;
+    .btn {
+      margin-right: 15px;
+    }
+  }
+
+  h2 {
+    margin: 20px 0;
+  }
+
+  .main-content {
+    div.exam {
+      padding: 5px 5px 20px 5px;
+      border-bottom: 2px #c4c4c4 dashed;
+      .name {
+
+      }
+      .wrapper-button {
+        .btn {
+          margin: 0 10px;
+        }
+        .text-link {
+          display: flex;
+          align-items: center;
+          color: #17a2b8;
+          cursor: pointer;
+          &:hover {
+            color: #117a8b;
+          }
+        }
+      }
+    }
+    div.exam:last-child() {
+      border: none;
+    }
+  }
+}

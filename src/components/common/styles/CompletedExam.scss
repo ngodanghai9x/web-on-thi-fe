@@ -1,0 +1,15 @@
+.completed-exam {
+  display: flex;
+  flex-flow: column;
+  color: #17a2b8;
+  margin-top: 15px;
+  .exam-suggestion {
+    border: 1px solid #17a2b8;
+    border-radius: 4px;
+    padding: 8px 11px;
+    font-size: 13.5px;
+    .alert1 {
+      color: #17a2b8;
+    }
+  }
+}

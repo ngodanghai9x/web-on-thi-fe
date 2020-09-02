@@ -1,0 +1,43 @@
+.home {
+  margin-bottom: 25px;
+  .img-btn {
+    justify-content: space-between;
+    // padding: 0 15px;
+    .img-btn-item {
+      background: aquamarine;
+      border: 2px solid transparent;
+      width: calc(50% - 20px);
+      padding: 15px;
+      border-radius: 5px;
+      height: 180px;
+      cursor: pointer;
+      &:hover {
+        border: 2px solid #0084FF;
+        .d-table-cell {
+          color: #0084FF;
+        }
+      }
+      .d-table-cell {
+        vertical-align: bottom;
+        color: #FFF;
+        font-size: 24px;
+        font-weight: 500;
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  .div-infor {
+    border: 2px solid #c4c4c4;
+    width: 80%;
+    padding: 0;
+    .wrapper-btn-group {
+      .btn {
+        border-radius: 0;
+        margin: 1px;
+      }
+      border-bottom: 1px solid #c4c4c4;;
+    }
+    
+  }
+}

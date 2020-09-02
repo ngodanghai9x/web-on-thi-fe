@@ -1,0 +1,33 @@
+.choose-subjects {
+  .subject-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    justify-content: flex-start;
+    .subject {
+      border: 1.5px solid #c4c4c4;
+      padding: 15px 60px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 6px;
+      margin: 0 20px 20px 0;
+      // justify-content: center;
+      img {
+        align-self: center;
+        height: 65px;
+        max-width: 80px;
+      }
+      &:hover {
+        border: 1.5px solid #17a2b8;
+        cursor: pointer;
+        .title {
+          color: #17a2b8;
+        }
+        button {
+          background: #17a2b8;
+          color: #FFF;
+        }
+      }
+    }
+  }
+}
