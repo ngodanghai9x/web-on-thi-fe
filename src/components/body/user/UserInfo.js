@@ -110,15 +110,51 @@ class UserInfo extends React.Component {
       <div className="profile-right">
         <div className="avt-wrapper">
           <img src={'https://cf.shopee.vn/file/d6fe3aa81dc2f0f4938ad629afd347e7_tn'} />
-          <button className="btn btn-outline-info">
+          <button className="btn btn-outline-info" onClick={e => this.fileInput.click()}>
             Chọn ảnh
-                  </button>
+          </button>
+          <input
+            type="file"
+            className="d-none"
+            accept=".jpg,.jpeg,.png"
+            ref={el => this.fileInput = el}
+            onChange={e => this.uploadImage(e)}
+          />
           <p>Dụng lượng file tối đa 1 MB</p>
           <p>Định dạng file: .JPEG, .PNG</p>
         </div>
-      </div>
+      </div >
     );
   }
+
+  uploadImage = e => {
+    const { files } = e.target;
+    const file = files[0];
+    console.log("UserInfo -> file", file)
+    const reader = new FileReader();
+    reader.onload = upload => {
+      console.log("UserInfo -> upload", upload)
+      if (file.size > 1048576 * 2) {
+        return alert(`Ảnh "${file.name}" có kích thước quá 2 MB!`);
+      }
+      const obj = {
+        load: upload, file, type: 'image', image: upload.target.result.split(',')[1],
+      };
+      // this.setState(prevState => ({
+      //   // listImgLoad: prevState.listImgLoad.concat(obj),
+      //   images: prevState.images && prevState.images.length + 1 > 10 ? prevState.images : prevState.images.concat(obj.image),
+      //   files: (prevState.files && prevState.files.length + 1 > 10) || (prevState.images && prevState.images.length + 1 > 10)
+      //     ? prevState.files
+      //     : prevState.files.concat(obj.file),
+      // }), () => {
+      //   if ((images && images.length + listFile.length > 10) || (files && files.length + listFile.length > 10)) {
+      //     SapoApp.flashError('Bạn chỉ được phép nhập tối đa 10 ảnh');
+      //   }
+      // });
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
   render() {
     const { location } = this.props;
     return (
