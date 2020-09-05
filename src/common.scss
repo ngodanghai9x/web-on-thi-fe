@@ -19,8 +19,21 @@ code {
 
 a {
   text-decoration: none !important;
+  color: #17a2b8;
   &:hover {
     text-decoration: none !important;
+    color: #52dcf1;
+  }
+}
+
+input[type=text], select {
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.14);
+  padding: 5px 10px;
+  &:focus {
+    border: 2px solid #0084ff;
   }
 }
 

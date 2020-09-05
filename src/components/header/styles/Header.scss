@@ -93,7 +93,7 @@
       }
       .avatar-dropdown {
         border-radius: 5px;
-        top: 50px;
+        top: 46px;
         right: 12px;
         left: unset;
         cursor: default;
@@ -103,7 +103,8 @@
         }
         .infor {
           background: #17a2b8;
-          border-radius: 5px;
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
         }
       }
     }
