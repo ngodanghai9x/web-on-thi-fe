@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import MainContent from '../layout/MainContent';
 // import './styles/MultipleChoiceResult.scss';
 
 class MultipleChoiceResult extends React.Component {
@@ -14,13 +15,12 @@ class MultipleChoiceResult extends React.Component {
   }
 
   render() {
-    const subjects = ['Toán Học', 'Ngữ Văn', 'Hóa Học'];
     return (
-      <React.Fragment>
+      <MainContent>
         <div className='MultipleChoiceResult'>
-
+        MultipleChoiceResult
         </div>
-      </React.Fragment>
+      </MainContent>
     );
   }
 }

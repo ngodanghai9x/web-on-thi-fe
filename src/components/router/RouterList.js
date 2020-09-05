@@ -16,7 +16,9 @@ export default class RouterList extends React.Component {
       <Switch>
         {/* <Route exact path="/" render={() => (<Redirect to="/home" />)} /> */}
         <Route exact path="/" component={Home} />
-        {/* <Route exact path="/thong-tin-ca-nhan" component={UserInfo} /> */}
+        <Route exact path="/thong-tin-ca-nhan" component={UserInfo} />
+
+
         <Route exact path="/lop-10" component={ChooseSubjects} />
         <Route exact path="/lop-10/:subject" component={ExamList} />
         <Route exact path="/lop-10/:subject/trac-nghiem/:id" component={MultipleChoiceExam} />

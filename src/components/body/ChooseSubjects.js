@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from '../icons/common';
+import MainContent from '../body/layout/MainContent';
 import './styles/ChooseSubjects.scss';
 import Ads from '../common/Ads';
 
@@ -23,7 +24,7 @@ class ChooseSubjects extends React.Component {
   render() {
     const { location } = this.props;
     return (
-      <React.Fragment>
+      <MainContent>
         <h2 className='title-center'>
           {this.getTitle(location.pathname)}
         </h2>
@@ -31,7 +32,7 @@ class ChooseSubjects extends React.Component {
           <div className='col-lg-9 col-md-12'>
             <div className='subject-list d-flex'>
               <div className='subject'>
-                <img src='../../images/logo.png' alt='subject'/>
+                <img src='../../images/logo.png' alt='subject' />
                 <h4 className='title-center'>
                   Toán
                 </h4>
@@ -42,10 +43,10 @@ class ChooseSubjects extends React.Component {
             </div>
           </div>
           <div className='col-lg-3 col-md-12'>
-            <Ads/>
+            <Ads />
           </div>
         </div>
-      </React.Fragment>
+      </MainContent>
     );
   }
 }

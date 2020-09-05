@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from '../icons/common';
+import MainContent from '../body/layout/MainContent';
 import './styles/Content.scss';
 
 class Content extends React.Component {
@@ -13,9 +14,9 @@ class Content extends React.Component {
   render() {
     const subjects = ['Toán Học', 'Ngữ Văn', 'Hóa Học'];
     return (
-      <React.Fragment>
-        
-      </React.Fragment>
+      <MainContent>
+        detail subjects
+      </MainContent>
     );
   }
 }

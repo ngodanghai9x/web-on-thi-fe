@@ -15,7 +15,8 @@ class UserContent extends React.Component {
         <div className='user-content' style={{ background: '#f5f5f5', padding: '20px 0 20px 0' }}>
           <div className='container'>
             <div className='wrapper-user-layout' style={{ borderRadius: 6, padding: '25px 15px', margin: '0 5%', background: '#FFF' }}>
-              <UserRouterList />
+              {/* <UserRouterList /> */}
+              {this.props.children}
             </div>
           </div>
         </div>

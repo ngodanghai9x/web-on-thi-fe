@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from '../icons/common';
+import MainContent from '../body/layout/MainContent';
+
 import './styles/Home.scss';
 import { Link, Redirect } from 'react-router-dom';
 
@@ -14,7 +16,7 @@ class Home extends React.Component {
   render() {
     const { location } = this.props;
     return (
-      <React.Fragment>
+      <MainContent>
         <h2 className='title-center'>
           THI THỬ ONLINE
         </h2>
@@ -59,7 +61,7 @@ class Home extends React.Component {
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </MainContent>
     );
   }
 }

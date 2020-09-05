@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import MainContent from '../layout/MainContent';
 import './styles/EssayExam.scss';
 
 class EssayExam extends React.Component {
@@ -14,13 +15,12 @@ class EssayExam extends React.Component {
   }
 
   render() {
-    const subjects = ['Toán Học', 'Ngữ Văn', 'Hóa Học'];
     return (
-      <React.Fragment>
+      <MainContent>
         <div className='EssayExam'>
-
+        EssayExam
         </div>
-      </React.Fragment>
+      </MainContent>
     );
   }
 }

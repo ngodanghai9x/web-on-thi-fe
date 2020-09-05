@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import MainContent from '../layout/MainContent';
 import './styles/MultipleChoiceExam.scss';
 
 class MultipleChoiceExam extends React.Component {
@@ -7,20 +8,19 @@ class MultipleChoiceExam extends React.Component {
     super(props);
     this.state = {};
   }
-  
+
   componentDidMount() {
     const { match } = this.props;
     const { subjects } = match.params; // type, môn học
   }
 
   render() {
-    const subjects = ['Toán Học', 'Ngữ Văn', 'Hóa Học'];
     return (
-      <React.Fragment>
+      <MainContent>
         <div className='MultipleChoiceExam'>
-
+        MultipleChoiceExam
         </div>
-      </React.Fragment>
+      </MainContent>
     );
   }
 }

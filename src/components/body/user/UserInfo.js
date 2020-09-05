@@ -3,14 +3,10 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { hideEmail, hidePhone } from '../../../actions/common/utils';
 import DatePicker from "react-datepicker";
-
+import UserContent from '../layout/UserContent';
 import "react-datepicker/dist/react-datepicker.css";
 import './styles/UserInfo.scss';
 import TittleUserInfo from './TittleUserInfo';
-
-const DAY_ARRAY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
-const MONTH_ARRAY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-const YEAR_ARRAY = [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006, 2005, 2004, 2003, 2002, 2001, 2000, 1999, 1998, 1997, 1996, 1995, 1994, 1993, 1992, 1991, 1990, 1989, 1988, 1987, 1986, 1985, 1984, 1983, 1982, 1981, 1980, 1979, 1978, 1977, 1976, 1975, 1974, 1973, 1972, 1971, 1970];
 
 class UserInfo extends React.Component {
   constructor(props) {
@@ -126,7 +122,7 @@ class UserInfo extends React.Component {
   render() {
     const { location } = this.props;
     return (
-      <React.Fragment>
+      <UserContent>
         <div className="UserInfo">
           <TittleUserInfo
             title='Hồ Sơ Của Tôi'
@@ -137,7 +133,7 @@ class UserInfo extends React.Component {
             {this.renderProfileR()}
           </div>
         </div>
-      </React.Fragment>
+      </UserContent>
     );
   }
 }

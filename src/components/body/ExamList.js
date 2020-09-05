@@ -4,6 +4,7 @@ import * as CommonIcon from '../icons/common';
 import Ads from '../common/Ads';
 import CompletedExam from '../common/CompletedExam';
 import { getInfo } from '../../actions/common/getInfo';
+import MainContent from '../body/layout/MainContent';
 
 import './styles/ExamList.scss';
 
@@ -55,7 +56,7 @@ class ExamList extends React.Component {
     const info = getInfo(location.pathname, subject);
     const subjects = ['Toán Học', 'Ngữ Văn', 'Hóa Học'];
     return (
-      <React.Fragment>
+      <MainContent>
         <div className='exam-list'>
           <div className='path-button d-flex'>
             {subjects.map(item => (
@@ -79,7 +80,7 @@ class ExamList extends React.Component {
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </MainContent>
     );
   }
 }
