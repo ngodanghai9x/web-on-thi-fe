@@ -7,13 +7,27 @@ import UserContent from '../layout/UserContent';
 import "react-datepicker/dist/react-datepicker.css";
 import './styles/UserInfo.scss';
 import TittleUserInfo from './TittleUserInfo';
+import ChangeMail from './ChangeMail';
+import ChangePhone from './ChangePhone';
 
 class UserInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       birthDay: new Date(),
+      screen: 'index',
     };
+  }
+
+  resetState = action => {
+    this.setState({
+      birthDay: new Date(),
+      screen: 'index',
+    });
+    if (action === 'cancel') {
+      window.location.pathname = '/';
+      // return <Redirect exact to='/' />
+    }
   }
 
   changeGender = (gender) => {
@@ -36,9 +50,15 @@ class UserInfo extends React.Component {
     this.setState({ birthDay });
   }
 
+  changeScreen = screen => {
+    if (!this.props.email1 && screen !== 'email') return;
+    this.setState({ screen });
+  }
+
   renderProfileL = () => {
     const genders = ['Nam', 'Nữ', 'Khác'];
     const { name, email, phone, gender, birthDay, school } = this.state;
+    const { email1 } = this.props;
     return (
       <div className="profile-left d-flex flex-column">
         <div className="profile-row">
@@ -55,14 +75,20 @@ class UserInfo extends React.Component {
           <div className="key">Email</div>
           <div className="value">
             <span>{hideEmail(email)}</span>
-            <Link exact to='/'>{email ? 'Thay đổi' : 'Thêm mới'}</Link>
+            <Link exact to='/thong-tin-ca-nhan' onClick={() => this.changeScreen('email')}>
+              {email ? 'Thay đổi' : 'Thêm mới'}</Link>
           </div>
         </div>
         <div className="profile-row">
           <div className="key">Số điện thoại</div>
           <div className="value">
             <span>{hidePhone(phone)}</span>
-            <Link exact to='/'>{phone ? 'Thay đổi' : 'Thêm mới'}</Link>
+            <Link
+              exact to='/thong-tin-ca-nhan'
+              onClick={() => this.changeScreen('phone')}
+              title={!email1 ? 'Hãy thêm email trước khi thêm số điện thoại' : ''}
+            >
+              {phone ? 'Thay đổi' : 'Thêm mới'}</Link>
           </div>
         </div>
         <div className="profile-row">
@@ -96,8 +122,11 @@ class UserInfo extends React.Component {
         <div className="profile-row">
           <div className="key" />
           <div className="value">
-            <button className='btn btn-info'>
+            <button className='btn btn-info mr-2'>
               Lưu
+            </button>
+            <button className="btn btn-outline-info" onClick={e => this.resetState('cancel')} >
+              Hủy
             </button>
           </div>
         </div>
@@ -130,6 +159,12 @@ class UserInfo extends React.Component {
   uploadImage = e => {
     const { files } = e.target;
     const file = files[0];
+    const listImgsSupport = [
+      'image/jpeg',
+      'image/png',
+      'image/jpg',
+      // 'image/gif',
+    ];
     console.log("UserInfo -> file", file)
     const reader = new FileReader();
     reader.onload = upload => {
@@ -137,37 +172,53 @@ class UserInfo extends React.Component {
       if (file.size > 1048576 * 2) {
         return alert(`Ảnh "${file.name}" có kích thước quá 2 MB!`);
       }
-      const obj = {
-        load: upload, file, type: 'image', image: upload.target.result.split(',')[1],
-      };
-      // this.setState(prevState => ({
-      //   // listImgLoad: prevState.listImgLoad.concat(obj),
-      //   images: prevState.images && prevState.images.length + 1 > 10 ? prevState.images : prevState.images.concat(obj.image),
-      //   files: (prevState.files && prevState.files.length + 1 > 10) || (prevState.images && prevState.images.length + 1 > 10)
-      //     ? prevState.files
-      //     : prevState.files.concat(obj.file),
-      // }), () => {
-      //   if ((images && images.length + listFile.length > 10) || (files && files.length + listFile.length > 10)) {
-      //     SapoApp.flashError('Bạn chỉ được phép nhập tối đa 10 ảnh');
-      //   }
-      // });
+      if (!listImgsSupport.includes(file.type)) {
+        return alert('Định dạng ảnh này không được hỗ trợ!');
+      }
+      const image = upload.target.result.split(',')[1];
+      this.setState({ image, file });
     };
     reader.readAsDataURL(file);
     e.target.value = '';
   };
+
+  getScreen = (screen) => {
+    const { phone, email } = this.state;
+    switch (screen) {
+      case 'email':
+        return <ChangeMail
+          hiddenEmail={hideEmail(email)}
+          changeScreen={this.changeScreen}
+        />;
+      case 'phone':
+        return <ChangePhone
+          hiddenPhone={hidePhone(phone) || 'abc'}
+          changeScreen={this.changeScreen}
+        />;
+      default:
+        return (
+          <React.Fragment>
+            <TittleUserInfo
+              title='Hồ Sơ Của Tôi'
+              description='Quản lý thông tin hồ sơ để bảo mật tài khoản'
+            />
+            <div className="content d-flex">
+              {this.renderProfileL()}
+              {this.renderProfileR()}
+            </div>
+          </React.Fragment>
+        );
+    }
+  }
+
   render() {
     const { location } = this.props;
+    const { screen } = this.state;
+
     return (
       <UserContent>
         <div className="UserInfo">
-          <TittleUserInfo
-            title='Hồ Sơ Của Tôi'
-            description='Quản lý thông tin hồ sơ để bảo mật tài khoản'
-          />
-          <div className="content d-flex">
-            {this.renderProfileL()}
-            {this.renderProfileR()}
-          </div>
+          {this.getScreen(screen)}
         </div>
       </UserContent>
     );

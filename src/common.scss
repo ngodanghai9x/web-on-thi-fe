@@ -17,7 +17,7 @@ code {
     monospace;
 }
 
-a {
+a, span.a {
   text-decoration: none !important;
   color: #17a2b8;
   &:hover {
@@ -26,7 +26,7 @@ a {
   }
 }
 
-input[type=text], select {
+input[type=text], input[type=password], select {
   outline: none;
   border-radius: 5px;
   border: 2px solid transparent;
@@ -34,6 +34,9 @@ input[type=text], select {
   padding: 5px 10px;
   &:focus {
     border: 2px solid #17a2b8;
+  }
+  &.error {
+    border: 2px solid #ff606b;
   }
 }
 

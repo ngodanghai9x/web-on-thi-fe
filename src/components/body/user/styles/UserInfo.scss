@@ -6,53 +6,56 @@
       padding-right: 20px;
       display: flex;
       width: calc(100% - 225px - 20px);
-      .profile-row {
-        padding: 25px 0 0 0;
+    }
+    //common
+    .profile-row {
+      padding: 25px 0 0 0;
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      .key {
+        width: 125px;
+        text-align: right;
+        margin-right: 20px;
+        color: rgba(85, 85, 85, 0.8);
+        text-transform: capitalize;
+        font-size: 14px;
+      }
+      .value {
+        width: calc(100% - 145px);
+        justify-content: start;
         display: flex;
-        flex-flow: row;
-        align-items: center;
-        .key {
-          width: 125px;
-          text-align: right;
-          margin-right: 20px;
-          color: rgba(85,85,85,.8);
-          text-transform: capitalize;
+        input[type="text"] {
+          width: calc(90% - 15px);
         }
-        .value {
-          width: calc(100% - 145px);
-          justify-content: start;
+        .react-datepicker-wrapper {
+          width: 100%;
+        }
+        .react-datepicker__triangle {
+          left: 50px !important;
+        }
+        span {
+          margin-right: 15px;
+        }
+        a {
+          text-decoration: underline !important;
+        }
+        select {
+          width: calc(30% - 15px);
+          margin-right: 15px;
+          min-width: 112px;
+        }
+        .choice {
+          margin-right: 15px;
           display: flex;
-          input[type=text] {
-            width: calc(90% - 15px);
-          }
-          .react-datepicker-wrapper {
-            width: 100%;
-          }
-          .react-datepicker__triangle {
-            left: 50px !important;
-          }
-          span {
-            margin-right: 15px;
-          }
-          a {
-            text-decoration: underline !important;
-          }
-          select {
-            width: calc(30% - 15px);
-            margin-right: 15px;
-            min-width: 112px;
-          }
-          .choice {
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            input[type=radio] {
-              margin-right: 5px;
-            }
+          align-items: center;
+          input[type="radio"] {
+            margin-right: 5px;
           }
         }
       }
     }
+    //end common
     .profile-right {
       width: 225px;
       margin-top: 25px;
