@@ -22,7 +22,7 @@ class ChangePhone extends React.Component {
     this.doInterval();
   }
 
-  componentWillMount() {
+  componentWillUnmount() {
     clearInterval(this.timeInterval);
   }
 
@@ -60,7 +60,7 @@ class ChangePhone extends React.Component {
       errorPassword: false,
     });
     if (action === 'cancel') {
-      this.props.changeScreen('index');
+      this.props.changeScreen('phone','index');
     }
   }
 

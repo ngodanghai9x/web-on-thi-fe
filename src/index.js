@@ -2,8 +2,63 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
-import 'bootstrap/dist/css/bootstrap.css';
+// import * as serviceWorker from './serviceWorker';
+import { store } from 'react-notifications-component';
+
+window.noti = {
+  info: (message, duration = 1500) => store.addNotification({
+    title: "",
+    message,
+    type: "info",
+    insert: "top",
+    container: "top-right",
+    animationIn: ["animated", "fadeIn"],
+    animationOut: ["animated", "fadeOut"],
+    dismiss: {
+      duration,
+      onScreen: true
+    }
+  }),
+  success: (message, duration = 1500) => store.addNotification({
+    title: "",
+    message,
+    type: "success",
+    insert: "top",
+    container: "top-right",
+    animationIn: ["animated", "fadeIn"],
+    animationOut: ["animated", "fadeOut"],
+    dismiss: {
+      duration,
+      onScreen: true
+    }
+  }),
+  error: (message, duration = 1500) => store.addNotification({
+    title: "",
+    message,
+    type: "danger",
+    insert: "top",
+    container: "top-right",
+    animationIn: ["animated", "fadeIn"],
+    animationOut: ["animated", "fadeOut"],
+    dismiss: {
+      duration,
+      onScreen: true
+    }
+  }),
+  warning: (message, duration = 1500) => store.addNotification({
+    title: "",
+    message,
+    type: "warning",
+    insert: "top",
+    container: "top-right",
+    animationIn: ["animated", "fadeIn"],
+    animationOut: ["animated", "fadeOut"],
+    dismiss: {
+      duration,
+      onScreen: true
+    }
+  }),
+};
 
 ReactDOM.render(
   <React.StrictMode>
@@ -15,4 +70,4 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// serviceWorker.unregister();

@@ -14,16 +14,29 @@ class UserInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      birthDay: new Date(),
       screen: 'index',
+      errorName: '',
     };
   }
 
+  componentDidMount() {
+    this.resetState();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user) {
+      const { name, email, phone, school, gender, birthday } = nextProps.user;
+      this.setState({ name, email, phone, school, gender, birthday });
+    }
+  }
+
+  componentWillUnmount() {
+    this.resetState();
+  }
+
   resetState = action => {
-    this.setState({
-      birthDay: new Date(),
-      screen: 'index',
-    });
+    const { name, email, phone, school, gender, birthday } = this.props.user;
+    this.setState({ name, email, phone, school, gender, birthday, screen: 'index', errorName: '' });
     if (action === 'cancel') {
       window.location.pathname = '/';
       // return <Redirect exact to='/' />
@@ -35,47 +48,71 @@ class UserInfo extends React.Component {
   }
 
   changeName = (name) => {
-    if (name && name.length <= 255) {
-      this.setState({ name });
+    if (name && name.length >= 255) {
+      this.setState({ errorName: 'Họ và tên quá 255 kí tự' });
+      return window.noti.error('Họ và tên quá 255 kí tự');
+    }
+    else {
+      this.setState({ name, errorName: '' });
+    }
+  }
+
+  onBlurName = e => {
+    const { name } = this.state;
+    if (!name || name.length <= 0) {
+      this.setState({ errorName: 'Trường này không được để trống' });
     }
   }
 
   changeSchool = (name) => {
     if (name && name.length <= 255) {
       this.setState({ school: name });
+    } else {
+      return window.noti.error('Tên trường quá 255 kí tự');
     }
   }
 
-  changeBirthday = (birthDay) => {
-    this.setState({ birthDay });
+  changeBirthday = (birthday) => {
+    this.setState({ birthday });
   }
 
-  changeScreen = screen => {
-    if (!this.props.email1 && screen !== 'email') return;
-    this.setState({ screen });
+  changeScreen = (from, to) => {
+    const { user } = this.props;
+    if (user && !user.email && to === 'phone') return window.noti.warning('Hãy thêm email trước khi thêm số điện thoại');
+    this.setState({ screen: to, from });
+  }
+
+  submit = e => {
+    if (this.state.errorName) return window.noti.error('Hãy hoàn thiệt thông tin trước khi lưu');
   }
 
   renderProfileL = () => {
-    const genders = ['Nam', 'Nữ', 'Khác'];
-    const { name, email, phone, gender, birthDay, school } = this.state;
-    const { email1 } = this.props;
+    const genders = ['nam', 'nữ', 'khác'];
+    const { name, email, phone, gender, birthday, school, errorName } = this.state;
+    const { user } = this.props;
     return (
       <div className="profile-left d-flex flex-column">
-        <div className="profile-row">
+        {/* <div className="profile-row">
           <div className="key">Tên đăng nhập</div>
           <div className="value">ndh12</div>
-        </div>
+        </div> */}
         <div className="profile-row">
           <div className="key">Họ và tên</div>
           <div className="value">
-            <input type="text" value={name} onChange={(e) => this.changeName(e.target.value)} />
+            <input
+              type="text" value={name || ''}
+              className={errorName ? 'error' : ''}
+              title={errorName}
+              onBlur={e => this.onBlurName(e)}
+              onChange={(e) => this.changeName(e.target.value)}
+            />
           </div>
         </div>
         <div className="profile-row">
           <div className="key">Email</div>
           <div className="value">
             <span>{hideEmail(email)}</span>
-            <Link exact to='/thong-tin-ca-nhan' onClick={() => this.changeScreen('email')}>
+            <Link exact to='/thong-tin-ca-nhan' onClick={() => this.changeScreen('index', 'email')}>
               {email ? 'Thay đổi' : 'Thêm mới'}</Link>
           </div>
         </div>
@@ -85,8 +122,8 @@ class UserInfo extends React.Component {
             <span>{hidePhone(phone)}</span>
             <Link
               exact to='/thong-tin-ca-nhan'
-              onClick={() => this.changeScreen('phone')}
-              title={!email1 ? 'Hãy thêm email trước khi thêm số điện thoại' : ''}
+              onClick={() => this.changeScreen('index', 'phone')}
+              title={user && !user.email ? 'Hãy thêm email trước khi thêm số điện thoại' : ''}
             >
               {phone ? 'Thay đổi' : 'Thêm mới'}</Link>
           </div>
@@ -94,7 +131,7 @@ class UserInfo extends React.Component {
         <div className="profile-row">
           <div className="key">Trường học</div>
           <div className="value">
-            <input type="text" value={school} onChange={(e) => this.changeSchool(e.target.value)} />
+            <input type="text" value={school || ''} onChange={(e) => this.changeSchool(e.target.value)} />
           </div>
         </div>
         <div className="profile-row">
@@ -102,8 +139,8 @@ class UserInfo extends React.Component {
           <div className="value">
             {genders.map(item => (
               <div className="choice">
-                <input type="radio" name="gender" checked={gender === item} onClick={() => this.changeGender(item)} />
-                <span>{item}</span>
+                <input type="radio" name="gender" checked={gender && gender.toLowerCase() === item} onClick={() => this.changeGender(item)} />
+                <span style={{ textTransform: 'capitalize' }}>{item}</span>
               </div>
             ))}
           </div>
@@ -112,7 +149,7 @@ class UserInfo extends React.Component {
           <div className="key">Ngày sinh</div>
           <div className="value">
             <DatePicker
-              selected={birthDay}
+              selected={birthday}
               onChange={(e) => this.changeBirthday(e)}
               dateFormat="dd/MM/yyyy"
               locale="vi"
@@ -122,7 +159,7 @@ class UserInfo extends React.Component {
         <div className="profile-row">
           <div className="key" />
           <div className="value">
-            <button className='btn btn-info mr-2'>
+            <button className='btn btn-info mr-2' onClick={e => this.submit()}>
               Lưu
             </button>
             <button className="btn btn-outline-info" onClick={e => this.resetState('cancel')} >
@@ -170,10 +207,10 @@ class UserInfo extends React.Component {
     reader.onload = upload => {
       console.log("UserInfo -> upload", upload)
       if (file.size > 1048576 * 2) {
-        return alert(`Ảnh "${file.name}" có kích thước quá 2 MB!`);
+        return window.noti.error(`Ảnh "${file.name}" có kích thước quá 2 MB!`);
       }
       if (!listImgsSupport.includes(file.type)) {
-        return alert('Định dạng ảnh này không được hỗ trợ!');
+        return window.noti.error('Định dạng ảnh này không được hỗ trợ!');
       }
       const image = upload.target.result.split(',')[1];
       this.setState({ image, file });
@@ -227,6 +264,10 @@ class UserInfo extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
+  const { auth } = state;
+  return {
+    user: auth.user,
+  };
 
 };
 

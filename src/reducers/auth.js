@@ -5,12 +5,15 @@ const initState = {
   account: {
     id: null,
     role: null,
+    username: null,
   },
   user: {
     name: null,
     email: null,
+    phone: null,
+    school: null,
+    gender: null,
     birthday: null,
-    gender: null
   }
 };
 
