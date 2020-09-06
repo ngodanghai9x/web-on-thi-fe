@@ -13,6 +13,7 @@ import RouterList from './components/router/RouterList';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-notifications-component/dist/theme.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 
 const store = createStore(myReducer);

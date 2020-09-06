@@ -8,6 +8,7 @@ const initState = {
     username: null,
   },
   user: {
+    avatar: null,
     name: null,
     email: null,
     phone: null,
