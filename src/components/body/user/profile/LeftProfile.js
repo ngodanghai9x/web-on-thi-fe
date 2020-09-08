@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { hideEmail, hidePhone } from '../../../../actions/common/utils';
 import DatePicker from "react-datepicker";
+import $ from 'jquery';
 
 class LeftProfile extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class LeftProfile extends React.Component {
 
   componentDidMount() {
     this.resetState();
+    $('.react-datepicker__input-container input[type=text]').attr("placeholder", "Chọn ngày sinh nhật");
   }
 
   componentWillReceiveProps(nextProps) {
@@ -85,6 +87,7 @@ class LeftProfile extends React.Component {
             <input
               type="text" value={name || ''}
               className={errorName ? 'error' : ''}
+              placeholder="Nhập họ và tên"
               title={errorName}
               onBlur={e => this.onBlurName(e)}
               onChange={(e) => this.changeName(e.target.value)}
@@ -114,7 +117,11 @@ class LeftProfile extends React.Component {
         <div className="profile-row">
           <div className="key">Trường học</div>
           <div className="value">
-            <input type="text" value={school || ''} onChange={(e) => this.changeSchool(e.target.value)} />
+            <input
+              type="text"
+              value={school || ''}
+              placeholder="Nhập tên trường học"
+              onChange={(e) => this.changeSchool(e.target.value)} />
           </div>
         </div>
         <div className="profile-row">
@@ -135,6 +142,7 @@ class LeftProfile extends React.Component {
               selected={birthday}
               onChange={(e) => this.changeBirthday(e)}
               dateFormat="dd/MM/yyyy"
+              placeholder="Nhập họ và tên"
               locale="vi"
             />
           </div>
