@@ -1,4 +1,4 @@
-import * as actionTypes from '../constants/actionTypes';
+import { actionTypes } from '../constants/actionTypes';
 
 const initState = {
   accessToken: null,
@@ -8,6 +8,7 @@ const initState = {
     username: null,
   },
   user: {
+    id: null,
     avatar: null,
     name: null,
     email: null,
@@ -25,6 +26,42 @@ const auth = (state = initState, action) => {
         ...state,
         accessToken: action.accessToken,
       };
+    case actionTypes.GET_USER_INFO:
+      return {
+        ...state,
+        ...action,
+      };
+    case actionTypes.CREATE_ACCOUNT:
+      return {
+        ...state,
+        ...action,
+      };
+    case actionTypes.UPDATE_USER_INFO:
+      return {
+        ...state,
+        ...action,
+      };
+    case actionTypes.UPDATE_AVATAR_USER:
+      return {
+        ...state,
+        ...action,
+      };
+    case actionTypes.UPDATE_EMAIL_USER:
+      return {
+        ...state,
+        ...action,
+      };
+    case actionTypes.UPDATE_PHONE_USER:
+      return {
+        ...state,
+        ...action,
+      };
+    case actionTypes.UPDATE_PASSWORD_USER:
+      return {
+        ...state,
+        ...action,
+      };
+
     default:
       return state;
   }

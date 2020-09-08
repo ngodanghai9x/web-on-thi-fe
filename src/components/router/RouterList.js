@@ -8,12 +8,15 @@ import EssayExam from '../body/detail-exam/EssayExam';
 import MultipleChoiceResult from '../body/detail-exam/MultipleChoiceResult';
 import Register from '../body/Register';
 import UserInfo from '../body/user/UserInfo';
+import Test from '../body/admin/Test';
 
 
 export default class RouterList extends React.Component {
   render() {
     return (
       <Switch>
+        <Route exact path="/test" component={Test} />
+        <Route exact path="/dang-ky" component={Register} />
         {/* <Route exact path="/" render={() => (<Redirect to="/home" />)} /> */}
         <Route exact path="/" component={Home} />
         <Route exact path="/thong-tin-ca-nhan" component={UserInfo} />
