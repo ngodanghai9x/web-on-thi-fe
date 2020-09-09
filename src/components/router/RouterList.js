@@ -24,8 +24,8 @@ export default class RouterList extends React.Component {
 
         <Route exact path="/lop-10" component={ChooseSubjects} />
         <Route exact path="/lop-10/:subject" component={ExamList} />
-        <Route exact path="/lop-10/:subject/trac-nghiem/:id" component={MultipleChoiceExam} />
-        <Route exact path="/lop-10/:subject/trac-nghiem/ket-qua" component={MultipleChoiceResult} />
+        <Route exact path="/lop-10/toan/trac-nghiem1/:id" component={MultipleChoiceExam} />
+        <Route exact path="/lop-10/toan/trac-nghiem/ket-qua" component={MultipleChoiceResult} />
         <Route exact path="/lop-10/:subject/tu-luan/:id" component={EssayExam} />
         <Route exact path="/dai-hoc" component={ChooseSubjects} />
         <Route exact path="/dai-hoc/:subject" component={ExamList} />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MainContent from '../layout/MainContent';
-// import './styles/MultipleChoiceResult.scss';
+import './styles/MultipleChoiceResult.scss';
 
 class MultipleChoiceResult extends React.Component {
   constructor(props) {
