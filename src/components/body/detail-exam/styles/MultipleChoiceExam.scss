@@ -1,0 +1,58 @@
+
+    .MultipleChoiceExam {
+        width: 80%;
+        padding: 70px;
+    }
+    .exam-infor-panel {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        color: #333;
+    }
+    Mul-title {
+        font-size: 30px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    .description {
+        margin-bottom: 15px;
+    }
+    .item-infor-panel {
+        display: flex;
+        align-items: center;
+        width: 350px;
+        justify-content: space-between;
+        .icon {
+            padding-right: 5px;
+            margin-bottom: 10px;
+        }
+        .label {
+            padding-right: 30px;
+        }
+        .gtw-HTML {
+            text-align: end;
+            padding-left: 10px;
+        }
+    }
+    .item-label {
+        display: flex;
+        width: 60%;
+    }
+    .gwt-HTML {
+        width: 40%;
+    }
+    .btn-primary {
+        align-items: center;
+        text-transform: uppercase;
+    }
+    .button {
+        margin: 0;
+        position: relative;
+        top: 50%;
+        left: 50%;
+    }
+    @media (max-width: 768px) {
+        .submit-button {
+            padding: 7px 10px !important;
+        }
+    }
+    
