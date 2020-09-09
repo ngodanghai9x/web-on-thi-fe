@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from '../icons/common';
-import './styles/Register.scss';
 import { Link, Redirect } from 'react-router-dom';
 import UserContent from './layout/UserContent';
+import './styles/Register.scss';
+
 
 class Register extends React.Component {
   constructor(props) {
