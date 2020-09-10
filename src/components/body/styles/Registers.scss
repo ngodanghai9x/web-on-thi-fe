@@ -1,17 +1,13 @@
-
+.register-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
     .registerContainer {
         background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 3);
         width: 500px;
         max-width: 100%;
-    }
-    .register-body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        margin: 0;
     }
     .resgiter-header {
         background-color: #f7f7f7;
@@ -19,7 +15,7 @@
         padding: 20px 40px;
     }
 
-    .register-title{
+    .register-title {
         margin: 0;
         color: #17a2b8;
     }
@@ -46,8 +42,6 @@
     #register-input {
         width: 100%;
         border-radius: 4px;
-        border-color: aqua;
-        border: 2px solid #f0f0f0;
         padding: 10px;
     }
     #line-terms {
@@ -68,4 +62,4 @@
         background-color: #17a2b8;
         color: #fff;
     }
-    
+}
