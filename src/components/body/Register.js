@@ -4,7 +4,7 @@ import * as CommonIcon from '../icons/common';
 import './styles/Registers.scss';
 import { Link, Redirect } from 'react-router-dom';
 import UserContent from './layout/UserContent';
-import './styles/Register.scss';
+// import './styles/Register.scss';
 
 
 class Register extends React.Component {
@@ -18,11 +18,11 @@ class Register extends React.Component {
           <div className="register-body">
             <div className="registerContainer">
               <div className="register-header">
-                <h2 className="register-title">Đăng ký</h2>
+                <h2 className="register-title title-center">Đăng ký</h2>
               </div>
               <form className="Singup">
                 <div className="form-control-1">
-                  <input type="name" id="register-input" className="name" placeholder="Họ và tên " required />
+                  <input type="text" id="register-input" className="name" placeholder="Họ và tên " required />
                 </div>
                 <div className="form-control-1">
                   <label className="singup" />
@@ -51,7 +51,7 @@ class Register extends React.Component {
                   </div>
                 </div>
                 <div className="form-control-1">
-                  <button type="submit" value="submit" className="register-button">Submit</button>
+                  <button type="submit" value="submit" className="register-button">Xác nhận</button>
                 </div>
             </form>
         </div> 
