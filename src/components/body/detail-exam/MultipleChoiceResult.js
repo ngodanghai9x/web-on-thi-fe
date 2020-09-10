@@ -21,6 +21,7 @@ class MultipleChoiceResult extends React.Component {
         <div>
           <div className="exam-result-panel">
               <div className="emoji-result">
+                {/* sửa lại đường dẫn chỗ này  */}
                 <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg" id="exam-images"></img>
               </div>
             <div className="row-infor-panel">
