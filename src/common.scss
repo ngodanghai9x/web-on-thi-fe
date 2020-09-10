@@ -40,6 +40,11 @@ input[type=text], input[type=password],input[type=email], select {
   }
 }
 
+small.note {
+  color: rgba(0,0,0,.4);
+  text-transform: unset;
+}
+
 h1,h2,h3,h4,h5,h6,small {
   text-transform: uppercase;
   margin: 20px 0;

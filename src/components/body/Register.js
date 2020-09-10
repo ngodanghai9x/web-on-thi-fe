@@ -38,15 +38,15 @@ class Register extends React.Component {
                 <div className="form-control-1">
                   {/* <label class="singup"></label> */}
                   <input type="email" id="register-input" className="email" placeholder="Email" required />
-                  <p>Bạn cần sử dụng email này trong trường hợp đặt lại mật khẩu</p>
+                  <small className="note">Bạn cần sử dụng email này trong trường hợp đặt lại mật khẩu</small>
                 </div>
                 <div className="form-control-1" id="line-terms">
                   <label>
                     <input type="checkbox" className="checkbox" defaultChecked="checked" />
                   </label>
                   <div id="title">
-                  <p>Tôi đồng ý với
-                    <a href="#">Điều Khoản Dịch vụ</a> và <a href="#">Chính Sách Bảo Mật</a>
+                  <p className="note">Tôi đồng ý với 
+                    {' '}<a href="#">Điều Khoản Dịch vụ</a> và {' '}<a href="#">Chính Sách Bảo Mật</a>
                   </p>            
                   </div>
                 </div>

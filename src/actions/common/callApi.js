@@ -1,8 +1,7 @@
 import axios from 'axios';
-import storage from './storage';
 
 const callApi = function callApi(pathUrl, options) {
-  const accessToken = storage.get('token', false);
+  const accessToken = localStorage.getItem('token');
   const domain = 'http://localhost:8888/';
   options.mode = 'cors';
   options.headers = {
