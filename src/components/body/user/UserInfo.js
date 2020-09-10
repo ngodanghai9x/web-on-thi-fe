@@ -11,6 +11,7 @@ import ChangeMail from './ChangeMail';
 import ChangePhone from './ChangePhone';
 import LeftProfile from './profile/LeftProfile';
 import RightProfile from './profile/RightProfile';
+import { getUserInfo } from '../../../actions/userActions';
 
 class UserInfo extends React.Component {
   constructor(props) {
@@ -21,11 +22,13 @@ class UserInfo extends React.Component {
   }
 
   componentDidMount() {
-
+    this.props.getUserInfo();
   }
 
   componentWillReceiveProps(nextProps) {
-
+    if (nextProps.user !== this.props.user) {
+      this.setState({ user: nextProps.user });
+    }
   }
 
   componentWillUnmount() {
@@ -268,7 +271,11 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user: auth.user,
   };
-
 };
 
-export default connect(mapStateToProps)(UserInfo);
+export default connect(
+  mapStateToProps,
+  {
+    getUserInfo,
+  }
+)(UserInfo);

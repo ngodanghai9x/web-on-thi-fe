@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 // import * as serviceWorker from './serviceWorker';
 import { store } from 'react-notifications-component';
+import callApi from './actions/common/callApi';
 
 window.noti = {
   info: (message, duration = 1500) => store.addNotification({
@@ -59,6 +60,10 @@ window.noti = {
     }
   }),
 };
+
+window.myApp = {
+  call: (pathUrl, options) => callApi(pathUrl, options),
+}
 
 ReactDOM.render(
   <React.StrictMode>
