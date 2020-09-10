@@ -1,3 +1,52 @@
 .MultipleChoiceResult {
   color: red;
 }
+body {
+    box-sizing: border-box;
+    align-items: center;
+}
+#exam-images {
+  display: block;
+  max-width: 100px;
+  max-height: 100px;
+  width: auto;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+  border-radius: 50%;
+}
+
+.exam-result-panel {
+    margin: 10px 20px 10px 20px;
+
+}
+.exam-result-panel .emoji-result {
+    justify-content: center;
+}
+.row-infor-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+.row-infor-panel .exam-label{
+  padding: 0px 5px 0px 0px;
+  color: #333;
+  font: 14px;
+  font-weight: bold;
+}
+.row-infor-panel .exam-result {
+  padding: 0px 0px 0px 5px;
+  color: #333;
+  font: 14px;
+}
+.row-infor-panel .item-left, .item-right {
+  padding: 10px 30px !important;
+    border: 0;
+    border-radius: 3px;
+    color: white;
+    text-transform: uppercase;
+    font-weight: normal;
+}

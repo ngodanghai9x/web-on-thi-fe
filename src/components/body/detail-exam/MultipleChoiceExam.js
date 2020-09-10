@@ -17,13 +17,11 @@ class MultipleChoiceExam extends React.Component {
   render() {
     return (
       <MainContent>
-        <div className='MultipleChoiceExam'>
-        <div className="exam-infor-panel">
-
-        <div className="Mul-title">Đề luyện thi THPT Quốc gia 2020 môn Lý - Đề số 1</div>
-        <div className="description">
-          Gửi đến các bạn học sinh lớp 12 đề luyện thi THPT Quốc gia 2020 môn Lý - Đề số 1 có đáp án do Học Tốt tổng hợp nhằm giúp các em có thêm tư liệu để tham khảo củng cố kiến thức trước khi bước vào kì thi.
-        </div>
+          <div className="exam-infor-panel">
+            <div className="Mul-title">Đề luyện thi THPT Quốc gia 2020 môn Lý - Đề số 1</div>
+            <div className="description">
+              Gửi đến các bạn học sinh lớp 12 đề luyện thi THPT Quốc gia 2020 môn Lý - Đề số 1 có đáp án do Học Tốt tổng hợp nhằm giúp các em có thêm tư liệu để tham khảo củng cố kiến thức trước khi bước vào kì thi.
+            </div>
         <div className="item-infor-panel">
           <div className="item-label">
             <div className="icon">
@@ -48,7 +46,7 @@ class MultipleChoiceExam extends React.Component {
             <div className="icon">
               <i className="far fa-calendar-alt" />
             </div>
-            <div className="label">Số lần tạm dừngi</div>
+            <div className="label">Số lần tạm dừng</div>
           </div>
           <div className="gwt-HTML">
             0 / Không
@@ -76,7 +74,6 @@ class MultipleChoiceExam extends React.Component {
           <button className="btn btn-primary" type="submit">làm bài</button>
         </div>
       </div>
-        </div>
       </MainContent>
     );
   }
