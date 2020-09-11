@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import { hideEmail, hidePhone } from '../../../../actions/common/utils';
+import { hideEmail, hidePhone } from 'actions/common/utils';
+import { regex, errorText } from 'constants/regexError';
 import DatePicker from "react-datepicker";
 import $ from 'jquery';
 
@@ -12,6 +13,7 @@ class LeftProfile extends React.Component {
       errorName: '',
     };
   }
+
 
   componentDidMount() {
     this.resetState();
@@ -54,7 +56,7 @@ class LeftProfile extends React.Component {
 
   onBlurName = e => {
     const { name } = this.state;
-    if (!name || name.length <= 0) {
+    if (!name || name.trim().length === 0) {
       this.setState({ errorName: 'Trường này không được để trống' });
     }
   }

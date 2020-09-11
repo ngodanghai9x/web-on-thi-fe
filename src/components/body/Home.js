@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from '../icons/common';
-import MainContent from '../body/layout/MainContent';
+// import MainContent from './layout/MainContent';
+import MainContent from 'components/body/layout/MainContent';
 
 import './styles/Home.scss';
 import { Link, Redirect } from 'react-router-dom';

@@ -11,7 +11,7 @@ import ChangeMail from './ChangeMail';
 import ChangePhone from './ChangePhone';
 import LeftProfile from './profile/LeftProfile';
 import RightProfile from './profile/RightProfile';
-import { getUserInfo } from '../../../actions/userActions';
+import { getUserInfo } from 'actions/userActions';
 
 class UserInfo extends React.Component {
   constructor(props) {
