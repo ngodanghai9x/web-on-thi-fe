@@ -29,7 +29,9 @@ const auth = (state = initState, action) => {
     case actionTypes.GET_USER_INFO:
       return {
         ...state,
-        ...action,
+        user: {
+          name: action.user.name,
+        },
       };
     case actionTypes.CREATE_ACCOUNT:
       return {
