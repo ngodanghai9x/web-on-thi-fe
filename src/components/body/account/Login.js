@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import UserContent from 'components/body/layout/UserContent';
 
 import './styles/Login.scss';
+import { login } from 'actions/userActions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -34,8 +35,9 @@ class Login extends React.Component {
     const {username, password, errorPassword,  errorUsername
     } = this.state;
     const isCanSubmit = !errorUsername && !errorPassword;
-    // if (!isCanSubmit) return window.noti.error('Bạn chưa nhập tài khoản hoặc mật khẩu');
-    // this.props.login(name, username, password1, email);
+    
+    if (!isCanSubmit) return window.noti.error('Bạn chưa nhập tài khoản hoặc mật khẩu');
+    this.props.login(username, password);
   }
 
   render() {
@@ -95,6 +97,6 @@ class Login extends React.Component {
 
 export default connect(null,
   {
-    // createAccount,
+    login,
   },
 )(Login);

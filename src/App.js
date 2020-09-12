@@ -15,6 +15,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'react-notifications-component/dist/theme.css';
 import "react-datepicker/dist/react-datepicker.css";
 import thunk from 'redux-thunk';
+import ChatBot from 'components/chatbot/ChatBot';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancer = composeEnhancers(
@@ -42,6 +43,7 @@ function App(props) {
           <Header />
           {/* <MainContent /> */}
           <RouterList />
+          <ChatBot />
           <Footer />
         </Router>
       </Provider>

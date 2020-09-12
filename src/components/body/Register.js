@@ -65,7 +65,7 @@ class Register extends React.Component {
     } = this.state;
     const isCanSubmit = isChecked && !errorName && !errorUsername && !errorPassword1 && !errorPassword2 && !errorEmail;
     // if (!isCanSubmit) return window.noti.error('Hãy hoàn thành form đăng ký trước khi bấm xác nhận');
-    this.props.createAccount(name, username, password1, email);
+    this.props.createAccount(name.trim(), username.trim(), password1, email.trim());
   }
 
   render() {

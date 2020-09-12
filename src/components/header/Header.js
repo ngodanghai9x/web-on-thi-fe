@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as CommonIcon from '../icons/common';
 import { subjects2 } from '../../actions/common/getInfo';
+import { logout } from 'actions/userActions';
 import './styles/Header.scss';
 
 const subjects1 = [
@@ -42,11 +43,15 @@ class Header extends React.Component {
     ));
   }
 
+  logout = () => {
+    this.props.logout();
+  }
+
   renderDropDown3 = () => {
     return (
       <div className='avatar-dropdown dropdown'>
         <div className='infor d-flex justify-content'>
-          <img src='../../images/default-avatar.jpg' alt='avatar'/>
+          <img src='../../images/default-avatar.jpg' alt='avatar' />
           <div className='name d-flex align-items-center'>Họ và Tên</div>
         </div>
         <div className='dropdown-item'>
@@ -60,7 +65,7 @@ class Header extends React.Component {
           </Link>
         </div>
         <div className='dropdown-item'>
-          <Link exact to='/dang-nhap'>
+          <Link exact to='/dang-nhap' onClick={() => this.logout()}>
             Đăng xuất
           </Link>
         </div>
@@ -108,9 +113,14 @@ class Header extends React.Component {
 }
 
 
-const mapStateToProps = (state, ownProps) => {
+// const mapStateToProps = (state, ownProps) => {
 
-};
+// };
 
-export default connect(mapStateToProps)(Header);
+export default connect(
+  null,
+  {
+    logout,
+  }
+)(Header);
 // export default Header;
