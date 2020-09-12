@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import $ from 'jquery';
 
 import './styles/ChatBot.scss';
 
@@ -10,6 +9,7 @@ class ChatBot extends React.Component {
     this.state = {
       isOpen: false,
       input: '',
+      lastIndex: 0,
       messages: [
         {
           isChatBot: true,
@@ -42,8 +42,14 @@ class ChatBot extends React.Component {
       ]
     };
   }
-  componentDidMount() {
-    // document.addEventListener('keydown', this.onEnter, false);
+  componentDidUpdate() {
+    if (document.getElementById(`mes-${this.state.lastIndex}`)) {
+      document.getElementById(`mes-${this.state.lastIndex}`).scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+
   }
 
   componentWillUnmount() {
@@ -61,6 +67,7 @@ class ChatBot extends React.Component {
       this.setState(pre => ({
         messages: temp,
         input: '',
+        lastIndex: temp.length - 1,
       }));
     }
   }
@@ -82,12 +89,12 @@ class ChatBot extends React.Component {
   renderMessage = () => {
     const { messages } = this.state;
     if (messages) {
-      return messages.map((item,i) => {
+      return messages.map((item, i) => {
         return (
           <React.Fragment>
             <div className="">
               <span className={`name ${!item.isChatBot ? 'd-none' : ''}`}>Windy</span>
-              <div id={`abc${i}`} className={`message ${!item.isChatBot ? 'notchatbot' : ''}`}>
+              <div id={`mes-${i}`} className={`message ${!item.isChatBot ? 'notchatbot' : ''}`}>
                 {item.mes}
               </div>
             </div>
@@ -103,7 +110,6 @@ class ChatBot extends React.Component {
     const { isOpen, input } = this.state;
     return (
       <React.Fragment>
-        <button onClick={() => $('#form-chatbot #abc7').scrollTop(0,3030)} style={{ height:40, position:'fixed', bottom: 30}}>ABGFAS</button>
         <div className="ChatBot h-25 w-25">
           <div className="icon-chatbot" onClick={() => this.toggle()} />
           <div className="wrapper-CB">
