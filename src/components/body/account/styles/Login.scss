@@ -1,0 +1,32 @@
+.wrapper-login {
+  margin: 0 25%;
+  .login-form {
+    margin: 30px 0;
+    input {
+      margin-bottom: 20px;
+    }
+    .hr {
+      width: 90%;
+      border-top: 1px solid #c4c4c4;
+      position: relative;
+      margin: 20px 5%;
+      span {
+        text-transform: lowercase;
+        font-size: 13px;
+        position: absolute;
+        top: -12px;
+        left: calc(50% - 20px);
+        background: #fff;
+        z-index: 2;
+        padding: 0 10px;
+      }
+    }
+    button, a, input {
+      width: 100%;
+    }
+  }
+
+  a.text-center {
+    margin: 5px 0 45px 0;
+  }
+}

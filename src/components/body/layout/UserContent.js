@@ -10,13 +10,14 @@ class UserContent extends React.Component {
   }
 
   render() {
+    const { children, marginStyle } = this.props;
     return (
       <React.Fragment>
         <div className='user-content' style={{ background: '#f5f5f5', padding: '20px 0 20px 0' }}>
           <div className='container'>
-            <div className='wrapper-user-layout' style={{ borderRadius: 6, padding: '25px 15px', margin: '0 10%', background: '#FFF' }}>
+            <div className='wrapper-user-layout' style={{ borderRadius: 6, padding: '25px 15px', margin: marginStyle || '0 10%', background: '#FFF' }}>
               {/* <UserRouterList /> */}
-              {this.props.children}
+              {children}
             </div>
           </div>
         </div>

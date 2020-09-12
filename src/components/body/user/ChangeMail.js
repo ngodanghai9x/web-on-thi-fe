@@ -26,16 +26,6 @@ class ChangeMail extends React.Component {
     clearInterval(this.timeInterval);
   }
 
-  doInterval = () => {
-    this.timeInterval = setInterval(() => {
-      if (this.state.countDown === 0) {
-        clearInterval(this.timeInterval);
-      } else {
-        this.setState({ countDown: this.state.countDown - 1 });
-      }
-    }, 1000);
-  }
-
   changePassword = password => {
     if (password === '123') {
       this.setState({ errorPassword: true, password });
@@ -62,6 +52,16 @@ class ChangeMail extends React.Component {
     if (action === 'cancel') {
       this.props.changeScreen('email','index');
     }
+  }
+
+  doInterval = () => {
+    this.timeInterval = setInterval(() => {
+      if (this.state.countDown === 0) {
+        clearInterval(this.timeInterval);
+      } else {
+        this.setState({ countDown: this.state.countDown - 1 });
+      }
+    }, 1000);
   }
 
   getOTP = () => {

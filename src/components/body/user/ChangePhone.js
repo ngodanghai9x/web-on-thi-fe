@@ -80,8 +80,8 @@ class ChangePhone extends React.Component {
     return (
       <React.Fragment>
         <TittleUserInfo
-          title='Đổi Hòm Thư'
-          description='Để cập nhật email mới, vui lòng xác nhận bằng cách nhập mật khẩu'
+          title='Đổi Số Điện Thoại'
+          description='Để cập nhật số điện thoại mới, vui lòng xác nhận bằng cách nhập mã OTP'
         />
         <div className="content ChangePhone" style={{ margin: '15px 10% 25px 10%' }}>
           {!hiddenPhone ? null : (

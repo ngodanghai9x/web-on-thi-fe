@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import { hideEmail, hidePhone } from '../../../actions/common/utils';
+import { hideEmail, hidePhone } from 'actions/common/utils';
 import DatePicker from "react-datepicker";
 import UserContent from '../layout/UserContent';
 import "react-datepicker/dist/react-datepicker.css";
@@ -41,7 +41,7 @@ class UserInfo extends React.Component {
 
   changeScreen = (from, to) => {
     const { user } = this.props;
-    if (user && !user.email && to === 'phone') return window.noti.warning('Hãy thêm email trước khi thêm số điện thoại');
+    // if (user && !user.email && to === 'phone') return window.noti.warning('Hãy thêm email trước khi thêm số điện thoại');
     this.setState({ screen: to, from });
   }
 

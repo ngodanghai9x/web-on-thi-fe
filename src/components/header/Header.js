@@ -55,6 +55,11 @@ class Header extends React.Component {
           </Link>
         </div>
         <div className='dropdown-item'>
+          <Link exact to='/doi-mat-khau'>
+            Đổi mật khẩu
+          </Link>
+        </div>
+        <div className='dropdown-item'>
           <Link exact to='/dang-nhap'>
             Đăng xuất
           </Link>

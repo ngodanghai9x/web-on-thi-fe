@@ -4,12 +4,21 @@ const callApi = function callApi(pathUrl, options) {
   const accessToken = localStorage.getItem('token');
   const domain = 'http://localhost:8888/';
   options.mode = 'cors';
-  options.headers = {
-    // 'Authorization': 'Bearer ' + accessToken,
-    'Content-Type': 'application/json',
-    'TIMESTAMP': new Date().getTime(),
-    'Accept': '*/*',
-  };
+  if (accessToken) {
+    options.headers = {
+      'Authorization': 'Bearer ' + accessToken,
+      'Content-Type': 'application/json',
+      'TIMESTAMP': new Date().getTime(),
+      'Accept': '*/*',
+    };
+  } else {
+    options.headers = {
+      'Content-Type': 'application/json',
+      'TIMESTAMP': new Date().getTime(),
+      'Accept': '*/*',
+    };
+  }
+
   // Object.assign(options.headers, { 'TOKEN': accessToken });
   options.url = domain + String(pathUrl);
 
