@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import UserContent from 'components/body/layout/UserContent';
 
 import './styles/ForgotPassword.scss';
+import { errorText, regex } from 'constants/regexError';
 
 class ForgotPassword extends React.Component {
   constructor(props) {
@@ -21,6 +22,11 @@ class ForgotPassword extends React.Component {
   onBlurNotNull = (key, val, text) => {
     if (!val || val.trim().length === 0) {
       this.setState({ [key]: 'Trường này không để để trống' });
+    }
+    if (key === 'errorPassword') {
+      if (!regex.password.test(val)) {
+        this.setState({ [key]: text });
+      }
     }
   }
 
@@ -91,7 +97,7 @@ class ForgotPassword extends React.Component {
               placeholder="Nhập tài khoản"
               title={errorUsername}
               onClick={e => this.onClick(0)}
-              onChange={(e) => this.onChangeMax255('username', e.target.value)}
+              onChange={(e) => this.onChangeMax255('username', e.target.value, 'errorUsername')}
             // onBlur={e => this.onBlurNotNull('errorUsername', e.target.value)}
             />
           </div>
@@ -103,7 +109,7 @@ class ForgotPassword extends React.Component {
               placeholder="Nhập email"
               title={errorPhone}
               onClick={e => this.onClick(1)}
-              onChange={(e) => this.onChangeMax255('phone', e.target.value)}
+              onChange={(e) => this.onChangeMax255('phone', e.target.value, 'errorPhone')}
             // onBlur={e => this.onBlurNotNull('errorPhone', e.target.value)}
             />
           </div>
@@ -135,8 +141,8 @@ class ForgotPassword extends React.Component {
               placeholder="Nhập mật khẩu mới"
               title={errorPassword}
               onClick={e => this.onClick(0)}
-              onChange={(e) => this.onChangeMax255('password', e.target.value)}
-              onBlur={e => this.onBlurNotNull('errorUsername', e.target.value)}
+              onChange={(e) => this.onChangeMax255('password', e.target.value, 'errorPassword')}
+              onBlur={e => this.onBlurNotNull('errorPassword', e.target.value, errorText.password)}
             />
           </div>
           <div className="input-row d-flex">
@@ -146,7 +152,7 @@ class ForgotPassword extends React.Component {
               placeholder="Nhập mã xác nhận OTP"
               title={errorOTP}
               onClick={e => this.onClick(1)}
-              onChange={(e) => this.onChangeMax255('otp', e.target.value)}
+              onChange={(e) => this.onChangeMax255('otp', e.target.value, 'errorOTP')}
               onBlur={e => this.onBlurNotNull('errorOTP', e.target.value)}
             />
           </div>

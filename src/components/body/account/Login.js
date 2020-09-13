@@ -57,15 +57,15 @@ class Login extends React.Component {
               className={errorUsername ? 'error' : ''}
               placeholder="Nhập tài khoản"
               title={errorUsername}
-              onChange={(e) => this.onChangeMax255('username', e.target.value)}
+              onChange={(e) => this.onChangeMax255('username', e.target.value, 'errorUsername')}
               onBlur={e => this.onBlurNotNull('errorUsername', e.target.value)}
             />
             <input
-              type="text" value={password || ''}
+              type="password" value={password || ''}
               className={errorPassword ? 'error' : ''}
               placeholder="Nhập mật khẩu"
               title={errorPassword}
-              onChange={(e) => this.onChangeMax255('password', e.target.value)}
+              onChange={(e) => this.onChangeMax255('password', e.target.value, 'errorPassword')}
               onBlur={e => this.onBlurNotNull('errorPassword', e.target.value)}
             />
             <button
