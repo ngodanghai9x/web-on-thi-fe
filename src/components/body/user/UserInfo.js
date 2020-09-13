@@ -25,12 +25,6 @@ class UserInfo extends React.Component {
     this.props.getUserInfo();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.user !== this.props.user) {
-      this.setState({ user: nextProps.user });
-    }
-  }
-
   componentWillUnmount() {
     this.resetState();
   }

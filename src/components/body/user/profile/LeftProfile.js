@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { hideEmail, hidePhone } from 'actions/common/utils';
 import { regex, errorText } from 'constants/regexError';
+import { updateUserInfo } from 'actions/userActions';
 import DatePicker from "react-datepicker";
 import $ from 'jquery';
 
@@ -74,7 +75,10 @@ class LeftProfile extends React.Component {
   }
 
   submit = e => {
-    if (this.state.errorName) return window.noti.error('Hãy hoàn thiệt thông tin trước khi lưu');
+    const { name, email, phone, gender, birthday, school, errorName } = this.state;
+    // if (errorName) return window.noti.error('Hãy hoàn thiệt thông tin trước khi lưu');name, phone, birthday, gender, school
+    this.props.updateUserInfo(name, phone, birthday, gender, school);
+    // this.props.updateUserInfo(name, phone, '2020-09ab', gender, school);
   }
 
   render() {
@@ -143,9 +147,10 @@ class LeftProfile extends React.Component {
             <DatePicker
               selected={birthday}
               onChange={(e) => this.changeBirthday(e)}
-              dateFormat="dd/MM/yyyy"
+              // dateFormat="dd/MM/yyyy"
+              dateFormat="yyyy-MM-dd"
               placeholder="Nhập họ và tên"
-              locale="vi"
+              // locale="vi"
             />
           </div>
         </div>
@@ -174,4 +179,9 @@ const mapStateToProps = (state, ownProps) => {
 
 };
 
-export default connect(mapStateToProps)(LeftProfile);
+export default connect(
+  mapStateToProps,
+  {
+    updateUserInfo,
+  },
+)(LeftProfile);

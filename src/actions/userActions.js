@@ -1,15 +1,18 @@
 import callApi from "./common/callApi";
 import { actionTypes } from "../constants/actionTypes";
-
+import moment from 'moment';
 
 export const getUserInfo = () => (dispatch, getState) => {
-  return callApi('api/profile/get-profile', { method: 'GET' })
+  return callApi('api/profile/get', { method: 'POST', data: { body: {} } })
     .then((obj) => {
+      console.log('agsagsa',moment(obj.data.userProfile.birthday).format('YYYY-MM-DD'))
       if (obj && obj.data && obj.code === 200) {
         // dispatch({
         //   type: actionTypes.GET_USER_INFO,
         //   user: obj.data.userProfile || {},
         // });
+        // obj.data.userProfile.birthday = moment(obj.data.userProfile.birthday).format('dd/MM/yyyy'); 
+        // console.log("getUserInfo -> birthday", obj.data.userProfile.birthday)
         dispatch(receiveUserInfo(obj.data.userProfile || {}));
       }
     })
@@ -137,9 +140,11 @@ export const updateUserInfo = (name, phone, birthday, gender, school) => (dispat
       }
     }
   }
-  return callApi('api/profile/update-profile', { method: 'POST', data: reqBody })
+  return callApi('api/profile/update', { method: 'POST', data: reqBody })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
+        console.log("updateUserInfo -> data", data)
+        // data.userProfile.birthday = "abc";
         dispatch(receiveUserInfo(data.userProfile || {}));
       }
       if (code === 400) {

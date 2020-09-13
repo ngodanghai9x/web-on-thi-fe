@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { actionTypes } from '../constants/actionTypes';
 
 const initState = {
@@ -35,7 +36,8 @@ const auth = (state = initState, action) => {
           email: action.user.email,
           phone: action.user.phone,
           avatar: action.user.avatar,
-          birthday: action.user.birthday,
+          // birthday: action.user.birthday,
+          // birthday: moment(action.user.birthday).format('YYYY-MM-DD'),
           gender: action.user.gender,
           clazz: action.user.clazz,
           school: action.user.school,
