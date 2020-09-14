@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from '../icons/common';
-import MainContent from '../body/layout/MainContent';
+import { getAvatar, changeLayout } from 'actions/userActions';
+import MainContent from 'components/body/layout/MainContent';
 
 import './styles/Home.scss';
 import { Link, Redirect } from 'react-router-dom';
@@ -12,6 +13,10 @@ class Home extends React.Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    this.props.getAvatar();
+  }
+
 
   render() {
     const { location } = this.props;
@@ -20,6 +25,11 @@ class Home extends React.Component {
         <h2 className='title-center'>
           THI THỬ ONLINE
         </h2>
+        <br />
+        <Link exact to='/admin' onClick={() => this.props.changeLayout(1)}>Admin</Link>
+        <br />
+        <br />
+        <br />
         <div className='home'>
           <div className='img-btn d-flex'>
             <div className='img-btn-item d-table' onClick={() => window.location.pathname = `${location.pathname}lop-10`}>
@@ -67,8 +77,14 @@ class Home extends React.Component {
 }
 
 
-const mapStateToProps = (state, ownProps) => {
+// const mapStateToProps = (state, ownProps) => {
 
-};
+// };
 
-export default connect(mapStateToProps)(Home);
+export default connect(
+  null,
+  {
+    getAvatar,
+    changeLayout,
+  }
+)(Home);

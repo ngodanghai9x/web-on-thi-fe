@@ -1,10 +1,11 @@
+import moment from 'moment';
 import { actionTypes } from '../constants/actionTypes';
 
 const initState = {
   accessToken: null,
   account: {
     id: null,
-    role: null,
+    role: [],
     username: null,
   },
   user: {
@@ -15,8 +16,10 @@ const initState = {
     phone: null,
     school: null,
     gender: null,
-    birthday: null,
-  }
+    birthday: new Date("2020-09-15T07:14:53.000+00:00"),
+    examHistories: [],
+  },
+  layout: 1,
 };
 
 const auth = (state = initState, action) => {
@@ -25,43 +28,68 @@ const auth = (state = initState, action) => {
       return {
         ...state,
         accessToken: action.accessToken,
+        role: action.role,
       };
     case actionTypes.GET_USER_INFO:
       return {
         ...state,
-        ...action,
-      };
-    case actionTypes.CREATE_ACCOUNT:
-      return {
-        ...state,
-        ...action,
-      };
-    case actionTypes.UPDATE_USER_INFO:
-      return {
-        ...state,
-        ...action,
+        user: {
+          ...state.user,
+          name: action.user.fullname,
+          email: action.user.email,
+          phone: action.user.phone,
+          // avatar: action.user.avatar,
+          birthday: new Date(action.user.birthday),
+          gender: action.user.gender,
+          clazz: action.user.clazz,
+          school: action.user.school,
+          examHistories: action.user.examHistories,
+        },
       };
     case actionTypes.UPDATE_AVATAR_USER:
       return {
         ...state,
-        ...action,
+        user: {
+          ...state.user,
+          avatar: action.avatar,
+        },
       };
     case actionTypes.UPDATE_EMAIL_USER:
       return {
         ...state,
-        ...action,
+        user: {
+          ...state.user,
+          email: action.email,
+        },
       };
     case actionTypes.UPDATE_PHONE_USER:
       return {
         ...state,
-        ...action,
+        user: {
+          ...state.user,
+          phone: action.phone,
+        },
       };
-    case actionTypes.UPDATE_PASSWORD_USER:
+    case 'CHANGE_LAYOUT':
       return {
         ...state,
-        ...action,
+        layout: action.layout,
       };
-
+    // case actionTypes.CREATE_ACCOUNT:
+    //   return {
+    //     ...state,
+    //     ...action,
+    //   };
+    // case actionTypes.UPDATE_USER_INFO:
+    //   return {
+    //     ...state,
+    //     ...action,
+    //   };
+    // case actionTypes.UPDATE_PASSWORD_USER:
+    //   return {
+    //     ...state,
+    //     ...action,
+    //   };
     default:
       return state;
   }

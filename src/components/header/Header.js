@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as CommonIcon from '../icons/common';
 import { subjects2 } from '../../actions/common/getInfo';
+import { logout } from 'actions/userActions';
 import './styles/Header.scss';
 
 const subjects1 = [
@@ -42,12 +43,16 @@ class Header extends React.Component {
     ));
   }
 
+  logout = () => {
+    this.props.logout();
+  }
+
   renderDropDown3 = () => {
     return (
       <div className='avatar-dropdown dropdown'>
         <div className='infor d-flex justify-content'>
-          <img src='../../images/default-avatar.jpg' alt='avatar'/>
-          <div className='name d-flex align-items-center'>Họ và Tên</div>
+          <img src='../../images/default-avatar.jpg' alt='avatar' />
+          <div className='name d-flex align-items-center'>{this.props.name}</div>
         </div>
         <div className='dropdown-item'>
           <Link exact to='/thong-tin-ca-nhan'>
@@ -55,7 +60,12 @@ class Header extends React.Component {
           </Link>
         </div>
         <div className='dropdown-item'>
-          <Link exact to='/dang-nhap'>
+          <Link exact to='/doi-mat-khau'>
+            Đổi mật khẩu
+          </Link>
+        </div>
+        <div className='dropdown-item'>
+          <Link exact to='/dang-nhap' onClick={() => this.logout()}>
             Đăng xuất
           </Link>
         </div>
@@ -65,6 +75,7 @@ class Header extends React.Component {
   }
 
   render() {
+    if (this.props.layout === 1) return null;
     return (
       <React.Fragment>
         <div className='header container-fluid'>
@@ -89,12 +100,22 @@ class Header extends React.Component {
                 </div>
               </div>
             </div>
-            <div className='avatar route'>
-              <Link exact to='/thong-tin-ca-nhan/'>
-                <img src='../../images/default-avatar.jpg' alt='avatar' />
-              </Link>
-              {this.renderDropDown3()}
-            </div>
+            {localStorage.getItem('accessToken')
+              ? (
+                <div className='avatar route'>
+                  <Link exact to='/thong-tin-ca-nhan/'>
+                    <img src='../../images/default-avatar.jpg' alt='avatar' />
+                  </Link>
+                  {this.renderDropDown3()}
+                </div>
+              )
+              : (
+                <React.Fragment>
+                  <div className='avatar route'>
+                    <Link exact to='/dang-nhap'>Đăng nhập</Link>
+                  </div>
+                </React.Fragment>
+              )}
           </div>
         </div>
       </React.Fragment>
@@ -104,8 +125,18 @@ class Header extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-
+  const { auth: { user: { name, avatar }, layout } } = state;
+  return {
+    name,
+    avatar,
+    layout,
+  };
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(
+  mapStateToProps,
+  {
+    logout,
+  }
+)(Header);
 // export default Header;

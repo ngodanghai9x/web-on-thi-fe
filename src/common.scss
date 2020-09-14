@@ -20,6 +20,7 @@ code {
 a, span.a {
   text-decoration: none !important;
   color: #17a2b8;
+  cursor: pointer;
   &:hover {
     text-decoration: none !important;
     color: #52dcf1;
@@ -39,6 +40,17 @@ input[type=text], input[type=password],input[type=email], select {
     border: 2px solid #ff606b;
   }
 }
+
+small.note {
+  color: rgba(0,0,0,.4);
+  text-transform: unset;
+}
+
+// ::-webkit-scrollbar {
+//   width: 10px;
+//   height: 6px;
+// }
+
 
 h1,h2,h3,h4,h5,h6,small {
   text-transform: uppercase;

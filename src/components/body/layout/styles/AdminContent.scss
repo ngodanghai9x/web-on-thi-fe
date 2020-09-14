@@ -1,0 +1,31 @@
+.admin-content {
+  .wrapper-sidebar {
+    background: #202d3f;
+    height: 100vh;
+    width: 230px;
+    display: block;
+    transition: width 0.2s;
+    z-index: 1002;
+  }
+
+  .wrapper-content {
+    width: calc(100% - 230px);
+    .header-admin-layout {
+      border-bottom: 1px solid #ddd;
+      margin: 10px 30px 30px 30px;
+      width: calc(100% - 60px);
+      display: flex;
+      background: #fff;
+      border-radius: 5px;
+      padding: 10px 20px;
+    }
+  }
+  .wrapper-admin-layout {
+    width: calc(100% - 230px);
+    margin: 25px 30px 30px 30px;
+    width: calc(100% - 60px);
+    background: #fff;
+    border-radius: 5px;
+    padding: 20px;
+  }
+}

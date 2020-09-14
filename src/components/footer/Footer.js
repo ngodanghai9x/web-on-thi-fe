@@ -10,6 +10,7 @@ class Content extends React.Component {
 
 
   render() {
+    if (this.props.layout === 1) return null;
     return (
       <React.Fragment>
         <footer className="footer footer-wrapper">
@@ -72,7 +73,10 @@ class Content extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-
+  const { auth: {layout} } = state;
+  return {
+    layout,
+  }
 };
 
 export default connect(mapStateToProps)(Content);

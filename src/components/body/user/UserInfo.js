@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import { hideEmail, hidePhone } from '../../../actions/common/utils';
+import { hideEmail, hidePhone } from 'actions/common/utils';
 import DatePicker from "react-datepicker";
 import UserContent from '../layout/UserContent';
 import "react-datepicker/dist/react-datepicker.css";
@@ -11,6 +11,7 @@ import ChangeMail from './ChangeMail';
 import ChangePhone from './ChangePhone';
 import LeftProfile from './profile/LeftProfile';
 import RightProfile from './profile/RightProfile';
+import { getUserInfo } from 'actions/userActions';
 
 class UserInfo extends React.Component {
   constructor(props) {
@@ -21,11 +22,7 @@ class UserInfo extends React.Component {
   }
 
   componentDidMount() {
-
-  }
-
-  componentWillReceiveProps(nextProps) {
-
+    this.props.getUserInfo();
   }
 
   componentWillUnmount() {
@@ -38,7 +35,7 @@ class UserInfo extends React.Component {
 
   changeScreen = (from, to) => {
     const { user } = this.props;
-    if (user && !user.email && to === 'phone') return window.noti.warning('Hãy thêm email trước khi thêm số điện thoại');
+    // if (user && !user.email && to === 'phone') return window.noti.warning('Hãy thêm email trước khi thêm số điện thoại');
     this.setState({ screen: to, from });
   }
 
@@ -268,7 +265,11 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user: auth.user,
   };
-
 };
 
-export default connect(mapStateToProps)(UserInfo);
+export default connect(
+  mapStateToProps,
+  {
+    getUserInfo,
+  }
+)(UserInfo);
