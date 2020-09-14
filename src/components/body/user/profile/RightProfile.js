@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { changeAvatar } from 'actions/userActions';
 import "react-datepicker/dist/react-datepicker.css";
 
 class RightProfile extends React.Component {
@@ -11,7 +13,7 @@ class RightProfile extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.avatar) {
-      this.setState({ image: nextProps.avatar})
+      this.setState({ image: nextProps.avatar })
     }
   }
 
@@ -36,17 +38,30 @@ class RightProfile extends React.Component {
       }
       const image = upload.target.result.split(',')[1];
       this.setState({ image, file });
+      this.props.changeAvatar(image, file.type);
     };
     reader.readAsDataURL(file);
     e.target.value = '';
   };
 
+  onError = (e) => {
+    e.target.src = 'images/default-avatar.jpg';
+    e.target.onerror = null;
+  }
+
   render() {
     const { image } = this.state;
+    const { avatar } = this.props;
     return (
       <div className="profile-right">
         <div className="avt-wrapper">
-          <img src={image || 'https://cf.shopee.vn/file/d6fe3aa81dc2f0f4938ad629afd347e7_tn'} />
+          <img
+            className="img-uploaded"
+            src={avatar ? `data:image/png;base64,${avatar}` : 'https://cf.shopee.vn/file/d6fe3aa81dc2f0f4938ad629afd347e7_tn'}
+            // src={image ? `data:image/png;base64,${image}` : 'https://cf.shopee.vn/file/d6fe3aa81dc2f0f4938ad629afd347e7_tn'}
+            alt="not found"
+            onError={e => this.onError(e)}
+          />
           <button className="btn btn-outline-info" onClick={e => this.fileInput.click()}>
             Chọn ảnh
           </button>
@@ -65,4 +80,9 @@ class RightProfile extends React.Component {
   }
 }
 
-export default RightProfile;
+export default connect(
+  null,
+  {
+    changeAvatar,
+  },
+)(RightProfile);

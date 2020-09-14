@@ -46,7 +46,7 @@ export const login = (username, password) => (dispatch, getState) => {
 
 export const logout = () => (dispatch, getState) => {
   const accessToken = '';
-  localStorage.setItem('accessToken', accessToken);
+  localStorage.removeItem('accessToken');
   dispatch({
     type: actionTypes.RECEIVE_ACCESS_TOKEN,
     accessToken,

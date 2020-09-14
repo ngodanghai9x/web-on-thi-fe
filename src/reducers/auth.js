@@ -19,7 +19,7 @@ const initState = {
     birthday: new Date("2020-09-15T07:14:53.000+00:00"),
     examHistories: [],
   },
-  layout: 1,
+  layout: 0,
 };
 
 const auth = (state = initState, action) => {

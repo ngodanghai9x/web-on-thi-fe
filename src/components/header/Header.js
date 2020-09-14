@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as CommonIcon from '../icons/common';
-import { subjects2 } from '../../actions/common/getInfo';
-import { logout } from 'actions/userActions';
+import { subjects2 } from 'actions/common/getInfo';
+import { logout, changeLayout } from 'actions/userActions';
 import './styles/Header.scss';
 
 const subjects1 = [
@@ -48,6 +48,7 @@ class Header extends React.Component {
   }
 
   renderDropDown3 = () => {
+    const token = localStorage.getItem('accessToken');
     return (
       <div className='avatar-dropdown dropdown'>
         <div className='infor d-flex justify-content'>
@@ -59,6 +60,13 @@ class Header extends React.Component {
             Thông tin cá nhân
           </Link>
         </div>
+        {!token ? null : (
+          <div className='dropdown-item'>
+            <Link exact to='/admin' onClick={() => this.props.changeLayout(1)}>
+              Trang quản lý
+          </Link>
+          </div>
+        )}
         <div className='dropdown-item'>
           <Link exact to='/doi-mat-khau'>
             Đổi mật khẩu
@@ -82,7 +90,7 @@ class Header extends React.Component {
           <div className='container d-flex'>
             <div className='wrapper-logo-route d-flex'>
               <Link exact to='/'>
-                <img className='header-logo' src='../../images/logo.png' alt='logo' />
+                <img className='header-logo' src='images/logo.png' alt='logo' />
               </Link>
               <div className='route lop-10'
               // onMouseEnter={() => this.setState({ dropdown10: true})}
@@ -104,7 +112,7 @@ class Header extends React.Component {
               ? (
                 <div className='avatar route'>
                   <Link exact to='/thong-tin-ca-nhan/'>
-                    <img src='../../images/default-avatar.jpg' alt='avatar' />
+                    <img src='images/default-avatar.jpg' alt='avatar' />
                   </Link>
                   {this.renderDropDown3()}
                 </div>
@@ -137,6 +145,7 @@ export default connect(
   mapStateToProps,
   {
     logout,
+    changeLayout,
   }
 )(Header);
 // export default Header;
