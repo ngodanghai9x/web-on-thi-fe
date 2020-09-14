@@ -13,7 +13,8 @@ class Sidebar extends React.Component {
     return (
       <React.Fragment>
         <div className="wrapper-sidebar">
-          abc
+          làm thanh đen ở đây
+          đừng có tự xóa cái gì, viết thêm từ chỗ này thôi
         </div>
       </React.Fragment>
     );
