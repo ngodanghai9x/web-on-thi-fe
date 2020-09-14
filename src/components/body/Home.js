@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from '../icons/common';
-import { getAvatar } from 'actions/userActions';
+import { getAvatar, changeLayout } from 'actions/userActions';
 import MainContent from 'components/body/layout/MainContent';
 
 import './styles/Home.scss';
@@ -25,6 +25,11 @@ class Home extends React.Component {
         <h2 className='title-center'>
           THI THỬ ONLINE
         </h2>
+        <br />
+        <Link exact to='/admin' onClick={() => this.props.changeLayout(1)}>Admin</Link>
+        <br />
+        <br />
+        <br />
         <div className='home'>
           <div className='img-btn d-flex'>
             <div className='img-btn-item d-table' onClick={() => window.location.pathname = `${location.pathname}lop-10`}>
@@ -80,5 +85,6 @@ export default connect(
   null,
   {
     getAvatar,
+    changeLayout,
   }
 )(Home);

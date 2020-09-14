@@ -75,6 +75,7 @@ class Header extends React.Component {
   }
 
   render() {
+    if (this.props.layout === 1) return null;
     return (
       <React.Fragment>
         <div className='header container-fluid'>
@@ -124,10 +125,11 @@ class Header extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { user: { name, avatar } } } = state;
+  const { auth: { user: { name, avatar }, layout } } = state;
   return {
     name,
     avatar,
+    layout,
   };
 };
 

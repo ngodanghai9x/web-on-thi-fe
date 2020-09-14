@@ -12,6 +12,7 @@ import Test from '../body/admin/Test';
 import Login from 'components/body/account/Login';
 import ForgotPassword from 'components/body/account/ForgotPassword';
 import ChangePassword from 'components/body/account/ChangePassword';
+import AdminHome from 'components/body/admin/AdminHome';
 
 
 export default class RouterList extends React.Component {
@@ -37,7 +38,7 @@ export default class RouterList extends React.Component {
         <Route exact path="/dai-hoc/:subject" component={ExamList} />
 
 
-        <Route exact path="/admin" component={ExamList} />
+        <Route exact path="/admin" component={AdminHome} />
 
       </Switch>
     )

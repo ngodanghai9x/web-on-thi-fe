@@ -18,7 +18,8 @@ const initState = {
     gender: null,
     birthday: new Date("2020-09-15T07:14:53.000+00:00"),
     examHistories: [],
-  }
+  },
+  layout: 1,
 };
 
 const auth = (state = initState, action) => {
@@ -68,6 +69,11 @@ const auth = (state = initState, action) => {
           ...state.user,
           phone: action.phone,
         },
+      };
+    case 'CHANGE_LAYOUT':
+      return {
+        ...state,
+        layout: action.layout,
       };
     // case actionTypes.CREATE_ACCOUNT:
     //   return {

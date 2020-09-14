@@ -1,7 +1,10 @@
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import CKEditor from 'ckeditor4-react';
+import AdminContent from '../layout/AdminContent';
+import { changeLayout } from 'actions/userActions';
 
 class Test extends Component {
   constructor(props) {
@@ -29,7 +32,9 @@ class Test extends Component {
 
   render() {
     return (
-      <div>
+      <AdminContent>
+        <button onClick={() => this.props.changeLayout(1)}>abbb1111111</button>
+        <button onClick={() => this.props.changeLayout(0)}>abbb00000000000</button>
         <CKEditor
           data={this.state.data}
           onChange={this.onEditorChange} />
@@ -38,7 +43,9 @@ class Test extends Component {
                         <textarea defaultValue={this.state.data} onChange={this.handleChange} />
         </label>
         <EditorPreview data={this.state.data} />
-      </div>
+      </AdminContent>
+
+
     );
   }
 }
@@ -62,7 +69,12 @@ EditorPreview.propTypes = {
   data: PropTypes.string
 };
 
-export default Test;
+export default connect(
+  null,
+  {
+    changeLayout,
+  }
+)(Test);
 
 
 

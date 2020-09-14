@@ -36,14 +36,14 @@ const store = createStore(myReducer, enhancer);
 
 function App(props) {
   return (
-    <div className="App" style={{ paddingTop: 50 }}>
+    <div className="App">
       <Provider store={store} >
         <Router>
           <ReactNotification />
           <Header />
           {/* <MainContent /> */}
           <RouterList />
-          <ChatBot />
+          {/* <ChatBot /> */}
           <Footer />
         </Router>
       </Provider>

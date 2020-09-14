@@ -201,7 +201,12 @@ export const getAvatar = () => (dispatch, getState) => {
     });
 }
 
-
+export const changeLayout = (layout) => (dispatch, getState) => {
+  dispatch({
+    type: 'CHANGE_LAYOUT',
+    layout,
+  });
+}
 
 
 

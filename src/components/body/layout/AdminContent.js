@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import './styles/MainContent.scss';
+import Sidebar from './Sidebar';
+import './styles/AdminContent.scss';
 
 class AdminContent extends React.Component {
   constructor(props) {
@@ -9,15 +10,16 @@ class AdminContent extends React.Component {
   }
 
   render() {
-    const { children, marginStyle } = this.props;
+    const { children, style } = this.props;
     return (
       <React.Fragment>
-        <div className='user-content' style={{ background: '#f5f5f5', padding: '20px 0 20px 0' }}>
-          <div className='container-fluid d-flex'>
-            <div className="wrapper-sidebar h-100">
-              abc
+        <div className='admin-content d-flex' style={{ background: '#f5f5f5' }}>
+          <Sidebar />
+          <div className="wrapper-content">
+            <div className="header-admin-layout">
+              Header
             </div>
-            <div className='wrapper-user-layout' style={{ borderRadius: 6, padding: '25px 15px', margin: marginStyle || '0 5%', background: '#FFF' }}>
+            <div className='wrapper-admin-layout' style={{ style }}>
               {children}
             </div>
           </div>
