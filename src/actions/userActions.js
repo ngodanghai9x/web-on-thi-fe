@@ -24,16 +24,17 @@ export const getUserInfo = () => (dispatch, getState) => {
 export const login = (username, password) => (dispatch, getState) => {
   return callApi('auth/token', { method: 'POST', data: { body: { username, password } } })
     .then(({ data, code, message }) => {
-      console.log('abc',{ data, code, message })
       if (data && code === 200) {
         const accessToken = data.token;
+        const obj = JSON.parse(atob(accessToken.split('.')[1]));
         dispatch({
           type: actionTypes.RECEIVE_ACCESS_TOKEN,
           accessToken,
+          role: obj.ROLE,
         });
-        window.noti.success('Đăng nhập thành công');
         localStorage.setItem('accessToken', accessToken);
         // window.location.pathname = '/';
+        window.noti.success('Đăng nhập thành công');
       }
       if (code === 400) {
         window.noti.error('Tài khoản hoặc mật khẩu (mã OTP) không đúng');

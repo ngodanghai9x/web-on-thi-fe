@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from '../icons/common';
-// import MainContent from './layout/MainContent';
+import { getAvatar } from 'actions/userActions';
 import MainContent from 'components/body/layout/MainContent';
 
 import './styles/Home.scss';
@@ -11,6 +11,10 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentDidMount() {
+    this.props.getAvatar();
   }
 
 
@@ -68,8 +72,13 @@ class Home extends React.Component {
 }
 
 
-const mapStateToProps = (state, ownProps) => {
+// const mapStateToProps = (state, ownProps) => {
 
-};
+// };
 
-export default connect(mapStateToProps)(Home);
+export default connect(
+  null,
+  {
+    getAvatar,
+  }
+)(Home);

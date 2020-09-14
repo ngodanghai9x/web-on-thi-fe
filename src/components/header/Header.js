@@ -52,7 +52,7 @@ class Header extends React.Component {
       <div className='avatar-dropdown dropdown'>
         <div className='infor d-flex justify-content'>
           <img src='../../images/default-avatar.jpg' alt='avatar' />
-          <div className='name d-flex align-items-center'>Họ và Tên</div>
+          <div className='name d-flex align-items-center'>{this.props.name}</div>
         </div>
         <div className='dropdown-item'>
           <Link exact to='/thong-tin-ca-nhan'>
@@ -99,12 +99,22 @@ class Header extends React.Component {
                 </div>
               </div>
             </div>
-            <div className='avatar route'>
-              <Link exact to='/thong-tin-ca-nhan/'>
-                <img src='../../images/default-avatar.jpg' alt='avatar' />
-              </Link>
-              {this.renderDropDown3()}
-            </div>
+            {localStorage.getItem('accessToken')
+              ? (
+                <div className='avatar route'>
+                  <Link exact to='/thong-tin-ca-nhan/'>
+                    <img src='../../images/default-avatar.jpg' alt='avatar' />
+                  </Link>
+                  {this.renderDropDown3()}
+                </div>
+              )
+              : (
+                <React.Fragment>
+                  <div className='avatar route'>
+                    <Link exact to='/dang-nhap'>Đăng nhập</Link>
+                  </div>
+                </React.Fragment>
+              )}
           </div>
         </div>
       </React.Fragment>
@@ -113,12 +123,16 @@ class Header extends React.Component {
 }
 
 
-// const mapStateToProps = (state, ownProps) => {
-
-// };
+const mapStateToProps = (state, ownProps) => {
+  const { auth: { user: { name, avatar } } } = state;
+  return {
+    name,
+    avatar,
+  };
+};
 
 export default connect(
-  null,
+  mapStateToProps,
   {
     logout,
   }

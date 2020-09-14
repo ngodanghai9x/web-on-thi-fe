@@ -5,7 +5,7 @@ const initState = {
   accessToken: null,
   account: {
     id: null,
-    role: null,
+    role: [],
     username: null,
   },
   user: {
@@ -16,7 +16,7 @@ const initState = {
     phone: null,
     school: null,
     gender: null,
-    birthday: null,
+    birthday: new Date("2020-09-15T07:14:53.000+00:00"),
     examHistories: [],
   }
 };
@@ -27,17 +27,18 @@ const auth = (state = initState, action) => {
       return {
         ...state,
         accessToken: action.accessToken,
+        role: action.role,
       };
     case actionTypes.GET_USER_INFO:
       return {
         ...state,
         user: {
+          ...state.user,
           name: action.user.fullname,
           email: action.user.email,
           phone: action.user.phone,
-          avatar: action.user.avatar,
-          // birthday: action.user.birthday,
-          // birthday: moment(action.user.birthday).format('YYYY-MM-DD'),
+          // avatar: action.user.avatar,
+          birthday: new Date(action.user.birthday),
           gender: action.user.gender,
           clazz: action.user.clazz,
           school: action.user.school,
