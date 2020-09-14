@@ -14,17 +14,17 @@ class MultipleChoiceResult extends React.Component {
     const { subjects } = match.params; // type, môn học
   }
 
-  render() {
+  render() {// cái kết quả mới là trang này
     return (
       <MainContent>
         <div className='MultipleChoiceResult'>
         <div>
           <div className="exam-result-panel">
               <div className="emoji-result">
-                {/* sửa lại đường dẫn chỗ này  */}
+                {/* sửa lại đường dẫn chỗ này bằng icon1.jpg trong thư mục images */}
                 <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg" id="exam-images"></img>
               </div>
-            <div className="row-infor-panel">
+            <div className="row-infor-panel"> 
               <div className="exam-label">Tổng điểm</div>
               <div className="exam-result">0.0/10 Điểm</div>
             </div>
