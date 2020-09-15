@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import Home from '../body/Home';
 import ChooseSubjects from '../body/ChooseSubjects';
-import ExamList from '../body/ExamList';
+// import ExamList from '../body/ExamList';
+
 import MultipleChoiceExam from '../body/detail-exam/MultipleChoiceExam';
 import EssayExam from '../body/detail-exam/EssayExam';
 import MultipleChoiceResult from '../body/detail-exam/MultipleChoiceResult';
@@ -13,6 +14,7 @@ import Login from 'components/body/account/Login';
 import ForgotPassword from 'components/body/account/ForgotPassword';
 import ChangePassword from 'components/body/account/ChangePassword';
 import AdminHome from 'components/body/admin/AdminHome';
+import CollegeExamList from 'components/body/home-content/CollegeExamList';
 
 
 export default class RouterList extends React.Component {
@@ -30,12 +32,12 @@ export default class RouterList extends React.Component {
 
 
         <Route exact path="/lop-10" component={ChooseSubjects} />
-        <Route exact path="/lop-10/:subject" component={ExamList} />
+        <Route exact path="/lop-10/:subject" component={CollegeExamList} />
         <Route exact path="/lop-10/toan/trac-nghiem1/:id" component={MultipleChoiceExam} />
         <Route exact path="/lop-10/toan/trac-nghiem/ket-qua" component={MultipleChoiceResult} />
         <Route exact path="/lop-10/:subject/tu-luan/:id" component={EssayExam} />
         <Route exact path="/dai-hoc" component={ChooseSubjects} />
-        <Route exact path="/dai-hoc/:subject" component={ExamList} />
+        <Route exact path="/dai-hoc/:subject" component={CollegeExamList} />
 
 
         <Route exact path="/admin" component={AdminHome} />

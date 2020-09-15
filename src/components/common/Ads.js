@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as CommonIcon from '../icons/common';
+import * as CommonIcon from 'components/icons/common';
 import './styles/Ads.scss';
 
 class Ads extends React.Component {

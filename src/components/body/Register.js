@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as CommonIcon from '../icons/common';
+import * as CommonIcon from 'components/icons/common';
 import { Link, Redirect } from 'react-router-dom';
 import { regex, errorText } from 'constants/regexError';
 import UserContent from './layout/UserContent';

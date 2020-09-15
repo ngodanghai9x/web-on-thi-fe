@@ -26,18 +26,34 @@
       }
     }
   }
+  h3.title-left {
+    margin: 15px 0;
+  }
 
   .div-infor {
     border: 2px solid #c4c4c4;
     width: 80%;
     padding: 0;
+    border-radius: 2px;
+    margin-bottom: 20px;
     .wrapper-btn-group {
-      .btn {
-        border-radius: 0;
-        margin: 1px;
+      border-bottom: 1px solid #c4c4c4;
+      .btn-group {
+        .btn-link-sub {
+          border-radius: 1px;
+          margin: 1px;
+
+          &.active {
+            // background: aquamarine !important;
+          }
+        }
       }
-      border-bottom: 1px solid #c4c4c4;;
     }
     
+    .content {
+      h5 {
+        text-transform: unset;
+      }
+    }
   }
 }

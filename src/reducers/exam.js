@@ -2,11 +2,75 @@ import { actionTypes } from '../constants/actionTypes';
 
 const initState = {
   id: null,
-
+  activeCollegeSub: 'toan',
+  activeHSSub: 'toan',
+  college: {
+    math: [
+      {},
+    ],
+    literature: [
+      {},
+    ],
+    english: [
+      {},
+    ],
+    physics: [
+      {},
+    ],
+    chemistry: [
+      {},
+    ],
+    biology: [
+      {},
+    ],
+    history: [
+      {},
+    ],
+    geography: [
+      {},
+    ],
+  },
+  highSchool: {
+    math: [
+      {},
+    ],
+    literature: [
+      {},
+    ],
+    english: [
+      {},
+    ],
+    physics: [
+      {},
+    ],
+    chemistry: [
+      {},
+    ],
+    biology: [
+      {},
+    ],
+    history: [
+      {},
+    ],
+    geography: [
+      {},
+    ],
+  }
 };
 
 const exam = (state = initState, action) => {
   switch (action.type) {
+    case actionTypes.CHANGE_SUBJECT:
+      if (action.kind === 10) {
+        return {
+          ...state,
+          activeCollegeSub: action.subject,
+        }
+      }
+      return {
+        ...state,
+        activeCollegeSub: action.subject,
+      };
     case actionTypes.GET_EXAM:
       return {
         ...state,

@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as CommonIcon from '../icons/common';
 import { getAvatar, changeLayout } from 'actions/userActions';
 import MainContent from 'components/body/layout/MainContent';
+import { Link, Redirect } from 'react-router-dom';
+import { subjects2 } from 'actions/common/getInfo';
+import HighSchoolTable from './home-content/HighSchoolTable';
+import CollegeTable from './home-content/CollegeTable';
 
 import './styles/Home.scss';
-import { Link, Redirect } from 'react-router-dom';
 
 class Home extends React.Component {
   constructor(props) {
@@ -17,9 +19,13 @@ class Home extends React.Component {
     this.props.getAvatar();
   }
 
+  getExamBySubject = (subject) => {
+
+  }
+
 
   render() {
-    const { location } = this.props;
+    const { location, activeSub } = this.props;
     return (
       <MainContent>
         <h2 className='title-center'>
@@ -44,28 +50,10 @@ class Home extends React.Component {
             </div>
           </div>
 
-          <h3 className='title-left'>
-            LUYỆN THI VÀO LỚP 10
-          </h3>
-          <div className='div-infor'>
-            <div className='wrapper-btn-group'>
-              <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-info">Toán</button>
-                <button type="button" class="btn btn-info">Văn</button>
-                <button type="button" class="btn btn-info">Anh</button>
-              </div>
-            </div>
-            <div className='content' style={{ padding: '15px 20px' }}>
-              <h4>Các đề được quan tâm nhiều nhất</h4>
-              <div className='item'>
-                > Trắc nghiệm ôn tập kiến thức bài Căn thức bậc hai
-              </div>
-              <div className='item'>
-                > Trắc nghiệm ôn tập kiến thức bài Căn thức bậc hai
-              </div>
-              <p className='more' style={{ textAlign: 'right', margin: 0 }}>Xem thêm ></p>
-            </div>
-          </div>
+          <HighSchoolTable />
+          <CollegeTable />
+          
+          
         </div>
       </MainContent>
     );

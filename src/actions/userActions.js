@@ -5,7 +5,7 @@ import moment from 'moment';
 export const getUserInfo = () => (dispatch, getState) => {
   return callApi('api/profile/get', { method: 'POST', data: { body: {} } })
     .then((obj) => {
-      console.log('agsagsa',moment(obj.data.userProfile.birthday).format('YYYY-MM-DD'))
+      console.log('agsagsa', moment(obj.data.userProfile.birthday).format('YYYY-MM-DD'))
       if (obj && obj.data && obj.code === 200) {
         // dispatch({
         //   type: actionTypes.GET_USER_INFO,
@@ -34,6 +34,7 @@ export const login = (username, password) => (dispatch, getState) => {
         });
         localStorage.setItem('accessToken', accessToken);
         // window.location.pathname = '/';
+        dispatch(init())
         window.noti.success('Đăng nhập thành công');
       }
       if (code === 400) {
@@ -107,7 +108,7 @@ export const changePassword = (username, newPassword, otp) => (dispatch, getStat
 };
 
 export const getOtpCode = (username, type) => (dispatch, getState) => {
-  const pathUrl = type === 'login' ? 'generate-otp' : 'forgot-password';
+  const pathUrl = type === 1 ? 'generate-otp' : 'forgot-password';
   const reqBody = {
     body: {
       userRegister: {
@@ -208,6 +209,16 @@ export const changeLayout = (layout) => (dispatch, getState) => {
   });
 }
 
+
+export const init = () => dispatch => {
+  const accessToken = localStorage.getItem('accessToken');
+  const obj = JSON.parse(atob(accessToken.split('.')[1]));
+  dispatch({
+    type: actionTypes.RECEIVE_ACCESS_TOKEN,
+    accessToken,
+    role: obj.ROLE,
+  });
+}
 
 
 export const receiveUserInfo = (user) => ({

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import * as CommonIcon from '../icons/common';
+import * as CommonIcon from 'components/icons/common';
 import { subjects2 } from 'actions/common/getInfo';
 import { logout, changeLayout } from 'actions/userActions';
 import './styles/Header.scss';

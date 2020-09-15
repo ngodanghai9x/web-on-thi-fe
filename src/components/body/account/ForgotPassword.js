@@ -2,9 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import UserContent from 'components/body/layout/UserContent';
+import { errorText, regex } from 'constants/regexError';
+import { changePassword } from 'actions/userActions';
 
 import './styles/ForgotPassword.scss';
-import { errorText, regex } from 'constants/regexError';
 
 class ForgotPassword extends React.Component {
   constructor(props) {
@@ -45,11 +46,11 @@ class ForgotPassword extends React.Component {
   }
 
   submit = e => {
-    const { otp, password, errorOTP, errorPassword, selected
+    const { username, otp, password, errorOTP, errorPassword, selected
     } = this.state;
     const isCanSubmit = !errorOTP && !errorPassword;
     // if (!isCanSubmit) return window.noti.error('Bạn chưa nhập tài khoản hoặc mật khẩu');
-    // this.props.login(selected, username, phone, otp, password);
+    this.props.changePassword(username, password, otp);
   }
 
   doInterval = () => {
@@ -63,13 +64,14 @@ class ForgotPassword extends React.Component {
   }
 
   getOTP = () => {
+    this.props.getOtpCode(this.state.username, 0);
     this.setState({ countDown: 60 });
     this.doInterval();
   }
 
   nextStep = e => {
     const { phone, username } = this.state;
-    if ((phone && phone.trim())|| (username && username.trim())) {
+    if ((phone && phone.trim()) || (username && username.trim())) {
       this.setState({ step: 2 });
       this.getOTP();
     } else {
@@ -188,8 +190,17 @@ class ForgotPassword extends React.Component {
   }
 }
 
-export default connect(null,
+
+const mapStateToProps = (state, ownProps) => {
+  const { auth: { user, account } } = state;
+  return {
+    user,
+    account,
+  }
+};
+export default connect(
+  mapStateToProps,
   {
-    // createAccount,
-  },
+    changePassword,
+  }
 )(ForgotPassword);

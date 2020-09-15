@@ -1,8 +1,9 @@
 import React from 'react';
-
+import { connect } from 'react-redux';
 import TittleUserInfo from 'components/body/user/TittleUserInfo';
 import UserContent from '../layout/UserContent';
 import { hideEmail, hidePhone } from 'actions/common/utils';
+import { changePassword } from 'actions/userActions';
 
 class ChangePassword extends React.Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class ChangePassword extends React.Component {
   }
 
   getOTP = () => {
+    this.props.getOtpCode(this.props.account.username, 0);
     this.setState({ countDown: 60 });
     this.doInterval();
   }
@@ -60,6 +62,7 @@ class ChangePassword extends React.Component {
   submit = () => {
     const { password, otp, errorOtp, errorEmail, errorPassword } = this.state;
     if (errorEmail || errorPassword || errorOtp) return;
+    this.props.changePassword(this.props.account.username, password, otp);
   }
 
   render() {
@@ -131,4 +134,16 @@ class ChangePassword extends React.Component {
   }
 }
 
-export default ChangePassword;
+const mapStateToProps = (state, ownProps) => {
+  const { auth: { user, account } } = state;
+  return {
+    user,
+    account,
+  }
+};
+export default connect(
+  mapStateToProps,
+  {
+    changePassword,
+  }
+)(ChangePassword);
