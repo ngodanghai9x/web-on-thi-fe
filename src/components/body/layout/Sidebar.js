@@ -52,7 +52,6 @@ class Sidebar extends React.Component {
   }
 }
 
-
 const mapStateToProps = (state, ownProps) => {
 
 };
