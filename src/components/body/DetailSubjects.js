@@ -1,6 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
+
+
+
+
+
 import MainContent from 'components/body/layout/MainContent';
 import './styles/Content.scss';
 

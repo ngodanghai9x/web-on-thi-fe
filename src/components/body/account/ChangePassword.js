@@ -1,5 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as CommonIcon from 'components/icons/common';
+
+
+
+
 import TittleUserInfo from 'components/body/user/TittleUserInfo';
 import UserContent from '../layout/UserContent';
 import { hideEmail, hidePhone } from 'actions/common/utils';

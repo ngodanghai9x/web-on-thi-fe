@@ -1,4 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as CommonIcon from 'components/icons/common';
+
+
+
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import Home from '../body/Home';
 import ChooseSubjects from '../body/ChooseSubjects';

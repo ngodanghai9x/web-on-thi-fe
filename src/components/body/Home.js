@@ -1,5 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as CommonIcon from 'components/icons/common';
+
+
+
+
 import { getAvatar, changeLayout } from 'actions/userActions';
 import MainContent from 'components/body/layout/MainContent';
 import { Link, Redirect } from 'react-router-dom';

@@ -3,8 +3,13 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
 import * as CommonIcon from 'components/icons/common';
+
+
+
+
+import { Link, Redirect } from 'react-router-dom';
+
 import { getAvatar, changeLayout } from 'actions/userActions';
 import MainContent from 'components/body/layout/MainContent';
 import { subjects2 } from 'actions/common/getInfo';

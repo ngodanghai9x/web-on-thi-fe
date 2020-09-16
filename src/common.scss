@@ -50,11 +50,62 @@ small.note {
   text-transform: unset;
 }
 
-.list-scroll::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 10px;
   height: 6px;
 }
 
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-ellipsis-line-clamp-3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  height: inherit;
+}
+
+.text-ellipsis-line-clamp-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  height: inherit;
+}
+
+.list-overflow-auto {
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: #f5f5f5;
+  }
+}
+
+.btn-disable{
+  cursor: not-allowed !important;
+  opacity: 0.7;
+}
+
+.wrapper-icon {
+  height: 30px;
+  background: transparent;
+  width: 30px;
+  justify-content: center;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background: rgb(230, 244, 255);
+  }
+}
 
 h1,h2,h3,h4,h5,h6,small {
   text-transform: uppercase;

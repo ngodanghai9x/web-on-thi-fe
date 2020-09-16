@@ -1,5 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as CommonIcon from 'components/icons/common';
+
+
+
+
 import { changeAvatar } from 'actions/userActions';
 import "react-datepicker/dist/react-datepicker.css";
 

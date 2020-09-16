@@ -1,12 +1,67 @@
 .admin-home {
   .wrapper-search {
     margin-bottom: 40px;
-    input[type=search] {
-      width:  80%;
+    input[type="search"] {
+      width: 80%;
     }
   }
 
   table {
+    //common
+    .col-checkbox {
+      width: 100px;
+    }
+    .col-id {
+      width: 180px;
+    }
+    .col-name {
+      width: calc(100% - 100px - 180px);
+    }
+    .col-type {
+      width: 220px;
+    }
+    .col-amount {
+      width: 220px;
+    }
+    .col-time {
+    }
+    .col-action {
+    }
+    .col {
+      align-items: center;
+      justify-self: start;
+      justify-content: start;
 
-  };
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 2;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      height: inherit;
+    }
+    //end common
+    thead {
+      font-weight: 500;
+      .col-checkbox {
+        width: 100px;
+        .wrapper-check-all {
+        }
+      }
+    }
+    tboby {
+      .col-action {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .wrapper-icon {
+          height: 30px;
+          width: 30px;
+          &:hover {
+            background: rgb(230, 244, 255);
+          }
+        }
+      }
+    }
+  }
 }

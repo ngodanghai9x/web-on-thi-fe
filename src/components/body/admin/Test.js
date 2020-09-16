@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+
 import PropTypes from 'prop-types';
 import CKEditor from 'ckeditor4-react';
 import AdminContent from '../layout/AdminContent';

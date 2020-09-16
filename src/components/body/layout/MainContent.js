@@ -1,5 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as CommonIcon from 'components/icons/common';
+
+
+
+
 import Breadcumb from '../../common/Breadcumb';
 import RouterList from '../../router/RouterList';
 import './styles/MainContent.scss';

@@ -1,4 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as CommonIcon from 'components/icons/common';
+
+
+
 import ReactDOM from 'react-dom';
 // import './index.css';
 import App from './App';

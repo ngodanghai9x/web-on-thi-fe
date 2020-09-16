@@ -1,5 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as CommonIcon from 'components/icons/common';
+
+
+
+
 import { Link, Redirect } from 'react-router-dom';
 import { hideEmail, hidePhone } from 'actions/common/utils';
 import { regex, errorText } from 'constants/regexError';
