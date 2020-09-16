@@ -1,13 +1,23 @@
 export const subjects2 = [
-  { vn: 'Toán Học', en: 'toan' },
-  { vn: 'Ngữ Văn', en: 'van' },
-  { vn: 'Tiếng Anh', en: 'anh' },
-  { vn: 'Vật Lý', en: 'ly' },
-  { vn: 'Hóa Học', en: 'hoa' },
-  { vn: 'Sinh Học', en: 'sinh' },
-  { vn: 'Lịch Sử', en: 'su' },
-  { vn: 'Địa Lý', en: 'dia' },
+  { vn: 'Toán Học', en: 'toan', eng: 'math' },
+  { vn: 'Ngữ Văn', en: 'van', eng: 'literature' },
+  { vn: 'Tiếng Anh', en: 'anh', eng: 'english' },
+  { vn: 'Vật Lý', en: 'ly', eng: 'physics' },
+  { vn: 'Hóa Học', en: 'hoa', eng: 'chemistry' },
+  { vn: 'Sinh Học', en: 'sinh', eng: 'biology' },
+  { vn: 'Lịch Sử', en: 'su', eng: 'history' },
+  { vn: 'Địa Lý', en: 'dia', eng: 'geography' },
 ];
+
+export const getObjSubject = (subject) => {
+  const result = subjects2.find(item => 
+    item.vn.toLowerCase() === subject.toLowerCase()
+    || item.en.toLowerCase() === subject.toLowerCase()
+    || item.eng.toLowerCase() === subject.toLowerCase()
+    );
+  if (result) return result;
+  return {};
+}
 
 export const getInfo = (pathname, subjectParam) => {
   let range;

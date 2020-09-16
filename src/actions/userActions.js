@@ -5,14 +5,11 @@ import moment from 'moment';
 export const getUserInfo = () => (dispatch, getState) => {
   return callApi('api/profile/get', { method: 'POST', data: { body: {} } })
     .then((obj) => {
-      console.log('agsagsa', moment(obj.data.userProfile.birthday).format('YYYY-MM-DD'))
       if (obj && obj.data && obj.code === 200) {
         // dispatch({
         //   type: actionTypes.GET_USER_INFO,
         //   user: obj.data.userProfile || {},
         // });
-        // obj.data.userProfile.birthday = moment(obj.data.userProfile.birthday).format('dd/MM/yyyy'); 
-        // console.log("getUserInfo -> birthday", obj.data.userProfile.birthday)
         dispatch(receiveUserInfo(obj.data.userProfile || {}));
       }
     })

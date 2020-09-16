@@ -4,7 +4,17 @@ const initState = {
   id: null,
   activeCollegeSub: 'toan',
   activeHSSub: 'toan',
+  result: {
+    // numAnswer: 0,
+    // numCorrectAns: 0,
+    // time: 0,
+    // totalQuestion: 0,
+    // examQuestions: [],
+  },
   college: {
+    all: [
+      {},
+    ],
     math: [
       {},
     ],
@@ -31,6 +41,9 @@ const initState = {
     ],
   },
   highSchool: {
+    all: [
+      {},
+    ],
     math: [
       {},
     ],
@@ -55,13 +68,14 @@ const initState = {
     geography: [
       {},
     ],
-  }
+  },
+  all: [],
 };
 
 const exam = (state = initState, action) => {
   switch (action.type) {
     case actionTypes.CHANGE_SUBJECT:
-      if (action.kind === 10) {
+      if (action.level === 10) {
         return {
           ...state,
           activeCollegeSub: action.subject,
@@ -71,10 +85,19 @@ const exam = (state = initState, action) => {
         ...state,
         activeCollegeSub: action.subject,
       };
-    case actionTypes.GET_EXAM:
+    case actionTypes.GET_ALL_EXAM:
       return {
         ...state,
-        accessToken: action.accessToken,
+        all: action.exams,
+      };
+    case actionTypes.GET_EXAM_BY_SUBJECT:
+      return {
+        ...state,
+        [action.level]: {
+          ...state[action.level],
+          [action.subject] : action.exams,
+          all: action.exams,
+        },
       };
     case actionTypes.DELETE_EXAM:
       return {
@@ -84,12 +107,20 @@ const exam = (state = initState, action) => {
     case actionTypes.UPDATE_EXAM:
       return {
         ...state,
-        ...action,
+        [action.level]: {
+          ...state[action.level],
+          [action.subject] : [action.exam, ...state[action.level][action.subject]],
+        },
+        all : [action.exam, ...state.all],
       };
     case actionTypes.CREATE_EXAM:
       return {
         ...state,
-        ...action,
+        [action.level]: {
+          ...state[action.level],
+          [action.subject] : [action.exam, ...state[action.level][action.subject]],
+        },
+        all : [action.exam, ...state.all],
       };
     case actionTypes.SUBMIT_EXAM:
       return {
@@ -99,12 +130,12 @@ const exam = (state = initState, action) => {
     case actionTypes.GET_RESULT_EXAM:
       return {
         ...state,
-        ...action,
+        result: action.result,
       };
     case actionTypes.CREATE_QUESTION:
       return {
         ...state,
-        ...action,
+        result: action.result,
       };
 
     default:
