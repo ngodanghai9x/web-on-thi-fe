@@ -10,6 +10,7 @@ export const subjects2 = [
 ];
 
 export const getObjSubject = (subject) => {
+  if (!subject) return {};
   const result = subjects2.find(item => 
     item.vn.toLowerCase() === subject.toLowerCase()
     || item.en.toLowerCase() === subject.toLowerCase()

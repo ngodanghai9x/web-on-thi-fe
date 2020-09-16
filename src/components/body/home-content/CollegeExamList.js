@@ -10,7 +10,7 @@ import Ads from 'components/common/Ads';
 import MainContent from 'components/body/layout/MainContent';
 import CompletedExam from 'components/common/CompletedExam';
 
-import { getExam, changeSubject } from 'actions/examActions';
+import { getExamBySubject, changeSubject } from 'actions/examActions';
 import { getInfo, subjects2 } from 'actions/common/getInfo';
 
 import '../styles/ExamList.scss';
@@ -25,7 +25,7 @@ class CollegeExamList extends React.Component {
   componentDidMount() {
     const { match, location } = this.props;
     const { subject } = match.params; // type, môn học
-    this.props.getExam(subject);
+    this.props.getExamBySubject(subject);
   }
 
   renderExam = (exams) => {
@@ -122,6 +122,6 @@ export default connect(
   mapStateToProps,
   {
     changeSubject,
-    getExam,
+    getExamBySubject,
   }
 )(CollegeExamList);

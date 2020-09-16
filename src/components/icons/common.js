@@ -43,32 +43,32 @@ export const remove = () => {
   );
 }
 
-export const b2 = () => {
-  return (
+// export const b2 = () => {
+//   return (
 
-  );
-}
+//   );
+// }
 
-export const b23 = () => {
-  return (
+// export const b23 = () => {
+//   return (
 
-  );
-}
+//   );
+// }
 
-export const b3 = () => {
-  return (
+// export const b3 = () => {
+//   return (
 
-  );
-}
+//   );
+// }
 
-export const b4 = () => {
-  return (
+// export const b4 = () => {
+//   return (
 
-  );
-}
+//   );
+// }
 
-export const b5 = () => {
-  return (
+// export const b5 = () => {
+//   return (
 
-  );
-}
+//   );
+// }

@@ -72,21 +72,6 @@ class AdminHome extends React.Component {
                 </td>
               </tr>
 
-
-              <tr>
-                <td>
-                  <input type="checkbox"
-                    className=""
-                  />
-                </td>
-                <td colspan="2">Larry the Bird</td>
-                <td>Otto</td>
-                <td>Otto</td>
-                <td>Otto</td>
-                <td>Otto</td>
-                <td>@twitter</td>
-              </tr>
-
               
             </tbody>
           </table>

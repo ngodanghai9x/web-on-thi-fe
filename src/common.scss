@@ -94,16 +94,22 @@ small.note {
 }
 
 .wrapper-icon {
-  height: 30px;
+  height: 35px;
   background: transparent;
-  width: 30px;
+  width: 35px;
   justify-content: center;
   border-radius: 50%;
   display: flex;
   align-items: center;
 
   &:hover {
-    background: rgb(230, 244, 255);
+    background: rgb(141, 187, 223);
+    svg {
+      fill: #fff;
+      * {
+        stroke: #FFF;
+      }
+    }
   }
 }
 

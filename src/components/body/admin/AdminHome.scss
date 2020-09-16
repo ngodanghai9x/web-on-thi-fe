@@ -9,59 +9,68 @@
   table {
     //common
     .col-checkbox {
-      width: 100px;
+      width: 60px;
+      .wrapper-check-all {
+        width: 50px;
+      }
+      .wrapper-icon {
+        width: 50px;
+      }
     }
     .col-id {
-      width: 180px;
+      width: 60px;
     }
     .col-name {
-      width: calc(100% - 100px - 180px);
+      width: calc(100% - 600px);
     }
     .col-type {
-      width: 220px;
+      width: 120px;
     }
     .col-amount {
-      width: 220px;
+      width: 120px;
     }
     .col-time {
+      width: 120px;
     }
     .col-action {
+      width: 120px;
     }
-    .col {
-      align-items: center;
-      justify-self: start;
-      justify-content: start;
 
-      overflow: hidden;
-      text-overflow: ellipsis;
-      -webkit-line-clamp: 2;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      height: inherit;
-    }
-    //end common
-    thead {
-      font-weight: 500;
-      .col-checkbox {
-        width: 100px;
-        .wrapper-check-all {
-        }
-      }
-    }
-    tboby {
-      .col-action {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    // .col {
+    //   align-items: center;
+    //   justify-self: start;
+    //   justify-content: start;
 
-        .wrapper-icon {
-          height: 30px;
-          width: 30px;
-          &:hover {
-            background: rgb(230, 244, 255);
-          }
-        }
-      }
-    }
+    //   overflow: hidden;
+    //   text-overflow: ellipsis;
+    //   -webkit-line-clamp: 2;
+    //   display: -webkit-box;
+    //   -webkit-box-orient: vertical;
+    //   height: inherit;
+    // }
+    // //end common
+    // thead {
+    //   font-weight: 500;
+    //   .col-checkbox {
+    //     width: 100px;
+    //     .wrapper-check-all {
+    //     }
+    //   }
+    // }
+    // tboby {
+    //   .col-action {
+    //     display: flex;
+    //     justify-content: space-between;
+    //     align-items: center;
+
+    //     .wrapper-icon {
+    //       height: 30px;
+    //       width: 30px;
+    //       &:hover {
+    //         background: rgb(230, 244, 255);
+    //       }
+    //     }
+    //   }
+    // }
   }
 }

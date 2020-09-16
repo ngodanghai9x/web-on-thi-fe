@@ -13,7 +13,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { getAvatar, changeLayout } from 'actions/userActions';
 import MainContent from 'components/body/layout/MainContent';
 import { subjects2 } from 'actions/common/getInfo';
-import { getExam } from 'actions/examActions';
+import { getExamBySubject } from 'actions/examActions';
 
 class HighSchoolTable extends React.Component {
   constructor(props) {
@@ -23,10 +23,10 @@ class HighSchoolTable extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getExam();
+    this.props.getExamBySubject();
   }
 
-  getExamBySubject = (subject) => {
+  getExam = (subject) => {
     this.pros.changeSubject(10, subject);
   }
 
@@ -48,7 +48,7 @@ class HighSchoolTable extends React.Component {
                   return (
                     <button type="button"
                       className={`btn btn-info btn-link-sub ${activeHSSub === item.en ? 'active' : ''}`}
-                      onClick={() => this.getExamBySubject(item.en)}
+                      onClick={() => this.getExam(item.en)}
                     >
                       {item.vn}
                     </button>
@@ -91,6 +91,6 @@ export default connect(
   mapStateToProps,
   {
     getAvatar,
-    getExam,
+    getExamBySubject,
   }
 )(HighSchoolTable);

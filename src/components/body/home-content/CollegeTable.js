@@ -12,7 +12,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 import { getAvatar, changeLayout } from 'actions/userActions';
 import MainContent from 'components/body/layout/MainContent';
-import { getExam, changeSubject } from 'actions/examActions';
+import { getExamBySubject, changeSubject } from 'actions/examActions';
 import { subjects2 } from 'actions/common/getInfo';
 
 class CollegeTable extends React.Component {
@@ -23,7 +23,7 @@ class CollegeTable extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getExam();
+    this.props.getExamBySubject();
   }
 
   getExamBySubject = (subject) => {
@@ -87,6 +87,6 @@ export default connect(
   mapStateToProps,
   {
     changeSubject,
-    getExam,
+    getExamBySubject,
   }
 )(CollegeTable);
