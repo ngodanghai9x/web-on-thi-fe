@@ -1,10 +1,6 @@
 .MultipleChoiceExam {
     width: 80%;
     padding: 70px;
-    color: red;
-    .a123 {
-
-    }
 
     .a123 div {
         padding: 5px 7px;
@@ -12,126 +8,69 @@
     }
 
     .abc {
-        border: 1px solid black;
-        padding: 5px;
+        border: 0.5px solid black;
+        padding: 7px;
     }
 
     .abc .edf {
         border-radius: 50%;
         padding: 5px 7px;
-        background-color: #999;
         margin-left: 5px;
+        background: white;
+        border: 0.5px solid #111;
+        color: #011;
     }
-
-    .exam-infor-panel {
-        padding-top: 15px;
-        padding-bottom: 15px;
-        color: #333;
+    .d-flex {
+        width: fit-content;
     }
+    
 
-    Mul-title {
-        font-size: 30px;
-        margin-top: 20px;
-        margin-bottom: 10px;
-    }
+    // .answer-sheet-fixed {
+    //     border: 1px solid rgb(153, 153, 153);
+    //     width: 100%;
+    //     height: calc(100% - 54px);
+    // }
 
-    .description {
-        margin-bottom: 15px;
-    }
+    // .answer-sheet-fixed-main {
+    //     padding: 7px 0px;
+    // }
 
-    .item-infor-panel {
-        display: flex;
-        align-items: center;
-        width: 350px;
-        justify-content: space-between;
+    // .title-answer-sheet-panel {
+    //     display: flex;
+    //     justify-content: flex-start;
+    //     align-items: center;
+    //     width: 100%;
+    //     border-bottom: 1px solid #999;
+    //     font-weight: 700;
+    //     color: #fff;
+    //     text-align: center;
+    // }
 
-        .icon {
-            padding-right: 5px;
-            margin-bottom: 10px;
-        }
+    // .exam-scroll-style {
+    //     overflow: hidden auto;
+    //     position: relative;
+    //     zoom: 1;
+    //     height: calc(100% - 85px);
+    // }
 
-        .label {
-            padding-right: 30px;
-        }
+    // .exam-answer-panel-item {
+    //     position: relative;
+    //     zoom: 1;
+    // }
 
-        .gtw-HTML {
-            text-align: end;
-            padding-left: 10px;
-        }
-    }
+    // .exam-title {
+    //     width: 25px;
+    // }
 
-    .item-label {
-        display: flex;
-        width: 60%;
-    }
-
-    .gwt-HTML {
-        width: 40%;
-    }
-
-    .btn-primary {
-        align-items: center;
-        text-transform: uppercase;
-    }
-
-    .button {
-        margin: 0;
-        position: relative;
-        top: 50%;
-        left: 50%;
-    }
-
-    @media (max-width: 768px) {
-        .submit-button {
-            padding: 7px 10px !important;
-        }
-    }
-
-    .answer-sheet-fixed {
-        border: 1px solid rgb(153, 153, 153);
-        width: 100%;
-        height: calc(100% - 54px);
-    }
-
-    .answer-sheet-fixed-main {
-        padding: 7px 0px;
-    }
-
-    .title-answer-sheet-panel {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        width: 100%;
-        border-bottom: 1px solid #999;
-        font-weight: 700;
-        color: #fff;
-        text-align: center;
-    }
-
-    .exam-scroll-style {
-        overflow: hidden auto;
-        position: relative;
-        zoom: 1;
-        height: calc(100% - 85px);
-    }
-
-    .exam-answer-panel-item {
-        position: relative;
-        zoom: 1;
-    }
-
-    .exam-title {
-        width: 25px;
-    }
-
-    .exam-number-answer-question {
-        padding: 6px 10px !important;
-        margin: 6px;
-        text-align: center;
-    }
+    // .exam-number-answer-question {
+    //     padding: 6px 10px !important;
+    //     margin: 6px;
+    //     text-align: center;
+    // }
 
     // viết từ đây
-    color: blue;
+
+    
 
 
 
