@@ -60,7 +60,7 @@ class CreateQuestion extends React.Component {
     console.log('can', can);
     if (!can) return;
     this.setState(state => ({
-      questionList: state.currentObj.number === state.questionList.length ? [...state.questionList, state.currentObj] : state.questionList,
+      // questionList: state.currentObj.number === state.questionList.length ? [...state.questionList, state.currentObj] : state.questionList,
       currentObj: state.questionList[state.currentObj.number - 1]
     }));
   }
@@ -97,7 +97,7 @@ class CreateQuestion extends React.Component {
     if (!can) return;
     this.setState(state => ({
       currentObj: {
-        number: state.questionList.length +1,
+        number: state.currentObj.number === state.questionList.length ? state.questionList.length +1 : state.questionList.length ,
         question: '',
         option1: '',
         option2: '',
@@ -105,7 +105,7 @@ class CreateQuestion extends React.Component {
         option4: '',
         answer: 'option1',
       },
-      questionList: [...state.questionList, state.currentObj],
+      questionList: state.currentObj.number !== state.questionList.length ? state.questionList : [...state.questionList, state.currentObj],
     }));
   }
 
