@@ -37,7 +37,8 @@ class Test extends Component {
         <button onClick={() => this.props.changeLayout(0)}>abbb00000000000</button>
         <CKEditor
           data={this.state.data}
-          onChange={this.onEditorChange} />
+          onChange={this.onEditorChange}
+        />
         <label>
           Change value:
                         <textarea defaultValue={this.state.data} onChange={this.handleChange} />

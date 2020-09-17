@@ -7,6 +7,7 @@ export const getExamBySubject = (subject, level) => (dispatch, getState) => {
   const req = {
     body: {
       subject: obj.vn,
+      grade: level,
     }
   };
   return callApi('exam-by-subject', { method: 'POST', data: req })
@@ -36,12 +37,15 @@ export const changeSubject = (level, subject) => (dispatch, getState) => {
   })
 };
 
-export const createExam = (name, image, subject, description, time, examQuestions, level) => (dispatch, getState) => {
+export const createExam = (name, image, subject, level, description, time, examQuestions) => (dispatch, getState) => {
   const obj = getObjSubject(subject);
   const req = {
     body: {
       exam: {
-        name, image, subject: obj.vn, description, time, examQuestions
+        name, image,
+        subject: obj.vn,
+        grade: level,
+        description, time, examQuestions
       }
     }
   };
@@ -64,12 +68,15 @@ export const createExam = (name, image, subject, description, time, examQuestion
     });
 };
 
-export const updateExam = (name, image, subject, description, time, examQuestions, level) => (dispatch, getState) => {
+export const updateExam = (name, image, subject, level, description, time, examQuestions) => (dispatch, getState) => {
   const obj = getObjSubject(subject);
   const req = {
     body: {
       exam: {
-        name, image, subject: obj.vn, description, time, examQuestions
+        name, image,
+        subject: obj.vn,
+        grade: level,
+        description, time, examQuestions
       }
     }
   };

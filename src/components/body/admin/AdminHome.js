@@ -7,6 +7,7 @@ import * as CommonIcon from 'components/icons/common';
 
 import AdminContent from '../layout/AdminContent';
 import './AdminHome.scss';
+import { Link } from 'react-router-dom';
 
 class AdminHome extends React.Component {
   constructor(props) {
@@ -25,7 +26,9 @@ class AdminHome extends React.Component {
               <input className="w-75" type="search" />
             </div>
             <div className="w-25 d-flex justify-content-end">
-              <button className="btn btn-info">Thêm mới đề</button>
+              <Link exact to='/admin/create-exam' >
+                <button className="btn btn-info">Thêm mới đề</button>
+              </Link>
             </div>
           </div>
 
@@ -43,13 +46,12 @@ class AdminHome extends React.Component {
                 <th className="col col-subject">Môn học</th>
                 <th className="col col-type">Thể loại</th>
                 <th className="col col-amount">Số câu hỏi</th>
-                <th className="col col-time">Thời gian làm</th>
                 <th className="col col-action">Thao tác</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>
+                <td className="col col-checkbox">
                   <div className="wrapper-icon checkbox">
                     <input type="checkbox"
                       className=""
@@ -61,18 +63,19 @@ class AdminHome extends React.Component {
                 <td className="col col-subject">Môn học</td>
                 <td className="col col-type">Thể loại</td>
                 <td className="col col-amount">Số câu hỏi</td>
-                <td className="col col-time">Thời gian làm</td>
                 <td className="col col-action">
-                  <div className="wrapper-icon">
-                    <CommonIcon.edit />
-                  </div>
-                  <div className="wrapper-icon">
-                    <CommonIcon.remove />
+                  <div className="d-flex">
+                    <div className="wrapper-icon">
+                      <CommonIcon.edit />
+                    </div>
+                    <div className="wrapper-icon">
+                      <CommonIcon.remove />
+                    </div>
                   </div>
                 </td>
               </tr>
 
-              
+
             </tbody>
           </table>
         </div>

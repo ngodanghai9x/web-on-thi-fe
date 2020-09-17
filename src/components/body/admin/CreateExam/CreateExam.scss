@@ -1,0 +1,50 @@
+.CreateExam {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  .CreateQuestion {
+    .wrapper-question {
+      border-radius: 6px;
+      background: azure;
+      padding: 15px 20px 25px 20px;
+      margin-bottom: 15px;
+      .question {
+        .left {
+          width: 55%;
+        }
+
+        .right {
+          width: 45%;
+          padding: 0 5px 0 25px;
+          .row-option {
+            .text {
+              max-width: 70px;
+            }
+            input[type=text] {
+              width: calc(100% - 100px);
+              padding: 3px 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

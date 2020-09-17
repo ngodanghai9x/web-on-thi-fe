@@ -4,6 +4,7 @@ const initState = {
   id: null,
   activeCollegeSub: 'toan',
   activeHSSub: 'toan',
+  all: [],
   result: {
     // numAnswer: 0,
     // numCorrectAns: 0,
@@ -69,7 +70,6 @@ const initState = {
       {},
     ],
   },
-  all: [],
 };
 
 const exam = (state = initState, action) => {

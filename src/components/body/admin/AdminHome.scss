@@ -7,21 +7,28 @@
   }
 
   table {
+    table-layout: fixed;
     //common
+    th {
+      font-weight: 500;
+    }
+    th, td {
+      vertical-align: middle;
+    }
     .col-checkbox {
       width: 60px;
       .wrapper-check-all {
-        width: 50px;
-      }
-      .wrapper-icon {
-        width: 50px;
+        width: 46px;
+        border: 1px solid #000;
+        padding: 5px 5px;
+        border-radius: 3px;
       }
     }
     .col-id {
-      width: 60px;
+      width: 80px;
     }
     .col-name {
-      width: calc(100% - 600px);
+      width: calc(100% - 360px - 170px);
     }
     .col-type {
       width: 120px;
@@ -29,48 +36,41 @@
     .col-amount {
       width: 120px;
     }
-    .col-time {
+    .col-subject {
       width: 120px;
     }
     .col-action {
-      width: 120px;
+      width: 90px;
+      .d-flex {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
     }
+    .col {
+      // align-items: center;
+      // justify-self: start;
+      // justify-content: start;
 
-    // .col {
-    //   align-items: center;
-    //   justify-self: start;
-    //   justify-content: start;
-
-    //   overflow: hidden;
-    //   text-overflow: ellipsis;
-    //   -webkit-line-clamp: 2;
-    //   display: -webkit-box;
-    //   -webkit-box-orient: vertical;
-    //   height: inherit;
-    // }
-    // //end common
-    // thead {
-    //   font-weight: 500;
-    //   .col-checkbox {
-    //     width: 100px;
-    //     .wrapper-check-all {
-    //     }
-    //   }
-    // }
-    // tboby {
-    //   .col-action {
-    //     display: flex;
-    //     justify-content: space-between;
-    //     align-items: center;
-
-    //     .wrapper-icon {
-    //       height: 30px;
-    //       width: 30px;
-    //       &:hover {
-    //         background: rgb(230, 244, 255);
-    //       }
-    //     }
-    //   }
-    // }
+      // overflow: hidden;
+      // text-overflow: ellipsis;
+      // -webkit-line-clamp: 2;
+      // height: inherit;
+    }
+    //end common
+    thead {
+      .col-checkbox {
+        .wrapper-check-all {
+        }
+      }
+    }
+    tbody {
+      .col-action {
+        padding-left: 5px;
+      }
+      .col-checkbox {
+        padding-left: 5px;
+      }
+    }
   }
 }

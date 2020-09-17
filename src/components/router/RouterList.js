@@ -20,6 +20,7 @@ import ForgotPassword from 'components/body/account/ForgotPassword';
 import ChangePassword from 'components/body/account/ChangePassword';
 import AdminHome from 'components/body/admin/AdminHome';
 import CollegeExamList from 'components/body/home-content/CollegeExamList';
+import CreateExam from 'components/body/admin/CreateExam/CreateExam';
 
 
 export default class RouterList extends React.Component {
@@ -46,6 +47,7 @@ export default class RouterList extends React.Component {
 
 
         <Route exact path="/admin" component={AdminHome} />
+        <Route exact path="/admin/create-exam" component={CreateExam} />
 
       </Switch>
     )
