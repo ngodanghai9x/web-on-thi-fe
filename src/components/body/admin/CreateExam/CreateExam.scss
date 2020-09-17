@@ -35,11 +35,14 @@
           width: 45%;
           padding: 0 5px 0 25px;
           .row-option {
+            input[type=radio] {
+              transform: scale(1.35);
+            }
             .text {
-              max-width: 70px;
+              width: 80px;
             }
             input[type=text] {
-              width: calc(100% - 100px);
+              width: calc(100% - 120px);
               padding: 3px 10px;
             }
           }

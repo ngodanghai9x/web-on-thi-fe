@@ -83,21 +83,10 @@ class CreateQuestion extends React.Component {
   }
 
   add = (can) => {
-    const obj = {
-      number: this.state.questionList.length + 1,
-      question: '',
-      option1: '',
-      option2: '',
-      option3: '',
-      option4: '',
-      answer: 'option1',
-    }
-    console.log('can', can);
-    debugger
     if (!can) return;
     this.setState(state => ({
       currentObj: {
-        number: state.currentObj.number === state.questionList.length ? state.questionList.length +1 : state.questionList.length ,
+        number: state.currentObj.number === state.questionList.length ? state.questionList.length + 1 : state.questionList.length,
         question: '',
         option1: '',
         option2: '',
@@ -111,10 +100,6 @@ class CreateQuestion extends React.Component {
 
   renderQuestion = () => {
     const { questionList, currentObj: { number, question, option1, option2, option3, option4, answer } } = this.state;
-    const canBack = questionList.length > 1 && number > 0;
-    const canNext = questionList.length < 50 && number < 49;
-    const canAdd = questionList.length < 50 && number > 0;
-    const canSave = questionList.length > 1 && number > 0;
     return (
       <div className="wrapper-question">
         <h6 className="title-left">
@@ -135,16 +120,20 @@ class CreateQuestion extends React.Component {
           <div className="right  d-flex justify-content-between flex-column">
             {[1, 2, 3, 4].map(item => (
               <div className="row-option d-flex justify-content-between align-items-center">
-                <input type="radio" name="radio-btn-exam"
-                  checked={`option${item} === ${answer}`}
-                  onChange={() => this.setState({ currentObj: { answer: `option${item}` } })}
-                />
                 <div className="text">
                   {`Lựa chọn ${item}`}
                 </div>
                 <input type="text"
                   className=""
                   onChange={(e) => this.onChangeMax255(`option${item}`, e.target.value, `option${item}`)}
+                />
+                <input type="radio" name="radio-btn-exam"
+                  checked={`option${item}` === answer}
+                  onClick={() => this.setState(state => ({
+                    currentObj: { ...state.currentObj, answer: `option${item}` }
+                  }))}
+                  title="Đánh dấu đáp án đúng"
+                  onChange={() => { }}
                 />
               </div>
             ))}
@@ -158,8 +147,8 @@ class CreateQuestion extends React.Component {
     const { questionList, currentObj: { number, question, option1, option2, option3, option4, answer } } = this.state;
     const canBack = questionList.length > 1 && number > 0;
     const canNext = number < questionList.length - 1;
-    const canAdd = questionList.length < 50 && number < 50;
-    const canSave = questionList.length > 1 && number > 0;
+    const canAdd = questionList.length < 5 && number < 5;
+    const canSave = questionList.length >= 1;
     return (
       <React.Fragment>
         <div className="CreateQuestion">
@@ -170,10 +159,10 @@ class CreateQuestion extends React.Component {
               {`<< Back`}
             </span>
             <button className="btn btn-outline-info" onClick={() => this.save(canSave)}>
-              Lưu
+              {`Lưu & Đóng`}
             </button>
             <button className="btn btn-info" onClick={() => this.add(canAdd)}>
-              Thêm câu hỏi
+              {`Lưu & Thêm`}
             </button>
             <span className="a" onClick={() => this.next(canNext)}>
               {`Next >>`}
