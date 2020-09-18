@@ -15,7 +15,7 @@
   }
 
   .exam-result-panel {
-    margin: 10px 20px 10px 20px;
+    margin: 20px 20px 10px 20px;
 
   }
 
@@ -26,14 +26,14 @@
   .row-infor-panel {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     padding: 10px 0px;
     border-bottom: 1px solid #ddd;
     outline: none;
   }
 
   .row-infor-panel .exam-label {
-    padding: 0px 5px 0px 0px;
+    padding: 0px 30px 0px 0px;
     color: #333;
     font-size: 14px;
     font-weight: bold;
@@ -56,9 +56,74 @@
     text-transform: uppercase;
     font-weight: normal;
   }
-// viết từ đây
 
-color: green;
+  .col-7 {
+    align-items: center;
+  }
+// viết từ đây
+.exam-infor-panel {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  color: #333;
+}
+
+Mul-title {
+  font-size: 30px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.description {
+  margin-bottom: 15px;
+}
+
+.item-infor-panel {
+  display: flex;
+  align-items: center;
+  width: 350px;
+  justify-content: space-between;
+
+  .icon {
+      padding-right: 5px;
+      margin-bottom: 10px;
+  }
+
+  .label {
+      padding-right: 30px;
+  }
+
+  .gtw-HTML {
+      text-align: end;
+      padding-left: 10px;
+  }
+}
+
+.item-label {
+  display: flex;
+  width: 60%;
+}
+
+.gwt-HTML {
+  width: 40%;
+}
+
+.btn-primary {
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.button {
+  margin: 0;
+  position: relative;
+  top: 50%;
+  left: 50%;
+}
+
+@media (max-width: 768px) {
+  .submit-button {
+      padding: 7px 10px !important;
+  }
+}
 
 
 

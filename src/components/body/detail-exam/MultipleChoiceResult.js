@@ -52,9 +52,9 @@ class MultipleChoiceResult extends React.Component {
                     <div className="icon" >
                       <i className="far fa-calendar-alt" />
                     </div>
-                    <div className="label" > Số lần tạm dừng </div>
+                    <div className="label" >Số lần tạm dừng</div>
                   </div>
-                  <div className="gwt-HTML" >0 / Không </div>
+                  <div className="gwt-HTML" >0 / Không</div>
                 </div>
                 <div className="item-infor-panel" >
                   <div className="item-label" >
@@ -63,7 +63,7 @@ class MultipleChoiceResult extends React.Component {
                     </div>
                     <div className="label" >  </div>
                   </div>
-                  <div className="gwt-HTML" > 0 / Không giới hạn </div>
+                  <div className="gwt-HTML" >0 / Không giới hạn</div>
                 </div>
                 <div className="item-infor-panel" >
                   <div className="item-label" >
@@ -105,7 +105,9 @@ class MultipleChoiceResult extends React.Component {
                   <div className="exam-result">10/09/2020</div>
                 </div>
               </div>
-              <div className="row-infor-panel">
+
+            <div className="col-7">
+            <div className="row-infor-panel">
                 <div className="item-left">
                   <button className="btn btn-primary">xem lại kết quả</button>
                 </div>
@@ -114,8 +116,6 @@ class MultipleChoiceResult extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="col-4">
-
             </div>
           </div>
 
