@@ -22,12 +22,35 @@ class CreateExam extends React.Component {
   }
 
   render() {
-    const { step } = this.state;
+    const { step, name, image, subject, level, description, time } = this.state;
+    const exam1 = { name, image, subject, level, description, time };
     return (
       <AdminContent>
         <div className="CreateExam">
-          <CreateExamInfo isShow={step === 1} changeStep={this.changeStep} />
-          <CreateQuestion isShow={step === 2} changeStep={this.changeStep} />
+          <div className={`CreateExamInfo ${step !== 1 ? 'd-none' : ''}`}>
+            <div className="profile-left d-flex flex-column">
+              <div className="profile-row">
+                <div className="key">Họ và tên</div>
+                <div className="value">
+                  <input
+                    type="text" value={name || ''}
+                    className={false ? 'error' : ''}
+                    placeholder="Nhập họ và tên"
+                    // title={errorName}
+                    required
+                    onBlur={e => this.onBlurName(e)}
+                    onChange={(e) => this.changeName(e.target.value)}
+                  />
+                </div>
+              </div>
+
+            </div>
+            <button className="btn btn-info" onClick={() => this.next()}>
+              Next
+            </button>
+          </div>
+          {/* <CreateExamInfo isShow={step === 1} changeStep={this.changeStep} /> */}
+          <CreateQuestion isShow={step === 2} changeStep={this.changeStep} exam1={exam1} />
         </div>
       </AdminContent>
 

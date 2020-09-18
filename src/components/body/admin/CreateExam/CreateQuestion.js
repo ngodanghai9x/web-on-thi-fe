@@ -1,9 +1,10 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import * as CommonIcon from 'components/icons/common';
-
 import CKEditor from 'ckeditor4-react';
+import * as CommonIcon from 'components/icons/common';
+import { createExam } from 'actions/examActions';
+
 // import './styles/CreateExam.scss';
 
 class CreateQuestion extends React.Component {
@@ -83,13 +84,14 @@ class CreateQuestion extends React.Component {
   }
 
   save = (can) => {
-    console.log('can', can);
+    const { name, image, subject, level, description, time } = this.props.exam1;
     if (!can) return;
     const listQuestion = Object.values(this.state.listQ).map(item => ({
       ...item,
       answer: item[item.answer],
     }));
     console.log("save -> listQuestion", listQuestion)
+    this.props.createExam(name, image, subject, level, description, time, listQuestion);
   }
 
   add = (can) => {
@@ -174,6 +176,7 @@ class CreateQuestion extends React.Component {
     const canNext = pointer < Object.keys(listQ).length - 1;
     const canAdd = Object.keys(listQ).length < 10 && pointer < 10;
     const canSave = Object.keys(listQ).length >= 1;
+    
     return (
       <React.Fragment>
         <div className={`CreateQuestion ${!isShow ? 'd-none' : ''}`}>
@@ -199,5 +202,9 @@ class CreateQuestion extends React.Component {
   }
 }
 
-
-export default CreateQuestion;
+export default connect(
+  null,
+  {
+    createExam,
+  }
+)(CreateQuestion);

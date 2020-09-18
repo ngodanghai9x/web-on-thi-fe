@@ -2,7 +2,27 @@
   min-height: 374px;
 
   .CreateExamInfo {
-    
+    padding: 25px 0 0 0;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    .key {
+      width: 125px;
+      text-align: right;
+      margin-right: 20px;
+      color: rgba(85, 85, 85, 0.8);
+      text-transform: capitalize;
+      font-size: 14px;
+    }
+    .value {
+      width: calc(100% - 145px);
+      justify-content: start;
+      display: flex;
+      input[type="text"] {
+        width: calc(90% - 15px);
+      }
+      
+    }
   }
 
   .CreateQuestion {
