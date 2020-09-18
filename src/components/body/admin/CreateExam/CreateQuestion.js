@@ -68,7 +68,7 @@ class CreateQuestion extends React.Component {
 
   back = (can) => {
     console.log('can', can);
-    if (!can) return;
+    if (!can) return this.props.changeStep(1);
     this.setState(state => ({
       pointer: state.pointer - 1,
     }));
@@ -142,6 +142,7 @@ class CreateQuestion extends React.Component {
                 </div>
                 <input type="text"
                   className=""
+                  value={listQ[`Q${pointer}`][`option${item}`] || ''}
                   onChange={(e) => this.onChangeMax255(`option${item}`, e.target.value, `errorOption${item}`)}
                 />
                 <input type="radio" name="radio-btn-exam"
@@ -168,13 +169,14 @@ class CreateQuestion extends React.Component {
 
   render() {
     const { listQ, pointer } = this.state;
+    const { isShow } = this.props;
     const canBack = Object.keys(listQ).length > 1 && pointer > 0;
     const canNext = pointer < Object.keys(listQ).length - 1;
     const canAdd = Object.keys(listQ).length < 10 && pointer < 10;
     const canSave = Object.keys(listQ).length >= 1;
     return (
       <React.Fragment>
-        <div className="CreateQuestion">
+        <div className={`CreateQuestion ${!isShow ? 'd-none' : ''}`}>
           {this.renderQuestion()}
 
           <div className="wrapper-btn d-flex justify-content-between align-items-center">
