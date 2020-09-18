@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
 import AdminContent from 'components/body/layout/AdminContent';
 import CreateQuestion from './CreateQuestion';
+// import CreateQuestion2 from './CreateQuestion2';
 
 import './CreateExam.scss';
 

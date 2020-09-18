@@ -6,35 +6,33 @@ import * as CommonIcon from 'components/icons/common';
 import CKEditor from 'ckeditor4-react';
 // import './styles/CreateExam.scss';
 
-class CreateQuestion extends React.Component {
+class CreateQuestion2 extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      listQ: {
-        Q0: {
-          question: '',
-          option1: '',
-          option2: '',
-          option3: '',
-          option4: '',
-          answer: 'option1',
-        }
+      currentObj: {
+        number: 0,
+        question: '',
+        option1: '',
+        option2: '',
+        option3: '',
+        option4: '',
+        answer: 'option1',
       },
-      pointer: 0,
+      questionList: [],
     };
   }
 
   componentDidMount() {
+    // this.setState(state => ({ questionList: [...state.questionList, state.currentObj],}));
   }
 
   onEditorChange = (evt) => {
     this.setState(state => ({
-      listQ: {
-        ...state.listQ,
-        [`Q${state.pointer}`]: {
-          ...state.listQ[`Q${state.pointer}`],
-          question: evt.editor.getData(),
-        }
+      currentObj: {
+        ...state.currentObj,
+        question: evt.editor.getData()
       }
     }));
   }
@@ -42,25 +40,18 @@ class CreateQuestion extends React.Component {
   onChangeMax255 = (key, val, error) => {
     if (val && val.length >= 255) {
       this.setState(state => ({
-        listQ: {
-          ...state.listQ,
-          [`Q${state.pointer}`]: {
-            ...state.listQ[`Q${state.pointer}`],
-            [error]: 'Độ dài tối đa là 255 kí tự',
-          }
+        currentObj: {
+          ...state.currentObj,
+          [error]: 'Bạn nhập quá 255 kí tự'
         }
-
       }));
       return window.noti.error('Bạn nhập quá 255 kí tự');
     }
     else {
       this.setState(state => ({
-        listQ: {
-          ...state.listQ,
-          [`Q${state.pointer}`]: {
-            ...state.listQ[`Q${state.pointer}`],
-            [key]: val,
-          }
+        currentObj: {
+          ...state.currentObj,
+          [key]: val,
         }
       }));
     }
@@ -70,7 +61,8 @@ class CreateQuestion extends React.Component {
     console.log('can', can);
     if (!can) return;
     this.setState(state => ({
-      pointer: state.pointer - 1,
+      // questionList: state.currentObj.number === state.questionList.length ? [...state.questionList, state.currentObj] : state.questionList,
+      currentObj: state.questionList[state.currentObj.number - 1]
     }));
   }
 
@@ -78,54 +70,46 @@ class CreateQuestion extends React.Component {
     console.log('can', can);
     if (!can) return;
     this.setState(state => ({
-      pointer: state.pointer + 1,
+      // questionList: state.currentObj.number === state.questionList.length ? [...state.questionList, state.currentObj] : state.questionList,
+      currentObj: state.questionList[state.currentObj.number + 1]
     }));
   }
 
   save = (can) => {
     console.log('can', can);
     if (!can) return;
-    const listQuestion = Object.values(this.state.listQ).map(item => ({
-      ...item,
-      answer: item[item.answer],
+    this.setState(state => ({
+      currentObj: state.questionList[state.currentObj.number]
     }));
-    console.log("save -> listQuestion", listQuestion)
   }
 
   add = (can) => {
     if (!can) return;
-    const length = Object.keys(this.state.listQ).length;
-    this.setState(state => {
-      return ({
-        pointer: length,
-        listQ: {
-          ...state.listQ,
-          [`Q${length}`]: {
-            number: length,
-            question: '',
-            option1: '',
-            option2: '',
-            option3: '',
-            option4: '',
-            answer: 'option1',
-          }
-        },
-      })
-    });
+    this.setState(state => ({
+      currentObj: {
+        number: state.currentObj.number === state.questionList.length ? state.questionList.length + 1 : state.questionList.length,
+        question: '',
+        option1: '',
+        option2: '',
+        option3: '',
+        option4: '',
+        answer: 'option1',
+      },
+      questionList: state.currentObj.number !== state.questionList.length ? state.questionList : [...state.questionList, state.currentObj],
+    }));
   }
 
   renderQuestion = () => {
-    const { listQ, pointer } = this.state;
+    const { questionList, currentObj: { number, question, option1, option2, option3, option4, answer } } = this.state;
     return (
       <div className="wrapper-question">
         <h6 className="title-left">
-          {`Câu ${pointer + 1}`}
+          {`Câu ${number + 1}`}
         </h6>
         <div className="question d-flex">
           <div className="left">
             <CKEditor
-              data={listQ[`Q${pointer}`].question || ''}
-              // data={''}
+              data={question || ''}
               onChange={e => this.onEditorChange(e)}
               config={{
                 height: 68,
@@ -142,18 +126,12 @@ class CreateQuestion extends React.Component {
                 </div>
                 <input type="text"
                   className=""
-                  onChange={(e) => this.onChangeMax255(`option${item}`, e.target.value, `errorOption${item}`)}
+                  onChange={(e) => this.onChangeMax255(`option${item}`, e.target.value, `option${item}`)}
                 />
                 <input type="radio" name="radio-btn-exam"
-                  checked={`option${item}` === listQ[`Q${pointer}`].answer}
+                  checked={`option${item}` === answer}
                   onClick={() => this.setState(state => ({
-                    listQ: {
-                      ...state.listQ,
-                      [`Q${state.pointer}`]: {
-                        ...state.listQ[`Q${state.pointer}`],
-                        answer: `option${item}`,
-                      }
-                    },
+                    currentObj: { ...state.currentObj, answer: `option${item}` }
                   }))}
                   title="Đánh dấu đáp án đúng"
                   onChange={() => { }}
@@ -167,11 +145,11 @@ class CreateQuestion extends React.Component {
   }
 
   render() {
-    const { listQ, pointer } = this.state;
-    const canBack = Object.keys(listQ).length > 1 && pointer > 0;
-    const canNext = pointer < Object.keys(listQ).length - 1;
-    const canAdd = Object.keys(listQ).length < 10 && pointer < 10;
-    const canSave = Object.keys(listQ).length >= 1;
+    const { questionList, currentObj: { number, question, option1, option2, option3, option4, answer } } = this.state;
+    const canBack = questionList.length > 1 && number > 0;
+    const canNext = number < questionList.length - 1;
+    const canAdd = questionList.length < 5 && number < 5;
+    const canSave = questionList.length >= 1;
     return (
       <React.Fragment>
         <div className="CreateQuestion">
@@ -182,10 +160,10 @@ class CreateQuestion extends React.Component {
               {`<< Back`}
             </span>
             <button className="btn btn-outline-info" onClick={() => this.save(canSave)}>
-              {`Lưu`}
+              {`Lưu & Đóng`}
             </button>
             <button className="btn btn-info" onClick={() => this.add(canAdd)}>
-              {`Thêm câu hỏi`}
+              {`Lưu & Thêm`}
             </button>
             <span className="a" onClick={() => this.next(canNext)}>
               {`Next >>`}
@@ -196,6 +174,4 @@ class CreateQuestion extends React.Component {
     );
   }
 }
-
-
-export default CreateQuestion;
+export default CreateQuestion2;
