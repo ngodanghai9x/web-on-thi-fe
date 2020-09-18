@@ -9,6 +9,7 @@ import Breadcumb from '../../common/Breadcumb';
 import RouterList from '../../router/RouterList';
 import './styles/MainContent.scss';
 import UserRouterList from '../../router/UserRouterList';
+import { getAvatar, changeLayout } from 'actions/userActions';
 
 class MainContent extends React.Component {
   constructor(props) {
@@ -16,6 +17,9 @@ class MainContent extends React.Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    this.props.changeLayout(0);
+  }
 
   render() {
     return (
@@ -33,8 +37,12 @@ class MainContent extends React.Component {
 }
 
 
-const mapStateToProps = (state, ownProps) => {
+// const mapStateToProps = (state, ownProps) => {
 
-};
+// };
 
-export default connect(mapStateToProps)(MainContent);
+export default connect(null,
+  {
+    changeLayout,
+  }
+)(MainContent);

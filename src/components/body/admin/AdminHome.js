@@ -1,17 +1,21 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
 import * as CommonIcon from 'components/icons/common';
-
+import { getAvatar, changeLayout } from 'actions/userActions';
 
 
 import AdminContent from '../layout/AdminContent';
 import './AdminHome.scss';
-import { Link } from 'react-router-dom';
 
 class AdminHome extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    this.props.changeLayout(1);
   }
 
   render() {
@@ -23,7 +27,7 @@ class AdminHome extends React.Component {
               <button className="btn btn-outline-info mr-2">
                 Xóa nhiều
               </button>
-              <input className="w-75" type="search" />
+              <input className="w-75" type="search" placeholder="Tìm kiếm"/>
             </div>
             <div className="w-25 d-flex justify-content-end">
               <Link exact to='/admin/create-exam' >
@@ -36,7 +40,7 @@ class AdminHome extends React.Component {
             <thead>
               <tr>
                 <th className="col col-checkbox">
-                  <div className="wrapper-check-all d-flex p-1 justify-content-between align-items-center">
+                  <div className="wrapper-check-all d-flex p-1 justify-content-between align-items-center" title="Chọn tất cả">
                     <input type="checkbox" />
                     <CommonIcon.caretDownFill />
                   </div>
@@ -65,12 +69,18 @@ class AdminHome extends React.Component {
                 <td className="col col-amount">Số câu hỏi</td>
                 <td className="col col-action">
                   <div className="d-flex">
-                    <div className="wrapper-icon">
+                    <div className="wrapper-icon" title="Chỉnh sửa">
                       <CommonIcon.edit />
                     </div>
-                    <div className="wrapper-icon">
+                    <div className="wrapper-icon" title="Xóa bỏ">
                       <CommonIcon.remove />
                     </div>
+                    <div className="toggle-icon" title="Ngưng kích hoạt">
+                      <CommonIcon.toggleOn />
+                    </div>
+                    {/* <div className="toggle-icon" title="Kích hoạt">
+                      <CommonIcon.toggleOff />
+                    </div> */}
                   </div>
                 </td>
               </tr>
@@ -86,5 +96,9 @@ class AdminHome extends React.Component {
   }
 }
 
-
-export default AdminHome;
+export default withRouter(connect(
+  null,
+  {
+    changeLayout,
+  }
+  )(AdminHome)) ;

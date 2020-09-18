@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
-
+import { getAvatar, changeLayout } from 'actions/userActions';
 
 
 
@@ -12,6 +12,10 @@ class AdminContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentDidMount() {
+    this.props.changeLayout(1);
   }
 
   render() {
@@ -35,8 +39,12 @@ class AdminContent extends React.Component {
 }
 
 
-const mapStateToProps = (state, ownProps) => {
+// const mapStateToProps = (state, ownProps) => {
 
-};
+// };
 
-export default connect(mapStateToProps)(AdminContent);
+export default connect(null,
+  {
+    changeLayout,
+  }
+)(AdminContent);

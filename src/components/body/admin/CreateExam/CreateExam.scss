@@ -2,30 +2,39 @@
   min-height: 374px;
 
   .CreateExamInfo {
-    padding: 25px 0 0 0;
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    .key {
-      width: 125px;
-      text-align: right;
-      margin-right: 20px;
-      color: rgba(85, 85, 85, 0.8);
-      text-transform: capitalize;
-      font-size: 14px;
-    }
-    .value {
-      width: calc(100% - 145px);
-      justify-content: start;
-      display: flex;
-      input[type="text"] {
-        width: calc(90% - 15px);
+    .form-create-exam {
+      padding: 0 50px 0 10px;
+      .profile-row {
+        padding: 25px 0 0 0;
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        .key {
+          width: 125px;
+          text-align: right;
+          margin-right: 20px;
+          color: rgba(85, 85, 85, 0.8);
+          text-transform: capitalize;
+          font-size: 14px;
+        }
+        .value {
+          width: calc(100% - 145px);
+          justify-content: start;
+          display: flex;
+
+          input[type="text"], 
+          input[type="number"],
+          select
+          {
+            width: 100%;
+          }
+        }
       }
-      
     }
   }
 
   .CreateQuestion {
+    margin: 5px 15px;
     .wrapper-question {
       border-radius: 6px;
       background: azure;

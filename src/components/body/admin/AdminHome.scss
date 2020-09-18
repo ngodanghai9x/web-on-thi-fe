@@ -12,7 +12,8 @@
     th {
       font-weight: 500;
     }
-    th, td {
+    th,
+    td {
       vertical-align: middle;
     }
     .col-checkbox {
@@ -28,7 +29,7 @@
       width: 80px;
     }
     .col-name {
-      width: calc(100% - 360px - 170px);
+      width: calc(100% - 360px - 200px);
     }
     .col-type {
       width: 120px;
@@ -40,7 +41,7 @@
       width: 120px;
     }
     .col-action {
-      width: 90px;
+      width: 120px;
       .d-flex {
         flex-direction: row;
         justify-content: space-between;
@@ -67,6 +68,12 @@
     tbody {
       .col-action {
         padding-left: 5px;
+        .toggle-icon {
+          margin-left: 5px;
+          svg {
+            transform: scale(1.5);
+          }
+        }
       }
       .col-checkbox {
         padding-left: 5px;

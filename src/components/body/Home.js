@@ -22,6 +22,7 @@ class Home extends React.Component {
 
   componentDidMount() {
     this.props.getAvatar();
+    this.props.changeLayout(0);
   }
 
   getExamBySubject = (subject) => {

@@ -1,23 +1,21 @@
-
 img {
   object-fit: cover;
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // height: 100vh;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-a, span.a {
+a,
+span.a {
   text-decoration: none !important;
   color: #17a2b8;
   cursor: pointer;
@@ -27,15 +25,20 @@ a, span.a {
   }
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
   transform: scale(1.25);
 }
 
-input[type=text], input[type=password],input[type=email],input[type=search], select {
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="search"],
+input[type="number"],
+select {
   outline: none;
   border-radius: 5px;
   border: 2px solid transparent;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.14);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.14);
   padding: 5px 10px;
   &:focus {
     border: 2px solid #17a2b8;
@@ -46,7 +49,7 @@ input[type=text], input[type=password],input[type=email],input[type=search], sel
 }
 
 small.note {
-  color: rgba(0,0,0,.4);
+  color: rgba(0, 0, 0, 0.4);
   text-transform: unset;
 }
 
@@ -88,7 +91,7 @@ small.note {
   }
 }
 
-.btn-disable{
+.btn-disable {
   cursor: not-allowed !important;
   opacity: 0.7;
 }
@@ -107,13 +110,19 @@ small.note {
     svg {
       fill: #fff;
       * {
-        stroke: #FFF;
+        stroke: #fff;
       }
     }
   }
 }
 
-h1,h2,h3,h4,h5,h6,small {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+small {
   text-transform: uppercase;
   margin: 20px 0;
   &.title-center {
@@ -137,7 +146,7 @@ h1,h2,h3,h4,h5,h6,small {
 .btn-outline-info {
   &:active {
     background: #17a2b8;
-    color: #FFF;
+    color: #fff;
   }
 }
 
