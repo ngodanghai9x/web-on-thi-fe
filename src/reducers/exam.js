@@ -4,6 +4,7 @@ const initState = {
   id: null,
   activeCollegeSub: 'toan',
   activeHSSub: 'toan',
+  header: 'Danh sách đề',
   all: [],
   result: {
     // numAnswer: 0,
@@ -74,11 +75,16 @@ const initState = {
 
 const exam = (state = initState, action) => {
   switch (action.type) {
+    case actionTypes.CHANGE_HEADER:
+      return {
+        ...state,
+        header: action.header,
+      };
     case actionTypes.CHANGE_SUBJECT:
       if (action.level === 10) {
         return {
           ...state,
-          activeCollegeSub: action.subject,
+          activeHSSub: action.subject,
         }
       }
       return {

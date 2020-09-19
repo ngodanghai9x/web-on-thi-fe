@@ -13,7 +13,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { getAvatar, changeLayout } from 'actions/userActions';
 import MainContent from 'components/body/layout/MainContent';
 import { subjects2 } from 'actions/common/getInfo';
-import { getExamBySubject } from 'actions/examActions';
+import { getExamBySubject, changeSubject } from 'actions/examActions';
 
 class HighSchoolTable extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class HighSchoolTable extends React.Component {
   }
 
   getExam = (subject) => {
-    this.pros.changeSubject(10, subject);
+    this.props.changeSubject(10, subject);
   }
 
 
@@ -92,5 +92,6 @@ export default connect(
   {
     getAvatar,
     getExamBySubject,
+    changeSubject,
   }
 )(HighSchoolTable);

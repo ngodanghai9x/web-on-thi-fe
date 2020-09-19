@@ -2,10 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
 
+// import { browserHistory } from 'react-router'
 
-
-
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { hideEmail, hidePhone } from 'actions/common/utils';
 import { regex, errorText } from 'constants/regexError';
 import { updateUserInfo } from 'actions/userActions';
@@ -41,8 +40,7 @@ class LeftProfile extends React.Component {
     const { name, email, phone, school, gender, birthday } = this.props.user;
     this.setState({ name, email, phone, school, gender, birthday, errorName: '' });
     if (action === 'cancel') {
-      window.location.pathname = '/';
-      // return <Redirect exact to='/' />
+      this.props.history.push('/');
     }
   }
 
@@ -184,9 +182,9 @@ const mapStateToProps = (state, ownProps) => {
 
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   {
     updateUserInfo,
   },
-)(LeftProfile);
+)(LeftProfile));

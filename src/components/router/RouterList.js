@@ -21,6 +21,7 @@ import ChangePassword from 'components/body/account/ChangePassword';
 import AdminHome from 'components/body/admin/AdminHome';
 import CollegeExamList from 'components/body/home-content/CollegeExamList';
 import CreateExam from 'components/body/admin/CreateExam/CreateExam';
+import ChooseSubjects2 from 'components/body/ChooseSubjects2';
 
 
 export default class RouterList extends React.Component {
@@ -37,14 +38,17 @@ export default class RouterList extends React.Component {
         <Route exact path="/thong-tin-ca-nhan" component={UserInfo} />
 
 
-        <Route exact path="/lop-10" component={ChooseSubjects} />
+        <Route exact path="/lop-10/" component={ChooseSubjects} />
         <Route exact path="/lop-10/:subject" component={CollegeExamList} />
-        <Route exact path="/lop-10/toan/trac-nghiem1/:id" component={MultipleChoiceExam} />
-        <Route exact path="/lop-10/toan/trac-nghiem/ket-qua" component={MultipleChoiceResult} />
+        <Route exact path="/lop-10/:subject/trac-nghiem/:id" component={MultipleChoiceExam} />
+        <Route exact path="/lop-10/:subject/trac-nghiem/ket-qua/:id" component={MultipleChoiceResult} />
         <Route exact path="/lop-10/:subject/tu-luan/:id" component={EssayExam} />
-        <Route exact path="/dai-hoc" component={ChooseSubjects} />
-        <Route exact path="/dai-hoc/:subject" component={CollegeExamList} />
 
+        <Route exact path="/dai-hoc/" component={ChooseSubjects2} />
+        <Route exact path="/dai-hoc/:subject" component={CollegeExamList} />
+        <Route exact path="/dai-hoc/:subject/trac-nghiem/:id" component={MultipleChoiceExam} />
+        <Route exact path="/dai-hoc/:subject/trac-nghiem/ket-qua/:id" component={MultipleChoiceResult} />
+        <Route exact path="/dai-hoc/:subject/tu-luan/:id" component={EssayExam} />
 
         <Route exact path="/admin" component={AdminHome} />
         <Route exact path="/admin/create-exam" component={CreateExam} />

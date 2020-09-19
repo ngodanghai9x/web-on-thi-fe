@@ -48,6 +48,9 @@ class Login extends React.Component {
   render() {
     const { username, password, errorUsername, errorPassword,
     } = this.state;
+    if (window.localStorage.getItem('accessToken')) {
+      return <Redirect to='/'/>;
+    }
     // const isCanSubmit = !isChecked && !errorName && !errorUsername && !errorPassword1 && !errorPassword2 && !errorEmail;
     return (
       <UserContent >

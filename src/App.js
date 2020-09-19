@@ -12,7 +12,7 @@ import Header from './components/header/Header';
 
 import Footer from './components/footer/Footer';
 import './common.scss';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 // import MainContent from './components/body/layout/MainContent';
 import RouterList from './components/router/RouterList';
 
@@ -40,10 +40,11 @@ const store = createStore(myReducer, enhancer);
 // );
 
 function App(props) {
+  const history = useHistory();
   return (
     <div className="App">
       <Provider store={store} >
-        <Router>
+        <Router history={history}>
           <ReactNotification />
           <Header />
           {/* <MainContent /> */}

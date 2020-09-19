@@ -7,7 +7,7 @@ import * as CommonIcon from 'components/icons/common';
 
 import { getAvatar, changeLayout } from 'actions/userActions';
 import MainContent from 'components/body/layout/MainContent';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { subjects2 } from 'actions/common/getInfo';
 import HighSchoolTable from './home-content/HighSchoolTable';
 import CollegeTable from './home-content/CollegeTable';
@@ -31,7 +31,7 @@ class Home extends React.Component {
 
 
   render() {
-    const { location, activeSub } = this.props;
+    const { location, activeSub, history } = this.props;
     return (
       <MainContent>
         <h2 className='title-center'>
@@ -40,14 +40,14 @@ class Home extends React.Component {
         {/* <Link exact to='/admin' onClick={() => this.props.changeLayout(1)}>Admin</Link> */}
         <div className='home'>
           <div className='img-btn d-flex'>
-            <div className='img-btn-item d-table' onClick={() => window.location.pathname = `${location.pathname}lop-10`}>
+            <div className='img-btn-item d-table' onClick={() => history.push(`${location.pathname}lop-10`)}>
               <div className='d-table-cell'>
                 Ôn thi
                   <br />
                   vào lớp 10
                 </div>
             </div>
-            <div className='img-btn-item d-table' onClick={() => window.location.pathname = `${location.pathname}dai-hoc`}>
+            <div className='img-btn-item d-table' onClick={() =>  history.push(`${location.pathname}dai-hoc`)}>
               <div className='d-table-cell'>
                 Luyện đề
                   <br />
@@ -71,10 +71,10 @@ class Home extends React.Component {
 
 // };
 
-export default connect(
+export default withRouter(connect(
   null,
   {
     getAvatar,
     changeLayout,
   }
-)(Home);
+)(Home));

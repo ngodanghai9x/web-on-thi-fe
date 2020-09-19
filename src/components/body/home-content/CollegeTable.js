@@ -27,7 +27,7 @@ class CollegeTable extends React.Component {
   }
 
   getExamBySubject = (subject) => {
-    this.pros.changeSubject(13, subject);
+    this.props.changeSubject(13, subject);
   }
 
 

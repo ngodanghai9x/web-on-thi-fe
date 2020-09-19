@@ -26,16 +26,18 @@ class CreateQuestion extends React.Component {
   }
 
   componentDidMount() {
+
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pathName } = this.props;
-    if (nextProps.pathName && nextProps.pathName.abc) {
-      const listQ = [].map((item, i) => ({
-        [`Q${i}`] : { ...item }
-      }))
-      this.setState({ listQ });
-    }
+    //for update
+    // const { pathName } = this.props;
+    // if (nextProps.pathName && nextProps.pathName.abc) {
+    //   const listQ = [].map((item, i) => ({
+    //     [`Q${i}`] : { ...item }
+    //   }))
+    //   this.setState({ listQ });
+    // }
   }
 
   onEditorChange = (evt) => {

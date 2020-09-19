@@ -19,14 +19,14 @@ class AdminContent extends React.Component {
   }
 
   render() {
-    const { children, style } = this.props;
+    const { children, style, header } = this.props;
     return (
       <React.Fragment>
         <div className='admin-content d-flex' style={{ background: '#f5f5f5' }}>
           <Sidebar />
           <div className="wrapper-content">
             <div className="header-admin-layout">
-              Header
+              {header}
             </div>
             <div className='wrapper-admin-layout' style={{ style }}>
               {children}
@@ -39,11 +39,14 @@ class AdminContent extends React.Component {
 }
 
 
-// const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, ownProps) => {
+  const { exam: { header } } = state;
+  return {
+    header,
+  }
+};
 
-// };
-
-export default connect(null,
+export default connect(mapStateToProps,
   {
     changeLayout,
   }

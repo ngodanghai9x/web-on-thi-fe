@@ -25,7 +25,7 @@ class CollegeExamList extends React.Component {
   componentDidMount() {
     const { match, location } = this.props;
     const { subject } = match.params; // type, môn học
-    this.props.getExamBySubject(subject);
+    this.props.getExamBySubject(subject, 'Đại học');
   }
 
   renderExam = (exams) => {
@@ -60,7 +60,7 @@ class CollegeExamList extends React.Component {
 
   getExamBySubject = subject => {
     this.props.changeSubject(13, subject);
-    this.props.getExam(subject);
+    this.props.getExamBySubject(subject, 'Đại học');
   }
 
   render() {

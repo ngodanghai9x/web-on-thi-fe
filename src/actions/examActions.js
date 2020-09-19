@@ -37,6 +37,13 @@ export const changeSubject = (level, subject) => (dispatch, getState) => {
   })
 };
 
+export const changeHeader = (header) => (dispatch, getState) => {
+  dispatch({
+    type: actionTypes.CHANGE_HEADER,
+    header,
+  })
+};
+
 export const createExam = (name, image, subject, level, description, time, examQuestions) => (dispatch, getState) => {
   const obj = getObjSubject(subject);
   const req = {

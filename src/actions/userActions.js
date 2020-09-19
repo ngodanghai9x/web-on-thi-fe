@@ -1,6 +1,6 @@
 import callApi from "./common/callApi";
 import { actionTypes } from "../constants/actionTypes";
-import moment from 'moment';
+
 
 export const getUserInfo = () => (dispatch, getState) => {
   return callApi('api/profile/get', { method: 'POST', data: { body: {} } })
@@ -23,14 +23,13 @@ export const login = (username, password) => (dispatch, getState) => {
     .then(({ data, code, message }) => {
       if (data && code === 200) {
         const accessToken = data.token;
-        const obj = JSON.parse(atob(accessToken.split('.')[1]));
-        dispatch({
-          type: actionTypes.RECEIVE_ACCESS_TOKEN,
-          accessToken,
-          role: obj.ROLE,
-        });
+        // const obj = JSON.parse(atob(accessToken.split('.')[1]));
+        // dispatch({
+        //   type: actionTypes.RECEIVE_ACCESS_TOKEN,
+        //   accessToken,
+        //   role: obj.ROLE,
+        // });
         localStorage.setItem('accessToken', accessToken);
-        // window.location.pathname = '/';
         dispatch(init())
         window.noti.success('Đăng nhập thành công');
       }

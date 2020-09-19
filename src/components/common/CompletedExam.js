@@ -14,9 +14,12 @@ class CompletedExam extends React.Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    // this.props.getCompletedExam();
+  }
+
 
   render() {
-    const subjects = ['Toán Học', 'Ngữ Văn', 'Hóa Học'];
     return (
       <React.Fragment>
         <div className='completed-exam'>

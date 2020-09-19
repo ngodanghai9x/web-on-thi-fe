@@ -6,6 +6,7 @@ import AdminContent from 'components/body/layout/AdminContent';
 import CreateQuestion from './CreateQuestion';
 import { subjects2 } from 'actions/common/getInfo';
 import { getAvatar, changeLayout } from 'actions/userActions';
+import { changeHeader } from 'actions/examActions';
 // import CreateExamInfo from './CreateExamInfo';
 import './CreateExam.scss';
 import { withRouter } from 'react-router-dom';
@@ -21,7 +22,8 @@ class CreateExam extends React.Component {
   }
 
   componentDidMount() {
-    // this.props.changeLayout(1);
+    this.props.changeLayout(1);
+    this.props.changeHeader('Thêm mới đề');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -204,5 +206,6 @@ export default withRouter(connect(
   null,
   {
     changeLayout,
+    changeHeader,
   }
   )(CreateExam)) ;

@@ -8,38 +8,35 @@ import Ads from 'components/common/Ads';
 import './styles/ChooseSubjects.scss';
 import { subjects2 } from 'actions/common/getInfo';
 
-class ChooseSubjects extends React.Component {
+class ChooseSubjects2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   changeSubject = (subject) => {
-    this.props.changeSubject(10, subject);
+    this.props.changeSubject(13, subject);
   }
 
   render() {
     const { location } = this.props;
     const btnSub = subjects2.map((item, i) => {
-      if (i < 3) {
-        return (
-          <div className='subject' onClick={() => this.changeSubject(item.en)}>
-            <img src='../../images/logo.png' alt='subject' />
-            <h4 className='title-center'>
-              {item.vn}
-            </h4>
-            <button className='btn btn-outline-info'>
-              Xem chi tiết
-            </button>
-          </div>
-        );
-      }
-      return null;
+      return (
+        <div className='subject' onClick={() => this.changeSubject(item.en)}>
+          <img src='../../images/logo.png' alt='subject' />
+          <h4 className='title-center'>
+            {item.vn}
+          </h4>
+          <button className='btn btn-outline-info'>
+            Xem chi tiết
+          </button>
+        </div>
+      );
     })
     return (
       <MainContent>
         <h2 className='title-center'>
-          LUYỆN THI VÀO LỚP 10
+          LUYỆN THI THPT QUỐC GIA
         </h2>
         <div className='row choose-subjects'>
           <div className='col-lg-9 col-md-12'>
@@ -61,4 +58,4 @@ const mapStateToProps = (state, ownProps) => {
 
 };
 
-export default connect(mapStateToProps)(ChooseSubjects);
+export default connect(mapStateToProps)(ChooseSubjects2);
