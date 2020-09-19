@@ -4,21 +4,40 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import * as CommonIcon from 'components/icons/common';
 import { getAvatar, changeLayout } from 'actions/userActions';
-
+import * as EXAM from 'actions/examActions';
 
 import AdminContent from '../layout/AdminContent';
 import './AdminHome.scss';
+import Pagination from 'react-js-pagination';
 
+const SIZE = 10;
 class AdminHome extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      activePage: 1,
+      inputSearch: '',
+    };
   }
 
   componentDidMount() {
     this.props.changeLayout(1);
+    this.props.getAllExam()
+  }
+
+  reload = () => {
+    let { activePage, inputSearch } = this.state;
+    if (inputSearch === '' || inputSearch == null) this.apiGetPage(activePage, SIZE);
+    else this.apiSearchPage(activePage, SIZE, inputSearch);
+  }
+
+  handlePageChange = (pageNumber) => {
+    console.log(`active page is ${pageNumber}`);
+    this.setState({ activePage: pageNumber }, () => this.reload());
   }
 
   render() {
+    const { activePage, inputSearch } = this.state;
     return (
       <AdminContent>
         <div className="admin-home">
@@ -27,7 +46,9 @@ class AdminHome extends React.Component {
               <button className="btn btn-outline-info mr-2">
                 Xóa nhiều
               </button>
-              <input className="w-75" type="search" placeholder="Tìm kiếm"/>
+              <input className="w-75" type="search" placeholder="Tìm kiếm"
+                value={inputSearch} onChange={(e) => this.setState({ inputSearch: e.target.value })}
+              />
             </div>
             <div className="w-25 d-flex justify-content-end">
               <Link exact to='/admin/create-exam' >
@@ -75,12 +96,17 @@ class AdminHome extends React.Component {
                     <div className="wrapper-icon" title="Xóa bỏ">
                       <CommonIcon.remove />
                     </div>
-                    <div className="toggle-icon" title="Ngưng kích hoạt">
-                      <CommonIcon.toggleOn />
-                    </div>
-                    {/* <div className="toggle-icon" title="Kích hoạt">
-                      <CommonIcon.toggleOff />
-                    </div> */}
+                    {
+                      true ? (
+                        <div className="toggle-icon" title="Ngưng kích hoạt">
+                          <CommonIcon.toggleOn />
+                        </div>
+                      ) : (
+                          <div className="toggle-icon" title="Kích hoạt">
+                            <CommonIcon.toggleOff />
+                          </div>
+                        )
+                    }
                   </div>
                 </td>
               </tr>
@@ -88,6 +114,18 @@ class AdminHome extends React.Component {
 
             </tbody>
           </table>
+
+          <div className='ơagination'>
+            <Pagination
+              activePage={activePage}
+              itemsCountPerPage={SIZE}
+              // totalItemsCount={this.state.count}
+              pageRangeDisplayed={5}  // số nút hiển thị
+              onChange={this.handlePageChange}
+              itemClass={"page-item"}
+              linkClass={"page-link"}
+            />
+          </div>
         </div>
       </AdminContent>
 
@@ -100,5 +138,6 @@ export default withRouter(connect(
   null,
   {
     changeLayout,
+    getAllExam: EXAM.getAllExam,
   }
-  )(AdminHome)) ;
+)(AdminHome));

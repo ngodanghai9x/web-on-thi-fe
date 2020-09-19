@@ -99,13 +99,34 @@ export const updateExam = (name, image, subject, level, description, time, examQ
     });
 };
 
-export const deleteExam = (type) => (dispatch, getState) => {
+export const deleteExam = (id) => (dispatch, getState) => {
   const req = {
     body: {
-
+      id,
     }
   };
   return callApi('api/get', { method: 'POST', data: req })
+    .then(({ data, code, message }) => {
+      if (data && code === 200) {
+
+        window.noti.success('Xóa đề thành công');
+      }
+      if (code === 400) {
+        window.noti.error('Xóa đề thất bại');
+      }
+    })
+    .catch(err => {
+    });
+};
+
+export const changeActiveExam = (id, isActive) => (dispatch, getState) => {
+  const req = {
+    body: {
+      id,
+      isActive,
+    }
+  };
+  return callApi('api/exam/change-active', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
 
@@ -161,7 +182,7 @@ export const getResultExam = (historyId) => (dispatch, getState) => {
     });
 };
 
-export const getAllEXam = (type) => (dispatch, getState) => {
+export const getAllExam = (type) => (dispatch, getState) => {
   const req = {
     body: {
 

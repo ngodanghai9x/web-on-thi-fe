@@ -28,6 +28,16 @@ class CreateQuestion extends React.Component {
   componentDidMount() {
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { pathName } = this.props;
+    if (nextProps.pathName && nextProps.pathName.abc) {
+      const listQ = [].map((item, i) => ({
+        [`Q${i}`] : { ...item }
+      }))
+      this.setState({ listQ });
+    }
+  }
+
   onEditorChange = (evt) => {
     this.setState(state => ({
       listQ: {
@@ -171,10 +181,10 @@ class CreateQuestion extends React.Component {
 
   render() {
     const { listQ, pointer } = this.state;
-    const { isShow } = this.props;
+    const { isShow, total } = this.props;
     const canBack = Object.keys(listQ).length > 1 && pointer > 0;
     const canNext = pointer < Object.keys(listQ).length - 1;
-    const canAdd = Object.keys(listQ).length < 10 && pointer < 10;
+    const canAdd = Object.keys(listQ).length < total && pointer < total;
     const canSave = Object.keys(listQ).length >= 1;
     
     return (

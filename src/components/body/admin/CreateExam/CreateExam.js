@@ -24,6 +24,16 @@ class CreateExam extends React.Component {
     // this.props.changeLayout(1);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { pathName } = this.props;
+    if (nextProps.pathName !== pathName) {
+      this.setState({
+        level: 1,
+        subject: 2,
+      });
+    }
+  }
+
   changeStep = (step) => {
     this.setState({ step });
   }
