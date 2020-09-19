@@ -96,12 +96,16 @@ const exam = (state = initState, action) => {
         ...state,
         all: action.exams,
       };
+    case actionTypes.GET_DETAIL_EXAM:
+      return {
+        ...state,
+      };
     case actionTypes.GET_EXAM_BY_SUBJECT:
       return {
         ...state,
         [action.level]: {
           ...state[action.level],
-          [action.subject] : action.exams,
+          [action.subject]: action.exams,
           all: action.exams,
         },
       };
@@ -115,18 +119,18 @@ const exam = (state = initState, action) => {
         ...state,
         [action.level]: {
           ...state[action.level],
-          [action.subject] : [action.exam, ...state[action.level][action.subject]],
+          [action.subject]: [action.exam, ...state[action.level][action.subject]],
         },
-        all : [action.exam, ...state.all],
+        all: [action.exam, ...state.all],
       };
     case actionTypes.CREATE_EXAM:
       return {
         ...state,
         [action.level]: {
           ...state[action.level],
-          [action.subject] : [action.exam, ...state[action.level][action.subject]],
+          [action.subject]: [action.exam, ...state[action.level][action.subject]],
         },
-        all : [action.exam, ...state.all],
+        all: [action.exam, ...state.all],
       };
     case actionTypes.SUBMIT_EXAM:
       return {

@@ -8,7 +8,7 @@ import * as CommonIcon from 'components/icons/common';
 import { Link } from 'react-router-dom';
 
 import { subjects2 } from 'actions/common/getInfo';
-import { logout, changeLayout } from 'actions/userActions';
+import { logout, changeLayout, init } from 'actions/userActions';
 import './styles/Header.scss';
 
 const subjects1 = [
@@ -23,7 +23,7 @@ class Header extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-
+    this.props.init();
   }
 
   renderDropDown1 = () => {
@@ -151,6 +151,7 @@ export default connect(
   {
     logout,
     changeLayout,
+    init,
   }
 )(Header);
 // export default Header;

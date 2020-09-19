@@ -29,6 +29,30 @@ export const getExamBySubject = (subject, level) => (dispatch, getState) => {
     });
 };
 
+export const getDetailExam = (id, isAdmin) => (dispatch, getState) => {
+  const url = isAdmin ? 'api/exam/get' : 'api/profile/get-exam';
+  const req = {
+    body: {
+      id,
+    }
+  };
+  return callApi(url, { method: 'POST', data: req })
+    .then(({ data, code, message }) => {
+      if (data && code === 200) {
+        dispatch({
+          type: actionTypes.GET_DETAIL_EXAM,
+
+        })
+        // window.noti.success('Đăng nhập thành công');
+      }
+      if (code === 400) {
+        // window.noti.error('Tài khoản hoặc mật khẩu (mã OTP) không đúng');
+      }
+    })
+    .catch(err => {
+    });
+};
+
 export const changeSubject = (level, subject) => (dispatch, getState) => {
   dispatch({
     type: actionTypes.CHANGE_SUBJECT,

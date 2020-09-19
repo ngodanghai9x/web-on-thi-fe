@@ -9,7 +9,7 @@ import { getAvatar, changeLayout } from 'actions/userActions';
 import { changeHeader } from 'actions/examActions';
 // import CreateExamInfo from './CreateExamInfo';
 import './CreateExam.scss';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 class CreateExam extends React.Component {
   constructor(props) {
@@ -103,6 +103,8 @@ class CreateExam extends React.Component {
       errorName, errorSubject, errorTime, errorTotal,
     } = this.state;
     const exam1 = { name, image, subject, level, description, time, total };
+    const { role } = this.props;
+    if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
     return (
       <AdminContent>
         <div className="CreateExam">
@@ -202,8 +204,15 @@ class CreateExam extends React.Component {
   }
 }
 
+const mapStateToProps = (state, ownProps) => {
+  const { auth: { account }} = state;
+  return {
+    role: account.role,
+  }
+}
+
 export default withRouter(connect(
-  null,
+  mapStateToProps,
   {
     changeLayout,
     changeHeader,

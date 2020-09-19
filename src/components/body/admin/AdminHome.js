@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import * as CommonIcon from 'components/icons/common';
 import { getAvatar, changeLayout } from 'actions/userActions';
 import { changeHeader, getAllExam } from 'actions/examActions';
@@ -40,6 +40,8 @@ class AdminHome extends React.Component {
 
   render() {
     const { activePage, inputSearch } = this.state;
+    const { role } = this.props;
+    if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
     return (
       <AdminContent>
         <div className="admin-home">
@@ -136,8 +138,15 @@ class AdminHome extends React.Component {
   }
 }
 
+const mapStateToProps = (state, ownProps) => {
+  const { auth: { account }} = state;
+  return {
+    role: account.role,
+  }
+}
+
 export default withRouter(connect(
-  null,
+  mapStateToProps,
   {
     changeLayout,
     getAllExam,
