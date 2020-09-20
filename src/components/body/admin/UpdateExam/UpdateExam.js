@@ -103,7 +103,7 @@ class UpdateExam extends React.Component {
     } = this.state;
     const exam1 = { name, image, subject, level, description, time, total };
     const { role } = this.props;
-    if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
+    // if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
     return (
       <AdminContent>
         <div className="UpdateExam">

@@ -23,6 +23,7 @@ import CollegeExamList from 'components/body/home-content/CollegeExamList';
 import CreateExam from 'components/body/admin/CreateExam/CreateExam';
 import ChooseSubjects2 from 'components/body/ChooseSubjects2';
 import HighSchoolExamList from 'components/body/home-content/HighSchoolExamList';
+import UpdateExam from 'components/body/admin/UpdateExam/UpdateExam';
 
 
 export default class RouterList extends React.Component {
@@ -53,6 +54,7 @@ export default class RouterList extends React.Component {
 
         <Route exact path="/admin" component={AdminHome} />
         <Route exact path="/admin/create-exam" component={CreateExam} />
+        <Route exact path="/admin/update-exam/:id" component={UpdateExam} />
 
       </Switch>
     )

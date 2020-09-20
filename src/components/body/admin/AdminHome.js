@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 
 import React from 'react';
 import { connect } from 'react-redux';
@@ -38,10 +39,30 @@ class AdminHome extends React.Component {
     this.setState({ activePage: pageNumber }, () => this.reload());
   }
 
+  seeDetailExam = (e, id) => {
+    e.stopPropagation();
+    console.log("AdminHome -> seeDetailExam -> id", id)
+    const { history } = this.props;
+    history.push(`/admin/update-exam/${id}`);
+  }
+
+  deleteExam = (e, id) => {
+    e.stopPropagation();
+    if (confirm('Chỉ có thể xóa những đề chưa có người làm, thao tác này không thể khôi phục, bạn có chắc chắn xóa ?')) {
+      console.log("AdminHome -> deleteExam -> id", id)
+    } else {
+      return;
+    }
+  }
+
+  changeActiveExam = (e, id) => {
+    e.stopPropagation();
+  }
+
   render() {
     const { activePage, inputSearch } = this.state;
     const { role } = this.props;
-    if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
+    // if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
     return (
       <AdminContent>
         <div className="admin-home">
@@ -55,7 +76,7 @@ class AdminHome extends React.Component {
               />
             </div>
             <div className="w-25 d-flex justify-content-end">
-              <Link  to='/admin/create-exam' >
+              <Link to='/admin/create-exam' >
                 <button className="btn btn-info">Thêm mới đề</button>
               </Link>
             </div>
@@ -79,7 +100,7 @@ class AdminHome extends React.Component {
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr onClick={(id) => this.seeDetailExam(id)}>
                 <td className="col col-checkbox">
                   <div className="wrapper-icon checkbox">
                     <input type="checkbox"
@@ -94,19 +115,19 @@ class AdminHome extends React.Component {
                 <td className="col col-amount">Số câu hỏi</td>
                 <td className="col col-action">
                   <div className="d-flex">
-                    <div className="wrapper-icon" title="Chỉnh sửa">
+                    <div className="wrapper-icon" title="Chỉnh sửa" onClick={(id) => this.seeDetailExam(id)}>
                       <CommonIcon.edit />
                     </div>
-                    <div className="wrapper-icon" title="Xóa bỏ">
+                    <div className="wrapper-icon" title="Xóa bỏ" onClick={(id) => this.deleteExam(id)}>
                       <CommonIcon.remove />
                     </div>
                     {
                       true ? (
-                        <div className="toggle-icon" title="Ngưng kích hoạt">
+                        <div className="toggle-icon" title="Ngưng kích hoạt" onClick={(id) => this.changeActiveExam(id)}>
                           <CommonIcon.toggleOn />
                         </div>
                       ) : (
-                          <div className="toggle-icon" title="Kích hoạt">
+                          <div className="toggle-icon" title="Kích hoạt" onClick={(id) => this.changeActiveExam(id)}>
                             <CommonIcon.toggleOff />
                           </div>
                         )
@@ -139,7 +160,7 @@ class AdminHome extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { account }} = state;
+  const { auth: { account } } = state;
   return {
     role: account.role,
   }
