@@ -5,7 +5,7 @@ import * as CommonIcon from 'components/icons/common';
 
 
 
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { hideEmail, hidePhone } from 'actions/common/utils';
 import DatePicker from "react-datepicker";
 import UserContent from '../layout/UserContent';
@@ -107,7 +107,7 @@ class UserInfo extends React.Component {
   //         <div className="key">Email</div>
   //         <div className="value">
   //           <span>{hideEmail(email)}</span>
-  //           <Link exact to='/thong-tin-ca-nhan' onClick={() => this.changeScreen('index', 'email')}>
+  //           <Link  to='/thong-tin-ca-nhan' onClick={() => this.changeScreen('index', 'email')}>
   //             {email ? 'Thay đổi' : 'Thêm mới'}</Link>
   //         </div>
   //       </div>
@@ -251,8 +251,10 @@ class UserInfo extends React.Component {
   }
 
   render() {
-    const { location } = this.props;
+    const { location, accessToken } = this.props;
     const { screen } = this.state;
+
+    if (!accessToken) return <Redirect to='/' />
 
     return (
       <UserContent>
@@ -269,12 +271,13 @@ const mapStateToProps = (state, ownProps) => {
   const { auth } = state;
   return {
     user: auth.user,
+    accessToken: auth.accessToken,
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   {
     getUserInfo,
   }
-)(UserInfo);
+)(UserInfo));

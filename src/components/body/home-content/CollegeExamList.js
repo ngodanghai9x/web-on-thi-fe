@@ -11,7 +11,7 @@ import MainContent from 'components/body/layout/MainContent';
 import CompletedExam from 'components/common/CompletedExam';
 
 import { getExamBySubject, changeSubject } from 'actions/examActions';
-import { getInfo, subjects2 } from 'actions/common/getInfo';
+import { getInfo, subjects2, getObjSubject } from 'actions/common/getInfo';
 
 import '../styles/ExamList.scss';
 import { Link } from 'react-router-dom';
@@ -66,15 +66,15 @@ class CollegeExamList extends React.Component {
   render() {
     const { match, location, activeCollegeSub } = this.props;
     const { subject } = match.params; // type, môn học
-    const info = getInfo(location.pathname, subject);
+    const objSub = getObjSubject(subject);
     return (
       <MainContent>
-        <div className='exam-list'>
+        <div className='exam-list college'>
           <div className='path-button d-flex'>
             {subjects2.map((item, idx) => {
               if (idx < 3) {
                 return (
-                  <Link exact to={`/dai-hoc/${item.en}`} >
+                  <Link  to={`/dai-hoc/${item.en}`} >
                     <button type="button"
                       className={`btn btn-outline-info btn-link-sub ${activeCollegeSub === item.en ? 'active' : ''}`}
                       onClick={() => this.getExamBySubject(item.en)}
@@ -90,7 +90,7 @@ class CollegeExamList extends React.Component {
           </div>
 
           <h2 className='title-center'>
-            {`${info.title} ${info.subject} ONLINE`}
+            {`LUYỆN THI THPT QUỐC GIA ${objSub.vn} ONLINE`}
           </h2>
 
           <div className='main-content row'>

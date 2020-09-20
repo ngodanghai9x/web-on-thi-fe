@@ -37,7 +37,7 @@ class Home extends React.Component {
         <h2 className='title-center'>
           THI THỬ ONLINE
         </h2>
-        {/* <Link exact to='/admin' onClick={() => this.props.changeLayout(1)}>Admin</Link> */}
+        {/* <Link  to='/admin' onClick={() => this.props.changeLayout(1)}>Admin</Link> */}
         <div className='home'>
           <div className='img-btn d-flex'>
             <div className='img-btn-item d-table' onClick={() => history.push(`${location.pathname}lop-10`)}>

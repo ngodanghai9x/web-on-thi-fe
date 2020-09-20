@@ -107,7 +107,7 @@ class LeftProfile extends React.Component {
           <div className="key">Email</div>
           <div className="value">
             <span>{hideEmail(email)}</span>
-            <Link exact to='/thong-tin-ca-nhan' onClick={() => changeScreen('index', 'email')}>
+            <Link  to='/thong-tin-ca-nhan' onClick={() => changeScreen('index', 'email')}>
               {email ? 'Thay đổi' : 'Thêm mới'}</Link>
           </div>
         </div>

@@ -85,7 +85,7 @@ class Login extends React.Component {
             <div className="hr">
               <span>Hoặc</span>
             </div>
-            <Link exact to='/dang-ky'>
+            <Link  to='/dang-ky'>
               <button
                 className="btn btn-outline-info"
               // onClick={}
@@ -94,7 +94,7 @@ class Login extends React.Component {
               </button>
             </Link>
           </div>
-          <Link exact to='/quen-mat-khau' className="text-center">
+          <Link  to='/quen-mat-khau' className="text-center">
             Quên mật khẩu ?
           </Link>
         </div>

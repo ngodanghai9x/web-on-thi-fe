@@ -12,50 +12,50 @@ export const hidePhone = phone => {
 }
 
 export const checkDate = (day, month, year) => {
-  let validateDate = false;
-  if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
-    if (month === 2) {
-      if (day <= 29) {
-        validateDate = true;
-      }
-    }
-    switch (month) {
-      case 4:
-      case 6:
-      case 9:
-      case 11:
-        if (day <= 30) {
-          validateDate = true;
-        } else {
-          validateDate = false;
-        }
-        break;
-      default:
-        validateDate = true;
-        break;
-    }
-  } else {
-    if (month === 2) {
-      if (day <= 28) {
-        validateDate = true;
-      }
-    }
-    switch (month) {
-      case 4:
-      case 6:
-      case 9:
-      case 11:
-        if (day <= 30) {
-          validateDate = true;
-        } else {
-          validateDate = false;
-        }
-        break;
-      default:
-        validateDate = true;
-        break;
-    }
-  }
+  // let validateDate = false;
+  // if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
+  //   if (month === 2) {
+  //     if (day <= 29) {
+  //       validateDate = true;
+  //     }
+  //   }
+  //   switch (month) {
+  //     case 4:
+  //     case 6:
+  //     case 9:
+  //     case 11:
+  //       if (day <= 30) {
+  //         validateDate = true;
+  //       } else {
+  //         validateDate = false;
+  //       }
+  //       break;
+  //     default:
+  //       validateDate = true;
+  //       break;
+  //   }
+  // } else {
+  //   if (month === 2) {
+  //     if (day <= 28) {
+  //       validateDate = true;
+  //     }
+  //   }
+  //   switch (month) {
+  //     case 4:
+  //     case 6:
+  //     case 9:
+  //     case 11:
+  //       if (day <= 30) {
+  //         validateDate = true;
+  //       } else {
+  //         validateDate = false;
+  //       }
+  //       break;
+  //     default:
+  //       validateDate = true;
+  //       break;
+  //   }
+  // }
 }
 
 /*

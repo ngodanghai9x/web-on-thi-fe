@@ -7,6 +7,7 @@ import * as CommonIcon from 'components/icons/common';
 
 import MainContent from '../layout/MainContent';
 import './styles/EssayExam.scss';
+import { Redirect } from 'react-router';
 
 class EssayExam extends React.Component {
   constructor(props) {
@@ -20,6 +21,8 @@ class EssayExam extends React.Component {
   }
 
   render() {
+    const { accessToken } = this.props;
+    if (!accessToken) return <Redirect to='/' />
     return (
       <MainContent>
         <div className='EssayExam'>
@@ -32,7 +35,11 @@ class EssayExam extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-
+  const { auth } = state;
+  return {
+    user: auth.user,
+    accessToken: auth.accessToken,
+  };
 };
 
 export default connect(mapStateToProps)(EssayExam);

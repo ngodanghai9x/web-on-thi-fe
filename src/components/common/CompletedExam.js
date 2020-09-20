@@ -45,7 +45,9 @@ class CompletedExam extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
+  return {
 
+  };
 };
 
 export default connect(mapStateToProps)(CompletedExam);

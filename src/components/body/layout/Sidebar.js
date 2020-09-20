@@ -32,27 +32,27 @@ class Sidebar extends React.Component {
             <h1><a href="index.html" className="logo">Project Name</a></h1>
             <ul className="list-unstyled components mb-5">
               <li className={``}  onClick={() => this.props.changeLayout(0)}>
-                <Link exact to='/' >
+                <Link  to='/' >
                   <span className="fa fa-home mr-3"></span> Trang chủ
                 </Link>
               </li>
               <li className={`${pathname === '/admin' ? 'active' : ''}`} >
-                <Link exact to='/admin' >
+                <Link  to='/admin' >
                   <span className="fa fa-user mr-3"></span> Danh sách đề
                 </Link>
               </li>
               <li className={`${pathname === '/admin/create-exam' ? 'active' : ''}`} >
-                <Link exact to='/admin/create-exam' >
+                <Link  to='/admin/create-exam' >
                   <span className="fa fa-sticky-note mr-3"></span> Thêm mới đề
                 </Link>
               </li>
               <li className={``}  onClick={() => this.props.changeLayout(0)}>
-                <Link exact to='/thong-tin-ca-nhan'>
+                <Link  to='/thong-tin-ca-nhan'>
                   <span className="fa fa-sticky-note mr-3"></span> Tài khoản
                 </Link>
               </li>
               <li className={``} >
-                <Link exact to='' >
+                <Link  to='' >
                   <span className="fa fa-paper-plane mr-3"></span> Đăng xuất
                 </Link>
               </li>

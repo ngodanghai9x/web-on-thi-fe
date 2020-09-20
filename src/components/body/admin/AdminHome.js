@@ -55,7 +55,7 @@ class AdminHome extends React.Component {
               />
             </div>
             <div className="w-25 d-flex justify-content-end">
-              <Link exact to='/admin/create-exam' >
+              <Link  to='/admin/create-exam' >
                 <button className="btn btn-info">Thêm mới đề</button>
               </Link>
             </div>

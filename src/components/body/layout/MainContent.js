@@ -25,7 +25,7 @@ class MainContent extends React.Component {
     return (
       <React.Fragment>
         <div className='main-content' style={{ padding: '50px 0 20px 0' }}>
-          <Breadcumb />
+          {/* <Breadcumb /> */}
           <div className='container'>
             {/* <RouterList /> */}
             {this.props.children}

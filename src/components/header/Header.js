@@ -29,7 +29,7 @@ class Header extends React.Component {
   renderDropDown1 = () => {
     return subjects1.map(item => (
       <div className='dropdown-item'>
-        <Link exact to={`/lop-10/${item.en}`}>
+        <Link to={`/lop-10/${item.en}`}>
           {item.vn}
           <CommonIcon.chevronRight />
         </Link>
@@ -40,7 +40,7 @@ class Header extends React.Component {
   renderDropDown2 = () => {
     return subjects2.map(item => (
       <div className='dropdown-item'>
-        <Link exact to={`/dai-hoc/${item.en}`}>
+        <Link to={`/dai-hoc/${item.en}`}>
           {item.vn}
           <CommonIcon.chevronRight />
         </Link>
@@ -61,24 +61,24 @@ class Header extends React.Component {
           <div className='name d-flex align-items-center'>{this.props.name}</div>
         </div>
         <div className='dropdown-item'>
-          <Link exact to='/thong-tin-ca-nhan'>
+          <Link to='/thong-tin-ca-nhan'>
             Thông tin cá nhân
           </Link>
         </div>
         {!token ? null : (
           <div className='dropdown-item'>
-            <Link exact to='/admin' onClick={() => this.props.changeLayout(1)}>
+            <Link to='/admin' onClick={() => this.props.changeLayout(1)}>
               Trang quản lý
           </Link>
           </div>
         )}
         <div className='dropdown-item'>
-          <Link exact to='/doi-mat-khau'>
+          <Link to='/doi-mat-khau'>
             Đổi mật khẩu
           </Link>
         </div>
         <div className='dropdown-item'>
-          <Link exact to='/dang-nhap' onClick={() => this.logout()}>
+          <Link to='/dang-nhap' onClick={() => this.logout()}>
             Đăng xuất
           </Link>
         </div>
@@ -94,20 +94,20 @@ class Header extends React.Component {
         <div className='header container-fluid'>
           <div className='container d-flex'>
             <div className='wrapper-logo-route d-flex'>
-              <Link exact to='/'>
+              <Link to='/'>
                 <img className='header-logo' src='images/logo.png' alt='logo' />
               </Link>
               <div className='route lop-10'
               // onMouseEnter={() => this.setState({ dropdown10: true})}
               // onMouseLeave={() => this.setState({ dropdown10: false})}
               >
-                <Link className='route-path' exact to='/lop-10/'>Luyện thi vào lớp 10</Link>
+                <Link className='route-path' to='/lop-10/'>Luyện thi vào lớp 10</Link>
                 <div className='lop-10-dropdown dropdown'>
                   {this.renderDropDown1()}
                 </div>
               </div>
               <div className='route dai-hoc'>
-                <Link className='route-path' exact to='/dai-hoc/'>Luyện thi THPT Quốc Gia</Link>
+                <Link className='route-path' to='/dai-hoc/'>Luyện thi THPT Quốc Gia</Link>
                 <div className='dai-hoc-dropdown dropdown'>
                   {this.renderDropDown2()}
                 </div>
@@ -116,7 +116,7 @@ class Header extends React.Component {
             {localStorage.getItem('accessToken')
               ? (
                 <div className='avatar route'>
-                  <Link exact to='/thong-tin-ca-nhan/'>
+                  <Link to='/thong-tin-ca-nhan/'>
                     <img src='images/default-avatar.jpg' alt='avatar' />
                   </Link>
                   {this.renderDropDown3()}
@@ -125,7 +125,7 @@ class Header extends React.Component {
               : (
                 <React.Fragment>
                   <div className='avatar route'>
-                    <Link exact to='/dang-nhap'>Đăng nhập</Link>
+                    <Link to='/dang-nhap'>Đăng nhập</Link>
                   </div>
                 </React.Fragment>
               )}

@@ -22,6 +22,7 @@ import AdminHome from 'components/body/admin/AdminHome';
 import CollegeExamList from 'components/body/home-content/CollegeExamList';
 import CreateExam from 'components/body/admin/CreateExam/CreateExam';
 import ChooseSubjects2 from 'components/body/ChooseSubjects2';
+import HighSchoolExamList from 'components/body/home-content/HighSchoolExamList';
 
 
 export default class RouterList extends React.Component {
@@ -39,7 +40,7 @@ export default class RouterList extends React.Component {
 
 
         <Route exact path="/lop-10/" component={ChooseSubjects} />
-        <Route exact path="/lop-10/:subject" component={CollegeExamList} />
+        <Route exact path="/lop-10/:subject" component={HighSchoolExamList} />
         <Route exact path="/lop-10/:subject/trac-nghiem/:id" component={MultipleChoiceExam} />
         <Route exact path="/lop-10/:subject/trac-nghiem/ket-qua/:id" component={MultipleChoiceResult} />
         <Route exact path="/lop-10/:subject/tu-luan/:id" component={EssayExam} />

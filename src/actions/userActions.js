@@ -208,7 +208,13 @@ export const changeLayout = (layout) => (dispatch, getState) => {
 
 export const init = () => dispatch => {
   const accessToken = localStorage.getItem('accessToken');
-  const obj = JSON.parse(atob(accessToken.split('.')[1]));
+  let obj = {};
+  try {
+    obj = JSON.parse(atob(accessToken.split('.')[1]));
+  } catch (error) {
+    obj = {};
+  };
+
   dispatch({
     type: actionTypes.RECEIVE_ACCESS_TOKEN,
     accessToken,

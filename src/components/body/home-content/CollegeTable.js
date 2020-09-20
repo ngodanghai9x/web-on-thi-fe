@@ -63,7 +63,7 @@ class CollegeTable extends React.Component {
             <div className='item'>
               > Trắc nghiệm ôn tập kiến thức bài Căn thức bậc hai
               </div>
-            <Link exact to={`/lop-10/${activeCollegeSub}`} >
+            <Link  to={`/lop-10/${activeCollegeSub}`} >
               <p className='more' style={{ textAlign: 'right', margin: 0 }}>Xem thêm ></p>
             </Link>
           </div>

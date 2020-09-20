@@ -23,11 +23,11 @@ class Breadcumb extends React.Component {
         <div className='my-breadcumb'>
           <div className='header-content'>
             <div className='container'>
-              <Link exact to='/'>Trang chủ</Link>
+              <Link  to='/'>Trang chủ</Link>
               {` / `}
-              <Link exact to='/lop-10/'>Luyện thi vào lớp 10</Link>
+              <Link  to='/lop-10/'>Luyện thi vào lớp 10</Link>
               {` / `}
-              <Link exact to='/lop-10/toan'>Toán Học</Link>
+              <Link  to='/lop-10/toan'>Toán Học</Link>
               {` / `}
               <Link>Đề luyện thi THPT Quốc gia 2020 môn Toán - Đề số 1</Link>
             </div>
@@ -40,7 +40,9 @@ class Breadcumb extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
+  return {
 
+  };
 };
 
 export default connect(mapStateToProps)(Breadcumb);

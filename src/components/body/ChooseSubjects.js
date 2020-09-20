@@ -58,7 +58,14 @@ class ChooseSubjects extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
+  return {
 
+  };
 };
 
-export default connect(mapStateToProps)(ChooseSubjects);
+export default connect(
+  mapStateToProps,
+  {
+    changeSubject,
+  },
+)(ChooseSubjects);

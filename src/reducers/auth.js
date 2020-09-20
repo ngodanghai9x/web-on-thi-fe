@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { actionTypes } from '../constants/actionTypes';
 
 const initState = {

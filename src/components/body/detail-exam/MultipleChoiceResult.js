@@ -7,6 +7,7 @@ import * as CommonIcon from 'components/icons/common';
 
 import MainContent from '../layout/MainContent';
 import './styles/MultipleChoiceResult.scss';
+import { Redirect } from 'react-router';
 
 class MultipleChoiceResult extends React.Component {
   constructor(props) {
@@ -20,6 +21,8 @@ class MultipleChoiceResult extends React.Component {
   }
 
   render() {// cái kết quả mới là trang này
+    const { accessToken } = this.props;
+    if (!accessToken) return <Redirect to='/' />
     return (
       <MainContent>
         <div className='MultipleChoiceResult container'>
@@ -127,7 +130,11 @@ class MultipleChoiceResult extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-
+  const { auth } = state;
+  return {
+    user: auth.user,
+    accessToken: auth.accessToken,
+  };
 };
 
 export default connect(mapStateToProps)(MultipleChoiceResult);
