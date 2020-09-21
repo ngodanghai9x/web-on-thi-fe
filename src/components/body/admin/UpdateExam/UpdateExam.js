@@ -10,29 +10,45 @@ import { changeHeader } from 'actions/examActions';
 import './UpdateExam.scss';
 import { Redirect, withRouter } from 'react-router-dom';
 
+const total = 1000;
 class UpdateExam extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       step: 1,
-      level: "Lớp 10",
+      grade: "Lớp 10",
       subject: "Toán học",
+      examQuestions: [],
     };
   }
 
   componentDidMount() {
+    const { params } = this.props;
     this.props.changeLayout(1);
     this.props.changeHeader('Chỉnh sửa đề');
+    this.fetchDetailExam(params.id);
+    
+  }
+
+  fetchDetailExam = (id) => {
+    this.props.getDetailExam(id, true).then(({ data, code, message }) => {
+      if (data && code === 200) {
+        const { id, name, image, subject, grade, description, time, canDelete, examQuestions } = data.exam;
+        this.setState(id, name, image, subject, grade, description, time, canDelete, examQuestions);
+      }
+      if (code === 400) {
+      }
+    })
   }
 
   componentWillReceiveProps(nextProps) {
     const { pathName } = this.props;
-    if (nextProps.pathName !== pathName) {
-      this.setState({
-        level: 1,
-        subject: 2,
-      });
-    }
+    // if (nextProps.pathName !== pathName) {
+    //   this.setState({
+    //     level: 1,
+    //     subject: 2,
+    //   });
+    // }
   }
 
   changeStep = (step) => {
@@ -75,33 +91,13 @@ class UpdateExam extends React.Component {
       this.setState({ [key]: 'Giá trị tối đa là 1000' });
       // return window.noti.error('Giá trị tối đa là 1000');
     }
-    // if (key === 'errorUsername') {
-    //   if (regex.username.test(val)) {
-    //     this.setState({ [key]: text });
-    //   }
-    // }
-    // if (key === 'errorPassword1') {
-    //   if (!regex.password.test(val)) {
-    //     this.setState({ [key]: text });
-    //   }
-    // }
-    // if (key === 'errorPassword2') {
-    //   if (val !== this.state.password1) {
-    //     this.setState({ [key]: text });
-    //   }
-    // }
-    // if (key === 'errorEmail') {
-    //   if (!regex.email.test(val)) {
-    //     this.setState({ [key]: text });
-    //   }
-    // }
   }
 
   render() {
-    const { step, name, image, subject, level, description, time, total,
+    const { step, id, name, image, subject, grade, description, time, canDelete, examQuestions,
       errorName, errorSubject, errorTime, errorTotal,
     } = this.state;
-    const exam1 = { name, image, subject, level, description, time, total };
+    const exam = { id, name, image, subject, grade, description, time, canDelete };
     const { role } = this.props;
     // if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
     return (
@@ -170,7 +166,7 @@ class UpdateExam extends React.Component {
                   />
                 </div>
               </div>
-              <div className="profile-row">
+              {/* <div className="profile-row">
                 <div className="key">Tổng số câu</div>
                 <div className="value">
                   <input
@@ -184,7 +180,7 @@ class UpdateExam extends React.Component {
                     onChange={(e) => this.onChangeMax1000('total', e.target.value, 'errorTotal')}
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="profile-row d-flex justify-content-center">
                 <button className="btn btn-info" onClick={() => this.changeStep(2)}>
                   Next
@@ -194,7 +190,7 @@ class UpdateExam extends React.Component {
             </div>
           </div>
           {/* <CreateExamInfo isShow={step === 1} changeStep={this.changeStep} /> */}
-          <UpdateQuestion isShow={step === 2} changeStep={this.changeStep} exam1={exam1} />
+          <UpdateQuestion isShow={step === 2} changeStep={this.changeStep} exam={exam} listQuestion={examQuestions}/>
         </div>
       </AdminContent>
 

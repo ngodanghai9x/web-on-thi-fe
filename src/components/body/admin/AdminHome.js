@@ -59,9 +59,51 @@ class AdminHome extends React.Component {
     e.stopPropagation();
   }
 
+  renderBody = (all) => {
+    // id, name, image, subject, grade, description, time, canDelete, examQuestions
+    return all.map(item => {
+      return (
+        <tr onClick={(id) => this.seeDetailExam(id)}>
+          <td className="col col-checkbox">
+            <div className="wrapper-icon checkbox">
+              <input type="checkbox"
+                className=""
+              />
+            </div>
+          </td>
+          <td className="col col-name">{item.name}</td>
+          <td className="col col-subject">{item.subject}</td>
+          <td className="col col-grade">{item.grade}</td>
+          <td className="col col-time">{item.time}</td>
+          <td className="col col-action">
+            <div className="d-flex">
+              <div className="wrapper-icon" title="Chỉnh sửa" onClick={(id) => this.seeDetailExam(id)}>
+                <CommonIcon.edit />
+              </div>
+              <div className={`wrapper-icon ${item.canDelete ? '' : 'disable'}`} title={`${item.canDelete ? 'Xóa' : 'Không thẻ xóa đề đã public'}`} onClick={(id) => this.deleteExam(id)}>
+                <CommonIcon.remove />
+              </div>
+              {
+                item.isActive ? (
+                  <div className="toggle-icon" title="Ngưng kích hoạt" onClick={(id) => this.changeActiveExam(id)}>
+                    <CommonIcon.toggleOn />
+                  </div>
+                ) : (
+                    <div className="toggle-icon" title="Kích hoạt" onClick={(id) => this.changeActiveExam(id)}>
+                      <CommonIcon.toggleOff />
+                    </div>
+                  )
+              }
+            </div>
+          </td>
+        </tr>
+      )
+    })
+  }
+
   render() {
     const { activePage, inputSearch } = this.state;
-    const { role } = this.props;
+    const { role, all } = this.props;
     // if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
     return (
       <AdminContent>
@@ -91,52 +133,15 @@ class AdminHome extends React.Component {
                     <CommonIcon.caretDownFill />
                   </div>
                 </th>
-                <th className="col col-id">Mã đề</th>
                 <th className="col col-name">Tên đề</th>
                 <th className="col col-subject">Môn học</th>
-                <th className="col col-type">Thể loại</th>
-                <th className="col col-amount">Số câu hỏi</th>
+                <th className="col col-grade">Cấp bậc</th>
+                <th className="col col-time">Thời gian</th>
                 <th className="col col-action">Thao tác</th>
               </tr>
             </thead>
             <tbody>
-              <tr onClick={(id) => this.seeDetailExam(id)}>
-                <td className="col col-checkbox">
-                  <div className="wrapper-icon checkbox">
-                    <input type="checkbox"
-                      className=""
-                    />
-                  </div>
-                </td>
-                <td className="col col-id">Mã đề</td>
-                <td className="col col-name">Tên đề</td>
-                <td className="col col-subject">Môn học</td>
-                <td className="col col-type">Thể loại</td>
-                <td className="col col-amount">Số câu hỏi</td>
-                <td className="col col-action">
-                  <div className="d-flex">
-                    <div className="wrapper-icon" title="Chỉnh sửa" onClick={(id) => this.seeDetailExam(id)}>
-                      <CommonIcon.edit />
-                    </div>
-                    <div className="wrapper-icon" title="Xóa bỏ" onClick={(id) => this.deleteExam(id)}>
-                      <CommonIcon.remove />
-                    </div>
-                    {
-                      true ? (
-                        <div className="toggle-icon" title="Ngưng kích hoạt" onClick={(id) => this.changeActiveExam(id)}>
-                          <CommonIcon.toggleOn />
-                        </div>
-                      ) : (
-                          <div className="toggle-icon" title="Kích hoạt" onClick={(id) => this.changeActiveExam(id)}>
-                            <CommonIcon.toggleOff />
-                          </div>
-                        )
-                    }
-                  </div>
-                </td>
-              </tr>
-
-
+              {this.renderBody(all)}
             </tbody>
           </table>
 
@@ -160,9 +165,10 @@ class AdminHome extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { account } } = state;
+  const { auth: { account }, exam: { all } } = state;
   return {
     role: account.role,
+    all: [{}, {}],
   }
 }
 

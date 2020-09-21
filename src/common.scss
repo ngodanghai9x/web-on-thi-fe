@@ -53,6 +53,11 @@ small.note {
   text-transform: unset;
 }
 
+.disable {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 6px;

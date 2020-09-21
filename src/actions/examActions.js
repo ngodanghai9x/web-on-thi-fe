@@ -37,20 +37,20 @@ export const getDetailExam = (id, isAdmin) => (dispatch, getState) => {
     }
   };
   return callApi(url, { method: 'POST', data: req })
-    .then(({ data, code, message }) => {
-      if (data && code === 200) {
-        dispatch({
-          type: actionTypes.GET_DETAIL_EXAM,
-
-        })
-        // window.noti.success('Đăng nhập thành công');
-      }
-      if (code === 400) {
-        // window.noti.error('Tài khoản hoặc mật khẩu (mã OTP) không đúng');
-      }
-    })
-    .catch(err => {
-    });
+    // .then(({ data, code, message }) => {
+    //   if (data && code === 200) {
+    //     dispatch({
+    //       type: actionTypes.GET_DETAIL_EXAM,
+    //       exam: data.exam,
+    //     })
+    //     // window.noti.success('Đăng nhập thành công');
+    //   }
+    //   if (code === 400) {
+    //     // window.noti.error('Tài khoản hoặc mật khẩu (mã OTP) không đúng');
+    //   }
+    // })
+    // .catch(err => {
+    // });
 };
 
 export const changeSubject = (level, subject) => (dispatch, getState) => {
@@ -213,18 +213,20 @@ export const getResultExam = (historyId) => (dispatch, getState) => {
     });
 };
 
-export const getAllExam = (type) => (dispatch, getState) => {
+export const getAllExam = (pageNumber, pageSize) => (dispatch, getState) => {
   const req = {
     body: {
-
+      pageSize,
+      pageNumber,
     }
   };
   return callApi('api/exam/get-all', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
+        // id, name, image, subject, grade, description, time, canDelete, examQuestions
         dispatch({
           type: actionTypes.GET_ALL_EXAM,
-          exams: data.examDtos,
+          exams: data.examDtos.content,
         });
 
         // window.noti.success('Đăng nhập thành công');

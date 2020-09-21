@@ -25,16 +25,13 @@
         border-radius: 3px;
       }
     }
-    .col-id {
-      width: 80px;
-    }
     .col-name {
-      width: calc(100% - 360px - 200px);
+      width: calc(100% - 480px - 60px);
     }
-    .col-type {
+    .col-grade {
       width: 120px;
     }
-    .col-amount {
+    .col-time {
       width: 120px;
     }
     .col-subject {

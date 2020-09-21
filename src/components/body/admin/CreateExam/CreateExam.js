@@ -104,7 +104,7 @@ class CreateExam extends React.Component {
     } = this.state;
     const exam1 = { name, image, subject, level, description, time, total };
     const { role } = this.props;
-    if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
+    // if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
     return (
       <AdminContent>
         <div className="CreateExam">
@@ -163,7 +163,6 @@ class CreateExam extends React.Component {
                     type="number" value={time || ''}
                     className={errorTime ? 'error' : ''}
                     placeholder="Nhập tên đề"
-                    min="1" max="500"
                     title={errorTime}
                     required
                     // onBlur={e => this.onBlurName(e)}
@@ -171,21 +170,20 @@ class CreateExam extends React.Component {
                   />
                 </div>
               </div>
-              <div className="profile-row">
+              {/* <div className="profile-row">
                 <div className="key">Tổng số câu</div>
                 <div className="value">
                   <input
                     type="number" value={total || ''}
                     className={errorTotal ? 'error' : ''}
                     placeholder="Nhập tên đề"
-                    min="1" max="500"
                     title={errorTotal}
                     required
                     // onBlur={e => this.onBlurName(e)}
                     onChange={(e) => this.onChangeMax1000('total', e.target.value, 'errorTotal')}
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="profile-row d-flex justify-content-center">
                 <button className="btn btn-info" onClick={() => this.changeStep(2)}>
                   Next

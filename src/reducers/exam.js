@@ -6,6 +6,7 @@ const initState = {
   activeHSSub: 'toan',
   header: 'Danh sách đề',
   all: [],
+  currentExam: {},
   result: {
     // numAnswer: 0,
     // numCorrectAns: 0,
@@ -99,6 +100,7 @@ const exam = (state = initState, action) => {
     case actionTypes.GET_DETAIL_EXAM:
       return {
         ...state,
+        currentExam: action.exam,
       };
     case actionTypes.GET_EXAM_BY_SUBJECT:
       return {

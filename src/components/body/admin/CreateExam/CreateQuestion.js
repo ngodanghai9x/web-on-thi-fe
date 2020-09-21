@@ -6,7 +6,7 @@ import * as CommonIcon from 'components/icons/common';
 import { createExam } from 'actions/examActions';
 
 // import './styles/CreateExam.scss';
-
+const total = 50;
 class CreateQuestion extends React.Component {
   constructor(props) {
     super(props);
@@ -18,7 +18,7 @@ class CreateQuestion extends React.Component {
           option2: '',
           option3: '',
           option4: '',
-          answer: 'option1',
+          correctAnswer: 'option1',
         }
       },
       pointer: 0,
@@ -100,7 +100,7 @@ class CreateQuestion extends React.Component {
     if (!can) return;
     const listQuestion = Object.values(this.state.listQ).map(item => ({
       ...item,
-      answer: item[item.answer],
+      correctAnswer: item[item.correctAnswer],
     }));
     console.log("save -> listQuestion", listQuestion)
     this.props.createExam(name, image, subject, level, description, time, listQuestion);
@@ -121,7 +121,7 @@ class CreateQuestion extends React.Component {
             option2: '',
             option3: '',
             option4: '',
-            answer: 'option1',
+            correctAnswer: 'option1',
           }
         },
       })
@@ -160,13 +160,13 @@ class CreateQuestion extends React.Component {
                   onChange={(e) => this.onChangeMax255(`option${item}`, e.target.value, `errorOption${item}`)}
                 />
                 <input type="radio" name="radio-btn-exam"
-                  checked={`option${item}` === listQ[`Q${pointer}`].answer}
+                  checked={`option${item}` === listQ[`Q${pointer}`].correctAnswer}
                   onClick={() => this.setState(state => ({
                     listQ: {
                       ...state.listQ,
                       [`Q${state.pointer}`]: {
                         ...state.listQ[`Q${state.pointer}`],
-                        answer: `option${item}`,
+                        correctAnswer: `option${item}`,
                       }
                     },
                   }))}
@@ -183,7 +183,7 @@ class CreateQuestion extends React.Component {
 
   render() {
     const { listQ, pointer } = this.state;
-    const { isShow, total } = this.props;
+    const { isShow } = this.props;
     const canBack = Object.keys(listQ).length > 1 && pointer > 0;
     const canNext = pointer < Object.keys(listQ).length - 1;
     const canAdd = Object.keys(listQ).length < total && pointer < total;
