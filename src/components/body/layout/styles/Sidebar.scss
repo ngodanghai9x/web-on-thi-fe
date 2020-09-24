@@ -97,16 +97,16 @@ $primary: #40aaf4;
         }
       }
     }
-    @include media-breakpoint-down(md) {
-      margin-left: -250px;
-      &.active {
-        margin-left: 0;
-      }
-      .custom-menu {
-        margin-right: -60px !important;
-        top: 10px !important;
-      }
-    }
+    // @include media-breakpoint-down(md) {
+    //   margin-left: -250px;
+    //   &.active {
+    //     margin-left: 0;
+    //   }
+    //   .custom-menu {
+    //     margin-right: -60px !important;
+    //     top: 10px !important;
+    //   }
+    // }
 
     .custom-menu {
       display: inline-block;

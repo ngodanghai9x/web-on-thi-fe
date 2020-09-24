@@ -23,12 +23,12 @@ class Sidebar extends React.Component {
       <React.Fragment>
         <div className="wrapper-sidebar">
           <nav id="sidebar">
-            <div className="custom-menu">
-              <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                <i class="fa fa-bars"></i>
+            {/* <div className="custom-menu">
+              <button type="button" id="sidebarCollapse" className="btn btn-primary">
+                <i className="fa fa-bars"></i>
                 <span className="sr-only">Toggle Menu</span>
               </button>
-            </div>
+            </div> */}
             <h1><a href="index.html" className="logo">Project Name</a></h1>
             <ul className="list-unstyled components mb-5">
               <li className={``}  onClick={() => this.props.changeLayout(0)}>

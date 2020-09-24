@@ -115,7 +115,7 @@ class ChangePassword extends React.Component {
                 <div className="value">
                   {
                     countDown === 0 ? (
-                      <span class='a d-block' onClick={() => this.getOTP()}>Gửi lại OTP</span>
+                      <span className='a d-block' onClick={() => this.getOTP()}>Gửi lại OTP</span>
                     ) : (
                         <span className="d-block">{`Gửi lại sau ${countDown}s`}</span>
                       )

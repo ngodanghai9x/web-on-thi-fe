@@ -115,7 +115,7 @@ class CreateQuestion extends React.Component {
         listQ: {
           ...state.listQ,
           [`Q${length}`]: {
-            number: length,
+            // number: length,
             question: '',
             option1: '',
             option2: '',

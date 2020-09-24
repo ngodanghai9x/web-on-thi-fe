@@ -124,7 +124,7 @@ class AdminHome extends React.Component {
             </div>
           </div>
 
-          <table class="table table-hover">
+          <table className="table table-hover">
             <thead>
               <tr>
                 <th className="col col-checkbox">

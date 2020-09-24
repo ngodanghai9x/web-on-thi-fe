@@ -112,7 +112,7 @@ class Register extends React.Component {
                 />
               </div>
               <div className="form-control-1">
-                {/* <label class="singup"></label> */}
+                {/* <label className="singup"></label> */}
                 <input type="password" className={`${errorPassword2 ? 'error' : ''} register-input config-password`} placeholder="Nhập lại mật khẩu"
                   onChange={(e) => this.onChangeMax255('password2', e.target.value, 'errorPassword2')} value={password2}
                   onBlur={e => this.onBlurNotNull('errorPassword2', e.target.value, 'Mật khẩu nhập lại không trùng khớp')}
@@ -121,7 +121,7 @@ class Register extends React.Component {
                 />
               </div>
               <div className="form-control-1">
-                {/* <label class="singup"></label> */}
+                {/* <label className="singup"></label> */}
                 <input type="email" className={`${errorEmail ? 'error' : ''} register-input email`} placeholder="Email"
                   onChange={(e) => this.onChangeMax255('email', e.target.value, 'errorEmail')} value={email}
                   onBlur={e => this.onBlurNotNull('errorEmail', e.target.value, errorText.email)}

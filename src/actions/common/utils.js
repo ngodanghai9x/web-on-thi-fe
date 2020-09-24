@@ -14,7 +14,7 @@ export const hidePhone = phone => {
 export const getMinute = second => {
   const _minute = Math.floor(second / 60);
   const _second = second % 60;
-  return `${_minute} : ${_second}`;
+  return `${_minute} phút : ${_second} giây`;
 }
 
 export const checkDate = (day, month, year) => {

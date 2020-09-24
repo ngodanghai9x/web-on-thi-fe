@@ -1,169 +1,128 @@
-$primary: #40AAF4;
+$primary: #40aaf4;
 .MultipleChoiceExam {
-    width: 100%;
-    padding: 50px;
-
-    .game-code-view {
-        padding: 10px;
-        position: relative;
-        background-color: #fff;
-        border-bottom: 1px dashed rgb(221, 221, 221);
-
-    }
-    .card-game-content {
-        padding: 10px;
-        word-break: break-word; 
-        width: 100%;
-         text-align:justify; 
-        font-size: 1.1em;
-
-    }
-
-    .input-group-prepend {
-        &.chosen {
-            color: violet;
-        }
-        &.true {
-            color: green;
-        }
-    }
-
-    .input-group-text {
-        vertical-align: middle;
-        background: none;
-        border: none;
-        .input-items {
-            width: 15px;
-            height: 15px;
-            margin: 0px auto;
-            display: block;
-            border-radius: 1.5px solid #111;
-        }
-    }
-
-    .a123 {
-        background-color: $primary;
-        padding: 4px;
-        padding-right: 8px;
-        text-align: center;
-        font-weight: 700;
-        color: #fff;
-
-    }
-    .a123-number {
-        padding: 6px 10px!important;
-        margin: 6px;
-        text-align: center;
-    }
-    .a123 div {
-        width: 25px;
-        padding-top: 10px;
-
-    }
-
-    .abc {
-        border: 0.5px solid black;
-        padding: 7px;
-    }
-    .col-3 {
-        max-width: 20%;
-        .multiple-choice {
-            width: 100%;
-        }
-    }
-
-    .abc .edf {
-        padding: 4px 10px;
-        margin-left: 5px;
-        background: white;
-
-        border: 1px solid #333;
-        border-radius: 100%;
-        display: inline-block;
-        vertical-align: middle;
-        margin: 5px;
-        color: #666;
-        outline: none;
-        width: 33px;
-        height: 33px;
-    }
-    .abc .edf.active {
-        background-color: #808080;
-    }
-    .abc .stt {
-        padding-right: 10px;
-    }
-    .d-flex {
-        // width: fit-content;
-    }
-    .btn-primary {
-        text-transform: uppercase;
-        width: 100%;
-        height: 54px;
-        background-color: $primary;
-        border: 0;
-        border-radius: 0 !important; 
-    }
-
-   
-
-    // viết từ đây
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	width: 100%;
+	padding: 50px;
+	.submit-btn {
+		border-top: 1px solid #c4c4c4;
+	}
+
+	.game-code-view {
+		padding: 10px;
+		position: relative;
+		background-color: #fff;
+		border-bottom: 1px dashed rgb(221, 221, 221);
+	}
+	.card-game-content {
+		padding: 10px;
+		padding-bottom: 0;
+		word-break: break-word;
+		width: 100%;
+		text-align: justify;
+		font-size: 1.1em;
+	}
+
+	.input-group-prepend {
+		margin-bottom: 3px;
+		border-radius: 3px;
+		&.active {
+			background-color: #c4c4c4;
+		}
+		&.true {
+			background-color: #83f07c;
+		}
+	}
+
+	.input-group-text {
+		vertical-align: middle;
+		background: none;
+		border: none;
+		.input-items {
+			width: 15px;
+			height: 15px;
+			margin: 0px auto;
+			display: block;
+			border-radius: 1.5px solid #111;
+		}
+	}
+
+	.a123 {
+		background-color: $primary;
+		padding: 4px;
+		text-align: center;
+		font-weight: 700;
+		color: #fff;
+		align-items: center;
+		// justify-content: center;
+	}
+	.a123-number {
+		width: 33px;
+		text-align: center;
+		margin: 5px;
+	}
+	.a123 .a123-stt {
+		width: 28px;
+		max-width: 28px;
+		min-width: 28px;
+		margin-right: 3px;
+		overflow: hidden;
+	}
+
+	.abc {
+		border: 1px solid #c4c4c4;
+		border-bottom: none;
+		padding: 4px;
+		align-items: center;
+	}
+	.col-3 {
+		max-width: 20%;
+		padding: 0 5px;
+		.multiple-choice {
+			width: 100%;
+		}
+	}
+
+	.abc .edf {
+		padding: 4px 10px;
+		background: white;
+		border: 1px solid #333;
+		border-radius: 100%;
+		display: inline-block;
+		vertical-align: middle;
+		margin: 5px;
+		color: #666;
+		outline: none;
+		width: 33px;
+		height: 33px;
+		cursor: pointer;
+	}
+	.abc .edf.active {
+		background-color: #808080;
+		// color: #FFF;
+	}
+	.abc .edf.true {
+		background: #83f07c;
+		color: #666;
+	}
+	.abc .stt {
+		text-align: center;
+		width: 28px;
+		max-width: 28px;
+		min-width: 28px;
+		margin-right: 3px;
+		overflow: hidden;
+	}
+	.d-flex {
+		// width: fit-content;
+	}
+	.submit-btn {
+		text-transform: uppercase;
+		font-weight: 600;
+		width: 100%;
+		height: 54px;
+		background-color: $primary;
+		border: 0;
+		border-radius: 0 !important;
+	}
+
+	// viết từ đây
 }
