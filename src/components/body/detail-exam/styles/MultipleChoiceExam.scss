@@ -19,6 +19,15 @@ $primary: #40AAF4;
 
     }
 
+    .input-group-prepend {
+        &.chosen {
+            color: violet;
+        }
+        &.true {
+            color: green;
+        }
+    }
+
     .input-group-text {
         vertical-align: middle;
         background: none;
@@ -78,7 +87,7 @@ $primary: #40AAF4;
         width: 33px;
         height: 33px;
     }
-    .abc .edf:active {
+    .abc .edf.active {
         background-color: #808080;
     }
     .abc .stt {

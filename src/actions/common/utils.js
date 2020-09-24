@@ -11,6 +11,12 @@ export const hidePhone = phone => {
   return `********${temp}`;
 }
 
+export const getMinute = second => {
+  const _minute = Math.floor(second / 60);
+  const _second = second % 60;
+  return `${_minute} : ${_second}`;
+}
+
 export const checkDate = (day, month, year) => {
   // let validateDate = false;
   // if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
