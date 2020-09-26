@@ -24,10 +24,14 @@ const initState = {
 const auth = (state = initState, action) => {
   switch (action.type) {
     case actionTypes.RECEIVE_ACCESS_TOKEN:
+      console.log("auth -> role", action.role)
       return {
         ...state,
         accessToken: action.accessToken,
-        role: action.role,
+        account: {
+          ...state.account,
+          role: action.role,
+        }
       };
     case actionTypes.GET_USER_INFO:
       return {

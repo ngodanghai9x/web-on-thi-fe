@@ -7,6 +7,12 @@ const initState = {
   activeHSSub: 'toan',
   header: 'Danh sách đề',
   all: [],
+  pagination: {
+    currentPage: 1,
+    pageSize: 10,
+    totalElements: 0,
+    totalPages: 0,
+  },
   currentExam: {},
   completedExams: [],
   result: {
@@ -99,7 +105,7 @@ const exam = (state = initState, action) => {
         ...state,
         callingApi: action.kind,
       }
-    case actionTypes.GET_COMPLETED_EXAMS: 
+    case actionTypes.GET_COMPLETED_EXAMS:
       return {
         ...state,
         completedExams: action.completedExams,
@@ -108,6 +114,7 @@ const exam = (state = initState, action) => {
       return {
         ...state,
         all: action.exams,
+        pagination: action.pagination,
       };
     case actionTypes.GET_DETAIL_EXAM:
       return {
@@ -124,18 +131,20 @@ const exam = (state = initState, action) => {
         },
       };
     case actionTypes.DELETE_EXAM:
+      const temp2 = state.all.filter(item => item.id !== action.id);
       return {
         ...state,
-        ...action,
+        all: [...temp2],
       };
     case actionTypes.UPDATE_EXAM:
+      const temp = state.all.filter(item => item.id !== action.id);
       return {
         ...state,
         [action.level]: {
           ...state[action.level],
           [action.subject]: [action.exam, ...state[action.level][action.subject]],
         },
-        all: [action.exam, ...state.all],
+        all: [action.exam, ...temp],
       };
     case actionTypes.CREATE_EXAM:
       return {
@@ -149,14 +158,9 @@ const exam = (state = initState, action) => {
     case actionTypes.SUBMIT_EXAM:
       return {
         ...state,
-        ...action,
+        // ...action,
       };
     case actionTypes.GET_RESULT_EXAM:
-      return {
-        ...state,
-        result: action.result,
-      };
-    case actionTypes.CREATE_QUESTION:
       return {
         ...state,
         result: action.result,

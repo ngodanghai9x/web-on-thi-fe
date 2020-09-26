@@ -7,7 +7,7 @@ import { createExam, callApiExam } from 'actions/examActions';
 import { withRouter } from 'react-router';
 
 // import './styles/CreateExam.scss';
-const total = 50;
+const total = 100;
 class CreateQuestion extends React.Component {
   constructor(props) {
     super(props);
@@ -92,11 +92,17 @@ class CreateQuestion extends React.Component {
   }
 
   save = (can) => {
+    if (!can) return;
     const { exam1, callingApi } = this.props;
     const { name, image, subject, level, description, time } = exam1;
     const { listQ } = this.state;
+    const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`];
+    if ( !lastQ.question || !lastQ.option1 || !lastQ.option2
+      || !lastQ.question.trim() || !lastQ.option1.trim() || !lastQ.option2.trim()
+    ) {
+      return window.noti.error('Bạn chưa điền đủ thông tin cho câu hỏi cuối cùng');
+    }
     this.props.callApiExam('CreateQuestion');
-    if (!can) return;
     const listQuestion = Object.values(listQ).map(item => ({
       ...item,
       correctAnswer: item[item.correctAnswer],
@@ -187,7 +193,7 @@ class CreateQuestion extends React.Component {
     const canNext = callingApi !== 'CreateQuestion' && pointer < Object.keys(listQ).length - 1;
     const canAdd = callingApi !== 'CreateQuestion' && Object.keys(listQ).length < total && pointer < total;
     const canSave = callingApi !== 'CreateQuestion' && Object.keys(listQ).length >= 1;
-    
+
     return (
       <React.Fragment>
         <div className={`CreateQuestion ${!isShow ? 'd-none' : ''}`}>
@@ -212,14 +218,17 @@ class CreateQuestion extends React.Component {
     );
   }
 }
+
 const mapStateToProps = (state, ownProps) => {
   const { auth: { account }, exam: { callingApi } } = state;
   return {
     role: account.role,
+    callingApi,
   }
 }
+
 export default withRouter(connect(
-  null,
+  mapStateToProps,
   {
     createExam,
     callApiExam,

@@ -5,7 +5,13 @@ import { connect } from 'react-redux';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import * as CommonIcon from 'components/icons/common';
 import { getAvatar, changeLayout } from 'actions/userActions';
-import { changeHeader, getAllExam } from 'actions/examActions';
+import  {
+  getAllExam,
+  changeHeader,
+  changeActiveExam,
+  deleteExam,
+  getDetailExam,
+} from 'actions/examActions';
 
 import AdminContent from '../layout/AdminContent';
 import './AdminHome.scss';
@@ -19,17 +25,19 @@ class AdminHome extends React.Component {
       activePage: 1,
       inputSearch: '',
       count: 15, //tổng trong db
+      selectedExamIds: [],
     };
   }
 
   componentDidMount() {
     this.props.changeHeader('Danh sách đề');
     this.props.changeLayout(1);
-    this.props.getAllExam(this.state.activePage, SIZE);
+    this.reload();
   }
 
   reload = () => {
     let { activePage, inputSearch } = this.state;
+    this.props.getAllExam(inputSearch, activePage, SIZE);
     // if (inputSearch === '' || inputSearch == null) this.apiGetPage(activePage, SIZE);
     // else this.apiSearchPage(activePage, SIZE, inputSearch);
   }
@@ -46,28 +54,94 @@ class AdminHome extends React.Component {
     history.push(`/admin/update-exam/${id}`);
   }
 
-  deleteExam = (e, id) => {
+  deleteExam = (e, id, canDelete) => {
+    if (!canDelete) return;
     e.stopPropagation();
-    if (confirm('Chỉ có thể xóa những đề chưa có người làm, thao tác này không thể khôi phục, bạn có chắc chắn xóa ?')) {
-      console.log("AdminHome -> deleteExam -> id", id)
-    } else {
-      return;
+    if (confirm('Thao tác này không thể khôi phục, bạn có chắc chắn xóa ?')) {
+      this.props.deleteExam([id]);
     }
   }
 
-  changeActiveExam = (e, id) => {
+  deleteExamList = (e) => {
+    const { all } = this.props;
+    const { selectedExamIds } = this.state;
+    const arr = all.filter(item => selectedExamIds.includes(item.id) && item.canDelete);
+    if (selectedExamIds.length !== arr.length) {
+      return window.noti.error('Không thể xóa đề đã kích hoạt và đã có người làm');
+    }
+    if (confirm('Thao tác này không thể khôi phục, bạn có chắc chắn xóa ?')) {
+      this.props.deleteExam(selectedExamIds);
+    }
+  }
+
+  changeActiveExam = (e, id, isActive) => {
+    if (!isActive) {
+      if (confirm('Kích hoạt đề để mọi người có thể làm đề, nhưng sẽ không thể xóa đề được nữa kể cả có tắt kích hoạt, bạn có chắc chắn kích hoạt ?')) {
+        this.props.changeActiveExam(id, isActive);
+      }
+    }
     e.stopPropagation();
   }
+
+  selectAll = () => {
+    let { selectedExamIds } = this.state;
+    if (selectedExamIds.length === this.props.all.length) {
+      selectedExamIds = [];
+      this.setState({ selectedExamIds });
+    } else {
+      selectedExamIds = [];
+      for (let index = 0; index < this.props.all.length; index++) {
+        selectedExamIds.push(this.props.all[index].id);
+      }
+      this.setState({ selectedExamIds });
+    }
+  };
+
+  isChoose = (id) => {
+    const { selectedExamIds } = this.state;
+    let exist = false;
+    if (selectedExamIds.length !== 0) {
+      for (let index = 0; index < selectedExamIds.length; index++) {
+        if (selectedExamIds[index] === id) {
+          exist = true;
+          break;
+        }
+      }
+    }
+    return exist;
+  };
+
+  selectOne = (e, id) => {
+    e.stopPropagation();
+    const { selectedExamIds } = this.state;
+    let exist = false;
+    if (selectedExamIds.length !== 0) {
+      for (let index = 0; index < selectedExamIds.length; index++) {
+        if (selectedExamIds[index] === id) {
+          exist = true;
+          selectedExamIds.splice(index, 1);
+          break;
+        }
+      }
+    }
+    if (!exist) {
+      selectedExamIds.push(id);
+    }
+    this.setState({ selectedExamIds });
+  };
+
 
   renderBody = (all) => {
     // id, name, image, subject, grade, description, time, canDelete, examQuestions
     return all.map(item => {
       return (
-        <tr onClick={(id) => this.seeDetailExam(id)}>
+        <tr onClick={(e) => this.seeDetailExam(e, item.id)}>
           <td className="col col-checkbox">
-            <div className="wrapper-icon checkbox">
+            <div className="wrapper-icon checkbox" onClick={(e) => this.selectOne(e, item.id)}>
               <input type="checkbox"
                 className=""
+                checked={this.isChoose(item.id)}
+                readOnly
               />
             </div>
           </td>
@@ -80,16 +154,19 @@ class AdminHome extends React.Component {
               <div className="wrapper-icon" title="Chỉnh sửa" onClick={(id) => this.seeDetailExam(id)}>
                 <CommonIcon.edit />
               </div>
-              <div className={`wrapper-icon ${item.canDelete ? '' : 'disable'}`} title={`${item.canDelete ? 'Xóa' : 'Không thẻ xóa đề đã public'}`} onClick={(id) => this.deleteExam(id)}>
+              <div
+                className={`wrapper-icon ${item.canDelete ? '' : 'disable'}`} title={`${item.canDelete ? 'Xóa' : 'Không thẻ xóa đề đã có người làm'}`}
+                onClick={(e) => this.deleteExam(e, item.id, item.canDelete)}
+              >
                 <CommonIcon.remove />
               </div>
               {
                 item.isActive ? (
-                  <div className="toggle-icon" title="Ngưng kích hoạt" onClick={(id) => this.changeActiveExam(id)}>
+                  <div className="toggle-icon" title="Ngưng kích hoạt" onClick={(e) => this.changeActiveExam(e, item.id, item.isActive)}>
                     <CommonIcon.toggleOn />
                   </div>
                 ) : (
-                    <div className="toggle-icon" title="Kích hoạt" onClick={(id) => this.changeActiveExam(id)}>
+                    <div className="toggle-icon" title="Kích hoạt" onClick={(e) => this.changeActiveExam(e, item.id, item.isActive)}>
                       <CommonIcon.toggleOff />
                     </div>
                   )
@@ -102,8 +179,9 @@ class AdminHome extends React.Component {
   }
 
   render() {
-    const { activePage, inputSearch } = this.state;
-    const { role, all } = this.props;
+    const { activePage, inputSearch, selectedExamIds } = this.state;
+    const { role, all, totalElements } = this.props;
+    const isChooseAll = selectedExamIds.length === all.length;
     // if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
     return (
       <AdminContent>
@@ -128,8 +206,15 @@ class AdminHome extends React.Component {
             <thead>
               <tr>
                 <th className="col col-checkbox">
-                  <div className="wrapper-check-all d-flex p-1 justify-content-between align-items-center" title="Chọn tất cả">
-                    <input type="checkbox" />
+                  <div
+                    className="wrapper-check-all d-flex p-1 justify-content-between align-items-center"
+                    title="Chọn tất cả"
+                    onClick={() => this.selectAll()}
+                  >
+                    <input type="checkbox" 
+                      checked={isChooseAll}
+                      readOnly
+                    />
                     <CommonIcon.caretDownFill />
                   </div>
                 </th>
@@ -149,7 +234,7 @@ class AdminHome extends React.Component {
             <Pagination
               activePage={activePage}
               itemsCountPerPage={SIZE}
-              totalItemsCount={this.state.count}
+              totalItemsCount={totalElements}
               pageRangeDisplayed={5}  // số nút hiển thị
               onChange={this.handlePageChange}
               itemClass={"page-item"}
@@ -165,10 +250,12 @@ class AdminHome extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { account }, exam: { all, callingApi } } = state;
+  const { auth: { account }, exam: { all, callingApi, pagination } } = state;
   return {
     role: account.role,
     all: all || [],
+    totalElements: pagination.totalElements,
+    callingApi,
   }
 }
 
@@ -178,5 +265,8 @@ export default withRouter(connect(
     changeLayout,
     getAllExam,
     changeHeader,
+    changeActiveExam,
+    deleteExam,
+    getDetailExam,
   }
 )(AdminHome));

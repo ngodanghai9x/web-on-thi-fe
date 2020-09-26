@@ -111,11 +111,12 @@ export const createExam = (name, image, subject, level, description, time, examQ
     });
 };
 
-export const updateExam = (name, image, subject, level, description, time, examQuestions) => (dispatch, getState) => {
+export const updateExam = (name, image, subject, level, description, time, examQuestions, id) => (dispatch, getState) => {
   const obj = getObjSubject(subject);
   const req = {
     body: {
       exam: {
+        id,
         name, image,
         subject: obj.vn,
         grade: level,
@@ -126,36 +127,18 @@ export const updateExam = (name, image, subject, level, description, time, examQ
   return callApi('api/exam/update', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
+        dispatch(callApiExam());
         dispatch({
           type: actionTypes.UPDATE_EXAM,
           exam: data.exam,
           subject: obj.eng,
           level,
+          id,
         });
         window.noti.success('Cập nhật đề thành công');
       }
       if (code === 400) {
         window.noti.error('Cập nhật đề thất bại');
-      }
-    })
-    .catch(err => {
-    });
-};
-
-export const deleteExam = (id) => (dispatch, getState) => {
-  const req = {
-    body: {
-      id,
-    }
-  };
-  return callApi('api/get', { method: 'POST', data: req })
-    .then(({ data, code, message }) => {
-      if (data && code === 200) {
-
-        window.noti.success('Xóa đề thành công');
-      }
-      if (code === 400) {
-        window.noti.error('Xóa đề thất bại');
       }
     })
     .catch(err => {
@@ -173,6 +156,25 @@ export const changeActiveExam = (id, isActive) => (dispatch, getState) => {
     .then(({ data, code, message }) => {
       if (data && code === 200) {
 
+        window.noti.success('Đổi trạng thái của đề thành công');
+      }
+      if (code === 400) {
+        window.noti.error('Đổi trạng thái của đề thất bại');
+      }
+    })
+    .catch(err => {
+    });
+};
+export const deleteExam = (examIds) => (dispatch, getState) => {
+  const req = {
+    body: {
+      examIds,
+    }
+  };
+  return callApi('api/exam/delete', { method: 'POST', data: req })
+    .then(({ data, code, message }) => {
+      if (data && code === 200) {
+
         window.noti.success('Đăng nhập thành công');
       }
       if (code === 400) {
@@ -182,7 +184,6 @@ export const changeActiveExam = (id, isActive) => (dispatch, getState) => {
     .catch(err => {
     });
 };
-
 export const doExam = (id, time, examAnswer) => (dispatch, getState) => {
   const req = {
     body: {
@@ -225,11 +226,12 @@ export const getResultExam = (historyId) => (dispatch, getState) => {
     });
 };
 
-export const getAllExam = (pageNumber, pageSize) => (dispatch, getState) => {
+export const getAllExam = (inputSearch, pageNumber, pageSize) => (dispatch, getState) => {
   const req = {
     body: {
       pageSize,
       pageNumber: pageNumber -1,
+      inputSearch,
     }
   };
   return callApi('api/exam/get-all', { method: 'POST', data: req })
@@ -239,6 +241,12 @@ export const getAllExam = (pageNumber, pageSize) => (dispatch, getState) => {
         dispatch({
           type: actionTypes.GET_ALL_EXAM,
           exams: data.examDtos.content,
+          pagination: {
+            currentPage: data.examDtos.currentPage,
+            totalElements: data.examDtos.totalElements,
+            totalPages: data.examDtos.totalPages,
+            pageSize: data.examDtos.pageSize,
+          },
         });
 
         // window.noti.success('Đăng nhập thành công');

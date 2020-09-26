@@ -6,9 +6,16 @@ import AdminContent from 'components/body/layout/AdminContent';
 import UpdateQuestion from './UpdateQuestion';
 import { subjects2 } from 'actions/common/getInfo';
 import { getAvatar, changeLayout } from 'actions/userActions';
-import { changeHeader } from 'actions/examActions';
 import './UpdateExam.scss';
 import { Redirect, withRouter } from 'react-router-dom';
+import CreateEssayExam from '../CreateExam/CreateEssayExam';
+import  {
+  getAllExam,
+  changeHeader,
+  changeActiveExam,
+  deleteExam,
+  getDetailExam,
+} from 'actions/examActions';
 
 const total = 1000;
 class UpdateExam extends React.Component {
@@ -23,18 +30,18 @@ class UpdateExam extends React.Component {
   }
 
   componentDidMount() {
-    const { params } = this.props;
+    const { match: {params} } = this.props;
     this.props.changeLayout(1);
     this.props.changeHeader('Chỉnh sửa đề');
     this.fetchDetailExam(params.id);
 
   }
 
-  fetchDetailExam = (id) => {
-    this.props.getDetailExam(id, true).then(({ data, code, message }) => {
+  fetchDetailExam = (_id) => {
+    this.props.getDetailExam(_id, true).then(({ data, code, message }) => {
       if (data && code === 200) {
         const { id, name, image, subject, grade, description, time, canDelete, examQuestions } = data.exam;
-        this.setState(id, name, image, subject, grade, description, time, canDelete, examQuestions);
+        this.setState({ id, name, image, subject, grade, description, time, canDelete, examQuestions });
       }
       if (code === 400) {
       }
@@ -52,7 +59,14 @@ class UpdateExam extends React.Component {
   }
 
   changeStep = (step) => {
-    this.setState({ step });
+    if (step === 1) {
+      this.setState({ step: 1});
+    }
+    if (this.state.subject === 'Ngữ Văn') {
+      this.setState({ step: 3 });
+    } else {
+      this.setState({ step: 2 });
+    }
   }
 
   onChangeMax255 = (key, val, error) => {
@@ -194,7 +208,8 @@ class UpdateExam extends React.Component {
             </div>
           </div>
           {/* <CreateExamInfo isShow={step === 1} changeStep={this.changeStep} /> */}
-          <UpdateQuestion isShow={step === 2} changeStep={this.changeStep} exam={exam} listQuestion={examQuestions} />
+          <UpdateQuestion isShow={step === 2} changeStep={this.changeStep} exam1={exam} listQuestion={examQuestions} />
+          <CreateEssayExam isShow={step === 3} changeStep={this.changeStep} exam1={exam} />
         </div>
       </AdminContent>
 
@@ -215,5 +230,6 @@ export default withRouter(connect(
   {
     changeLayout,
     changeHeader,
+    getDetailExam,
   }
 )(UpdateExam));

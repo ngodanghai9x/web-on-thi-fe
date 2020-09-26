@@ -37,7 +37,10 @@ class CreateExam extends React.Component {
     }
   }
 
-  changeStep = () => {
+  changeStep = (step) => {
+    if (step === 1) {
+      this.setState({ step: 1});
+    }
     if (this.state.subject === 'Ngữ Văn') {
       this.setState({ step: 3 });
     } else {

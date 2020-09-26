@@ -213,6 +213,7 @@ export const init = () => dispatch => {
   let obj = {};
   try {
     obj = JSON.parse(atob(accessToken.split('.')[1]));
+    console.log("obj", obj)
   } catch (error) {
     obj = {};
   };
