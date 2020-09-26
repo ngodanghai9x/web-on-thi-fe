@@ -1,13 +1,14 @@
 import { actionTypes } from "constants/actionTypes";
 import callApi from "./common/callApi";
-import { getObjSubject } from "./common/getInfo";
+import { getObjSubject, getObjLevel } from "./common/getInfo";
 
 export const getExamBySubject = (subject, level) => (dispatch, getState) => {
   const obj = getObjSubject(subject);
+  const ob = getObjLevel(level);
   const req = {
     body: {
       subject: obj.vn,
-      grade: level,
+      grade: ob.vn,
     }
   };
   return callApi('exam-by-subject', { method: 'POST', data: req })
@@ -16,7 +17,7 @@ export const getExamBySubject = (subject, level) => (dispatch, getState) => {
         dispatch({
           type: actionTypes.GET_EXAM_BY_SUBJECT,
           subject: obj.eng,
-          level,
+          level: ob.en,
           exams: data.exam,
         })
         // window.noti.success('Đăng nhập thành công');
@@ -73,10 +74,13 @@ export const createExam = (name, image, subject, level, description, time, examQ
   const req = {
     body: {
       exam: {
-        name, image,
+        name,
+        image,
         subject: obj.vn,
         grade: level,
-        description, time, examQuestions
+        description,
+        time,
+        examQuestions,
       }
     }
   };

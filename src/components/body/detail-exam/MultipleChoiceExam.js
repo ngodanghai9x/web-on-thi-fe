@@ -4,7 +4,7 @@ import * as CommonIcon from 'components/icons/common';
 
 
 
-import { doExam } from 'actions/examActions';
+import { doExam, getDetailExam } from 'actions/examActions';
 import MainContent from '../layout/MainContent';
 import './styles/MultipleChoiceExam.scss';
 import { Redirect } from 'react-router';
@@ -22,7 +22,8 @@ class MultipleChoiceExam extends React.Component {
 
   componentDidMount() {
     const { match } = this.props;
-    const { subjects } = match.params; // type, môn học
+    const { subject, id } = match.params; // type, môn học
+    this.props.getDetailExam(id, false);
     this.doInterval();
   }
 
@@ -270,5 +271,5 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(mapStateToProps,{
   doExam,
-
+  getDetailExam,
 })(MultipleChoiceExam);

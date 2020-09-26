@@ -7,6 +7,7 @@ import Ads from 'components/common/Ads';
 
 import './styles/ChooseSubjects.scss';
 import { subjects2 } from 'actions/common/getInfo';
+import { Link } from 'react-router-dom';
 
 class ChooseSubjects2 extends React.Component {
   constructor(props) {
@@ -22,15 +23,18 @@ class ChooseSubjects2 extends React.Component {
     const { location } = this.props;
     const btnSub = subjects2.map((item, i) => {
       return (
-        <div className='subject' onClick={() => this.changeSubject(item.en)}>
-          <img src='../../images/logo.png' alt='subject' />
-          <h4 className='title-center'>
-            {item.vn}
-          </h4>
-          <button className='btn btn-outline-info'>
-            Xem chi tiết
+        <Link to={`/dai-hoc/${item.en}`}>
+          <div className='subject' onClick={() => this.changeSubject(item.en)}>
+            <img src='../../images/logo.png' alt='subject' />
+            <h4 className='title-center'>
+              {item.vn}
+            </h4>
+            <button className='btn btn-outline-info'>
+              Xem chi tiết
           </button>
-        </div>
+          </div>
+        </Link>
+
       );
     })
     return (
@@ -60,4 +64,9 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(ChooseSubjects2);
+export default connect(
+  mapStateToProps,
+  {
+    changeSubject,
+  },
+)(ChooseSubjects2);

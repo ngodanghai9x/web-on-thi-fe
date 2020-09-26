@@ -20,6 +20,21 @@ export const getObjSubject = (subject) => {
   return {};
 }
 
+export const levels = [
+  {vn: 'Lớp 10', en: 'highSchool'},
+  {vn: 'Đại học', en: 'college'},
+];
+
+export const getObjLevel = (level) => {
+  if (!level) return {};
+  const result = levels.find(item => 
+    item.vn.toLowerCase() === level.toLowerCase()
+    || item.en.toLowerCase() === level.toLowerCase()
+    );
+  if (result) return result;
+  return {};
+}
+
 export const getInfo = (pathname, subjectParam) => {
   let range;
   let title;

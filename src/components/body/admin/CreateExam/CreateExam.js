@@ -10,6 +10,7 @@ import { changeHeader } from 'actions/examActions';
 // import CreateExamInfo from './CreateExamInfo';
 import './CreateExam.scss';
 import { Redirect, withRouter } from 'react-router-dom';
+import CreateEssayExam from './CreateEssayExam';
 
 class CreateExam extends React.Component {
   constructor(props) {
@@ -36,8 +37,12 @@ class CreateExam extends React.Component {
     }
   }
 
-  changeStep = (step) => {
-    this.setState({ step });
+  changeStep = () => {
+    if (this.state.subject === 'Ngữ Văn') {
+      this.setState({ step: 3 });
+    } else {
+      this.setState({ step: 2 });
+    }
   }
 
   onChangeMax255 = (key, val, error) => {
@@ -185,7 +190,7 @@ class CreateExam extends React.Component {
                 </div>
               </div> */}
               <div className="profile-row d-flex justify-content-center">
-                <button className="btn btn-info" onClick={() => this.changeStep(2)}>
+                <button className="btn btn-info" onClick={() => this.changeStep()}>
                   Next
                 </button>
               </div>
@@ -194,6 +199,7 @@ class CreateExam extends React.Component {
           </div>
           {/* <CreateExamInfo isShow={step === 1} changeStep={this.changeStep} /> */}
           <CreateQuestion isShow={step === 2} changeStep={this.changeStep} exam1={exam1} />
+          <CreateEssayExam isShow={step === 3} changeStep={this.changeStep} exam1={exam1} />
         </div>
       </AdminContent>
 

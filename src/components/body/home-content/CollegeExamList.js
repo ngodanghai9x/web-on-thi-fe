@@ -29,29 +29,34 @@ class CollegeExamList extends React.Component {
   }
 
   renderExam = (exams) => {
+    const { match, location } = this.props;
+    const { subject } = match.params; // type, môn học
     return exams.map(item => {
       return (
         <div className='exam'>
           <div className='name'>
-            Đề luyện thi vào lớp 10 môn Tiếng Anh 2020 - Đề số 2
-            {item.vn}
+            {item.name}
           </div>
           <div className='description'>
-            Mời các em cùng tham khảo đề luyện thi vào lớp 10 2020 môn Tiếng Anh - Đề số 1 (Có đáp án) được chia sẻ để có thêm tài liệu ôn tập chuẩn bị cho kì thi vào lớp 10 năm 2020 sắp tới. Tài liệu đi kèm có đáp án giúp các em so sánh kết quả bài làm và tự đánh giá được lực học của bản thân, từ đó đặt ra kế hoạch ôn tập phù hợp giúp để đạt kết quả cao trong kì thi.
+            {item.description}
           </div>
           <div className='time'>
-            Thời gian làm đề: 60 phút
+            {`Thời gian làm đề: ${item.time} phút`}
           </div>
           <div className='amount'>
-            Tổng số câu: 46
+            {`Tổng số câu: ${item.numQuestion}`}
           </div>
           <div className='wrapper-button d-flex justify-content-end'>
-            <button className='btn btn-info'>
-              Vào thi
+            <Link to={`/dai-hoc/${subject}/trac-nghiem/${item.id}`}>
+              <button className='btn btn-info'>
+                Vào thi
             </button>
-            <div className='text-link'>
-              Xem chi tiết >
+            </Link>
+            <Link to={`/dai-hoc/${subject}/trac-nghiem/ket-qua/${item.id}`}>
+              <div className='text-link'>
+                Xem chi tiết >
             </div>
+            </Link>
           </div>
         </div>
       );
@@ -64,7 +69,7 @@ class CollegeExamList extends React.Component {
   }
 
   render() {
-    const { match, location, activeCollegeSub } = this.props;
+    const { match, location, activeCollegeSub, college } = this.props;
     const { subject } = match.params; // type, môn học
     const objSub = getObjSubject(subject);
     return (
@@ -74,7 +79,7 @@ class CollegeExamList extends React.Component {
             {subjects2.map((item, idx) => {
               if (idx < 3) {
                 return (
-                  <Link  to={`/dai-hoc/${item.en}`} >
+                  <Link to={`/dai-hoc/${item.en}`} >
                     <button type="button"
                       className={`btn btn-outline-info btn-link-sub ${activeCollegeSub === item.en ? 'active' : ''}`}
                       onClick={() => this.getExamBySubject(item.en)}
@@ -95,7 +100,7 @@ class CollegeExamList extends React.Component {
 
           <div className='main-content row'>
             <div className='col-lg-8 col-md-12'>
-              {this.renderExam(subjects2)}
+              {this.renderExam(college.all)}
             </div>
             <div className='col-lg-4 col-md-12'>
               <CompletedExam />
@@ -110,11 +115,12 @@ class CollegeExamList extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  const { exam: { activeHSSub, activeCollegeSub } } = state;
+  const { exam: { activeHSSub, activeCollegeSub, college } } = state;
 
   return {
     activeCollegeSub,
     activeHSSub,
+    college,
   }
 };
 
