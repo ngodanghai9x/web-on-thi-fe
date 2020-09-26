@@ -2,6 +2,13 @@ import { actionTypes } from "constants/actionTypes";
 import callApi from "./common/callApi";
 import { getObjSubject, getObjLevel } from "./common/getInfo";
 
+export const callApiExam = (kind = '') => (dispatch) => {
+  dispatch({
+    type: actionTypes.CALL_API_EXAM,
+    kind,
+  })
+}
+
 export const getExamBySubject = (subject, level) => (dispatch, getState) => {
   const obj = getObjSubject(subject);
   const ob = getObjLevel(level);
@@ -38,20 +45,20 @@ export const getDetailExam = (id, isAdmin) => (dispatch, getState) => {
     }
   };
   return callApi(url, { method: 'POST', data: req })
-    // .then(({ data, code, message }) => {
-    //   if (data && code === 200) {
-    //     dispatch({
-    //       type: actionTypes.GET_DETAIL_EXAM,
-    //       exam: data.exam,
-    //     })
-    //     // window.noti.success('Đăng nhập thành công');
-    //   }
-    //   if (code === 400) {
-    //     // window.noti.error('Tài khoản hoặc mật khẩu (mã OTP) không đúng');
-    //   }
-    // })
-    // .catch(err => {
-    // });
+  // .then(({ data, code, message }) => {
+  //   if (data && code === 200) {
+  //     dispatch({
+  //       type: actionTypes.GET_DETAIL_EXAM,
+  //       exam: data.exam,
+  //     })
+  //     // window.noti.success('Đăng nhập thành công');
+  //   }
+  //   if (code === 400) {
+  //     // window.noti.error('Tài khoản hoặc mật khẩu (mã OTP) không đúng');
+  //   }
+  // })
+  // .catch(err => {
+  // });
 };
 
 export const changeSubject = (level, subject) => (dispatch, getState) => {
@@ -87,6 +94,7 @@ export const createExam = (name, image, subject, level, description, time, examQ
   return callApi('api/exam/add', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
+        dispatch(callApiExam());
         dispatch({
           type: actionTypes.CREATE_EXAM,
           exam: data.exam,
@@ -221,7 +229,7 @@ export const getAllExam = (pageNumber, pageSize) => (dispatch, getState) => {
   const req = {
     body: {
       pageSize,
-      pageNumber,
+      pageNumber: pageNumber -1,
     }
   };
   return callApi('api/exam/get-all', { method: 'POST', data: req })
@@ -266,6 +274,28 @@ export const getRankList = (examId) => (dispatch, getState) => {
     });
 };
 
+export const getCompletedExams = () => (dispatch, getState) => {
+  const req = {
+    body: {
+
+    }
+  };
+  return callApi('api/profile/get-completed-exam', { method: 'POST', data: req })
+    .then(({ data, code, message }) => {
+      if (data && code === 200) {
+        dispatch({
+          type: actionTypes.GET_COMPLETED_EXAMS,
+          completedExams: data.completedExamDtos,
+        })
+        // window.noti.success('Đăng nhập thành công');
+      }
+      if (code === 400) {
+        // window.noti.error('Tài khoản hoặc mật khẩu (mã OTP) không đúng');
+      }
+    })
+    .catch(err => {
+    });
+}
 const receiveResultExam = (result) => (dispatch) => {
   dispatch({
     type: actionTypes.GET_RESULT_EXAM,

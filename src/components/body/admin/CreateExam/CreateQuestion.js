@@ -3,7 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CKEditor from 'ckeditor4-react';
 import * as CommonIcon from 'components/icons/common';
-import { createExam } from 'actions/examActions';
+import { createExam, callApiExam } from 'actions/examActions';
+import { withRouter } from 'react-router';
 
 // import './styles/CreateExam.scss';
 const total = 50;
@@ -30,14 +31,9 @@ class CreateQuestion extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    //for update
-    // const { pathName } = this.props;
-    // if (nextProps.pathName && nextProps.pathName.abc) {
-    //   const listQ = [].map((item, i) => ({
-    //     [`Q${i}`] : { ...item }
-    //   }))
-    //   this.setState({ listQ });
-    // }
+    if (!nextProps.callingApi && this.props.callingApi === 'CreateQuestion') {
+      nextProps.history.push('/admin');
+    }
   }
 
   onEditorChange = (evt) => {
@@ -96,9 +92,12 @@ class CreateQuestion extends React.Component {
   }
 
   save = (can) => {
-    const { name, image, subject, level, description, time } = this.props.exam1;
+    const { exam1, callingApi } = this.props;
+    const { name, image, subject, level, description, time } = exam1;
+    const { listQ } = this.state;
+    this.props.callApiExam('CreateQuestion');
     if (!can) return;
-    const listQuestion = Object.values(this.state.listQ).map(item => ({
+    const listQuestion = Object.values(listQ).map(item => ({
       ...item,
       correctAnswer: item[item.correctAnswer],
     }));
@@ -183,11 +182,11 @@ class CreateQuestion extends React.Component {
 
   render() {
     const { listQ, pointer } = this.state;
-    const { isShow } = this.props;
-    const canBack = Object.keys(listQ).length > 1 && pointer > 0;
-    const canNext = pointer < Object.keys(listQ).length - 1;
-    const canAdd = Object.keys(listQ).length < total && pointer < total;
-    const canSave = Object.keys(listQ).length >= 1;
+    const { isShow, callingApi } = this.props;
+    const canBack = callingApi !== 'CreateQuestion' && Object.keys(listQ).length > 1 && pointer > 0;
+    const canNext = callingApi !== 'CreateQuestion' && pointer < Object.keys(listQ).length - 1;
+    const canAdd = callingApi !== 'CreateQuestion' && Object.keys(listQ).length < total && pointer < total;
+    const canSave = callingApi !== 'CreateQuestion' && Object.keys(listQ).length >= 1;
     
     return (
       <React.Fragment>
@@ -213,10 +212,16 @@ class CreateQuestion extends React.Component {
     );
   }
 }
-
-export default connect(
+const mapStateToProps = (state, ownProps) => {
+  const { auth: { account }, exam: { callingApi } } = state;
+  return {
+    role: account.role,
+  }
+}
+export default withRouter(connect(
   null,
   {
     createExam,
+    callApiExam,
   }
-)(CreateQuestion);
+)(CreateQuestion));

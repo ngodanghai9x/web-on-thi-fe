@@ -32,6 +32,7 @@ export const login = (username, password) => (dispatch, getState) => {
         localStorage.setItem('accessToken', accessToken);
         dispatch(init())
         window.noti.success('Đăng nhập thành công');
+        window.location.pathname = '/';
       }
       if (code === 400) {
         window.noti.error('Tài khoản hoặc mật khẩu (mã OTP) không đúng');
@@ -67,6 +68,7 @@ export const createAccount = (name, username, password1, email) => (dispatch, ge
       console.log("createAccount -> data=", { data, code, message });
       if (data && code === 200) {
         window.noti.success('Đăng ký tài khoản thành công');
+        window.location.pathname = '/dang-nhap';
       }
       if (code === 400) {
         if (message === "Username Exists") return window.noti.error('Tài khoản này đã tồn tài, vui lòng nhập tài khoản khác');

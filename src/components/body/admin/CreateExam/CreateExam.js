@@ -162,7 +162,11 @@ class CreateExam extends React.Component {
                 </div>
               </div>
               <div className="profile-row">
-                <div className="key">Thời gian làm</div>
+                <div className="key">
+                  Thời gian làm
+                  <br/>
+                  (phút)
+                </div>
                 <div className="value">
                   <input
                     type="number" value={time || ''}

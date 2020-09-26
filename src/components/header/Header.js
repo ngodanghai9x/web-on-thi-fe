@@ -28,7 +28,7 @@ class Header extends React.Component {
 
   renderDropDown1 = () => {
     return subjects1.map(item => (
-      <div className='dropdown-item'>
+      <div className='dropdown-item' key={`/lop-10/${item.en}`}>
         <Link to={`/lop-10/${item.en}`}>
           {item.vn}
           <CommonIcon.chevronRight />
@@ -39,7 +39,7 @@ class Header extends React.Component {
 
   renderDropDown2 = () => {
     return subjects2.map(item => (
-      <div className='dropdown-item'>
+      <div className='dropdown-item' key={`/dai-hoc/${item.en}`}>
         <Link to={`/dai-hoc/${item.en}`}>
           {item.vn}
           <CommonIcon.chevronRight />
@@ -113,7 +113,7 @@ class Header extends React.Component {
                 </div>
               </div>
             </div>
-            {localStorage.getItem('accessToken')
+            {this.props.accessToken
               ? (
                 <div className='avatar route'>
                   <Link to='/thong-tin-ca-nhan/'>
@@ -138,11 +138,12 @@ class Header extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { user: { name, avatar }, layout } } = state;
+  const { auth: { user: { name, avatar }, layout, accessToken } } = state;
   return {
     name,
     avatar,
     layout,
+    accessToken,
   };
 };
 

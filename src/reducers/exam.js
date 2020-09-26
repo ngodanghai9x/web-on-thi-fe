@@ -2,11 +2,13 @@ import { actionTypes } from '../constants/actionTypes';
 
 const initState = {
   id: null,
+  callingApi: '',
   activeCollegeSub: 'toan',
   activeHSSub: 'toan',
   header: 'Danh sách đề',
   all: [],
   currentExam: {},
+  completedExams: [],
   result: {
     // numAnswer: 0,
     // numCorrectAns: 0,
@@ -91,6 +93,16 @@ const exam = (state = initState, action) => {
       return {
         ...state,
         activeCollegeSub: action.subject,
+      };
+    case actionTypes.CALL_API_EXAM:
+      return {
+        ...state,
+        callingApi: action.kind,
+      }
+    case actionTypes.GET_COMPLETED_EXAMS: 
+      return {
+        ...state,
+        completedExams: action.completedExams,
       };
     case actionTypes.GET_ALL_EXAM:
       return {

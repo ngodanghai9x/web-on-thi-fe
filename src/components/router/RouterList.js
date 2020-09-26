@@ -42,15 +42,15 @@ export default class RouterList extends React.Component {
 
         <Route exact path="/lop-10/" component={ChooseSubjects} />
         <Route exact path="/lop-10/:subject" component={HighSchoolExamList} />
-        <Route exact path="/lop-10/:subject/trac-nghiem/:id" component={MultipleChoiceExam} />
-        <Route exact path="/lop-10/:subject/trac-nghiem/ket-qua/:id" component={MultipleChoiceResult} />
-        <Route exact path="/lop-10/:subject/tu-luan/:id" component={EssayExam} />
+        <Route exact path="/lop-10/:subject/:id" component={MultipleChoiceExam} />
+        <Route exact path="/lop-10/:subject/ket-qua/:id" component={MultipleChoiceResult} />
+        <Route exact path="/lop-10/van/:id" component={EssayExam} />
 
         <Route exact path="/dai-hoc/" component={ChooseSubjects2} />
         <Route exact path="/dai-hoc/:subject" component={CollegeExamList} />
-        <Route exact path="/dai-hoc/:subject/trac-nghiem/:id" component={MultipleChoiceExam} />
-        <Route exact path="/dai-hoc/:subject/trac-nghiem/ket-qua/:id" component={MultipleChoiceResult} />
-        <Route exact path="/dai-hoc/:subject/tu-luan/:id" component={EssayExam} />
+        <Route exact path="/dai-hoc/:subject/:id" component={MultipleChoiceExam} />
+        <Route exact path="/dai-hoc/:subject/ket-qua/:id" component={MultipleChoiceResult} />
+        <Route exact path="/dai-hoc/van/:id" component={EssayExam} />
 
         <Route exact path="/admin" component={AdminHome} />
         <Route exact path="/admin/create-exam" component={CreateExam} />

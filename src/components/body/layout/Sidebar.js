@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
-import { getAvatar, changeLayout } from 'actions/userActions';
+import { getAvatar, changeLayout, logout } from 'actions/userActions';
 
 
 
@@ -51,7 +51,7 @@ class Sidebar extends React.Component {
                   <span className="fa fa-sticky-note mr-3"></span> Tài khoản
                 </Link>
               </li>
-              <li className={``} >
+              <li className={``} onClick={() => this.props.logout()}>
                 <Link  to='' >
                   <span className="fa fa-paper-plane mr-3"></span> Đăng xuất
                 </Link>
@@ -72,5 +72,6 @@ export default withRouter(connect(
   null,
   {
     changeLayout,
+    logout,
   }
   )(Sidebar)) ;

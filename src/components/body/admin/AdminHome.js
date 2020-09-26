@@ -25,7 +25,7 @@ class AdminHome extends React.Component {
   componentDidMount() {
     this.props.changeHeader('Danh sách đề');
     this.props.changeLayout(1);
-    this.props.getAllExam()
+    this.props.getAllExam(this.state.activePage, SIZE);
   }
 
   reload = () => {
@@ -165,10 +165,10 @@ class AdminHome extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { account }, exam: { all } } = state;
+  const { auth: { account }, exam: { all, callingApi } } = state;
   return {
     role: account.role,
-    all: [{}, {}],
+    all: all || [],
   }
 }
 

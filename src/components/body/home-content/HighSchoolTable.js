@@ -12,7 +12,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 import { getAvatar, changeLayout } from 'actions/userActions';
 import MainContent from 'components/body/layout/MainContent';
-import { subjects2 } from 'actions/common/getInfo';
+import { getObjSubject, subjects2 } from 'actions/common/getInfo';
 import { getExamBySubject, changeSubject } from 'actions/examActions';
 
 class HighSchoolTable extends React.Component {
@@ -26,13 +26,26 @@ class HighSchoolTable extends React.Component {
     this.props.getExamBySubject();
   }
 
+  renderExams = (list, path) => {
+    return list.map((item, i) => {
+      if (item && i < 5) {
+        return (
+          <Link className='item d-block' to={`lop-10/${getObjSubject(item.subject).en}/${item.id}`} key={`${item.id}-HighSchoolTable-exam`}>
+            {`> ${item.name}`}
+          </Link>
+        )
+      }
+      return null;
+    });
+  }
+
   getExam = (subject) => {
     this.props.changeSubject(10, subject);
   }
 
 
   render() {
-    const { location, activeHSSub } = this.props;
+    const { highSchool, activeHSSub } = this.props;
     const { activeSub } = this.state;
     return (
       <React.Fragment>
@@ -61,12 +74,7 @@ class HighSchoolTable extends React.Component {
 
           <div className='content' style={{ padding: '15px 20px' }}>
             <h5>Các đề được quan tâm nhiều nhất</h5>
-            <div className='item'>
-              > Trắc nghiệm ôn tập kiến thức bài Căn thức bậc hai
-              </div>
-            <div className='item'>
-              > Trắc nghiệm ôn tập kiến thức bài Căn thức bậc hai
-              </div>
+            {this.renderExams(highSchool.all)}
             <Link  to={`/lop-10/${activeHSSub}`} >
               <p className='more' style={{ textAlign: 'right', margin: 0 }}>Xem thêm ></p>
             </Link>
@@ -79,11 +87,12 @@ class HighSchoolTable extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  const { exam: { activeHSSub, activeCollegeSub } } = state;
+  const { exam: { activeHSSub, activeCollegeSub, highSchool } } = state;
 
   return {
     activeCollegeSub,
     activeHSSub,
+    highSchool,
   }
 };
 

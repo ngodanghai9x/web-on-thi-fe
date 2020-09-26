@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
 
-
+import { getCompletedExams } from 'actions/examActions';
 
 
 
 import './styles/CompletedExam.scss';
+import { Link, withRouter } from 'react-router-dom';
 
 class CompletedExam extends React.Component {
   constructor(props) {
@@ -15,11 +16,41 @@ class CompletedExam extends React.Component {
   }
 
   componentDidMount() {
-    // this.props.getCompletedExam();
+    this.props.getCompletedExams();
+  }
+
+  renderExams = (list, path) => {
+    if (!list || list.length === 0) {
+      return (
+        <div className='alert1'>
+          Bạn chưa hoàn thành đề nào
+        </div>
+      );
+    }
+    return list.map((item, i) => {
+      if (item && i < 4) {
+        return (
+          <Link className='item d-block' to={`${path}/subject/${item.id}`} key={`${item.id}-completed-exam`}>
+          {`> ${item.name}`}
+        </Link>
+        )
+      }
+      return null;
+    });
   }
 
 
   render() {
+    const { completedExams, accessToken, location: { pathname } } = this.props;
+    let path = '';
+    if (pathname.includes('/lop-10')) {
+      path = '/lop-10';
+    } else {
+      path = '/dai-hoc';
+    }
+
+    if (!accessToken) return null;
+    
     return (
       <React.Fragment>
         <div className='completed-exam'>
@@ -27,15 +58,7 @@ class CompletedExam extends React.Component {
             ĐỀ BẠN ĐÃ HOÀN THÀNH
           </h6>
           <div className='exam-suggestion'>
-            <div className='alert1'>
-              Bạn chưa hoàn thành đề nào
-              </div>
-            <div className='item'>
-              > Trắc nghiệm ôn tập kiến thức bài Căn thức bậc hai
-              </div>
-            <div className='item'>
-              > Trắc nghiệm ôn tập kiến thức bài Căn thức bậc hai
-              </div>
+            {this.renderExams(completedExams, path)}
           </div>
         </div>
       </React.Fragment>
@@ -45,9 +68,16 @@ class CompletedExam extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
+  const { exam: { completedExams }, auth: { accessToken } } = state;
   return {
-
+    completedExams,
+    accessToken,
   };
 };
 
-export default connect(mapStateToProps)(CompletedExam);
+export default withRouter(connect(
+  mapStateToProps,
+  {
+    getCompletedExams,
+  },
+)(CompletedExam));

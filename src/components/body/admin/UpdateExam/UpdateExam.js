@@ -27,7 +27,7 @@ class UpdateExam extends React.Component {
     this.props.changeLayout(1);
     this.props.changeHeader('Chỉnh sửa đề');
     this.fetchDetailExam(params.id);
-    
+
   }
 
   fetchDetailExam = (id) => {
@@ -152,7 +152,11 @@ class UpdateExam extends React.Component {
                 </div>
               </div>
               <div className="profile-row">
-                <div className="key">Thời gian làm</div>
+                <div className="key">
+                  Thời gian làm
+                  <br />
+                  (phút)
+                </div>
                 <div className="value">
                   <input
                     type="number" value={time || ''}
@@ -190,7 +194,7 @@ class UpdateExam extends React.Component {
             </div>
           </div>
           {/* <CreateExamInfo isShow={step === 1} changeStep={this.changeStep} /> */}
-          <UpdateQuestion isShow={step === 2} changeStep={this.changeStep} exam={exam} listQuestion={examQuestions}/>
+          <UpdateQuestion isShow={step === 2} changeStep={this.changeStep} exam={exam} listQuestion={examQuestions} />
         </div>
       </AdminContent>
 
@@ -200,7 +204,7 @@ class UpdateExam extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { account }} = state;
+  const { auth: { account } } = state;
   return {
     role: account.role,
   }
@@ -212,4 +216,4 @@ export default withRouter(connect(
     changeLayout,
     changeHeader,
   }
-  )(UpdateExam)) ;
+)(UpdateExam));

@@ -31,9 +31,9 @@ class HighSchoolExamList extends React.Component {
   renderExam = (exams) => {
     const { match, location } = this.props;
     const { subject } = match.params; // type, môn học
-    return exams.map(item => {
+    return exams.map((item, i) => {
       return (
-        <div className='exam'>
+        <div className='exam' style={i === exams.length -1 ? { border: 'none' } : {}}>
           <div className='name'>
             {item.name}
           </div>
@@ -47,12 +47,12 @@ class HighSchoolExamList extends React.Component {
             {`Tổng số câu: ${item.numQuestion}`}
           </div>
           <div className='wrapper-button d-flex justify-content-end'>
-            <Link to={`/dai-hoc/${subject}/trac-nghiem/${item.id}`}>
+            <Link to={`/dai-hoc/${subject}/${item.id}`}>
               <button className='btn btn-info'>
                 Vào thi
             </button>
             </Link>
-            <Link to={`/dai-hoc/${subject}/trac-nghiem/ket-qua/${item.id}`}>
+            <Link to={`/dai-hoc/${subject}/ket-qua/${item.id}`}>
               <div className='text-link'>
                 Xem chi tiết >
             </div>
