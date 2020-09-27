@@ -107,7 +107,12 @@
 
 	.contact-item {
 		display: flex;
+		align-items: center;
 		margin: 8px;
+		i {
+			min-width: 16px;
+			max-width: 20px;
+		}
 	}
 
 	b {

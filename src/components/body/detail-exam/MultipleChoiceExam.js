@@ -7,7 +7,7 @@ import * as CommonIcon from 'components/icons/common';
 import { doExam, getDetailExam } from 'actions/examActions';
 import MainContent from '../layout/MainContent';
 import './styles/MultipleChoiceExam.scss';
-import { Redirect } from 'react-router';
+import { Redirect, withRouter } from 'react-router';
 import { getMinute } from 'actions/common/utils';
 
 class MultipleChoiceExam extends React.Component {
@@ -16,6 +16,7 @@ class MultipleChoiceExam extends React.Component {
     this.state = {
       examId: 0,
       examTime: 2700, // 45 * 60
+      examTotalTime: 2700, // 45 * 60
       examQuestions: [],
     };
     this.timeInterval = null;
@@ -33,7 +34,7 @@ class MultipleChoiceExam extends React.Component {
       if (data && code === 200) {
         const { id, name, image, subject, grade, description, time, canDelete, examQuestions } = data.exam;
         console.log("MultipleChoiceExamResult -> fetchDetailExam -> exam", data.exam)
-        this.setState({ examId: id, name, image, subject, grade, description, examTime: time, canDelete, examQuestions });
+        this.setState({ examId: id, name, image, subject, grade, description, examTime: time, examTotalTime: time, canDelete, examQuestions });
       }
       if (code === 400) {
       }
@@ -61,11 +62,12 @@ class MultipleChoiceExam extends React.Component {
   }
 
   renderQuestion = (examQuestions) => {
+    if (!examQuestions) return null;
     const opt = ['option1', 'option2', 'option3', 'option4'];
     return examQuestions.map((item, i) => {
       return (
         <React.Fragment>
-          <div className="game-code-view">
+          <div className="game-code-view" style={i === examQuestions.length -1 ? { border: 'none' } : {}}>
             <div className="card-game-content" >
               <span dangerouslySetInnerHTML={{ __html: `<b>Câu ${i + 1}: </b>${item.question}` }}>
                 {/* {item.question} */}
@@ -109,13 +111,17 @@ class MultipleChoiceExam extends React.Component {
   }
 
   submit = () => {
-    const { examTime, examId } = this.state;
+    const { examTime, examId, examTotalTime } = this.state;
+    const { location, history, match } = this.props;
+    const idx = location.pathname.lastIndexOf('/');
     if (examTime === 0) return;
     const examAnswer = Object.values(this.state).filter(item => item && item.questionId && item.answerOP && item.answer);
     // const examAnswer = arrVal.map(item => ({}));
     console.log("MultipleChoiceExam -> submit -> examAnswer", examAnswer)
-    this.props.doExam(examId, 2700 - examTime, examAnswer);
+    this.props.doExam(examId, examTotalTime - examTime, examAnswer);
     clearInterval(this.timeInterval);
+    history.push(`${location.pathname.substr(0,idx)}/ket-qua/${match.params.id}`);
+    
   }
 
   renderChoiceTable = (examQuestions) => {
@@ -285,7 +291,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, {
+export default withRouter(connect(mapStateToProps, {
   doExam,
   getDetailExam,
-})(MultipleChoiceExam);
+})(MultipleChoiceExam));

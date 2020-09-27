@@ -28,8 +28,8 @@ class CreateExam extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pathName } = this.props;
-    if (nextProps.pathName !== pathName) {
+    const { location: {pathname} } = this.props;
+    if (nextProps.location.pathname !== pathname) {
       this.setState({
         level: 1,
         subject: 2,

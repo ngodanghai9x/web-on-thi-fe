@@ -23,14 +23,15 @@ class CollegeTable extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getExamBySubject();
+    this.props.getExamBySubject(this.props.activeHSSub, 13);
   }
 
   renderExams = (list, path) => {
+    if (!list || list.length === 0) return 'Chưa có dữ liệu';
     return list.map((item, i) => {
       if (item && i < 5) {
         return (
-          <Link className='item d-block' to={`dai-hoc/${getObjSubject(item.subject).en}/${item.id}`} key={`${item.id}-CollegeTable-exam`}>
+          <Link className='item d-block' to={`dai-hoc/${getObjSubject(item.subject).en}/ket-qua/${item.id}`} key={`${item.id}-CollegeTable-exam`}>
             {`> ${item.name}`}
           </Link>
         )
@@ -40,7 +41,7 @@ class CollegeTable extends React.Component {
   }
 
   getExamBySubject = (subject) => {
-    this.props.changeSubject(13, subject);
+    this.props.getExamBySubject(subject, 13);
   }
 
 
@@ -71,7 +72,7 @@ class CollegeTable extends React.Component {
           <div className='content' style={{ padding: '15px 20px' }}>
             <h5>Các đề được quan tâm nhiều nhất</h5>
             {this.renderExams(college.all)}
-            <Link  to={`/lop-10/${activeCollegeSub}`} >
+            <Link  to={`/dai-hoc/${activeCollegeSub}`} >
               <p className='more' style={{ textAlign: 'right', margin: 0 }}>Xem thêm ></p>
             </Link>
           </div>

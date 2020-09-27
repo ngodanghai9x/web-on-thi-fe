@@ -9,7 +9,7 @@ import {
 
 
 import MainContent from '../layout/MainContent';
-// import './styles/RankList.scss';
+import './styles/RankList.scss';
 import { Redirect, withRouter } from 'react-router';
 
 class RankList extends React.Component {
@@ -26,12 +26,30 @@ class RankList extends React.Component {
 
   render() {
     const { accessToken, rankList } = this.props;
-    const data = rankList.map(item => (<div>{item.name}</div>));
+    const rankList1 = [1,2,3,4,5];
     // if (!accessToken) return <Redirect to='/' />
     return (
-      <div className='EssayExam'>
-        RankList
-        {data}
+      <div className='RankList'>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th className="col-stt">STT</th>
+              <th className="col-name">Thí sinh</th>
+              <th className="col-point">Điểm</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rankList1.map((item, i) => (
+              <tr className="tr">
+                <td className="col-stt">{i + 1}</td>
+                <td className="col-name text-ellipsis">Tên Thí sinh</td>
+                <td className="col-point">
+                  {parseFloat("3.456").toFixed(2)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }
@@ -39,11 +57,11 @@ class RankList extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth, exam: {rankList} } = state;
+  const { auth, exam: { rankList } } = state;
   return {
     user: auth.user,
     accessToken: auth.accessToken,
-    rankList,
+    rankList: rankList,
   };
 };
 

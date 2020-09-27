@@ -4,7 +4,11 @@ import * as CommonIcon from 'components/icons/common';
 
 
 
-import { doExam, getDetailExam } from 'actions/examActions';
+import { 
+  doExam,
+  getDetailExam,
+  getResultExam,
+} from 'actions/examActions';
 import MainContent from '../layout/MainContent';
 import './styles/MultipleChoiceExam.scss';
 import { Redirect } from 'react-router';
@@ -14,8 +18,6 @@ class MultipleChoiceExamResult extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      examId: 0,
-      examTime: 2700, // 45 * 60
     };
     this.timeInterval = null;
   }
@@ -23,30 +25,7 @@ class MultipleChoiceExamResult extends React.Component {
   componentDidMount() {
     const { match } = this.props;
     const { subject, id } = match.params; // type, môn học
-    this.fetchDetailExam(id, false);
-    this.doInterval();
-  }
-
-  fetchDetailExam = (_id) => {
-    this.props.getDetailExam(_id, false).then(({ data, code, message }) => {
-      if (data && code === 200) {
-        const { id, name, image, subject, grade, description, time, canDelete, examQuestions } = data.exam;
-        console.log("MultipleChoiceExamResult -> fetchDetailExam -> exam", data.exam)
-        this.setState({ examId: id, name, image, subject, grade, description, examTime: time, canDelete, examQuestions });
-      }
-      if (code === 400) {
-      }
-    })
-  }
-
-  doInterval = () => {
-    this.timeInterval = setInterval(() => {
-      if (this.state.examTime === 0) {
-        clearInterval(this.timeInterval);
-      } else {
-        this.setState({ examTime: this.state.examTime - 1 });
-      }
-    }, 1000);
+    this.props.getResultExam(id);
   }
 
   componentWillReceiveProps() {
@@ -60,6 +39,7 @@ class MultipleChoiceExamResult extends React.Component {
   }
 
   renderQuestion = (examQuestions) => {
+    if (!examQuestions) return null;
     const opt = ['option1', 'option2', 'option3', 'option4'];
     return examQuestions.map((item, i) => {
       return (
@@ -76,15 +56,14 @@ class MultipleChoiceExamResult extends React.Component {
                   <div className={`input-group-prepend 
                     ${item.correctAnswer && item[option] === item.correctAnswer ? 'true' : ''}
                     ${item.answerOP && item[option] === item.answerOP ? 'chosen' : ''}
+                    ${item.answer && item[option] === item.answer ? 'active' : ''}
                   `}
                   >
                     <div className="input-group-text">
                       <input type="radio" name={item.id} className="input-items disable"
                         onChange={() => { }} readOnly
-                        // onClick={() => this.choose(i, item.id, item[option], option)}
-                        checked={this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP}
-                      // onClick={() => this.setState({ [`Q${i}`]: { questionId: item.id, answerOP: item[option] } })}
-                      // checked={this.state[`Q${i}`] && item[option] === this.state[`Q${i}`].answerOP}
+                        checked={item.answer && item[option] === item.answer}
+
                       />
                     </div>
                     <div className="input-content">
@@ -100,24 +79,9 @@ class MultipleChoiceExamResult extends React.Component {
     })
   }
 
-  choose = (i, questionId, answer, answerOP) => {
-    this.setState({
-      [`Q${i}`]: { questionId, answer, answerOP }
-      // [`Q${i}`]: { questionId: item.id, answerOP: item[option] }
-    })
-  }
-
-  submit = () => {
-    const { examTime, examId } = this.state;
-    if (examTime === 0) return;
-    const examAnswer = Object.values(this.state).filter(item => item && item.questionId && item.answerOP && item.answer);
-    // const examAnswer = arrVal.map(item => ({}));
-    console.log("MultipleChoiceExam -> submit -> examAnswer", examAnswer)
-    this.props.doExam(examId, 2700 - examTime, examAnswer)
-
-  }
 
   renderChoiceTable = (examQuestions) => {
+    if (!examQuestions) return null;
     const opt = ['option1', 'option2', 'option3', 'option4'];
     const key = { option1: "A", option2: "B", option3: "C", option4: "D" };
     return examQuestions.map((item, i) => {
@@ -130,6 +94,7 @@ class MultipleChoiceExamResult extends React.Component {
                 return (
                   <div className={`edf disable
                     ${item.correctAnswer && item[option] === item.correctAnswer ? 'true' : ''}
+                    ${item.answer && item[option] === item.answer ? 'active' : ''}
                     ${this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP ? 'active' : ''}
                     `}
                     // onClick={() => this.choose(i, item.id, item[option], option)}
@@ -148,8 +113,9 @@ class MultipleChoiceExamResult extends React.Component {
   }
 
   render() {// file này là trang bài làm
-    // const { accessToken, examQuestions } = this.props;
-    const examQuestions = [
+    const { accessToken, result } = this.props;
+    const { examQuestions } = result;
+    const examQuestions1 = [
       {
         "id": 1,
         "image": "",
@@ -198,50 +164,6 @@ class MultipleChoiceExamResult extends React.Component {
         <div className="container MultipleChoiceExam">
           <div className="row">
             <div className="col-9">
-              {/* <div className="game-code-view">
-                <div className="card-game-content" >
-                  <b>Câu 1: </b>
-                  Trong thí nghiệm của Y-âng về giao thoa ánh sáng, khoảng cách giữa hai khe là 1 mm, khoảng cách từ mặt phẳng chứa hai khe đến màn quan sát lúc đầu là 2 m. Nguồn sáng đơn sắc có bước sóng 750 nm.
-                  Truyền cho màn vận tốc ban đầu hướng lại gần mặt phẳng hai khe để màn dao động điều hòa theo phương vuông góc với mặt phẳng hai khe với biên độ 40 cm và chu kì 6 s.
-                  Thời gian kể từ lúc màn dao động đến khi điểm M trên màn cách vân trung tâm 19,8 mm cho vân sáng lần thứ 8 bằng
-                </div>
-                <div className="group-checkbox">
-                  <div className="input-group-prepend">
-                    <div className="input-group-text">
-                      <input type="radio" className="input-items"></input>
-                    </div>
-                    <div className="input-content">
-                      3 s
-                                        </div>
-                  </div>
-                  <div className="input-group-prepend">
-                    <div className="input-group-text">
-                      <input type="radio" className="input-items"></input>
-                    </div>
-                    <div className="input-content">
-                      3,5 s
-                                        </div>
-                  </div>
-
-                  <div className="input-group-prepend">
-                    <div className="input-group-text">
-                      <input type="radio" className="input-items"></input>
-                    </div>
-                    <div className="input-content">
-                      2s
-                                        </div>
-                  </div>
-
-                  <div className="input-group-prepend">
-                    <div className="input-group-text">
-                      <input type="radio" className="input-items"></input>
-                    </div>
-                    <div className="input-content">
-                      3,375 s
-                                        </div>
-                  </div>
-                </div>
-              </div> */}
               {this.renderQuestion(examQuestions)}
             </div>
 
@@ -260,12 +182,11 @@ class MultipleChoiceExamResult extends React.Component {
               </div>
               {/* <div className="btn-group"> */}
               <button type="button" className="btn btn-primary submit-btn disable"
-                // onClick={() => this.submit()}
               >
                 Nộp Bài
                 </button>
               {/* </div> */}
-              {getMinute(examTime)}
+              {getMinute(result.time)}
             </div>
           </div>
         </div>
@@ -276,14 +197,16 @@ class MultipleChoiceExamResult extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth } = state;
+  const { auth, exam: {result} } = state;
   return {
     user: auth.user,
     accessToken: auth.accessToken,
+    result,
   };
 };
 
 export default connect(mapStateToProps,{
   doExam,
   getDetailExam,
+  getResultExam,
 })(MultipleChoiceExamResult);

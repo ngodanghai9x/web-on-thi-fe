@@ -49,13 +49,13 @@ class UpdateExam extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pathName } = this.props;
-    // if (nextProps.pathName !== pathName) {
-    //   this.setState({
-    //     level: 1,
-    //     subject: 2,
-    //   });
-    // }
+    const { location: {pathname} } = this.props;
+    if (nextProps.location.pathname !== pathname) {
+      this.setState({
+        level: 1,
+        subject: 2,
+      });
+    }
   }
 
   changeStep = (step) => {

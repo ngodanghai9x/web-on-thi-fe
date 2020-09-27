@@ -54,17 +54,23 @@ class Content extends React.Component {
                 <div style={{fontWeight: 'bold', paddingLeft: '8px'}}>Liên hệ với chúng tôi</div>
                 <div className="contact-item ">
                   <i className="fas fa-globe" />
+                  &nbsp;
                   <b>Website: </b>
+                  &nbsp;
                   <span>Hoctot.com</span>
                 </div>
                 <div className="contact-item ">
                   <i className="fas fa-map-marker-alt " />
+                  &nbsp;
                   <b>Địa chỉ: </b>
+                  &nbsp;
                   <span>82 Duy Tân , Quận Cầu Giấy , Hà Nội</span>
                 </div>
                 <div className="contact-item ">
                   <i className="fas fa-envelope " />
+                  &nbsp;
                   <b>Email: </b>
+                  &nbsp;
                   <span>doctailieu.com@gmail.com </span>
                 </div>
               </div>

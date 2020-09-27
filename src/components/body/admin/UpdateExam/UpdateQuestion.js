@@ -15,7 +15,7 @@ class UpdateQuestion extends React.Component {
     this.state = {
       listQ: {
         Q0: {
-          question: '',
+          question: 'ab',
           option1: '',
           option2: '',
           option3: '',
@@ -23,7 +23,7 @@ class UpdateQuestion extends React.Component {
           correctAnswer: 'option1',
         }
       },
-      pointer: 0,
+      pointer: -1,
     };
   }
 
@@ -39,9 +39,7 @@ class UpdateQuestion extends React.Component {
     const { listQuestion } = this.props;
     if (nextProps.listQuestion && nextProps.listQuestion !== listQuestion) {
       // { id, image, question, option1, suggestion, correctAnswer}
-      let item = {};
-      for (let i = 0; i < nextProps.listQuestion.length; i++) {
-        item = nextProps.listQuestion[i];
+      nextProps.listQuestion.forEach((item, i) => {
         if (item.correctAnswer === item.option1) {
           item.correctAnswer = 'option1';
         }
@@ -58,9 +56,11 @@ class UpdateQuestion extends React.Component {
           listQ: {
             ...state.listQ,
             [`Q${i}`]: { ...item },
-          }
+          },
+          pointer: 0,
         }))
-      }
+      });
+      // this.setState({ pointer: 0})
     }
   }
 
@@ -104,6 +104,7 @@ class UpdateQuestion extends React.Component {
   }
 
   back = (can, can2) => {
+    console.log("back -> can", can, can2)
     if (!can2) return;
     if (!can) return this.props.changeStep(1);
     this.setState(state => ({
@@ -162,8 +163,9 @@ class UpdateQuestion extends React.Component {
 
   renderQuestion = () => {
     const { listQ, pointer } = this.state;
-    const data = listQ[`Q${pointer}`] ? listQ[`Q${pointer}`].question : ''
+    const data = listQ[`Q${pointer}`] ? listQ[`Q${pointer}`].question : '';
     console.log("renderQuestion -> data", data)
+    // debugger;
     return (
       <div className="wrapper-question">
         <h6 className="title-left">
@@ -173,7 +175,8 @@ class UpdateQuestion extends React.Component {
           <div className="left">
             <CKEditor
               data={data}
-              // data={''}
+              // data={listQ[`Q${pointer}`] && listQ[`Q${pointer}`].question || ''}
+              // data={listQ[`Q${pointer}`] ? listQ[`Q${pointer}`].question : ''}
               onChange={e => this.onEditorChange(e)}
               config={{
                 height: 82,
@@ -218,6 +221,7 @@ class UpdateQuestion extends React.Component {
 
   render() {
     const { listQ, pointer } = this.state;
+    console.log("render -> pointer", pointer)
     const { isShow, callingApi } = this.props;
     const canBack = Object.keys(listQ).length > 1 && pointer > 0;
     const canNext = callingApi !== 'UpdateQuestion' && pointer < Object.keys(listQ).length - 1;

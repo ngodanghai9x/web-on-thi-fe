@@ -8,7 +8,7 @@ import * as CommonIcon from 'components/icons/common';
 
 
 
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 
 import { getAvatar, changeLayout } from 'actions/userActions';
 import MainContent from 'components/body/layout/MainContent';
@@ -23,14 +23,15 @@ class HighSchoolTable extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getExamBySubject();
+    this.props.getExamBySubject(this.props.activeHSSub, 10);
   }
 
   renderExams = (list, path) => {
+    if (!list || list.length === 0) return 'Chưa có dữ liệu';
     return list.map((item, i) => {
       if (item && i < 5) {
         return (
-          <Link className='item d-block' to={`lop-10/${getObjSubject(item.subject).en}/${item.id}`} key={`${item.id}-HighSchoolTable-exam`}>
+          <Link className='item d-block' to={`lop-10/${getObjSubject(item.subject).en}/ket-qua/${item.id}`} key={`${item.id}-HighSchoolTable-exam`}>
             {`> ${item.name}`}
           </Link>
         )
@@ -40,7 +41,7 @@ class HighSchoolTable extends React.Component {
   }
 
   getExam = (subject) => {
-    this.props.changeSubject(10, subject);
+    this.props.getExamBySubject(subject, 10);
   }
 
 
@@ -96,11 +97,11 @@ const mapStateToProps = (state, ownProps) => {
   }
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   {
     getAvatar,
     getExamBySubject,
     changeSubject,
   }
-)(HighSchoolTable);
+)(HighSchoolTable));

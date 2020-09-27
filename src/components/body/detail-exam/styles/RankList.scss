@@ -1,0 +1,28 @@
+.RankList {
+  margin-top: 50px;
+  table {
+    .col-stt {
+      width: 55px;
+    }
+    .col-point {
+      width: 65px;
+    }
+    .col-name {
+      width: calc(100% - 120px);
+    }
+    thead {
+
+    }
+    tbody {
+      tr:nth-child(1) {
+        color: #ff6a00 ;
+      }
+      tr:nth-child(2) {
+        color: #d800ff ;
+      }
+      tr:nth-child(3) {
+        color: #0400ff ;
+      }
+    }
+  }
+}

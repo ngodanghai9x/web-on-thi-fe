@@ -151,7 +151,7 @@ class AdminHome extends React.Component {
           <td className="col col-time">{item.time}</td>
           <td className="col col-action">
             <div className="d-flex">
-              <div className="wrapper-icon" title="Chỉnh sửa" onClick={(id) => this.seeDetailExam(id)}>
+              <div className="wrapper-icon" title="Chỉnh sửa" onClick={(e) => this.seeDetailExam(e, item.id)}>
                 <CommonIcon.edit />
               </div>
               <div

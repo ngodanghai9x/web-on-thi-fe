@@ -11,28 +11,34 @@ export const subjects2 = [
 
 export const getObjSubject = (subject) => {
   if (!subject) return {};
-  const result = subjects2.find(item => 
+  const result = subjects2.find(item =>
     item.vn.toLowerCase() === subject.toLowerCase()
     || item.en.toLowerCase() === subject.toLowerCase()
     || item.eng.toLowerCase() === subject.toLowerCase()
-    );
+  );
   if (result) return result;
   return {};
 }
 
 export const levels = [
-  {vn: 'Lớp 10', en: 'highSchool'},
-  {vn: 'Đại học', en: 'college'},
+  { vn: 'Lớp 10', en: 'highSchool', num: 10 },
+  { vn: 'Đại học', en: 'college', num: 13 },
 ];
 
 export const getObjLevel = (level) => {
   if (!level) return {};
-  const result = levels.find(item => 
-    item.vn.toLowerCase() === level.toLowerCase()
-    || item.en.toLowerCase() === level.toLowerCase()
-    );
-  if (result) return result;
-  return {};
+  let result = {};
+  if (typeof level === 'string') {
+    result = levels.find(item =>
+      item.vn.toLowerCase() === level.toLowerCase()
+      || item.en.toLowerCase() === level.toLowerCase())
+  }
+  if (typeof level === 'number') {
+    result = levels.find(item => item.num === level)
+  }
+
+if (result) return result;
+return {};
 }
 
 export const getInfo = (pathname, subjectParam) => {

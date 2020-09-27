@@ -49,7 +49,7 @@ class MultipleChoiceResult extends React.Component {
           <div className="row-infor-panel">
             <div className="exam-label">Tổng điểm</div>
             <div className="exam-result">
-              {`${Math.round(result.numCorrectAns / result.totalQuestion) * 10}/10 Điểm`}
+              {`${parseFloat((result.numCorrectAns / result.totalQuestion) * 10).toFixed(2)}/10 Điểm`}
             </div>
           </div>
           {/* <div className="row-infor-panel">
@@ -81,20 +81,20 @@ class MultipleChoiceResult extends React.Component {
                   </div>
                 </div> */}
         </div>
-        <div className="col-7">
-          <div className="row-infor-panel">
+        {/* <div className="col-8"> */}
+          <div className="row-infor-panel d-flex justify-content-center" style={{border: 'none'}}>
             <div className="item-left">
-              <Link to={`${location.pathName}/chi-tiet`}>
+              <Link to={`${location.pathname}/chi-tiet`}>
                 <button className="btn btn-info">xem lại kết quả</button>
               </Link>
             </div>
             <div className="item-right">
-              {/* <Link to={`${location.pathName.replace('/ket-qua/', '/')}`}> */}
-                <button className="btn btn-primary">làm lại</button>
-              {/* </Link> */}
+              <Link to={`${location.pathname.replace('/ket-qua/', '/')}`}>
+                <button className="btn btn-info">làm lại</button>
+              </Link>
             </div>
           </div>
-        </div>
+        {/* </div> */}
       </React.Fragment>
     );
   }
@@ -166,7 +166,7 @@ class MultipleChoiceResult extends React.Component {
                 </div> */}
                 {Object.keys(result).length > 0 ? null : (
                   <div className="button" >
-                    {/* <Link to={`${location.pathName.replace('/ket-qua/', '/')}`}> */}
+                    {/* <Link to={`${location.pathname.replace('/ket-qua/', '/')}`}> */}
                       <button className="btn btn-info" onClick={() => this.submit()} >Làm bài </button>
                     {/* </Link> */}
                   </div>

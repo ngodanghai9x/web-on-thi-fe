@@ -26,7 +26,7 @@
   .row-infor-panel {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 10px 0px;
     border-bottom: 1px solid #ddd;
     outline: none;
@@ -49,7 +49,7 @@
 
   .row-infor-panel .item-left,
   .item-right {
-    padding: 10px 30px !important;
+    padding: 10px !important;
     border: 0;
     border-radius: 3px;
     color: white;
@@ -57,9 +57,6 @@
     font-weight: normal;
   }
 
-  .col-7 {
-    align-items: center;
-  }
 // viết từ đây
 .exam-infor-panel {
   padding-top: 15px;

@@ -14,8 +14,8 @@ export const getExamBySubject = (subject, level) => (dispatch, getState) => {
   const ob = getObjLevel(level);
   const req = {
     body: {
-      subject: obj.vn,
-      grade: ob.vn,
+      subject: obj.en,
+      grade: ob.en,
     }
   };
   return callApi('exam-by-subject', { method: 'POST', data: req })
@@ -27,6 +27,7 @@ export const getExamBySubject = (subject, level) => (dispatch, getState) => {
           level: ob.en,
           exams: data.exam,
         })
+        dispatch(changeSubject(ob.num, obj.en))
         // window.noti.success('Đăng nhập thành công');
       }
       if (code === 400) {
@@ -78,13 +79,14 @@ export const changeHeader = (header) => (dispatch, getState) => {
 
 export const createExam = (name, image, subject, level, description, time, examQuestions) => (dispatch, getState) => {
   const obj = getObjSubject(subject);
+  const ob = getObjLevel(level);
   const req = {
     body: {
       exam: {
         name,
         image,
-        subject: obj.vn,
-        grade: level,
+        subject: obj.en,
+        grade: ob.en,
         description,
         time,
         examQuestions,
@@ -115,13 +117,14 @@ export const createExam = (name, image, subject, level, description, time, examQ
 
 export const updateExam = (name, image, subject, level, description, time, examQuestions, id) => (dispatch, getState) => {
   const obj = getObjSubject(subject);
+  const ob = getObjLevel(level);
   const req = {
     body: {
       exam: {
         id,
         name, image,
-        subject: obj.vn,
-        grade: level,
+        subject: obj.en,
+        grade: ob.en,
         description, time, examQuestions
       }
     }
