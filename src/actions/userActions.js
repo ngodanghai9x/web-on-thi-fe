@@ -222,6 +222,7 @@ export const init = () => dispatch => {
     type: actionTypes.RECEIVE_ACCESS_TOKEN,
     accessToken,
     role: obj.ROLE,
+    fullname: obj.fullname,
   });
 }
 

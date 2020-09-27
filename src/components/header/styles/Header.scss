@@ -106,6 +106,10 @@
           background: #17a2b8;
           border-top-left-radius: 5px;
           border-top-right-radius: 5px;
+
+          .name {
+            text-transform: capitalize;
+          }
         }
       }
     }

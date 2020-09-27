@@ -1,13 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
+import {
+  getResultExam,
+  getDetailExam,
+} from 'actions/examActions';
 
-
-
+import { getMinute } from 'actions/common/utils';
 
 import MainContent from '../layout/MainContent';
 import './styles/MultipleChoiceResult.scss';
-import { Redirect } from 'react-router';
+import { Redirect, withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
+import RankList from './RankList';
 
 class MultipleChoiceResult extends React.Component {
   constructor(props) {
@@ -17,12 +22,88 @@ class MultipleChoiceResult extends React.Component {
 
   componentDidMount() {
     const { match } = this.props;
-    const { subjects } = match.params; // type, môn học
+    const { id } = match.params; // type, môn học
+    this.fetchDetailExam(id);
+    this.props.getResultExam(id);
+  }
+
+  fetchDetailExam = (_id) => {
+    this.props.getDetailExam(_id, false).then(({ data, code, message }) => {
+      if (data && code === 200) {
+        const { id, name, image, subject, grade, description, time, canDelete, examQuestions } = data.exam;
+        this.setState({ id, name, image, subject, grade, description, time, canDelete, examQuestions });
+      }
+      if (code === 400) {
+      }
+    })
+  }
+
+  renderResult = (result, location) => {
+    return (
+      <React.Fragment>
+        <div className="exam-result-panel">
+          <div className="emoji-result">
+            {/* sửa lại đường dẫn chỗ này bằng icon1.jpg trong thư mục images */}
+            <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg" id="exam-images"></img>
+          </div>
+          <div className="row-infor-panel">
+            <div className="exam-label">Tổng điểm</div>
+            <div className="exam-result">
+              {`${Math.round(result.numCorrectAns / result.totalQuestion) * 10}/10 Điểm`}
+            </div>
+          </div>
+          {/* <div className="row-infor-panel">
+                  <div className="exam-label">Điểm cao nhất</div>
+                  <div className="exam-result">0.0/10 Điểm</div>
+                </div> */}
+          <div className="row-infor-panel">
+            <div className="exam-label">Số câu đúng</div>
+            <div className="exam-result">
+              {`${result.numCorrectAns}/${result.totalQuestion}`}
+            </div>
+          </div>
+          <div className="row-infor-panel">
+            <div className="exam-label">Số câu đã làm</div>
+            <div className="exam-result">
+              {`${result.numAnswer}/${result.totalQuestion}`}
+            </div>
+          </div>
+          <div className="row-infor-panel">
+            <div className="exam-label">Thời gian làm bài</div>
+            <div className="exam-result">
+              {getMinute(result.time)}
+            </div>
+          </div>
+          {/* <div className="row-infor-panel">
+                  <div className="exam-label">Ngày Thi</div>
+                  <div className="exam-result">
+                    {result.date}
+                  </div>
+                </div> */}
+        </div>
+        <div className="col-7">
+          <div className="row-infor-panel">
+            <div className="item-left">
+              <Link to={`${location.pathName}/chi-tiet`}>
+                <button className="btn btn-info">xem lại kết quả</button>
+              </Link>
+            </div>
+            <div className="item-right">
+              {/* <Link to={`${location.pathName.replace('/ket-qua/', '/')}`}> */}
+                <button className="btn btn-primary">làm lại</button>
+              {/* </Link> */}
+            </div>
+          </div>
+        </div>
+      </React.Fragment>
+    );
   }
 
   render() {// cái kết quả mới là trang này
-    const { accessToken } = this.props;
-    if (!accessToken) return <Redirect to='/' />
+    const { accessToken, result, location, match, exam } = this.props;
+    const { id } = match.params; // type, môn học
+    const { name, image, subject, grade, description, time, canDelete, examQuestions } = this.state;
+    // if (!accessToken) return <Redirect to='/' />
     return (
       <MainContent>
         <div className='MultipleChoiceResult container'>
@@ -30,8 +111,10 @@ class MultipleChoiceResult extends React.Component {
             <div className="col-8">
 
               <div className="exam-infor-panel" >
-                <div className="Mul-title" > Đề luyện thi THPT Quốc gia 2020 môn Lý - Đề số 1 </div>
-                <div className="description">Gửi đến các bạn học sinh lớp 12 đề luyện thi THPT Quốc gia 2020 môn Lý - Đề số 1 có đáp án do Học Tốt tổng hợp nhằm giúp các em có thêm tư liệu để tham khảo củng cố kiến thức trước khi bước vào kì thi. </div>
+                <div className="Mul-title" >{name} </div>
+                <div className="description">
+                  {description}
+                </div>
                 <div className="item-infor-panel">
                   <div className="item-label">
                     <div className="icon">
@@ -39,18 +122,22 @@ class MultipleChoiceResult extends React.Component {
                     </div>
                     <div className="label" > Số câu hỏi </div>
                   </div>
-                  <div className="gwt-HTML" > 40 Câu </div>
+                  <div className="gwt-HTML" >
+                    {`${examQuestions ? examQuestions.length : 0} Câu`}
+                  </div>
                 </div>
                 <div className="item-infor-panel" >
                   <div className="item-label" >
                     <div className="icon" >
                       <i className="far fa-calendar-alt" />
                     </div>
-                    <div className="label" > Thời gian làm bàii </div>
+                    <div className="label" > Thời gian làm bài </div>
                   </div>
-                  <div className="gwt-HTML" >50 Phút </div>
+                  <div className="gwt-HTML" >
+                    {`${time} Phút`}
+                  </div>
                 </div>
-                <div className="item-infor-panel" >
+                {/* <div className="item-infor-panel" >
                   <div className="item-label" >
                     <div className="icon" >
                       <i className="far fa-calendar-alt" />
@@ -58,7 +145,7 @@ class MultipleChoiceResult extends React.Component {
                     <div className="label" >Số lần tạm dừng</div>
                   </div>
                   <div className="gwt-HTML" >0 / Không</div>
-                </div>
+                </div> 
                 <div className="item-infor-panel" >
                   <div className="item-label" >
                     <div className="icon" >
@@ -76,49 +163,19 @@ class MultipleChoiceResult extends React.Component {
                     <div className="label" > Số người đã tham gia </div>
                   </div>
                   <div className="gwt-HTML" > 1331 </div>
-                </div>
-                <div className="button" >
-                  <button className="btn btn-primary" type="submit" >làm bài </button>
-                </div>
+                </div> */}
+                {Object.keys(result).length > 0 ? null : (
+                  <div className="button" >
+                    {/* <Link to={`${location.pathName.replace('/ket-qua/', '/')}`}> */}
+                      <button className="btn btn-info" onClick={() => this.submit()} >Làm bài </button>
+                    {/* </Link> */}
+                  </div>
+                )}
               </div>
-             {/* a */}
-             <div className="exam-result-panel">
-                <div className="emoji-result">
-                  {/* sửa lại đường dẫn chỗ này bằng icon1.jpg trong thư mục images */}
-                  <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg" id="exam-images"></img>
-                </div>
-                <div className="row-infor-panel">
-                  <div className="exam-label">Tổng điểm</div>
-                  <div className="exam-result">0.0/10 Điểm</div>
-                </div>
-                <div className="row-infor-panel">
-                  <div className="exam-label">Điểm cao nhất</div>
-                  <div className="exam-result">0.0/10 Điểm</div>
-                </div>
-                <div className="row-infor-panel">
-                  <div className="exam-label">Số câu đúng</div>
-                  <div className="exam-result">0/40</div>
-                </div>
-                <div className="row-infor-panel">
-                  <div className="exam-label">Thời gian làm bài</div>
-                  <div className="exam-result">00m 00s</div>
-                </div>
-                <div className="row-infor-panel">
-                  <div className="exam-label">Ngày Thi</div>
-                  <div className="exam-result">10/09/2020</div>
-                </div>
-              </div>
-
-            <div className="col-7">
-            <div className="row-infor-panel">
-                <div className="item-left">
-                  <button className="btn btn-primary">xem lại kết quả</button>
-                </div>
-                <div className="item-right">
-                  <button className="btn btn-primary">làm lại</button>
-                </div>
-              </div>
+              {Object.keys(result).length > 0 && this.renderResult(result, location)}
             </div>
+            <div className="col-4">
+              <RankList />
             </div>
           </div>
 
@@ -130,11 +187,19 @@ class MultipleChoiceResult extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth } = state;
+  const { auth, exam: { result } } = state;
   return {
     user: auth.user,
     accessToken: auth.accessToken,
+    result,
+    exam: result.exam || {},
   };
 };
 
-export default connect(mapStateToProps)(MultipleChoiceResult);
+export default withRouter(connect(
+  mapStateToProps,
+  {
+    getResultExam,
+    getDetailExam,
+  }
+)(MultipleChoiceResult));

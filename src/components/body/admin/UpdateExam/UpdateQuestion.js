@@ -103,8 +103,8 @@ class UpdateQuestion extends React.Component {
     }
   }
 
-  back = (can) => {
-    console.log('can', can);
+  back = (can, can2) => {
+    if (!can2) return;
     if (!can) return this.props.changeStep(1);
     this.setState(state => ({
       pointer: state.pointer - 1,
@@ -219,7 +219,7 @@ class UpdateQuestion extends React.Component {
   render() {
     const { listQ, pointer } = this.state;
     const { isShow, callingApi } = this.props;
-    const canBack = callingApi !== 'UpdateQuestion' && Object.keys(listQ).length > 1 && pointer > 0;
+    const canBack = Object.keys(listQ).length > 1 && pointer > 0;
     const canNext = callingApi !== 'UpdateQuestion' && pointer < Object.keys(listQ).length - 1;
     const canAdd = callingApi !== 'UpdateQuestion' && Object.keys(listQ).length < total && pointer < total;
     const canSave = callingApi !== 'UpdateQuestion' && Object.keys(listQ).length >= 1;
@@ -230,16 +230,16 @@ class UpdateQuestion extends React.Component {
           {this.renderQuestion()}
 
           <div className="wrapper-btn d-flex justify-content-between align-items-center">
-            <span className="a" onClick={() => this.back(canBack)}>
+            <span className={`a ${callingApi !== 'UpdateQuestion' ? '' : 'disable'}`} onClick={() => this.back(canBack, callingApi !== 'UpdateQuestion')}>
               {`<< Back`}
             </span>
-            <button className="btn btn-outline-info" onClick={() => this.save(canSave)}>
+            <button className={`btn btn-outline-info ${canSave ? '' : 'disable'}`} onClick={() => this.save(canSave)}>
               {`Lưu`}
             </button>
-            <button className="btn btn-info" onClick={() => this.add(canAdd)}>
+            <button className={`btn btn-info ${canAdd ? '' : 'disable'}`} onClick={() => this.add(canAdd)}>
               {`Thêm câu hỏi`}
             </button>
-            <span className="a" onClick={() => this.next(canNext)}>
+            <span className={`a ${canNext ? '' : 'disable'}`} onClick={() => this.next(canNext)}>
               {`Next >>`}
             </span>
           </div>

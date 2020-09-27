@@ -24,6 +24,7 @@ import CreateExam from 'components/body/admin/CreateExam/CreateExam';
 import ChooseSubjects2 from 'components/body/ChooseSubjects2';
 import HighSchoolExamList from 'components/body/home-content/HighSchoolExamList';
 import UpdateExam from 'components/body/admin/UpdateExam/UpdateExam';
+import MultipleChoiceExamResult from 'components/body/detail-exam/MultipleChoiceExamResult';
 
 
 export default class RouterList extends React.Component {
@@ -50,6 +51,7 @@ export default class RouterList extends React.Component {
         <Route exact path="/dai-hoc/:subject" component={CollegeExamList} />
         <Route exact path="/dai-hoc/:subject/:id" component={MultipleChoiceExam} />
         <Route exact path="/dai-hoc/:subject/ket-qua/:id" component={MultipleChoiceResult} />
+        <Route exact path="/dai-hoc/:subject/ket-qua/:id/chi-tiet" component={MultipleChoiceExamResult} />
         <Route exact path="/dai-hoc/van/:id" component={EssayExam} />
 
         <Route exact path="/admin" component={AdminHome} />

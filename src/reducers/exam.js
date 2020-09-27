@@ -13,6 +13,7 @@ const initState = {
     totalElements: 0,
     totalPages: 0,
   },
+  rankList: [],
   currentExam: {},
   completedExams: [],
   result: {

@@ -10,13 +10,12 @@ import './styles/MultipleChoiceExam.scss';
 import { Redirect } from 'react-router';
 import { getMinute } from 'actions/common/utils';
 
-class MultipleChoiceExam extends React.Component {
+class MultipleChoiceExamResult extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       examId: 0,
       examTime: 2700, // 45 * 60
-      examQuestions: [],
     };
     this.timeInterval = null;
   }
@@ -24,7 +23,7 @@ class MultipleChoiceExam extends React.Component {
   componentDidMount() {
     const { match } = this.props;
     const { subject, id } = match.params; // type, môn học
-    this.fetchDetailExam(id);
+    this.fetchDetailExam(id, false);
     this.doInterval();
   }
 
@@ -52,7 +51,7 @@ class MultipleChoiceExam extends React.Component {
 
   componentWillReceiveProps() {
     if (false) {
-      this.setState({ examId: 1, })
+      this.setState({ examId: 1,})
     }
   }
 
@@ -80,9 +79,9 @@ class MultipleChoiceExam extends React.Component {
                   `}
                   >
                     <div className="input-group-text">
-                      <input type="radio" name={item.id} className="input-items"
+                      <input type="radio" name={item.id} className="input-items disable"
                         onChange={() => { }} readOnly
-                        onClick={() => this.choose(i, item.id, item[option], option)}
+                        // onClick={() => this.choose(i, item.id, item[option], option)}
                         checked={this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP}
                       // onClick={() => this.setState({ [`Q${i}`]: { questionId: item.id, answerOP: item[option] } })}
                       // checked={this.state[`Q${i}`] && item[option] === this.state[`Q${i}`].answerOP}
@@ -114,8 +113,8 @@ class MultipleChoiceExam extends React.Component {
     const examAnswer = Object.values(this.state).filter(item => item && item.questionId && item.answerOP && item.answer);
     // const examAnswer = arrVal.map(item => ({}));
     console.log("MultipleChoiceExam -> submit -> examAnswer", examAnswer)
-    this.props.doExam(examId, 2700 - examTime, examAnswer);
-    clearInterval(this.timeInterval);
+    this.props.doExam(examId, 2700 - examTime, examAnswer)
+
   }
 
   renderChoiceTable = (examQuestions) => {
@@ -129,13 +128,13 @@ class MultipleChoiceExam extends React.Component {
             {
               opt.map(option => {
                 return (
-                  <div className={`edf 
+                  <div className={`edf disable
                     ${item.correctAnswer && item[option] === item.correctAnswer ? 'true' : ''}
                     ${this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP ? 'active' : ''}
                     `}
-                    onClick={() => this.choose(i, item.id, item[option], option)}
-                  // onClick={() => this.choose(i, item.id, option)}
-                  // ${this.state[`Q${i}`] && item[option] === this.state[`Q${i}`].answerOP ? 'active' : ''}
+                    // onClick={() => this.choose(i, item.id, item[option], option)}
+                    // onClick={() => this.choose(i, item.id, option)}
+                    // ${this.state[`Q${i}`] && item[option] === this.state[`Q${i}`].answerOP ? 'active' : ''}
                   >
                     {key[option]}
                   </div>
@@ -149,9 +148,8 @@ class MultipleChoiceExam extends React.Component {
   }
 
   render() {// file này là trang bài làm
-    const { accessToken } = this.props;
-    const { examQuestions } = this.state;
-    const examQuestions1 = [
+    // const { accessToken, examQuestions } = this.props;
+    const examQuestions = [
       {
         "id": 1,
         "image": "",
@@ -261,8 +259,8 @@ class MultipleChoiceExam extends React.Component {
                 </div>
               </div>
               {/* <div className="btn-group"> */}
-              <button type="button" className="btn btn-primary submit-btn"
-                onClick={() => this.submit()}
+              <button type="button" className="btn btn-primary submit-btn disable"
+                // onClick={() => this.submit()}
               >
                 Nộp Bài
                 </button>
@@ -285,7 +283,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, {
+export default connect(mapStateToProps,{
   doExam,
   getDetailExam,
-})(MultipleChoiceExam);
+})(MultipleChoiceExamResult);

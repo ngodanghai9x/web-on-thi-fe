@@ -104,10 +104,12 @@ export const createExam = (name, image, subject, level, description, time, examQ
         window.noti.success('Thêm mới đề thành công');
       }
       if (code === 400) {
+        dispatch(callApiExam());
         window.noti.error('Thêm mới đề thất bại');
       }
     })
     .catch(err => {
+      dispatch(callApiExam());
     });
 };
 
@@ -138,10 +140,12 @@ export const updateExam = (name, image, subject, level, description, time, examQ
         window.noti.success('Cập nhật đề thành công');
       }
       if (code === 400) {
+        dispatch(callApiExam());
         window.noti.error('Cập nhật đề thất bại');
       }
     })
     .catch(err => {
+      dispatch(callApiExam());
     });
 };
 
@@ -305,6 +309,7 @@ export const getCompletedExams = () => (dispatch, getState) => {
     });
 }
 const receiveResultExam = (result) => (dispatch) => {
+  //numAnswer, numCorrectAns, time, totalQuestion, examQuestions
   dispatch({
     type: actionTypes.GET_RESULT_EXAM,
     result,

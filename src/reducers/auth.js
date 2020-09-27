@@ -31,6 +31,10 @@ const auth = (state = initState, action) => {
         account: {
           ...state.account,
           role: action.role,
+        },
+        user: {
+          ...state.user,
+          name: action.fullname,
         }
       };
     case actionTypes.GET_USER_INFO:

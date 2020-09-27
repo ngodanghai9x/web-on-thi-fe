@@ -67,10 +67,11 @@
   color: #333;
 }
 
-Mul-title {
+.Mul-title {
   font-size: 30px;
   margin-top: 20px;
   margin-bottom: 10px;
+  text-transform: capitalize;
 }
 
 .description {
@@ -107,7 +108,7 @@ Mul-title {
   width: 40%;
 }
 
-.btn-primary {
+.btn-info {
   align-items: center;
   text-transform: uppercase;
 }
