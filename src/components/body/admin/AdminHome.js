@@ -65,6 +65,7 @@ class AdminHome extends React.Component {
   }
 
   deleteExamList = (e) => {
+    e.stopPropagation();
     const { all } = this.props;
     const { selectedExamIds } = this.state;
     const arr = all.filter(item => selectedExamIds.includes(item.id) && item.canDelete);
@@ -190,11 +191,12 @@ class AdminHome extends React.Component {
         <div className="admin-home">
           <div className="wrapper-search d-flex">
             <div className="w-75 d-flex">
-              <button className="btn btn-outline-info mr-2">
+              <button className="btn btn-outline-info mr-2" onClick={(e) => this.deleteExamList(e)}>
                 Xóa nhiều
               </button>
               <input className="w-75" type="search" placeholder="Tìm kiếm"
                 value={inputSearch} onChange={(e) => this.setState({ inputSearch: e.target.value })}
+                onBlur={e => this.reload()}
               />
             </div>
             <div className="w-25 d-flex justify-content-end">

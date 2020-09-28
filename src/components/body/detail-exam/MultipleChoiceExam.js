@@ -206,50 +206,6 @@ class MultipleChoiceExam extends React.Component {
         <div className="container MultipleChoiceExam">
           <div className="row">
             <div className="col-9">
-              {/* <div className="game-code-view">
-                <div className="card-game-content" >
-                  <b>Câu 1: </b>
-                  Trong thí nghiệm của Y-âng về giao thoa ánh sáng, khoảng cách giữa hai khe là 1 mm, khoảng cách từ mặt phẳng chứa hai khe đến màn quan sát lúc đầu là 2 m. Nguồn sáng đơn sắc có bước sóng 750 nm.
-                  Truyền cho màn vận tốc ban đầu hướng lại gần mặt phẳng hai khe để màn dao động điều hòa theo phương vuông góc với mặt phẳng hai khe với biên độ 40 cm và chu kì 6 s.
-                  Thời gian kể từ lúc màn dao động đến khi điểm M trên màn cách vân trung tâm 19,8 mm cho vân sáng lần thứ 8 bằng
-                </div>
-                <div className="group-checkbox">
-                  <div className="input-group-prepend">
-                    <div className="input-group-text">
-                      <input type="radio" className="input-items"></input>
-                    </div>
-                    <div className="input-content">
-                      3 s
-                                        </div>
-                  </div>
-                  <div className="input-group-prepend">
-                    <div className="input-group-text">
-                      <input type="radio" className="input-items"></input>
-                    </div>
-                    <div className="input-content">
-                      3,5 s
-                                        </div>
-                  </div>
-
-                  <div className="input-group-prepend">
-                    <div className="input-group-text">
-                      <input type="radio" className="input-items"></input>
-                    </div>
-                    <div className="input-content">
-                      2s
-                                        </div>
-                  </div>
-
-                  <div className="input-group-prepend">
-                    <div className="input-group-text">
-                      <input type="radio" className="input-items"></input>
-                    </div>
-                    <div className="input-content">
-                      3,375 s
-                                        </div>
-                  </div>
-                </div>
-              </div> */}
               {this.renderQuestion(examQuestions)}
             </div>
 
