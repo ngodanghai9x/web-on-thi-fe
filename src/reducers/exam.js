@@ -8,7 +8,7 @@ const initState = {
   header: 'Danh sách đề',
   all: [],
   pagination: {
-    currentPage: 1,
+    activePage: 1,
     pageSize: 10,
     totalElements: 0,
     totalPages: 0,
@@ -69,7 +69,15 @@ const exam = (state = initState, action) => {
       return {
         ...state,
         callingApi: action.kind,
-      }
+      };
+    case actionTypes.CHANGE_ACTIVE_PAGE:
+      return {
+        ...state,
+        pagination: {
+          ...state.pagination,
+          activePage: action.activePage,
+        }
+      };
     case actionTypes.GET_COMPLETED_EXAMS:
       return {
         ...state,
@@ -79,7 +87,7 @@ const exam = (state = initState, action) => {
       return {
         ...state,
         all: action.exams,
-        pagination: action.pagination,
+        // pagination: action.pagination,
       };
     case actionTypes.GET_DETAIL_EXAM:
       return {

@@ -6,7 +6,14 @@ export const callApiExam = (kind = '') => (dispatch) => {
   dispatch({
     type: actionTypes.CALL_API_EXAM,
     kind,
-  })
+  });
+}
+
+export const changeActivePage = (activePage) => (dispatch) =>{
+  dispatch({
+    type: actionTypes.CHANGE_ACTIVE_PAGE,
+    activePage,
+  });
 }
 
 export const getExamBySubject = (subject, level) => (dispatch, getState) => {
@@ -181,7 +188,6 @@ export const deleteExam = (examIds) => (dispatch, getState) => {
   return callApi('api/exam/delete', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
-
         window.noti.success('Đăng nhập thành công');
       }
       if (code === 400) {

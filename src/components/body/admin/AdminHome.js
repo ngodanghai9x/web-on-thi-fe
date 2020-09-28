@@ -11,6 +11,7 @@ import  {
   changeActiveExam,
   deleteExam,
   getDetailExam,
+  changeActivePage,
 } from 'actions/examActions';
 
 import AdminContent from '../layout/AdminContent';
@@ -45,6 +46,7 @@ class AdminHome extends React.Component {
   handlePageChange = (pageNumber) => {
     console.log(`active page is ${pageNumber}`);
     this.setState({ activePage: pageNumber }, () => this.reload());
+    this.props.changeActivePage(pageNumber);
   }
 
   seeDetailExam = (e, id) => {
@@ -268,5 +270,6 @@ export default withRouter(connect(
     changeActiveExam,
     deleteExam,
     getDetailExam,
+    changeActivePage,
   }
 )(AdminHome));
