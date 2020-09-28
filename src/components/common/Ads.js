@@ -49,12 +49,16 @@ class Ads extends React.Component {
             Quảng cáo
           </small>
           <img src='../../images/ads.jpg' onClick={() => window.open('https://www.google.com.vn/')} />
-          <h6 className='title-left'>
-            ĐỀ ĐƯỢC QUAN TÂM
-          </h6>
-          <div className='exam-suggestion'>
-            {this.renderExams(list, path)}
-          </div>
+          {list && list.length > 0 ? (
+            <React.Fragment>
+              <h6 className='title-left'>
+                ĐỀ ĐƯỢC QUAN TÂM
+            </h6>
+              <div className='exam-suggestion'>
+                {this.renderExams(list, path)}
+              </div>
+            </React.Fragment>
+          ) : null}
         </div>
       </React.Fragment>
     );

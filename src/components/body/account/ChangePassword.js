@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
 
 
-
+import { regex, errorText } from 'constants/regexError';
 
 import TittleUserInfo from 'components/body/user/TittleUserInfo';
 import UserContent from '../layout/UserContent';
 import { hideEmail, hidePhone } from 'actions/common/utils';
-import { changePassword } from 'actions/userActions';
+import { changePassword, getOtpCode } from 'actions/userActions';
 
 class ChangePassword extends React.Component {
   constructor(props) {
@@ -16,15 +16,17 @@ class ChangePassword extends React.Component {
     this.state = {
       otp: '',
       password: '',
-      errorOtp: '',
-      errorPassword: '',
+      oldPassword: '',
+      errorOldPassword: false,
+      errorOtp: false,
+      errorPassword: false,
       countDown: 60,
     };
     this.timeInterval = null;
   }
 
   componentDidMount() {
-    this.doInterval();
+    // this.doInterval();
   }
 
   componentWillUnmount() {
@@ -43,9 +45,22 @@ class ChangePassword extends React.Component {
     this.setState({
       otp: '',
       password: '',
+      oldPassword: '',
+      errorOldPassword: false,
       errorOtp: false,
       errorPassword: false,
     });
+  }
+
+  onBlurNotNull = (key, val, text) => {
+    if (!val || val.trim().length === 0) {
+      this.setState({ [key]: 'Trường này không để để trống' });
+    }
+    if (key === 'errorPassword') {
+      if (!regex.password.test(val)) {
+        this.setState({ [key]: text });
+      }
+    }
   }
 
   doInterval = () => {
@@ -65,14 +80,14 @@ class ChangePassword extends React.Component {
   }
 
   submit = () => {
-    const { password, otp, errorOtp, errorEmail, errorPassword } = this.state;
-    if (errorEmail || errorPassword || errorOtp) return;
-    this.props.changePassword(this.props.account.username, password, otp);
+    const { password, otp, errorOtp, errorPassword, oldPassword, errorOldPassword } = this.state;
+    if (errorPassword || errorOldPassword) return;
+    this.props.changePassword(this.props.account.username, password, oldPassword);
   }
 
   render() {
-    const { email } = this.props;
-    const { password, otp, errorOtp, errorEmail, errorPassword, countDown } = this.state;
+    const { user } = this.props;
+    const { password, oldPassword, errorOldPassword, errorPassword, countDown } = this.state;
     return (
       <React.Fragment>
         <UserContent>
@@ -84,7 +99,7 @@ class ChangePassword extends React.Component {
             <div className="content ChangeMail" style={{ margin: '15px 10% 25px 10%' }}>
               <div className="profile-row">
                 <div className="key">Địa chỉ hòm thư</div>
-                <div className="value">{hideEmail(email)}</div>
+                <div className="value">{hideEmail(user.email)}</div>
               </div>
               <div className="profile-row">
                 <div className="key">Mật khẩu mới</div>
@@ -95,22 +110,24 @@ class ChangePassword extends React.Component {
                     title={errorPassword}
                     style={{ width: 350 }}
                     onChange={(e) => this.changePassword(e.target.value)}
+                    onBlur={e => this.onBlurNotNull('errorPassword1', e.target.value, errorText.password)}
                   />
                 </div>
               </div>
               <div className="profile-row">
-                <div className="key">Mã OTP</div>
+                <div className="key">Mật khẩu cũ</div>
                 <div className="value">
                   <input
-                    type="text" value={otp}
-                    className={errorOtp ? 'error' : ''}
-                    title={errorOtp}
+                    type="text" value={oldPassword}
+                    className={errorOldPassword ? 'error' : ''}
+                    title={errorOldPassword}
                     style={{ width: 350 }}
-                    onChange={(e) => this.setState({ otp: e.target.value })}
+                    onChange={(e) => this.setState({ oldPassword: e.target.value })}
+                    onBlur={e => this.onBlurNotNull('errorOldPassword', e.target.value, errorText.password)}
                   />
                 </div>
               </div>
-              <div className="profile-row" style={{ paddingTop: 4, marginBottom: -12 }}>
+              {/* <div className="profile-row" style={{ paddingTop: 4, marginBottom: -12 }}>
                 <div className="key"></div>
                 <div className="value">
                   {
@@ -121,7 +138,7 @@ class ChangePassword extends React.Component {
                       )
                   }
                 </div>
-              </div>
+              </div> */}
               <div className="profile-row">
                 <div className="key"></div>
                 <div className="value">
@@ -150,5 +167,6 @@ export default connect(
   mapStateToProps,
   {
     changePassword,
+    getOtpCode,
   }
 )(ChangePassword);

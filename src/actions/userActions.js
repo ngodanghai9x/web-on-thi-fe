@@ -72,6 +72,7 @@ export const createAccount = (name, username, password1, email) => (dispatch, ge
       }
       if (code === 400) {
         if (message === "Username Exists") return window.noti.error('Tài khoản này đã tồn tài, vui lòng nhập tài khoản khác');
+        if (message === "Email Exists") return window.noti.error('Email này đã tồn tài, vui lòng nhập email khác');
         window.noti.error('Đăng ký tài khoản thất bại');
       }
     })
@@ -80,17 +81,44 @@ export const createAccount = (name, username, password1, email) => (dispatch, ge
     });
 };
 
-export const changePassword = (username, newPassword, otp) => (dispatch, getState) => {
+export const changePassword = (username, newPassword, oldPassword) => (dispatch, getState) => {
   const reqBody = {
     body: {
-      userRegister: {
-        username,
-        newPassword,
-        otp,
-      }
+      newPassword,
+      oldPassword,
     }
   }
-  return callApi('change-password', { method: 'POST', data: reqBody })
+  return callApi('api/profile/change-password', { method: 'POST', data: reqBody })
+    .then(({ data, code, message }) => {
+      if (data && code === 200) {
+        window.noti.success('Đổi mật khẩu thành công');
+      }
+      if (code === 400) {
+        // if (message === 'OTP Invalid') return window.noti.error('Đổi mật khẩu thất bại, mã OTP không đúng');
+        window.noti.error('Đổi mật khẩu thất bại');
+      }
+    })
+    .catch(err => {
+      // window.noti.error('Đổi mật khẩu thất bại');
+    });
+};
+
+export const changeForgotPassword = (username, email, password, otp, selected) => (dispatch, getState) => {
+  const temp = { email, password, otp };
+  let body = {};
+  if (selected === 0) {
+    body = { username, ...temp };
+  }
+  else if (selected === 1) {
+    body = { email, ...temp };
+  }
+  else {
+    return window.noti.error('Bạn cần điền email hoặc username để lấy lại mật khẩu');
+  }
+  const reqBody = {
+    body,
+  }
+  return callApi('api/profile/change-password', { method: 'POST', data: reqBody })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
         window.noti.success('Đổi mật khẩu thành công');
@@ -105,14 +133,17 @@ export const changePassword = (username, newPassword, otp) => (dispatch, getStat
     });
 };
 
-export const getOtpCode = (username, type) => (dispatch, getState) => {
+export const getOtpCode = (username, type, email, selected) => (dispatch, getState) => {
   const pathUrl = type === 1 ? 'generate-otp' : 'forgot-password';
+  let body = {};
+  if (selected === 0) {
+    body = { username };
+  }
+  else if (selected === 1) {
+    body = { email };
+  }
   const reqBody = {
-    body: {
-      userRegister: {
-        username,
-      }
-    }
+    body,
   }
   return callApi(pathUrl, { method: 'POST', data: reqBody })
     .then(({ data, code, message }) => {
@@ -224,6 +255,8 @@ export const init = () => dispatch => {
     role: obj.ROLE,
     fullname: obj.fullname,
   });
+  dispatch(getAvatar());
+  dispatch(getUserInfo())
 }
 
 

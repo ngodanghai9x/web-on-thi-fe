@@ -8,7 +8,7 @@ import * as CommonIcon from 'components/icons/common';
 import { Link, Redirect } from 'react-router-dom';
 import UserContent from 'components/body/layout/UserContent';
 import { errorText, regex } from 'constants/regexError';
-import { changePassword } from 'actions/userActions';
+import { changeForgotPassword, getOtpCode } from 'actions/userActions';
 
 import './styles/ForgotPassword.scss';
 
@@ -17,6 +17,9 @@ class ForgotPassword extends React.Component {
     super(props);
     this.state = {
       step: 1,
+      email: '',
+      username: '',
+      selected: 0,
     };
   }
   // email = sdt
@@ -51,11 +54,11 @@ class ForgotPassword extends React.Component {
   }
 
   submit = e => {
-    const { username, otp, password, errorOTP, errorPassword, selected
+    const { username, otp, password, errorOTP, errorPassword, selected, email
     } = this.state;
-    const isCanSubmit = !errorOTP && !errorPassword;
-    // if (!isCanSubmit) return window.noti.error('Bạn chưa nhập tài khoản hoặc mật khẩu');
-    this.props.changePassword(username, password, otp);
+    const isCanSubmit = !errorOTP && !errorPassword && (username || email);
+    if (!isCanSubmit) return window.noti.error('Bạn cần nhập đủ thông tin để lấy lại mật khẩu');
+    this.props.changeForgotPassword(username, email, password, otp, selected);
   }
 
   doInterval = () => {
@@ -69,7 +72,8 @@ class ForgotPassword extends React.Component {
   }
 
   getOTP = () => {
-    this.props.getOtpCode(this.state.username, 0);
+    const { username, email, selected } = this.state;
+    this.props.getOtpCode(username, 0, email, selected);
     this.setState({ countDown: 60 });
     this.doInterval();
   }
@@ -85,7 +89,7 @@ class ForgotPassword extends React.Component {
   }
 
   renderStep1 = () => {
-    const { username, phone, errorUsername, errorPhone, selected
+    const { username, email, errorUsername, errorEmail, selected
     } = this.state;
     return (
       <React.Fragment>
@@ -111,12 +115,12 @@ class ForgotPassword extends React.Component {
           <div className="input-row d-flex">
             <input type="radio" name="form-FP" checked={selected === 1} readOnly />
             <input
-              type="text" value={phone || ''}
+              type="text" value={email || ''}
               // className={errorPhone && errorUsername ? 'error' : ''}
               placeholder="Nhập email"
-              title={errorPhone}
+              title={errorEmail}
               onClick={e => this.onClick(1)}
-              onChange={(e) => this.onChangeMax255('phone', e.target.value, 'errorPhone')}
+              onChange={(e) => this.onChangeMax255('email', e.target.value, 'errorEmail')}
             // onBlur={e => this.onBlurNotNull('errorPhone', e.target.value)}
             />
           </div>
@@ -143,7 +147,7 @@ class ForgotPassword extends React.Component {
         <div className="form-FP d-flex flex-column">
           <div className="input-row d-flex">
             <input
-              type="text" value={password || ''}
+              type="password" value={password || ''}
               className={errorPassword ? 'error' : ''}
               placeholder="Nhập mật khẩu mới"
               title={errorPassword}
@@ -206,6 +210,7 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(
   mapStateToProps,
   {
-    changePassword,
+    changeForgotPassword,
+    getOtpCode,
   }
 )(ForgotPassword);

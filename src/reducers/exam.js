@@ -24,62 +24,26 @@ const initState = {
     // examQuestions: [],
   },
   college: {
-    all: [
-      {},
-    ],
-    math: [
-      {},
-    ],
-    literature: [
-      {},
-    ],
-    english: [
-      {},
-    ],
-    physics: [
-      {},
-    ],
-    chemistry: [
-      {},
-    ],
-    biology: [
-      {},
-    ],
-    history: [
-      {},
-    ],
-    geography: [
-      {},
-    ],
+    all: [],
+    math: [],
+    literature: [],
+    english: [],
+    physics: [],
+    chemistry: [],
+    biology: [],
+    history: [],
+    geography: [],
   },
   highSchool: {
-    all: [
-      {},
-    ],
-    math: [
-      {},
-    ],
-    literature: [
-      {},
-    ],
-    english: [
-      {},
-    ],
-    physics: [
-      {},
-    ],
-    chemistry: [
-      {},
-    ],
-    biology: [
-      {},
-    ],
-    history: [
-      {},
-    ],
-    geography: [
-      {},
-    ],
+    all: [],
+    math: [],
+    literature: [],
+    english: [],
+    physics: [],
+    chemistry: [],
+    biology: [],
+    history: [],
+    geography: [],
   },
 };
 
