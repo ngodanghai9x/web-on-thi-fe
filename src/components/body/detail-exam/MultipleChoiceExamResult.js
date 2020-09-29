@@ -158,7 +158,7 @@ class MultipleChoiceExamResult extends React.Component {
     const numOption2 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option2');
     const numOption3 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option3');
     const numOption4 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option4');
-    // if (!accessToken) return <Redirect to='/' />
+    if (!accessToken) return <Redirect to='/' />
     return (
       <MainContent>
         <div className="container MultipleChoiceExam">

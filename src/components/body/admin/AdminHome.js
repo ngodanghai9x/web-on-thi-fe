@@ -185,7 +185,7 @@ class AdminHome extends React.Component {
     const { activePage, inputSearch, selectedExamIds } = this.state;
     const { role, all, totalElements } = this.props;
     const isChooseAll = selectedExamIds.length === all.length;
-    // if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
+    if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
     return (
       <AdminContent>
         <div className="admin-home">

@@ -57,7 +57,7 @@ class Header extends React.Component {
   }
 
   renderDropDown3 = () => {
-    const token = localStorage.getItem('accessToken');
+    const { role } = this.props;
     return (
       <div className='avatar-dropdown dropdown'>
         <div className='infor d-flex justify-content'>
@@ -69,7 +69,7 @@ class Header extends React.Component {
             Thông tin cá nhân
           </Link>
         </div>
-        {!token ? null : (
+        {!role || !role.includes("ROLE_ADMIN") ? null : (
           <div className='dropdown-item'>
             <Link to='/admin' onClick={() => this.props.changeLayout(1)}>
               Trang quản lý
@@ -142,9 +142,10 @@ class Header extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { user: { name, avatar }, layout, accessToken } } = state;
+  const { auth: { user: { name, avatar }, layout, accessToken, account } } = state;
   return {
     name,
+    role: account.role,
     avatar,
     layout,
     accessToken,
