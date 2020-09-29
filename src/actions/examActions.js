@@ -46,7 +46,8 @@ export const getExamBySubject = (subject, level) => (dispatch, getState) => {
 };
 
 export const getDetailExam = (id, isAdmin) => (dispatch, getState) => {
-  const url = isAdmin ? 'api/exam/get' : 'api/profile/get-exam';
+  // const url = isAdmin ? 'api/exam/get' : 'api/profile/get-exam';get-exam
+  const url = isAdmin ? 'api/exam/get' : 'get-exam';
   const req = {
     body: {
       id,
