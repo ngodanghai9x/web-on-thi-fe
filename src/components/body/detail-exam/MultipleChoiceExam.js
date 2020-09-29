@@ -34,7 +34,7 @@ class MultipleChoiceExam extends React.Component {
       if (data && code === 200) {
         const { id, name, image, subject, grade, description, time, canDelete, examQuestions } = data.exam;
         console.log("MultipleChoiceExamResult -> fetchDetailExam -> exam", data.exam)
-        this.setState({ examId: id, name, image, subject, grade, description, examTime: time, examTotalTime: time, canDelete, examQuestions });
+        this.setState({ examId: id, name, image, subject, grade, description, examTime: time * 60, examTotalTime: time * 60, canDelete, examQuestions });
       }
       if (code === 400) {
       }

@@ -31,7 +31,7 @@ class MultipleChoiceResult extends React.Component {
     this.props.getDetailExam(_id, false).then(({ data, code, message }) => {
       if (data && code === 200) {
         const { id, name, image, subject, grade, description, time, canDelete, examQuestions } = data.exam;
-        this.setState({ id, name, image, subject, grade, description, time, canDelete, examQuestions });
+        this.setState({ id, name, image, subject, grade, description, time: time * 60, canDelete, examQuestions });
       }
       if (code === 400) {
       }
@@ -166,9 +166,9 @@ class MultipleChoiceResult extends React.Component {
                 </div> */}
                 {Object.keys(result).length > 0 ? null : (
                   <div className="button" >
-                    {/* <Link to={`${location.pathname.replace('/ket-qua/', '/')}`}> */}
-                      <button className="btn btn-info" onClick={() => this.submit()} >Làm bài </button>
-                    {/* </Link> */}
+                    <Link to={`${location.pathname.replace('/ket-qua/', '/')}`}>
+                      <button className="btn btn-info" >Làm bài </button>
+                    </Link>
                   </div>
                 )}
               </div>
