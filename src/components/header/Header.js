@@ -69,13 +69,13 @@ class Header extends React.Component {
             Thông tin cá nhân
           </Link>
         </div>
-        {!role || !role.includes("ROLE_ADMIN") ? null : (
+        {/* {!role || !role.includes("ROLE_ADMIN") ? null : ( */}
           <div className='dropdown-item'>
             <Link to='/admin' onClick={() => this.props.changeLayout(1)}>
               Trang quản lý
           </Link>
           </div>
-        )}
+        {/* )} */}
         <div className='dropdown-item'>
           <Link to='/doi-mat-khau'>
             Đổi mật khẩu
@@ -142,7 +142,12 @@ class Header extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { user: { name, avatar }, layout, accessToken, account } } = state;
+  const { auth: {
+    user: { name, avatar },
+    layout,
+    accessToken,
+    account
+  } } = state;
   return {
     name,
     role: account.role,
