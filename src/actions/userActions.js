@@ -65,7 +65,6 @@ export const createAccount = (name, username, password1, email) => (dispatch, ge
   }
   return callApi('register', { method: 'POST', data: reqBody })
     .then(({ data, code, message }) => {
-      console.log("createAccount -> data=", { data, code, message });
       if (data && code === 200) {
         window.noti.success('Đăng ký tài khoản thành công');
         window.location.pathname = '/dang-nhap';
@@ -174,7 +173,6 @@ export const updateUserInfo = (name, phone, birthday, gender, school) => (dispat
   return callApi('api/profile/update', { method: 'POST', data: reqBody })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
-        console.log("updateUserInfo -> data", data)
         // data.userProfile.birthday = "abc";
         dispatch(receiveUserInfo(data.userProfile || {}));
       }

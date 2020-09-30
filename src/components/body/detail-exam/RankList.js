@@ -39,12 +39,12 @@ class RankList extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {rankList1.map((item, i) => (
+            {rankList.map((item, i) => (
               <tr className="tr">
                 <td className="col-stt">{i + 1}</td>
-                <td className="col-name text-ellipsis">Tên Thí sinh</td>
+                <td className="col-name text-ellipsis">{item.fullName}</td>
                 <td className="col-point">
-                  {parseFloat("3.456").toFixed(2)}
+                  {parseFloat(item.numCorrectAns * 10 / item.totalQuestion).toFixed(2)}
                 </td>
               </tr>
             ))}

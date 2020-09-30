@@ -60,7 +60,7 @@ class UpdateExam extends React.Component {
 
   changeStep = (step) => {
     if (step === 1) {
-      this.setState({ step: 1});
+      return this.setState({ step: 1});
     }
     if (this.state.subject === 'Ngữ Văn') {
       this.setState({ step: 3 });
@@ -112,6 +112,7 @@ class UpdateExam extends React.Component {
       errorName, errorSubject, errorTime, errorTotal,
     } = this.state;
     const exam = { id, name, image, subject, grade, description, time, canDelete };
+    const question0 = examQuestions ? examQuestions[0]  : '';
     const { role } = this.props;
     // if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
     return (
@@ -209,7 +210,7 @@ class UpdateExam extends React.Component {
           </div>
           {/* <CreateExamInfo isShow={step === 1} changeStep={this.changeStep} /> */}
           <UpdateQuestion isShow={step === 2} changeStep={this.changeStep} exam1={exam} listQuestion={examQuestions} />
-          <CreateEssayExam isShow={step === 3} changeStep={this.changeStep} exam1={exam} />
+          <CreateEssayExam isShow={step === 3} changeStep={this.changeStep} exam1={exam} question0={question0} />
         </div>
       </AdminContent>
 

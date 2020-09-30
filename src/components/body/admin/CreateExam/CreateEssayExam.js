@@ -19,10 +19,11 @@ class CreateEssayExam extends React.Component {
 
   submit = e => {
     const { name, image, subject, level, description, time } = this.props.exam1;
+    const { question0 } = this.props;
     const { question } = this.state;
     const listQuestion = [{
       image: null,
-      question,
+      question: question || question0 ? question0.question : '',
       option1: null,
       option2: null,
       option3: null,
@@ -35,27 +36,29 @@ class CreateEssayExam extends React.Component {
   }
 
   render() {
-    const { isShow } = this.props;
+    const { isShow, question0 } = this.props;
     const { question } = this.state;
     return (
       <React.Fragment>
         <div className={`CreateEssayExam ${!isShow ? 'd-none' : ''}`}>
           <CKEditor
-            data={question || ''}
+            data={(question0 ? question0.question : question) || ''}
             // data={''}
             onChange={e => this.onEditorChange(e)}
             config={{
-              height: 82,
-              resize_maxHeight: 334,
-              resize_minHeight: 186,
+              height: 234,
+              resize_maxHeight: 600,
+              resize_minHeight: 334,
             }}
           />
-          <span className="a" onClick={() => this.back()}>
+          <div className="wrapper-action d-flex justify-content-center align-items-center">
+            <span className="a" onClick={() => this.back()}>
               {`<< Quay lại`}
-          </span>
-          <button className="btn btn-info" onClick={() => this.submit()}>
-            Lưu
+            </span>
+            <button className="btn btn-info" onClick={() => this.submit()}>
+              Lưu
           </button>
+          </div>
         </div>
       </React.Fragment>
 

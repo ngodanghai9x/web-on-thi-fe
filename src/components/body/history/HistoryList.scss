@@ -1,0 +1,16 @@
+.HistoryList {
+  table {
+    .col-name {
+      width: calc(100% - 255px);
+    }
+    .col-date {
+      width: 100px;
+    }
+    .col-result {
+      width: 85px;
+    }
+    .col-point {
+      width: 70px;
+    }
+  }
+}

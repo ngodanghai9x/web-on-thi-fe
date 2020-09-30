@@ -69,6 +69,11 @@ class Header extends React.Component {
             Thông tin cá nhân
           </Link>
         </div>
+        <div className='dropdown-item'>
+          <Link to='/lich-su'>
+            Lịch sử thi
+          </Link>
+        </div>
         {/* {!role || !role.includes("ROLE_ADMIN") ? null : ( */}
           <div className='dropdown-item'>
             <Link to='/admin' onClick={() => this.props.changeLayout(1)}>

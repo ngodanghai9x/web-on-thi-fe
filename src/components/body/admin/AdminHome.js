@@ -44,14 +44,12 @@ class AdminHome extends React.Component {
   }
 
   handlePageChange = (pageNumber) => {
-    console.log(`active page is ${pageNumber}`);
     this.setState({ activePage: pageNumber }, () => this.reload());
     this.props.changeActivePage(pageNumber);
   }
 
   seeDetailExam = (e, id) => {
     e.stopPropagation();
-    console.log("AdminHome -> seeDetailExam -> id", id)
     const { history } = this.props;
     history.push(`/admin/update-exam/${id}`);
   }

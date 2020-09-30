@@ -25,6 +25,8 @@ import ChooseSubjects2 from 'components/body/ChooseSubjects2';
 import HighSchoolExamList from 'components/body/home-content/HighSchoolExamList';
 import UpdateExam from 'components/body/admin/UpdateExam/UpdateExam';
 import MultipleChoiceExamResult from 'components/body/detail-exam/MultipleChoiceExamResult';
+import HistoryList from 'components/body/history/HistoryList';
+import HistoryDetail from 'components/body/history/HistoryDetail';
 
 
 class RouterList extends React.Component {
@@ -42,6 +44,8 @@ class RouterList extends React.Component {
         {/* <Route exact path="/" render={() => (<Redirect to="/home" />)} /> */}
         <Route exact path="/" component={Home} />
         <Route exact path="/thong-tin-ca-nhan" component={UserInfo} />
+        <Route exact path="/lich-su" component={HistoryList} />
+        <Route exact path="/lich-su/:id" component={HistoryDetail} />
 
 
         <Route exact path="/lop-10/" component={ChooseSubjects} />

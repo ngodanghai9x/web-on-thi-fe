@@ -184,6 +184,7 @@ class UpdateQuestion extends React.Component {
                 resize_minHeight: 186,
               }}
             />
+            <input value={data} type="text" />
           </div>
           <div className="right  d-flex justify-content-between flex-column">
             {[1, 2, 3, 4].map(item => (

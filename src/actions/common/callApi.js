@@ -30,7 +30,7 @@ const callApi = function callApi(pathUrl, options) {
   return axios(options)
     .then(
       (response) => {
-        console.log("callApi -> response=", response);
+        // console.log(options.url, "callApi -> response=", response);
         const data = response && response.data ? response.data : {};
         return {
           data: data.body,
@@ -40,7 +40,7 @@ const callApi = function callApi(pathUrl, options) {
         };
       },
       (error) => {
-        console.log("callApi -> error=", error);
+        console.log(options.url, "callApi -> error=", error);
         if (options.method && options.method.toUpperCase() !== 'GET') window.noti.error('Có lỗi xảy ra, vui lòng thao tác lại');
         return error;
       },

@@ -2,9 +2,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import CKEditor from 'ckeditor4-react';
+// import CKEditor from 'ckeditor4-react';
+import CKEditor from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import AdminContent from '../layout/AdminContent';
 import { changeLayout } from 'actions/userActions';
+
+// import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
+// import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
+// import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
+// import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+
+// const editorConfiguration = {
+//     plugins: [ Essentials, Bold, Italic, Paragraph ],
+//     toolbar: [ 'bold', 'italic' ]
+// };
+
 
 class Test extends Component {
   constructor(props) {
@@ -36,6 +49,25 @@ class Test extends Component {
         <button onClick={() => this.props.changeLayout(1)}>abbb1111111</button>
         <button onClick={() => this.props.changeLayout(0)}>abbb00000000000</button>
         <CKEditor
+          editor={ClassicEditor}
+          data="<p>Hello from CKEditor 5!</p>"
+          // config={ editorConfiguration }
+          onInit={(editor) => {
+            // You can store the "editor" and use when it is needed.
+            console.log("Editor is ready to use!", editor);
+          }}
+          onChange={(event, editor) => {
+            const data = editor.getData();
+            console.log({ event, editor, data });
+          }}
+          onBlur={(event, editor) => {
+            // console.log("Blur.", editor);
+          }}
+          onFocus={(event, editor) => {
+            // console.log("Focus.", editor);
+          }}
+        />
+        {/* <CKEditor
           data={this.state.data}
           onChange={this.onEditorChange}
         />
@@ -43,7 +75,7 @@ class Test extends Component {
           Change value:
                         <textarea defaultValue={this.state.data} onChange={this.handleChange} />
         </label>
-        <EditorPreview data={this.state.data} />
+        <EditorPreview data={this.state.data} /> */}
       </AdminContent>
 
 
