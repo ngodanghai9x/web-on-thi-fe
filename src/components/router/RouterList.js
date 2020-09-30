@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
 
 
-
+import { logout, changeLayout, init } from 'actions/userActions';
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import Home from '../body/Home';
 import ChooseSubjects from '../body/ChooseSubjects';
@@ -27,7 +27,10 @@ import UpdateExam from 'components/body/admin/UpdateExam/UpdateExam';
 import MultipleChoiceExamResult from 'components/body/detail-exam/MultipleChoiceExamResult';
 
 
-export default class RouterList extends React.Component {
+class RouterList extends React.Component {
+  componentDidMount() {
+    this.props.init();
+  }
   render() {
     return (
       <Switch>
@@ -62,3 +65,10 @@ export default class RouterList extends React.Component {
     )
   }
 }
+
+export default connect(
+  null,
+  {
+    init,
+  }
+)(RouterList);

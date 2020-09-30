@@ -23,7 +23,7 @@ class Header extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-    this.props.init();
+    // this.props.init();
   }
 
   renderDropDown1 = () => {

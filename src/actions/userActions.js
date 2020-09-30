@@ -118,7 +118,7 @@ export const changeForgotPassword = (username, email, password, otp, selected) =
   const reqBody = {
     body,
   }
-  return callApi('api/profile/change-password', { method: 'POST', data: reqBody })
+  return callApi('change-password', { method: 'POST', data: reqBody })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
         window.noti.success('Đổi mật khẩu thành công');
