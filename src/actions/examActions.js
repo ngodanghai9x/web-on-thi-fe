@@ -219,7 +219,28 @@ export const doExam = (id, time, examAnswer) => (dispatch, getState) => {
     });
 };
 
-export const getResultExam = (historyId) => (dispatch, getState) => {
+export const getResultExam = (examId) => (dispatch, getState) => {
+  const req = {
+    body: {
+      examId,
+    }
+  };
+  return callApi('api/get-last-history', { method: 'POST', data: req })
+    .then(({ data, code, message }) => {
+      if (data && code === 200) {
+        dispatch(receiveResultExam(data.result));
+        // window.noti.success('Nộp bài thành công');
+      }
+      if (code === 400) {
+        // dispatch(receiveResultExam({}));
+        // window.noti.error('Nộp bài thất bại');
+      }
+    })
+    .catch(err => {
+    });
+};
+
+export const getHistoryExam = (historyId) => (dispatch, getState) => {
   const req = {
     body: {
       historyId
