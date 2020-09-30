@@ -228,7 +228,7 @@ export const getResultExam = (examId) => (dispatch, getState) => {
   return callApi('api/get-last-history', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
-        dispatch(receiveResultExam(data.result));
+        dispatch(receiveResultExam(data.lastHistory));
         // window.noti.success('Nộp bài thành công');
       }
       if (code === 400) {

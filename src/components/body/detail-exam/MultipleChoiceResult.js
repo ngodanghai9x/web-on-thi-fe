@@ -192,7 +192,7 @@ const mapStateToProps = (state, ownProps) => {
     user: auth.user,
     accessToken: auth.accessToken,
     result,
-    exam: result.exam || {},
+    exam:  result && result.exam || {},
   };
 };
 
