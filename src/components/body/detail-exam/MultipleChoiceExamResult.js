@@ -4,7 +4,7 @@ import * as CommonIcon from 'components/icons/common';
 
 
 
-import { 
+import {
   doExam,
   getDetailExam,
   getResultExam,
@@ -30,7 +30,7 @@ class MultipleChoiceExamResult extends React.Component {
 
   componentWillReceiveProps() {
     if (false) {
-      this.setState({ examId: 1,})
+      this.setState({ examId: 1, })
     }
   }
 
@@ -97,9 +97,9 @@ class MultipleChoiceExamResult extends React.Component {
                     ${item.answer && item[option] === item.answer ? 'active' : ''}
                     ${this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP ? 'active' : ''}
                     `}
-                    // onClick={() => this.choose(i, item.id, item[option], option)}
-                    // onClick={() => this.choose(i, item.id, option)}
-                    // ${this.state[`Q${i}`] && item[option] === this.state[`Q${i}`].answerOP ? 'active' : ''}
+                  // onClick={() => this.choose(i, item.id, item[option], option)}
+                  // onClick={() => this.choose(i, item.id, option)}
+                  // ${this.state[`Q${i}`] && item[option] === this.state[`Q${i}`].answerOP ? 'active' : ''}
                   >
                     {key[option]}
                   </div>
@@ -169,6 +169,9 @@ class MultipleChoiceExamResult extends React.Component {
 
             <div className="col-3">
               <div className="multiple-choice">
+                <div className="result-timer" style={{ textAlign: 'center', margin: '8px auto' }}>
+                  {getMinute(result.time)}
+                </div>
                 <div className="a123 d-flex">
                   <div className="a123-stt">STT</div>
                   <div className="a123-number">{numOption1 ? numOption1.length : 0}</div>
@@ -186,7 +189,6 @@ class MultipleChoiceExamResult extends React.Component {
                 Nộp Bài
                 </button>
               {/* </div> */}
-              {getMinute(result.time)}
             </div>
           </div>
         </div>
@@ -197,7 +199,7 @@ class MultipleChoiceExamResult extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth, exam: {result} } = state;
+  const { auth, exam: { result } } = state;
   return {
     user: auth.user,
     accessToken: auth.accessToken,
@@ -205,7 +207,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps,{
+export default connect(mapStateToProps, {
   doExam,
   getDetailExam,
   getResultExam,

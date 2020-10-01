@@ -67,7 +67,7 @@ class MultipleChoiceExam extends React.Component {
     return examQuestions.map((item, i) => {
       return (
         <React.Fragment>
-          <div className="game-code-view" style={i === examQuestions.length -1 ? { border: 'none' } : {}}>
+          <div className="game-code-view" style={i === examQuestions.length - 1 ? { border: 'none' } : {}}>
             <div className="card-game-content" >
               <span dangerouslySetInnerHTML={{ __html: `<b>Câu ${i + 1}: </b>${item.question}` }}>
                 {/* {item.question} */}
@@ -120,8 +120,8 @@ class MultipleChoiceExam extends React.Component {
     // console.log("MultipleChoiceExam -> submit -> examAnswer", examAnswer)
     this.props.doExam(examId, examTotalTime - examTime, examAnswer);
     clearInterval(this.timeInterval);
-    history.push(`${location.pathname.substr(0,idx)}/ket-qua/${match.params.id}`);
-    
+    history.push(`${location.pathname.substr(0, idx)}/ket-qua/${match.params.id}`);
+
   }
 
   renderChoiceTable = (examQuestions) => {
@@ -211,6 +211,9 @@ class MultipleChoiceExam extends React.Component {
 
             <div className="col-3">
               <div className="multiple-choice">
+                <div className="result-timer" style={{ textAlign: 'center', margin: '8px auto' }}>
+                  {getMinute(examTime)}
+                </div>
                 <div className="a123 d-flex">
                   <div className="a123-stt">STT</div>
                   <div className="a123-number">{numOption1 ? numOption1.length : 0}</div>
@@ -229,7 +232,6 @@ class MultipleChoiceExam extends React.Component {
                 Nộp Bài
                 </button>
               {/* </div> */}
-              {getMinute(examTime)}
             </div>
           </div>
         </div>

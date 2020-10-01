@@ -6,22 +6,33 @@ const initState = {
   activeCollegeSub: 'toan',
   activeHSSub: 'toan',
   header: 'Danh sách đề',
+  //id, name, image, subject, grade,description, time, isActive, canDelete, examQuestions
   all: [],
   pagination: {
     activePage: 1,
     pageSize: 10,
     totalElements: 0,
-    totalPages: 0,
+    totalPages: 1,
   },
   rankList: [],
   currentExam: {},
   completedExams: [],
   result: {
+    // examName,
+    // examDescription,
     // numAnswer: 0,
     // numCorrectAns: 0,
-    // time: 0,
+    // doTime: 0,
+    // totalTime: 0,
     // totalQuestion: 0,
     // examQuestions: [],
+  },
+  historyExam: [],
+  paginationHistory: {
+    currentPage: 1,
+    pageSize: 10,
+    totalPages: 1,
+    totalElements: 1,
   },
   college: {
     all: [],
@@ -49,6 +60,18 @@ const initState = {
 
 const exam = (state = initState, action) => {
   switch (action.type) {
+    case actionTypes.GET_LIST_HISTORY_EXAM:
+      return {
+        ...state,
+        historyExam: action.content || [],
+        paginationHistory: {
+          ...state.paginationHistory,
+          currentPage: action.currentPage,
+          pageSize: action.pageSize,
+          totalPages: action.totalPages,
+          totalElements: action.totalElements,
+        }
+      };
     case actionTypes.CHANGE_HEADER:
       return {
         ...state,

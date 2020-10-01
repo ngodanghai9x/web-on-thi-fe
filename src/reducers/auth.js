@@ -50,7 +50,7 @@ const auth = (state = initState, action) => {
           gender: action.user.gender,
           clazz: action.user.clazz,
           school: action.user.school,
-          examHistories: action.user.examHistories,
+          // examHistories: action.user.examHistories,
         },
       };
     case actionTypes.UPDATE_AVATAR_USER:

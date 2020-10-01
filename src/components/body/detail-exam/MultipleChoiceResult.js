@@ -23,7 +23,7 @@ class MultipleChoiceResult extends React.Component {
   componentDidMount() {
     const { match } = this.props;
     const { id } = match.params; // type, môn học
-    this.fetchDetailExam(id);
+    // this.fetchDetailExam(id);
     this.props.getResultExam(id);
   }
 
@@ -71,7 +71,7 @@ class MultipleChoiceResult extends React.Component {
           <div className="row-infor-panel">
             <div className="exam-label">Thời gian làm bài</div>
             <div className="exam-result">
-              {getMinute(result.time)}
+              {getMinute(result.doTime)}
             </div>
           </div>
           {/* <div className="row-infor-panel">
@@ -102,7 +102,17 @@ class MultipleChoiceResult extends React.Component {
   render() {// cái kết quả mới là trang này
     const { accessToken, result, location, match, exam } = this.props;
     const { id } = match.params; // type, môn học
-    const { name, image, subject, grade, description, time, canDelete, examQuestions } = this.state;
+    // const { name, image, subject, grade, description, time, canDelete, examQuestions } = this.state;
+    const { 
+      examName,
+      examDescription,
+      numAnswer,
+      numCorrectAns,
+      doTime,
+      totalTime,
+      totalQuestion,
+      examQuestions,
+    } = result;
     // if (!accessToken) return <Redirect to='/' />
     return (
       <MainContent>
@@ -111,9 +121,9 @@ class MultipleChoiceResult extends React.Component {
             <div className="col-8">
 
               <div className="exam-infor-panel" >
-                <div className="Mul-title" >{name} </div>
+                <div className="Mul-title" >{examName} </div>
                 <div className="description">
-                  {description}
+                  {examDescription}
                 </div>
                 <div className="item-infor-panel">
                   <div className="item-label">
@@ -123,7 +133,7 @@ class MultipleChoiceResult extends React.Component {
                     <div className="label" > Số câu hỏi </div>
                   </div>
                   <div className="gwt-HTML" >
-                    {`${examQuestions ? examQuestions.length : 0} Câu`}
+                    {`${totalQuestion ? totalQuestion : 0} Câu`}
                   </div>
                 </div>
                 <div className="item-infor-panel" >
@@ -134,7 +144,7 @@ class MultipleChoiceResult extends React.Component {
                     <div className="label" > Thời gian làm bài </div>
                   </div>
                   <div className="gwt-HTML" >
-                    {`${time} Phút`}
+                    {`${totalTime} Phút`}
                   </div>
                 </div>
                 {/* <div className="item-infor-panel" >

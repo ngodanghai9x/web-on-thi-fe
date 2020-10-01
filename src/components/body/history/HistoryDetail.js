@@ -16,16 +16,16 @@ class HistoryDetail extends React.Component {
     super(props);
     this.state = {};
   }
-  
+
   componentDidMount() {
     const { match } = this.props;
     const { subject, id } = match.params; // type, môn học
-    this.props.getHistoryExam(id);
+    // this.props.getHistoryExam(id);
   }
 
   componentWillReceiveProps() {
     if (false) {
-      this.setState({ examId: 1,})
+      this.setState({ examId: 1, })
     }
   }
 
@@ -92,9 +92,9 @@ class HistoryDetail extends React.Component {
                     ${item.answer && item[option] === item.answer ? 'active' : ''}
                     ${this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP ? 'active' : ''}
                     `}
-                    // onClick={() => this.choose(i, item.id, item[option], option)}
-                    // onClick={() => this.choose(i, item.id, option)}
-                    // ${this.state[`Q${i}`] && item[option] === this.state[`Q${i}`].answerOP ? 'active' : ''}
+                  // onClick={() => this.choose(i, item.id, item[option], option)}
+                  // onClick={() => this.choose(i, item.id, option)}
+                  // ${this.state[`Q${i}`] && item[option] === this.state[`Q${i}`].answerOP ? 'active' : ''}
                   >
                     {key[option]}
                   </div>
@@ -108,9 +108,7 @@ class HistoryDetail extends React.Component {
   }
 
   render() {
-    const { accessToken, result } = this.props;
-    const { examQuestions } = result;
-    const { examTime } = this.state;
+    const { accessToken, examQuestions, doTime } = this.props;
     const arrVal = Object.values(this.state);
     const numOption1 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option1');
     const numOption2 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option2');
@@ -118,48 +116,59 @@ class HistoryDetail extends React.Component {
     const numOption4 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option4');
     // if (!accessToken) return <Redirect to='/' />
     return (
-      <MainContent>
-        <div className="container MultipleChoiceExam">
-          <div className="row">
-            <div className="col-9">
-              {this.renderQuestion(examQuestions)}
-            </div>
+      // <MainContent>
+      <div className="container MultipleChoiceExam">
+        <div className="row">
+          <div className="col-9">
+            {this.renderQuestion(examQuestions)}
+          </div>
 
-            <div className="col-3">
-              <div className="multiple-choice">
-                <div className="a123 d-flex">
-                  <div className="a123-stt">STT</div>
-                  <div className="a123-number">{numOption1 ? numOption1.length : 0}</div>
-                  <div className="a123-number">{numOption2 ? numOption2.length : 0}</div>
-                  <div className="a123-number">{numOption3 ? numOption3.length : 0}</div>
-                  <div className="a123-number">{numOption4 ? numOption4.length : 0}</div>
-                </div>
-                <div className="wrapper-table-choice list-overflow-auto">
-                  {this.renderChoiceTable(examQuestions)}
-                </div>
+          <div className="col-3">
+            <div className="multiple-choice">
+              <div className="result-timer" style={{ textAlign: 'center', margin: '8px auto'}}>
+                {getMinute(doTime)}
               </div>
-              {/* <div className="btn-group"> */}
-              <button type="button" className="btn btn-primary submit-btn disable"
-              >
-                Nộp Bài
-                </button>
-              {/* </div> */}
-              {getMinute(result.time)}
+              <div className="a123 d-flex">
+                <div className="a123-stt">STT</div>
+                <div className="a123-number">{numOption1 ? numOption1.length : 0}</div>
+                <div className="a123-number">{numOption2 ? numOption2.length : 0}</div>
+                <div className="a123-number">{numOption3 ? numOption3.length : 0}</div>
+                <div className="a123-number">{numOption4 ? numOption4.length : 0}</div>
+              </div>
+              <div className="wrapper-table-choice list-overflow-auto">
+                {this.renderChoiceTable(examQuestions)}
+              </div>
             </div>
+            {/* <div className="btn-group"> */}
+            <button type="button" className="btn btn-primary submit-btn" onClick={() => this.props.back()}
+            >
+              Quay lại
+            </button>
+            {/* </div> */}
           </div>
         </div>
-      </MainContent>
+      </div>
+      // </MainContent>
     );
   }
 }
 
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth, exam: {result} } = state;
+  const {
+    auth,
+    exam: {
+      result,
+      historyExam,
+      paginationHistory,
+    },
+  } = state;
   return {
     user: auth.user,
     accessToken: auth.accessToken,
     result,
+    // historyExam,
+    // paginationHistory,
   };
 };
 

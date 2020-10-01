@@ -240,6 +240,37 @@ export const getResultExam = (examId) => (dispatch, getState) => {
     });
 };
 
+export const getListHistoryExam = (currentPage = 1, pageSize = 10) => (dispatch, getState) => {
+  const req = {
+    body: {
+      pageNumber: currentPage -1,
+      pageSize,
+    }
+  };
+  return callApi('api/profile/get-history', { method: 'POST', data: req })
+    .then(({ data, code, message }) => {
+      if (data && code === 200) {
+        dispatch({
+          type: actionTypes.GET_LIST_HISTORY_EXAM,
+          content: data.examHistoryDtos.content,
+          totalPages: data.examHistoryDtos.totalPages,
+          pageSize: data.examHistoryDtos.pageSize,
+          currentPage: data.examHistoryDtos.currentPage,
+          totalElements: data.examHistoryDtos.totalElements,
+          sort: data.examHistoryDtos.sort,
+          
+        });
+        // window.noti.success('Nộp bài thành công');
+      }
+      if (code === 400) {
+        // dispatch(receiveResultExam({}));
+        // window.noti.error('Nộp bài thất bại');
+      }
+    })
+    .catch(err => {
+    });
+};
+
 export const getHistoryExam = (historyId) => (dispatch, getState) => {
   const req = {
     body: {

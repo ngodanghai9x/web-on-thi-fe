@@ -66,8 +66,8 @@ class AdminHome extends React.Component {
     e.stopPropagation();
     const { all } = this.props;
     const { selectedExamIds } = this.state;
-    const arr = all.filter(item => selectedExamIds.includes(item.id) && item.canDelete);
-    if (selectedExamIds.length !== arr.length) {
+    const notDelete = all.find(item => selectedExamIds.includes(item.id) && item.canDelete);
+    if (notDelete) {
       return window.noti.error('Không thể xóa đề đã kích hoạt và đã có người làm');
     }
     if (confirm('Thao tác này không thể khôi phục, bạn có chắc chắn xóa ?')) {
