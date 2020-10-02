@@ -11,7 +11,7 @@ const initState = {
   pagination: {
     activePage: 1,
     pageSize: 10,
-    totalElements: 0,
+    totalElements: 1,
     totalPages: 1,
   },
   rankList: [],
@@ -110,8 +110,23 @@ const exam = (state = initState, action) => {
       return {
         ...state,
         all: action.exams,
-        // pagination: action.pagination,
+        pagination: {
+          ...state.pagination,
+          ...action.pagination,
+        },
       };
+      case actionTypes.CHANGE_ACTIVE_EXAM:
+        const { all } = state;
+        const newAll = all.map(item => {
+          if (item.id === action.id) {
+            item.isActive = !action.isActive;
+          }
+          return item;
+        })
+        return {
+          ...state,
+          all: newAll,
+        };
     case actionTypes.GET_DETAIL_EXAM:
       return {
         ...state,
@@ -127,7 +142,7 @@ const exam = (state = initState, action) => {
         },
       };
     case actionTypes.DELETE_EXAM:
-      const temp2 = state.all.filter(item => item.id !== action.id);
+      const temp2 = state.all.filter(item => !action.examIds.includes(item.id));
       return {
         ...state,
         all: [...temp2],

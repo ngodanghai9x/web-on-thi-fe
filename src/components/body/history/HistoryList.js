@@ -17,7 +17,7 @@ class HistoryList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      screen: 'detail',
+      screen: 'list',
       examQuestions: [],
       doTime: 0,
       activePage: 1,

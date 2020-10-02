@@ -194,6 +194,8 @@ class CreateQuestion extends React.Component {
     const canAdd = callingApi !== 'CreateQuestion' && Object.keys(listQ).length < total && pointer < total;
     const canSave = callingApi !== 'CreateQuestion' && Object.keys(listQ).length >= 1;
 
+    if (!isShow) return null;
+
     return (
       <React.Fragment>
         <div className={`CreateQuestion ${!isShow ? 'd-none' : ''}`}>

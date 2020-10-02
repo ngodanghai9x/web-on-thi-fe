@@ -184,7 +184,7 @@ class UpdateQuestion extends React.Component {
                 resize_minHeight: 186,
               }}
             />
-            <input value={data} type="text" />
+            {/* <input value={data} type="text" /> */}
           </div>
           <div className="right  d-flex justify-content-between flex-column">
             {[1, 2, 3, 4].map(item => (
@@ -228,7 +228,7 @@ class UpdateQuestion extends React.Component {
     const canNext = callingApi !== 'UpdateQuestion' && pointer < Object.keys(listQ).length - 1;
     const canAdd = callingApi !== 'UpdateQuestion' && Object.keys(listQ).length < total && pointer < total;
     const canSave = callingApi !== 'UpdateQuestion' && Object.keys(listQ).length >= 1;
-
+    if (!isShow) return null;
     return (
       <React.Fragment>
         <div className={`UpdateQuestion ${!isShow ? 'd-none' : ''}`}>

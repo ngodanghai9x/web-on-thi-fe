@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
 import AdminContent from 'components/body/layout/AdminContent';
 import UpdateQuestion from './UpdateQuestion';
-import { subjects2 } from 'actions/common/getInfo';
+import { getObjLevel, getObjSubject, subjects2 } from 'actions/common/getInfo';
 import { getAvatar, changeLayout } from 'actions/userActions';
 import './UpdateExam.scss';
 import { Redirect, withRouter } from 'react-router-dom';
@@ -150,7 +150,7 @@ class UpdateExam extends React.Component {
               <div className="profile-row">
                 <div className="key">Cấp bậc</div>
                 <div className="value">
-                  <select onChange={(e) => this.onChangeMax255('level', e.target.value, 'errorName')}>
+                  <select defaultValue={getObjLevel(grade).vn} onChange={(e) => this.onChangeMax255('level', e.target.value, 'errorName')}>
                     <option value="Lớp 10">Lớp 10</option>
                     <option value="Đại học">Đại học</option>
                   </select>
@@ -159,7 +159,7 @@ class UpdateExam extends React.Component {
               <div className="profile-row">
                 <div className="key">Môn học</div>
                 <div className="value">
-                  <select onChange={(e) => this.onChangeMax255('subject', e.target.value, 'errorSubject')}>
+                  <select style={{ cursor: 'not-allowed', color: '#000' }} disabled defaultValue={getObjSubject(subject).vn}>
                     {subjects2.map(item => ((
                       <option value={item.vn}>{item.vn}</option>
                     )))}

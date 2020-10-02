@@ -64,33 +64,33 @@ class Header extends React.Component {
           <img src='../../images/default-avatar.jpg' alt='avatar' />
           <div className='name d-flex align-items-center'>{this.props.name}</div>
         </div>
-        <div className='dropdown-item'>
-          <Link to='/thong-tin-ca-nhan'>
-            Thông tin cá nhân
-          </Link>
-        </div>
-        <div className='dropdown-item'>
-          <Link to='/lich-su'>
-            Lịch sử thi
-          </Link>
-        </div>
-        {/* {!role || !role.includes("ROLE_ADMIN") ? null : ( */}
+        <Link to='/thong-tin-ca-nhan'>
           <div className='dropdown-item'>
-            <Link to='/admin' onClick={() => this.props.changeLayout(1)}>
-              Trang quản lý
-          </Link>
-          </div>
+            Thông tin cá nhân
+        </div>
+        </Link>
+        <Link to='/lich-su'>
+          <div className='dropdown-item'>
+            Lịch sử thi
+        </div>
+        </Link>
+        {/* {!role || !role.includes("ROLE_ADMIN") ? null : ( */}
+        <Link to='/admin' onClick={() => this.props.changeLayout(1)}>
+          <div className='dropdown-item'>
+            Trang quản lý
+        </div>
+        </Link>
         {/* )} */}
-        <div className='dropdown-item'>
-          <Link to='/doi-mat-khau'>
+        <Link to='/doi-mat-khau'>
+          <div className='dropdown-item'>
             Đổi mật khẩu
-          </Link>
         </div>
-        <div className='dropdown-item'>
-          <Link to='/dang-nhap' onClick={() => this.logout()}>
+        </Link>
+        <Link to='/dang-nhap' onClick={() => this.logout()}>
+          <div className='dropdown-item'>
             Đăng xuất
-          </Link>
         </div>
+        </Link>
       </div>
 
     );

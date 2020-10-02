@@ -17,6 +17,7 @@ import  {
 import AdminContent from '../layout/AdminContent';
 import './AdminHome.scss';
 import Pagination from 'react-js-pagination';
+import { getObjLevel, getObjSubject } from 'actions/common/getInfo';
 
 const SIZE = 10;
 class AdminHome extends React.Component {
@@ -66,7 +67,7 @@ class AdminHome extends React.Component {
     e.stopPropagation();
     const { all } = this.props;
     const { selectedExamIds } = this.state;
-    const notDelete = all.find(item => selectedExamIds.includes(item.id) && item.canDelete);
+    const notDelete = all.find(item => selectedExamIds.includes(item.id) && !item.canDelete);
     if (notDelete) {
       return window.noti.error('Không thể xóa đề đã kích hoạt và đã có người làm');
     }
@@ -80,6 +81,9 @@ class AdminHome extends React.Component {
       if (confirm('Kích hoạt đề để mọi người có thể làm đề, nhưng sẽ không thể xóa đề được nữa kể cả có tắt kích hoạt, bạn có chắc chắn kích hoạt ?')) {
         this.props.changeActiveExam(id, isActive);
       }
+    } 
+    else {
+      this.props.changeActiveExam(id, isActive);
     }
     e.stopPropagation();
   }
@@ -147,9 +151,9 @@ class AdminHome extends React.Component {
             </div>
           </td>
           <td className="col col-name">{item.name}</td>
-          <td className="col col-subject">{item.subject}</td>
-          <td className="col col-grade">{item.grade}</td>
-          <td className="col col-time">{item.time}</td>
+          <td className="col col-subject">{getObjSubject(item.subject).vn}</td>
+          <td className="col col-grade">{getObjLevel(item.grade).vn}</td>
+          <td className="col col-time">{`${item.time} phút`}</td>
           <td className="col col-action">
             <div className="d-flex">
               <div className="wrapper-icon" title="Chỉnh sửa" onClick={(e) => this.seeDetailExam(e, item.id)}>

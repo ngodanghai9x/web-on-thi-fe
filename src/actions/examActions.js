@@ -141,13 +141,14 @@ export const updateExam = (name, image, subject, level, description, time, examQ
     .then(({ data, code, message }) => {
       if (data && code === 200) {
         dispatch(callApiExam());
-        dispatch({
-          type: actionTypes.UPDATE_EXAM,
-          exam: data.exam,
-          subject: obj.eng,
-          level,
-          id,
-        });
+        dispatch(getAllExam());
+        // dispatch({
+        //   type: actionTypes.UPDATE_EXAM,
+        //   exam: data.exam,
+        //   subject: obj.eng,
+        //   level,
+        //   id,
+        // });
         window.noti.success('Cập nhật đề thành công');
       }
       if (code === 400) {
@@ -164,13 +165,17 @@ export const changeActiveExam = (id, isActive) => (dispatch, getState) => {
   const req = {
     body: {
       id,
-      isActive,
+      isActive: !isActive,
     }
   };
   return callApi('api/exam/change-active', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
-
+        dispatch({
+          type: actionTypes.CHANGE_ACTIVE_EXAM,
+          id,
+          isActive,
+        });
         window.noti.success('Đổi trạng thái của đề thành công');
       }
       if (code === 400) {
@@ -189,10 +194,14 @@ export const deleteExam = (examIds) => (dispatch, getState) => {
   return callApi('api/exam/delete', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
-        window.noti.success('Đăng nhập thành công');
+        dispatch({
+          type: actionTypes.DELETE_EXAM,
+          examIds,
+        })
+        window.noti.success('Xóa đề thành công');
       }
       if (code === 400) {
-        window.noti.error('Tài khoản hoặc mật khẩu (mã OTP) không đúng');
+        window.noti.error('Xóa đề thất bại');
       }
     })
     .catch(err => {
@@ -292,7 +301,7 @@ export const getHistoryExam = (historyId) => (dispatch, getState) => {
     });
 };
 
-export const getAllExam = (inputSearch, pageNumber, pageSize) => (dispatch, getState) => {
+export const getAllExam = (inputSearch = '', pageNumber = 1, pageSize = 10) => (dispatch, getState) => {
   const req = {
     body: {
       pageSize,
