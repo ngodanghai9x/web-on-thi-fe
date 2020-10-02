@@ -10,8 +10,9 @@ import UserContent from '../layout/UserContent';
 import TittleUserInfo from '../user/TittleUserInfo';
 import MainContent from '../layout/MainContent';
 import HistoryDetail from './HistoryDetail';
+import Pagination from 'react-js-pagination';
 
-
+const SIZE = 10;
 class HistoryList extends React.Component {
   constructor(props) {
     super(props);
@@ -19,10 +20,11 @@ class HistoryList extends React.Component {
       screen: 'detail',
       examQuestions: [],
       doTime: 0,
+      activePage: 1,
     };
   }
   componentDidMount() {
-    this.props.getListHistoryExam();
+    this.reload();
   }
 
   resetState = () => {
@@ -33,6 +35,10 @@ class HistoryList extends React.Component {
     });
   }
 
+  reload = () => {
+    let { activePage } = this.state;
+    this.props.getListHistoryExam(activePage, SIZE);
+  }
 
   seeDetailExam = (e, examQuestions, doTime) => {
     e.stopPropagation();
@@ -45,7 +51,9 @@ class HistoryList extends React.Component {
     // history.push(`/admin/update-exam/${id}`);
   }
 
-
+  handlePageChange = (pageNumber) => {
+    this.setState({ activePage: pageNumber }, () => this.reload());
+  }
 
   renderBody = (historyExam) => {
     return historyExam.map(item => {
@@ -63,7 +71,8 @@ class HistoryList extends React.Component {
   }
 
   getScreen = screen => {
-    const { examQuestions, doTime } = this.state;
+    const { paginationHistory, historyExam } = this.props;
+    const { examQuestions, doTime, activePage } = this.state;
     if (screen === 'detail') {
       return (
         <MainContent>
@@ -88,9 +97,21 @@ class HistoryList extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {this.renderBody(this.props.historyExam)}
+              {this.renderBody(historyExam)}
             </tbody>
           </table>
+
+          <div className='pagination d-flex justify-content-center'>
+            <Pagination
+              activePage={activePage}
+              itemsCountPerPage={SIZE}
+              totalItemsCount={paginationHistory.totalElements}
+              pageRangeDisplayed={5}  // số nút hiển thị
+              onChange={this.handlePageChange}
+              itemClass={"page-item"}
+              linkClass={"page-link"}
+            />
+          </div>
         </div>
       </UserContent>
     );

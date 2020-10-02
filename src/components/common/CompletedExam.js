@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
 
-import { getCompletedExams } from 'actions/examActions';
+import { getCompletedExams, getListHistoryExam } from 'actions/examActions';
 
 
 
@@ -16,6 +16,7 @@ class CompletedExam extends React.Component {
   }
 
   componentDidMount() {
+    // this.props.getListHistoryExam(1, 5);
     this.props.getCompletedExams();
   }
 
@@ -31,8 +32,8 @@ class CompletedExam extends React.Component {
       if (item && i < 4) {
         return (
           <Link className='item d-block' to={`${path}/subject/${item.id}`} key={`${item.id}-completed-exam`}>
-          {`> ${item.name}`}
-        </Link>
+            {`> ${item.name}`}
+          </Link>
         )
       }
       return null;
@@ -50,7 +51,7 @@ class CompletedExam extends React.Component {
     }
 
     if (!accessToken) return null;
-    
+
     return (
       <React.Fragment>
         <div className='completed-exam'>
@@ -68,10 +69,14 @@ class CompletedExam extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  const { exam: { completedExams }, auth: { accessToken } } = state;
+  const {
+    exam: { historyExam, completedExams },
+    auth: { accessToken },
+  } = state;
   return {
     completedExams,
     accessToken,
+    historyExam,
   };
 };
 
@@ -79,5 +84,6 @@ export default withRouter(connect(
   mapStateToProps,
   {
     getCompletedExams,
+    getListHistoryExam,
   },
 )(CompletedExam));
