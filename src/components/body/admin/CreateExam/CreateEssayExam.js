@@ -18,7 +18,7 @@ class CreateEssayExam extends React.Component {
   }
 
   submit = e => {
-    const { name, image, subject, level, description, time } = this.props.exam1;
+    const { name, image, subject, grade, description, time } = this.props.exam1;
     const { question0 } = this.props;
     const { question } = this.state;
     const listQuestion = [{
@@ -32,7 +32,7 @@ class CreateEssayExam extends React.Component {
       suggestion: null,
     }];
 
-    this.props.createExam(name, image, subject, level, description, time, listQuestion);
+    this.props.createExam(name, image, subject, grade, description, time, listQuestion);
   }
 
   render() {

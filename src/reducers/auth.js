@@ -19,6 +19,7 @@ const initState = {
     examHistories: [],
   },
   layout: 0, //0 user, 1 admin
+  isOpen: true,
 };
 
 const auth = (state = initState, action) => {
@@ -81,6 +82,11 @@ const auth = (state = initState, action) => {
       return {
         ...state,
         layout: action.layout,
+      };
+    case 'TOGGLE_SIDEBAR':
+      return {
+        ...state,
+        isOpen: !state.isOpen,
       };
     // case actionTypes.CREATE_ACCOUNT:
     //   return {

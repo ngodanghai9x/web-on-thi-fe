@@ -17,7 +17,7 @@ class CreateExam extends React.Component {
     super(props);
     this.state = {
       step: 1,
-      level: "Lớp 10",
+      grade: "Lớp 10",
       subject: "Toán học",
     };
   }
@@ -31,7 +31,7 @@ class CreateExam extends React.Component {
     const { location: {pathname} } = this.props;
     if (nextProps.location.pathname !== pathname) {
       this.setState({
-        level: 1,
+        grade: 1,
         subject: 2,
       });
     }
@@ -107,10 +107,10 @@ class CreateExam extends React.Component {
   }
 
   render() {
-    const { step, name, image, subject, level, description, time, total,
+    const { step, name, image, subject, grade, description, time, total,
       errorName, errorSubject, errorTime, errorTotal,
     } = this.state;
-    const exam1 = { name, image, subject, level, description, time, total };
+    const exam1 = { name, image, subject, grade, description, time, total };
     const { role } = this.props;
     // if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
     return (
@@ -148,7 +148,7 @@ class CreateExam extends React.Component {
               <div className="profile-row">
                 <div className="key">Cấp bậc</div>
                 <div className="value">
-                  <select onChange={(e) => this.onChangeMax255('level', e.target.value, 'errorName')}>
+                  <select onChange={(e) => this.onChangeMax255('grade', e.target.value, 'errorName')}>
                     <option value="Lớp 10">Lớp 10</option>
                     <option value="Đại học">Đại học</option>
                   </select>

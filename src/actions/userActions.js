@@ -236,6 +236,11 @@ export const changeLayout = (layout) => (dispatch, getState) => {
   });
 }
 
+export const toggleSidebar = () => (dispatch, getState) => {
+  dispatch({
+    type: 'TOGGLE_SIDEBAR',
+  });
+}
 
 export const init = () => dispatch => {
   const accessToken = localStorage.getItem('accessToken');
@@ -256,7 +261,6 @@ export const init = () => dispatch => {
   dispatch(getAvatar());
   dispatch(getUserInfo())
 }
-
 
 export const receiveUserInfo = (user) => ({
   type: actionTypes.GET_USER_INFO,

@@ -27,6 +27,15 @@ class HistoryList extends React.Component {
     this.reload();
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { pagination } = this.props;
+    if (nextProps.pagination && nextProps.pagination !== pagination) {
+      this.setState({
+        activePage: pagination.activePage,
+      })
+    }
+  }
+
   resetState = () => {
     this.setState({
       screen: 'list',
@@ -71,7 +80,7 @@ class HistoryList extends React.Component {
   }
 
   getScreen = screen => {
-    const { paginationHistory, historyExam } = this.props;
+    const { pagination, historyExam } = this.props;
     const { examQuestions, doTime, activePage } = this.state;
     if (screen === 'detail') {
       return (
@@ -105,7 +114,7 @@ class HistoryList extends React.Component {
             <Pagination
               activePage={activePage}
               itemsCountPerPage={SIZE}
-              totalItemsCount={paginationHistory.totalElements}
+              totalItemsCount={pagination.totalElements}
               pageRangeDisplayed={5}  // số nút hiển thị
               onChange={this.handlePageChange}
               itemClass={"page-item"}
@@ -146,7 +155,7 @@ const mapStateToProps = (state, ownProps) => {
     layout,
     accessToken,
     historyExam,
-    paginationHistory,
+    pagination :paginationHistory,
     // examHistories: examHistories || [],
   };
 };

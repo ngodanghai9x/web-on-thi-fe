@@ -78,7 +78,7 @@ const exam = (state = initState, action) => {
         header: action.header,
       };
     case actionTypes.CHANGE_SUBJECT:
-      if (action.level === 10) {
+      if (action.grade === 10) {
         return {
           ...state,
           activeHSSub: action.subject,
@@ -135,8 +135,8 @@ const exam = (state = initState, action) => {
     case actionTypes.GET_EXAM_BY_SUBJECT:
       return {
         ...state,
-        [action.level]: {
-          ...state[action.level],
+        [action.grade]: {
+          ...state[action.grade],
           [action.subject]: action.exams,
           all: action.exams,
         },
@@ -151,18 +151,18 @@ const exam = (state = initState, action) => {
       const temp = state.all.filter(item => item.id !== action.id);
       return {
         ...state,
-        [action.level]: {
-          ...state[action.level],
-          [action.subject]: [action.exam, ...state[action.level][action.subject]],
+        [action.grade]: {
+          ...state[action.grade],
+          [action.subject]: [action.exam, ...state[action.grade][action.subject]],
         },
         all: [action.exam, ...temp],
       };
     case actionTypes.CREATE_EXAM:
       return {
         ...state,
-        [action.level]: {
-          ...state[action.level],
-          [action.subject]: [action.exam, ...state[action.level][action.subject]],
+        [action.grade]: {
+          ...state[action.grade],
+          [action.subject]: [action.exam, ...state[action.grade][action.subject]],
         },
         all: [action.exam, ...state.all],
       };

@@ -122,7 +122,7 @@ class UpdateQuestion extends React.Component {
 
   save = (can) => {
     if (!can) return;
-    const { name, image, subject, level, description, time, id } = this.props.exam1;
+    const { name, image, subject, grade, description, time, id } = this.props.exam1;
     const { listQ } = this.state;
     const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`];
     if (!lastQ.question || !lastQ.option1 || !lastQ.option2
@@ -136,7 +136,7 @@ class UpdateQuestion extends React.Component {
       correctAnswer: item[item.correctAnswer],
     }));
     console.log("save -> listQuestion", listQuestion)
-    this.props.updateExam(name, image, subject, level, description, time, listQuestion, id);
+    this.props.updateExam(name, image, subject, grade, description, time, listQuestion, id);
   }
 
   add = (can) => {

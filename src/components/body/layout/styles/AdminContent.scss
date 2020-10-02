@@ -14,7 +14,8 @@
   }
 
   .wrapper-content {
-    width: calc(100% - 230px);
+    width: -webkit-fill-available;
+    transition: all 5s;
     .header-admin-layout {
       border-bottom: 1px solid #ddd;
       margin: 10px 30px 30px 30px;
@@ -23,6 +24,14 @@
       background: #fff;
       border-radius: 5px;
       padding: 10px 20px;
+
+      .btn-toggle {
+        border-radius: 6px;
+        margin-right: 8px;
+        &:hover {
+          color: #FFF;
+        }
+      }
     }
   }
   .wrapper-admin-layout {

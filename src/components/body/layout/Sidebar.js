@@ -18,10 +18,10 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const { children, style, location: { pathname } } = this.props;
+    const { children, style, isOpen, location: { pathname } } = this.props;
     return (
       <React.Fragment>
-        <div className="wrapper-sidebar">
+        <div className="wrapper-sidebar" style={!isOpen ? { marginLeft: -240} : {}}>
           <nav id="sidebar">
             {/* <div className="custom-menu">
               <button type="button" id="sidebarCollapse" className="btn btn-primary">
@@ -29,7 +29,7 @@ class Sidebar extends React.Component {
                 <span className="sr-only">Toggle Menu</span>
               </button>
             </div> */}
-            <h1><a href="index.html" className="logo">Project Name</a></h1>
+            <div><a href="index.html" className="logo">Project Name</a></div>
             <ul className="list-unstyled components mb-5">
               <li className={``}  onClick={() => this.props.changeLayout(0)}>
                 <Link  to='/' >
@@ -65,11 +65,14 @@ class Sidebar extends React.Component {
   }
 }
 
-// const mapStateToProps = (state, ownProps) => {
-
-// };
+const mapStateToProps = (state, ownProps) => {
+  const { auth: { isOpen } } = state;
+  return {
+    isOpen,
+  };
+};
 export default withRouter(connect(
-  null,
+  mapStateToProps,
   {
     changeLayout,
     logout,

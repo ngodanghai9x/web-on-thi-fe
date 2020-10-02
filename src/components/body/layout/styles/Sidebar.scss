@@ -12,7 +12,8 @@ $primary: #40aaf4;
   font-weight: normal;
   background: #fff;
   color: lighten(black, 50%);
-
+  min-width: 0px;
+  width: 230px;
   a {
     transition: 0.3s all ease;
     color: $primary;
@@ -39,7 +40,7 @@ $primary: #40aaf4;
   }
 
   #sidebar {
-    min-width: 230px;
+    min-width: 0px;
     max-width: 230px;
     background: #202d3f;
     color: #fff;
@@ -131,6 +132,7 @@ $primary: #40aaf4;
         }
       }
     }
+
   }
 
   a[data-toggle="collapse"] {

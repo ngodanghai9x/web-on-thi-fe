@@ -26,7 +26,6 @@ class AdminHome extends React.Component {
     this.state = {
       activePage: 1,
       inputSearch: '',
-      count: 15, //tổng trong db
       selectedExamIds: [],
     };
   }
@@ -35,6 +34,15 @@ class AdminHome extends React.Component {
     this.props.changeHeader('Danh sách đề');
     this.props.changeLayout(1);
     this.reload();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { pagination } = this.props;
+    if (nextProps.pagination && nextProps.pagination !== pagination) {
+      this.setState({
+        activePage: pagination.activePage,
+      })
+    }
   }
 
   reload = () => {
@@ -140,7 +148,7 @@ class AdminHome extends React.Component {
     // id, name, image, subject, grade, description, time, canDelete, examQuestions
     return all.map(item => {
       return (
-        <tr onClick={(e) => this.seeDetailExam(e, item.id)}>
+        <tr onClick={(e) => this.seeDetailExam(e, item.id)} key={'admin-home'+item.id}>
           <td className="col col-checkbox">
             <div className="wrapper-icon checkbox" onClick={(e) => this.selectOne(e, item.id)}>
               <input type="checkbox"
@@ -185,7 +193,7 @@ class AdminHome extends React.Component {
 
   render() {
     const { activePage, inputSearch, selectedExamIds } = this.state;
-    const { role, all, totalElements } = this.props;
+    const { role, all, pagination } = this.props;
     const isChooseAll = selectedExamIds.length === all.length;
     if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
     return (
@@ -240,7 +248,7 @@ class AdminHome extends React.Component {
             <Pagination
               activePage={activePage}
               itemsCountPerPage={SIZE}
-              totalItemsCount={totalElements}
+              totalItemsCount={pagination.totalElements}
               pageRangeDisplayed={5}  // số nút hiển thị
               onChange={this.handlePageChange}
               itemClass={"page-item"}
@@ -260,7 +268,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     role: account.role,
     all: all || [],
-    totalElements: pagination.totalElements,
+    pagination: pagination || {},
     callingApi,
   }
 }

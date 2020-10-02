@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
-import { getAvatar, changeLayout } from 'actions/userActions';
+import { getAvatar, changeLayout, toggleSidebar } from 'actions/userActions';
 
 
 
@@ -26,6 +26,9 @@ class AdminContent extends React.Component {
           <Sidebar />
           <div className="wrapper-content">
             <div className="header-admin-layout">
+              <div className="wrapper-icon btn-toggle" onClick={() => this.props.toggleSidebar()}>
+                <i className="fa fa-bars"></i>
+              </div>
               {header}
             </div>
             <div className='wrapper-admin-layout' style={{ style }}>
@@ -49,5 +52,6 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(mapStateToProps,
   {
     changeLayout,
+    toggleSidebar,
   }
 )(AdminContent);

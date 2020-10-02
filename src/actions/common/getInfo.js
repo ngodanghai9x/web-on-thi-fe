@@ -36,9 +36,7 @@ export const getObjLevel = (level) => {
   if (typeof level === 'number') {
     result = levels.find(item => item.num === level)
   }
-
-if (result) return result;
-return {};
+  return result || {};
 }
 
 export const getInfo = (pathname, subjectParam) => {

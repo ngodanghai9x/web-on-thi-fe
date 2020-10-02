@@ -94,7 +94,7 @@ class CreateQuestion extends React.Component {
   save = (can) => {
     if (!can) return;
     const { exam1, callingApi } = this.props;
-    const { name, image, subject, level, description, time } = exam1;
+    const { name, image, subject, grade, description, time } = exam1;
     const { listQ } = this.state;
     const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`];
     if ( !lastQ.question || !lastQ.option1 || !lastQ.option2
@@ -107,8 +107,8 @@ class CreateQuestion extends React.Component {
       ...item,
       correctAnswer: item[item.correctAnswer],
     }));
-    console.log("save -> listQuestion", listQuestion)
-    this.props.createExam(name, image, subject, level, description, time, listQuestion);
+    console.log("save -> listQuestion", listQuestion);
+    this.props.createExam(name, image, subject, grade, description, time, listQuestion);
   }
 
   add = (can) => {

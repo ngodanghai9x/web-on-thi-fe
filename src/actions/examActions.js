@@ -16,9 +16,9 @@ export const changeActivePage = (activePage) => (dispatch) =>{
   });
 }
 
-export const getExamBySubject = (subject, level) => (dispatch, getState) => {
+export const getExamBySubject = (subject, grade) => (dispatch, getState) => {
   const obj = getObjSubject(subject);
-  const ob = getObjLevel(level);
+  const ob = getObjLevel(grade);
   const req = {
     body: {
       subject: obj.en,
@@ -31,7 +31,7 @@ export const getExamBySubject = (subject, level) => (dispatch, getState) => {
         dispatch({
           type: actionTypes.GET_EXAM_BY_SUBJECT,
           subject: obj.eng,
-          level: ob.en,
+          grade: ob.en,
           exams: data.exam,
         })
         dispatch(changeSubject(ob.num, obj.en))
@@ -70,10 +70,10 @@ export const getDetailExam = (id, isAdmin) => (dispatch, getState) => {
   // });
 };
 
-export const changeSubject = (level, subject) => (dispatch, getState) => {
+export const changeSubject = (grade, subject) => (dispatch, getState) => {
   dispatch({
     type: actionTypes.CHANGE_SUBJECT,
-    level,
+    grade,
     subject,
   })
 };
@@ -85,9 +85,9 @@ export const changeHeader = (header) => (dispatch, getState) => {
   })
 };
 
-export const createExam = (name, image, subject, level, description, time, examQuestions) => (dispatch, getState) => {
+export const createExam = (name, image, subject, grade, description, time, examQuestions) => (dispatch, getState) => {
   const obj = getObjSubject(subject);
-  const ob = getObjLevel(level);
+  const ob = getObjLevel(grade);
   const req = {
     body: {
       exam: {
@@ -109,7 +109,7 @@ export const createExam = (name, image, subject, level, description, time, examQ
           type: actionTypes.CREATE_EXAM,
           exam: data.exam,
           subject: obj.eng,
-          level,
+          grade,
         });
         window.noti.success('Thêm mới đề thành công');
       }
@@ -123,9 +123,9 @@ export const createExam = (name, image, subject, level, description, time, examQ
     });
 };
 
-export const updateExam = (name, image, subject, level, description, time, examQuestions, id) => (dispatch, getState) => {
+export const updateExam = (name, image, subject, grade, description, time, examQuestions, id) => (dispatch, getState) => {
   const obj = getObjSubject(subject);
-  const ob = getObjLevel(level);
+  const ob = getObjLevel(grade);
   const req = {
     body: {
       exam: {
@@ -146,7 +146,7 @@ export const updateExam = (name, image, subject, level, description, time, examQ
         //   type: actionTypes.UPDATE_EXAM,
         //   exam: data.exam,
         //   subject: obj.eng,
-        //   level,
+        //   grade,
         //   id,
         // });
         window.noti.success('Cập nhật đề thành công');

@@ -52,7 +52,7 @@ class UpdateExam extends React.Component {
     const { location: {pathname} } = this.props;
     if (nextProps.location.pathname !== pathname) {
       this.setState({
-        level: 1,
+        grade: 1,
         subject: 2,
       });
     }
@@ -150,7 +150,7 @@ class UpdateExam extends React.Component {
               <div className="profile-row">
                 <div className="key">Cấp bậc</div>
                 <div className="value">
-                  <select defaultValue={getObjLevel(grade).vn} onChange={(e) => this.onChangeMax255('level', e.target.value, 'errorName')}>
+                  <select defaultValue={getObjLevel(grade).vn} onChange={(e) => this.onChangeMax255('grade', e.target.value, 'errorName')}>
                     <option value="Lớp 10">Lớp 10</option>
                     <option value="Đại học">Đại học</option>
                   </select>
