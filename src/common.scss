@@ -118,6 +118,7 @@ svg, input[type=checkbox], input[type=radio] {
 
   &:hover {
     background: rgb(141, 187, 223);
+    color: #fff;
     svg {
       fill: #fff;
       * {
@@ -166,7 +167,12 @@ small {
   max-width: 100% !important;
   width: 100%;
 }
-
+.pagination {
+  .page-link.undefined {
+    background-color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
+  }
+}
 // ul.dropdown-menu {
 //   transform: unset !important;
 //   will-change: unset !important;
