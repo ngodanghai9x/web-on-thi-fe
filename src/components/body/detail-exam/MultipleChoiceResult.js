@@ -13,6 +13,7 @@ import './styles/MultipleChoiceResult.scss';
 import { Redirect, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import RankList from './RankList';
+import { getScore } from 'actions/common/getInfo';
 
 class MultipleChoiceResult extends React.Component {
   constructor(props) {
@@ -49,6 +50,9 @@ class MultipleChoiceResult extends React.Component {
             {/* sửa lại đường dẫn chỗ này bằng icon1.jpg trong thư mục images */}
             {/* <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg" id="exam-images"></img> */}
             <img src={`${process.env.PUBLIC_URL}/images/icon1.jpg`} alt='subject' />
+            <div className="score">
+              {getScore(result.numCorrectAns / result.totalQuestion).score}
+            </div>
           </div>
           <div className="row-infor-panel">
             <div className="exam-label">Tổng điểm</div>

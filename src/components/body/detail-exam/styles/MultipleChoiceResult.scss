@@ -16,12 +16,16 @@
 
   .exam-result-panel {
     margin: 20px 20px 10px 20px;
-
+    .emoji-result {
+      justify-content: center;
+      .score {
+        font-weight: 600;
+        font-size: 30px;
+        color: pink;
+      }
+    }
   }
 
-  .exam-result-panel .emoji-result {
-    justify-content: center;
-  }
 
   .row-infor-panel {
     display: flex;
