@@ -3,6 +3,7 @@ import { actionTypes } from '../constants/actionTypes';
 const initState = {
   accessToken: null,
   isDone: false,
+  callUser: null,
   account: {
     id: null,
     role: [],
@@ -39,6 +40,11 @@ const auth = (state = initState, action) => {
           ...state.user,
           name: action.fullname,
         }
+      };
+    case actionTypes.CALL_API_USER:
+      return {
+        ...state,
+        callUser: action.callUser,
       };
     case actionTypes.GET_USER_INFO:
       return {

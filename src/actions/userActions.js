@@ -175,6 +175,8 @@ export const updateUserInfo = (name, phone, birthday, gender, school) => (dispat
       if (data && code === 200) {
         // data.userProfile.birthday = "abc";
         dispatch(receiveUserInfo(data.userProfile || {}));
+        window.noti.success('Cập nhật thông tin tài khoản thành công');
+        dispatch(callApiUser());
       }
       if (code === 400) {
         window.noti.error('Cập nhật thông tin tài khoản thất bại')
@@ -211,11 +213,12 @@ export const changeAvatar = (imgBase64, typeFile) => (dispatch, getState) => {
 };
 
 export const getAvatar = () => (dispatch, getState) => {
-  return callApi('api/profile/get-img', { method: 'GET' })
+  return callApi('api/profile/get-img', { method: 'POST' })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
+        console.log("getAvatar -> data", data)
         dispatch({
-          type: actionTypes.UPDATE_AVATAR,
+          type: actionTypes.UPDATE_AVATAR_USER,
           avatar: data.imgBase64,
         });
         // window.noti.success('Thay đổi ảnh đại diện thành công');
@@ -260,10 +263,17 @@ export const init = () => dispatch => {
     isDone: true,
   });
   dispatch(getAvatar());
-  dispatch(getUserInfo())
+  console.log("getAvatar")
+  dispatch(getUserInfo());
+  console.log("getUserInfo")
 }
 
 export const receiveUserInfo = (user) => ({
   type: actionTypes.GET_USER_INFO,
   user,
+});
+
+export const callApiUser = (callUser) => ({
+  type: actionTypes.CALL_API_USER,
+  callUser,
 });

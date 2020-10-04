@@ -47,7 +47,8 @@ class MultipleChoiceResult extends React.Component {
         <div className="exam-result-panel">
           <div className="emoji-result">
             {/* sửa lại đường dẫn chỗ này bằng icon1.jpg trong thư mục images */}
-            <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg" id="exam-images"></img>
+            {/* <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg" id="exam-images"></img> */}
+            <img src={`${process.env.PUBLIC_URL}/images/icon1.jpg`} alt='subject' />
           </div>
           <div className="row-infor-panel">
             <div className="exam-label">Tổng điểm</div>

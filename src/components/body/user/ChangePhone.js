@@ -24,7 +24,7 @@ class ChangePhone extends React.Component {
   }
 
   componentDidMount() {
-    this.doInterval();
+    // this.doInterval();
   }
 
   componentWillUnmount() {
@@ -120,7 +120,8 @@ class ChangePhone extends React.Component {
               />
             </div>
           </div>
-          <div className="profile-row">
+
+          {/* <div className="profile-row">
             <div className="key">Địa chỉ hòm thư</div>
             <div className="value">{hiddenEmail}</div>
           </div>
@@ -147,7 +148,8 @@ class ChangePhone extends React.Component {
                   )
               }
             </div>
-          </div>
+          </div> */}
+
           <div className="profile-row">
             <div className="key"></div>
             <div className="value">

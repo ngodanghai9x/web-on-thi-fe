@@ -6,7 +6,10 @@
     justify-content: flex-start;
     .subject {
       border: 1.5px solid #c4c4c4;
-      padding: 15px 60px;
+      // padding: 15px 60px;
+      padding: 15px 0;
+      width: 230px;
+      align-items: center;
       display: flex;
       flex-direction: column;
       border-radius: 6px;
@@ -15,7 +18,15 @@
       img {
         align-self: center;
         height: 65px;
-        max-width: 80px;
+        width: 65px;
+        margin-top: 10px;
+      }
+      h4 {
+        color: #17a2b8;
+        font-size: 1.25rem;
+      }
+      button {
+        width: 110px;
       }
       &:hover {
         border: 1.5px solid #17a2b8;

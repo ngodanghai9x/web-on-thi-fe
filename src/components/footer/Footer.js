@@ -34,7 +34,7 @@ class Content extends React.Component {
                   </a>
                 </div>
                 <div className="logo">
-                  <img src="https://upload.wikimedia.org/wikipedia/vi/archive/d/dc/20200125140746%21Vinfast-logo.png " />
+                  <img src="/images/logo.png" />
                   <div className="infor">Bản Quyền của Hoctot.com ® 2020</div>
                 </div>
               </div>

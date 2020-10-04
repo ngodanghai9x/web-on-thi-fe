@@ -64,6 +64,12 @@ small.note {
   height: 6px;
 }
 
+a.d-block {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .text-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -137,6 +143,7 @@ h6,
 small {
   text-transform: uppercase;
   margin: 20px 0;
+  margin-top: 15px !important;
   &.title-center {
     text-align: center;
   }

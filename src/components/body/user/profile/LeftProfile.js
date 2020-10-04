@@ -7,7 +7,7 @@ import * as CommonIcon from 'components/icons/common';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { hideEmail, hidePhone } from 'actions/common/utils';
 import { regex, errorText } from 'constants/regexError';
-import { updateUserInfo } from 'actions/userActions';
+import { updateUserInfo, callApiUser } from 'actions/userActions';
 import DatePicker from "react-datepicker";
 import $ from 'jquery';
 
@@ -29,6 +29,9 @@ class LeftProfile extends React.Component {
     if (nextProps.user) {
       const { name, email, phone, school, gender, birthday } = nextProps.user;
       this.setState({ name, email, phone, school, gender, birthday });
+    }
+    if (!nextProps.callUser && this.props.callUser === 'LeftProfile') {
+      nextProps.history.push('/');
     }
   }
 
@@ -79,6 +82,7 @@ class LeftProfile extends React.Component {
 
   submit = e => {
     const { name, email, phone, gender, birthday, school, errorName } = this.state;
+    this.props.callApiUser('LeftProfile');
     // if (errorName) return window.noti.error('Hãy hoàn thiệt thông tin trước khi lưu');name, phone, birthday, gender, school
     this.props.updateUserInfo(name, phone, birthday, gender, school);
     // this.props.updateUserInfo(name, phone, '2020-09ab', gender, school);
@@ -107,8 +111,9 @@ class LeftProfile extends React.Component {
           <div className="key">Email</div>
           <div className="value">
             <span>{hideEmail(email)}</span>
-            <Link  to='/thong-tin-ca-nhan' onClick={() => changeScreen('index', 'email')}>
-              {email ? 'Thay đổi' : 'Thêm mới'}</Link>
+            {/* <Link  to='/thong-tin-ca-nhan' onClick={() => changeScreen('index', 'email')}>
+              {email ? 'Thay đổi' : 'Thêm mới'}
+            </Link> */}
           </div>
         </div>
         <div className="profile-row">
@@ -178,6 +183,7 @@ const mapStateToProps = (state, ownProps) => {
   const { auth } = state;
   return {
     user: auth.user,
+    callUser: auth.callUser,
   };
 
 };
@@ -186,5 +192,6 @@ export default withRouter(connect(
   mapStateToProps,
   {
     updateUserInfo,
+    callApiUser,
   },
 )(LeftProfile));

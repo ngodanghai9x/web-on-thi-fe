@@ -26,7 +26,8 @@ class ChooseSubjects extends React.Component {
         return (
           <Link to={`/lop-10/${item.en}`}>
             <div className='subject' onClick={() => this.changeSubject(item.en)}>
-              <img src='../../images/logo.png' alt='subject' />
+              {/* <img src='../../images/logo.png' alt='subject' /> */}
+              <img src={`${process.env.PUBLIC_URL}/images/${item.eng}.jpg`} alt='subject' />
               <h4 className='title-center'>
                 {item.vn}
               </h4>

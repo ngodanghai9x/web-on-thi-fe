@@ -48,7 +48,8 @@ class Ads extends React.Component {
           <small className='title-left'>
             Quảng cáo
           </small>
-          <img src='../../images/ads.jpg' onClick={() => window.open('https://www.google.com.vn/')} />
+          {/* <img src='../../images/ads.jpg' onClick={() => window.open('https://www.google.com.vn/')} /> */}
+          <img src={`${process.env.PUBLIC_URL}/images/ads.jpg`} alt='ads' onClick={() => window.open('https://www.google.com.vn/')} />
           {list && list.length > 0 ? (
             <React.Fragment>
               <h6 className='title-left'>

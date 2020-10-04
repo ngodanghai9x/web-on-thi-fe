@@ -50,11 +50,6 @@ const initState = {
     math: [],
     literature: [],
     english: [],
-    physics: [],
-    chemistry: [],
-    biology: [],
-    history: [],
-    geography: [],
   },
 };
 

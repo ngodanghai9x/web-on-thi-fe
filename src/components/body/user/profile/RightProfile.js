@@ -62,7 +62,7 @@ class RightProfile extends React.Component {
         <div className="avt-wrapper">
           <img
             className="img-uploaded"
-            src={avatar ? `data:image/png;base64,${avatar}` : 'https://cf.shopee.vn/file/d6fe3aa81dc2f0f4938ad629afd347e7_tn'}
+            src={avatar ? `data:image/png;base64,${avatar}` : '/images/default-avatar.jpg'}
             // src={image ? `data:image/png;base64,${image}` : 'https://cf.shopee.vn/file/d6fe3aa81dc2f0f4938ad629afd347e7_tn'}
             alt="not found"
             onError={e => this.onError(e)}

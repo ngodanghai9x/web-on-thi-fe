@@ -56,13 +56,24 @@ class Header extends React.Component {
     this.props.logout();
   }
 
+  onError = (e) => {
+    e.target.src = 'images/default-avatar.jpg';
+    e.target.onerror = null;
+  }
+
   renderDropDown3 = () => {
-    const { role } = this.props;
+    const { role, avatar, name } = this.props;
+    const arrName = name && name.split(' ') || [{}];
     return (
       <div className='avatar-dropdown dropdown'>
         <div className='infor d-flex justify-content'>
-          <img src='../../images/default-avatar.jpg' alt='avatar' />
-          <div className='name d-flex align-items-center'>{this.props.name}</div>
+          <img
+            className="img-avatar"
+            src={avatar ? `data:image/png;base64,${avatar}` : '/images/default-avatar.jpg'}
+            alt="not found"
+            onError={e => this.onError(e)}
+          />
+          <div className='name d-flex align-items-center'>{arrName[arrName.length -1]}</div>
         </div>
         <Link to='/thong-tin-ca-nhan'>
           <div className='dropdown-item'>
@@ -97,14 +108,15 @@ class Header extends React.Component {
   }
 
   render() {
-    if (this.props.layout === 1) return null;
+    const { avatar, layout } = this.props;
+    if (layout === 1) return null;
     return (
       <React.Fragment>
         <div className='header container-fluid'>
           <div className='container d-flex'>
             <div className='wrapper-logo-route d-flex'>
               <Link to='/'>
-                <img className='header-logo' src='images/logo.png' alt='logo' />
+                <img className='header-logo' src='/images/logo.png' alt='logo' />
               </Link>
               <div className='route lop-10'
               // onMouseEnter={() => this.setState({ dropdown10: true})}
@@ -126,7 +138,12 @@ class Header extends React.Component {
               ? (
                 <div className='avatar route'>
                   <Link to='/thong-tin-ca-nhan/'>
-                    <img src='images/default-avatar.jpg' alt='avatar' />
+                    <img
+                      className="img-avatar"
+                      src={avatar ? `data:image/png;base64,${avatar}` : '/images/default-avatar.jpg'}
+                      alt="not found"
+                      onError={e => this.onError(e)}
+                    />
                   </Link>
                   {this.renderDropDown3()}
                 </div>
