@@ -52,14 +52,15 @@ class RouterList extends React.Component {
         <Route exact path="/lop-10/:subject" component={HighSchoolExamList} />
         <Route exact path="/lop-10/:subject/:id" component={MultipleChoiceExam} />
         <Route exact path="/lop-10/:subject/ket-qua/:id" component={MultipleChoiceResult} />
-        <Route exact path="/lop-10/van/:id" component={EssayExam} />
+        <Route exact path="/lop-10/:subject/ket-qua/:id/chi-tiet" component={MultipleChoiceExamResult} />
+        <Route exact path="/lop-10/mon/van/:id" component={EssayExam} />
 
         <Route exact path="/dai-hoc/" component={ChooseSubjects2} />
         <Route exact path="/dai-hoc/:subject" component={CollegeExamList} />
         <Route exact path="/dai-hoc/:subject/:id" component={MultipleChoiceExam} />
         <Route exact path="/dai-hoc/:subject/ket-qua/:id" component={MultipleChoiceResult} />
         <Route exact path="/dai-hoc/:subject/ket-qua/:id/chi-tiet" component={MultipleChoiceExamResult} />
-        <Route exact path="/dai-hoc/van/:id" component={EssayExam} />
+        <Route exact path="/dai-hoc/mon/van/:id" component={EssayExam} />
 
         <Route exact path="/admin" component={AdminHome} />
         <Route exact path="/admin/create-exam" component={CreateExam} />

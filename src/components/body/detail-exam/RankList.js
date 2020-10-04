@@ -39,6 +39,7 @@ class RankList extends React.Component {
             </tr>
           </thead>
           <tbody>
+            {rankList.length === 0 && <tr><td colSpan="3" style={{ color: "#212529"}}>Chưa có dữ liệu</td></tr>}
             {rankList.map((item, i) => (
               <tr className="tr">
                 <td className="col-stt">{i + 1}</td>

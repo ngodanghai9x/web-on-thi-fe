@@ -251,10 +251,10 @@ class UserInfo extends React.Component {
   }
 
   render() {
-    const { location, accessToken } = this.props;
+    const { location, accessToken, isDone } = this.props;
     const { screen } = this.state;
 
-    if (!accessToken) return <Redirect to='/' />
+    if (!accessToken && isDone) return <Redirect to='/' />
 
     return (
       <UserContent>
@@ -272,6 +272,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user: auth.user,
     accessToken: auth.accessToken,
+    isDone: auth.isDone,
   };
 };
 

@@ -26,7 +26,7 @@
   .row-infor-panel {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     padding: 10px 0px;
     border-bottom: 1px solid #ddd;
     outline: none;
@@ -67,6 +67,7 @@
 .Mul-title {
   font-size: 30px;
   margin-top: 20px;
+  font-weight: 600;
   margin-bottom: 10px;
   text-transform: capitalize;
 }
@@ -111,7 +112,7 @@
 }
 
 .button {
-  margin: 0;
+  margin: 25px 0;
   position: relative;
   top: 50%;
   left: 50%;

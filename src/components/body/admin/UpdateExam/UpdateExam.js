@@ -9,7 +9,7 @@ import { getAvatar, changeLayout } from 'actions/userActions';
 import './UpdateExam.scss';
 import { Redirect, withRouter } from 'react-router-dom';
 import CreateEssayExam from '../CreateExam/CreateEssayExam';
-import  {
+import {
   getAllExam,
   changeHeader,
   changeActiveExam,
@@ -30,7 +30,7 @@ class UpdateExam extends React.Component {
   }
 
   componentDidMount() {
-    const { match: {params} } = this.props;
+    const { match: { params } } = this.props;
     this.props.changeLayout(1);
     this.props.changeHeader('Chỉnh sửa đề');
     this.fetchDetailExam(params.id);
@@ -41,7 +41,7 @@ class UpdateExam extends React.Component {
     this.props.getDetailExam(_id, true).then(({ data, code, message }) => {
       if (data && code === 200) {
         const { id, name, image, subject, grade, description, time, canDelete, examQuestions } = data.exam;
-        this.setState({ id, name, image, subject, grade, description, time, canDelete, examQuestions });
+        this.setState({ id, name, image, subject: getObjSubject(subject).vn, grade, description, time, canDelete, examQuestions });
       }
       if (code === 400) {
       }
@@ -49,7 +49,7 @@ class UpdateExam extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { location: {pathname} } = this.props;
+    const { location: { pathname } } = this.props;
     if (nextProps.location.pathname !== pathname) {
       this.setState({
         grade: 1,
@@ -60,7 +60,7 @@ class UpdateExam extends React.Component {
 
   changeStep = (step) => {
     if (step === 1) {
-      return this.setState({ step: 1});
+      return this.setState({ step: 1 });
     }
     if (this.state.subject === 'Ngữ Văn') {
       this.setState({ step: 3 });
@@ -75,17 +75,26 @@ class UpdateExam extends React.Component {
       return window.noti.error('Bạn nhập quá 255 kí tự');
     }
     else {
+      if (key === 'grade') {
+        return this.setState({ grade: val, subject: 'Toán Học' })
+      }
       this.setState({ [key]: val, [error]: '' });
     }
   }
 
   onChangeMax1000 = (key, val, error) => {
     if (val < 1) {
-      this.setState({ [error]: 'Giá trị tối thiểu là 1' });
+      this.setState({
+        // [error]: 'Giá trị tối thiểu là 1',
+        [key]: 1,
+      });
       // return window.noti.error('Giá trị tối đa là 1000');
     }
     else if (val >= 1000) {
-      this.setState({ [error]: 'Giá trị tối đa là 1000' });
+      this.setState({
+        // [error]: 'Giá trị tối đa là 1000',
+        [key]: 999,
+      });
       // return window.noti.error('Giá trị tối đa là 1000');
     }
     else {
@@ -112,9 +121,9 @@ class UpdateExam extends React.Component {
       errorName, errorSubject, errorTime, errorTotal,
     } = this.state;
     const exam = { id, name, image, subject, grade, description, time, canDelete };
-    const question0 = examQuestions ? examQuestions[0]  : '';
-    const { role } = this.props;
-    // if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
+    const question0 = examQuestions ? examQuestions[0] : '';
+    const { role, isDone } = this.props;
+    if ((!role || !role.includes("ROLE_ADMIN")) && isDone) return <Redirect to='/' />
     return (
       <AdminContent>
         <div className="UpdateExam">
@@ -159,10 +168,22 @@ class UpdateExam extends React.Component {
               <div className="profile-row">
                 <div className="key">Môn học</div>
                 <div className="value">
-                  <select style={{ cursor: 'not-allowed', color: '#000' }} disabled defaultValue={getObjSubject(subject).vn}>
-                    {subjects2.map(item => ((
-                      <option value={item.vn}>{item.vn}</option>
-                    )))}
+                  <select style={{ cursor: 'not-allowed', color: '#000' }} disabled value={getObjSubject(subject).vn}>
+                    {subjects2.map((item, i) => {
+                      if (grade === 'Lớp 10') {
+                        if (i < 3) {
+                          return (
+                            <option value={item.vn}>{item.vn}</option>
+                          );
+                        }
+                        return null;
+                      } else {
+                        return (
+                          <option value={item.vn}>{item.vn}</option>
+                        );
+                      }
+                    }
+                    )}
                   </select>
                 </div>
               </div>
@@ -220,9 +241,10 @@ class UpdateExam extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { account } } = state;
+  const { auth: { account, isDone } } = state;
   return {
     role: account.role,
+    isDone,
   }
 }
 

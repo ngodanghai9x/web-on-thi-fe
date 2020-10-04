@@ -115,18 +115,18 @@ const exam = (state = initState, action) => {
           ...action.pagination,
         },
       };
-      case actionTypes.CHANGE_ACTIVE_EXAM:
-        const { all } = state;
-        const newAll = all.map(item => {
-          if (item.id === action.id) {
-            item.isActive = !action.isActive;
-          }
-          return item;
-        })
-        return {
-          ...state,
-          all: newAll,
-        };
+    case actionTypes.CHANGE_ACTIVE_EXAM:
+      const { all } = state;
+      const newAll = all.map(item => {
+        if (item.id === action.id) {
+          item.isActive = !action.isActive;
+        }
+        return item;
+      })
+      return {
+        ...state,
+        all: newAll,
+      };
     case actionTypes.GET_DETAIL_EXAM:
       return {
         ...state,
@@ -175,6 +175,11 @@ const exam = (state = initState, action) => {
       return {
         ...state,
         result: action.result,
+      };
+    case actionTypes.GET_RANK_LIST:
+      return {
+        ...state,
+        rankList: action.rankList,
       };
 
     default:

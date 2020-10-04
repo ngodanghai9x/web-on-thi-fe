@@ -257,6 +257,7 @@ export const init = () => dispatch => {
     accessToken,
     role: obj.ROLE,
     fullname: obj.fullname,
+    isDone: true,
   });
   dispatch(getAvatar());
   dispatch(getUserInfo())

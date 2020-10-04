@@ -34,7 +34,7 @@ class MultipleChoiceExam extends React.Component {
       if (data && code === 200) {
         const { id, name, image, subject, grade, description, time, canDelete, examQuestions } = data.exam;
         // console.log("MultipleChoiceExamResult -> fetchDetailExam -> exam", data.exam)
-        this.setState({ examId: id, name, image, subject, grade, description, examTime: time * 60, examTotalTime: time * 60, canDelete, examQuestions });
+        this.setState({ examId: id, name, image, subject, grade, description, examTime: time, examTotalTime: time, canDelete, examQuestions });
       }
       if (code === 400) {
       }
@@ -155,7 +155,8 @@ class MultipleChoiceExam extends React.Component {
   }
 
   render() {// file này là trang bài làm
-    const { accessToken } = this.props;
+    const { accessToken, match, location, isDone } = this.props;
+    const { id, subject } = match.params;
     const { examQuestions } = this.state;
     const examQuestions1 = [
       {
@@ -200,7 +201,13 @@ class MultipleChoiceExam extends React.Component {
     const numOption2 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option2');
     const numOption3 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option3');
     const numOption4 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option4');
-    if (!accessToken) return <Redirect to='/' />
+    if (!accessToken && isDone) return <Redirect to='/' />
+    if (subject === 'van') {
+      if (location.pathname.includes('lop-10')) {
+        return <Redirect to={`/lop-10/mon/van/${id}`} />
+      }
+      return <Redirect to={`/dai-hoc/mon/van/${id}`} />
+    }
     return (
       <MainContent>
         <div className="container MultipleChoiceExam">
@@ -246,6 +253,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user: auth.user,
     accessToken: auth.accessToken,
+    isDone: auth.isDone,
   };
 };
 

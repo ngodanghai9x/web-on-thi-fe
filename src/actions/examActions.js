@@ -104,7 +104,6 @@ export const createExam = (name, image, subject, grade, description, time, examQ
   return callApi('api/exam/add', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
-        dispatch(callApiExam());
         dispatch({
           type: actionTypes.CREATE_EXAM,
           exam: data.exam,
@@ -112,10 +111,11 @@ export const createExam = (name, image, subject, grade, description, time, examQ
           grade,
         });
         window.noti.success('Thêm mới đề thành công');
+        dispatch(callApiExam());
       }
       if (code === 400) {
-        dispatch(callApiExam());
         window.noti.error('Thêm mới đề thất bại');
+        dispatch(callApiExam());
       }
     })
     .catch(err => {
@@ -140,20 +140,20 @@ export const updateExam = (name, image, subject, grade, description, time, examQ
   return callApi('api/exam/update', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
-        dispatch(callApiExam());
-        dispatch(getAllExam());
+        // dispatch(getAllExam());
         // dispatch({
-        //   type: actionTypes.UPDATE_EXAM,
-        //   exam: data.exam,
-        //   subject: obj.eng,
-        //   grade,
-        //   id,
-        // });
-        window.noti.success('Cập nhật đề thành công');
-      }
+          //   type: actionTypes.UPDATE_EXAM,
+          //   exam: data.exam,
+          //   subject: obj.eng,
+          //   grade,
+          //   id,
+          // });
+          window.noti.success('Cập nhật đề thành công');
+          dispatch(callApiExam());
+        }
       if (code === 400) {
-        dispatch(callApiExam());
         window.noti.error('Cập nhật đề thất bại');
+        dispatch(callApiExam());
       }
     })
     .catch(err => {
@@ -340,12 +340,13 @@ export const getRankList = (examId) => (dispatch, getState) => {
       examId
     }
   };
-  return callApi('api/exam/get-all', { method: 'POST', data: req })
+  return callApi('ranking-by-exam', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
+        console.log("getRankList -> data", data)
         dispatch({
           type: actionTypes.GET_RANK_LIST,
-          rankList: data.ranking,
+          rankList: data.ranking || [],
         })
         // window.noti.success('Đăng nhập thành công');
       }

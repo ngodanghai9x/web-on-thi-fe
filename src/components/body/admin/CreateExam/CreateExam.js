@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
 import AdminContent from 'components/body/layout/AdminContent';
 import CreateQuestion from './CreateQuestion';
-import { subjects2 } from 'actions/common/getInfo';
+import { getObjSubject, subjects2 } from 'actions/common/getInfo';
 import { getAvatar, changeLayout } from 'actions/userActions';
 import { changeHeader } from 'actions/examActions';
 // import CreateExamInfo from './CreateExamInfo';
@@ -19,6 +19,7 @@ class CreateExam extends React.Component {
       step: 1,
       grade: "Lớp 10",
       subject: "Toán học",
+      time: 45,
     };
   }
 
@@ -54,17 +55,26 @@ class CreateExam extends React.Component {
       return window.noti.error('Bạn nhập quá 255 kí tự');
     }
     else {
+      if (key === 'grade') {
+        return this.setState({ grade: val, subject: 'Toán Học'})
+      }
       this.setState({ [key]: val, [error]: '' });
     }
   }
 
   onChangeMax1000 = (key, val, error) => {
     if (val < 1) {
-      this.setState({ [error]: 'Giá trị tối thiểu là 1' });
+      this.setState({
+        // [error]: 'Giá trị tối thiểu là 1',
+        [key]: 1,
+      });
       // return window.noti.error('Giá trị tối đa là 1000');
     }
     else if (val >= 1000) {
-      this.setState({ [error]: 'Giá trị tối đa là 1000' });
+      this.setState({
+        // [error]: 'Giá trị tối đa là 1000',
+        [key]: 999,
+      });
       // return window.noti.error('Giá trị tối đa là 1000');
     }
     else {
@@ -111,8 +121,8 @@ class CreateExam extends React.Component {
       errorName, errorSubject, errorTime, errorTotal,
     } = this.state;
     const exam1 = { name, image, subject, grade, description, time, total };
-    const { role } = this.props;
-    // if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
+    const { role, isDone } = this.props;
+    if ((!role || !role.includes("ROLE_ADMIN")) && isDone) return <Redirect to='/' />
     return (
       <AdminContent>
         <div className="CreateExam">
@@ -157,10 +167,22 @@ class CreateExam extends React.Component {
               <div className="profile-row">
                 <div className="key">Môn học</div>
                 <div className="value">
-                  <select onChange={(e) => this.onChangeMax255('subject', e.target.value, 'errorSubject')}>
-                    {subjects2.map(item => ((
-                      <option value={item.vn}>{item.vn}</option>
-                    )))}
+                  <select onChange={(e) => this.onChangeMax255('subject', e.target.value, 'errorSubject')} value={getObjSubject(subject).vn}>
+                    {subjects2.map((item, i) => {
+                      if (grade === 'Lớp 10') {
+                        if (i < 3) {
+                          return (
+                            <option value={item.vn}>{item.vn}</option>
+                          );
+                        }
+                        return null;
+                      } else {
+                        return (
+                          <option value={item.vn}>{item.vn}</option>
+                        );
+                      }
+                    }
+                    )}
                   </select>
                 </div>
               </div>
@@ -216,9 +238,10 @@ class CreateExam extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { account }} = state;
+  const { auth: { account, isDone}} = state;
   return {
     role: account.role,
+    isDone,
   }
 }
 

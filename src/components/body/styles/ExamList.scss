@@ -13,10 +13,13 @@
 
   .main-content {
     div.exam {
-      padding: 5px 5px 20px 5px;
+      padding: 15px 5px 20px 5px;
       border-bottom: 2px #c4c4c4 dashed;
       .name {
-
+        font-size: 24px;
+        font-weight: 600;
+        color: #17a2b8;
+        text-transform: capitalize;
       }
       .wrapper-button {
         .btn {

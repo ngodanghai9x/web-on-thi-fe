@@ -193,9 +193,9 @@ class AdminHome extends React.Component {
 
   render() {
     const { activePage, inputSearch, selectedExamIds } = this.state;
-    const { role, all, pagination } = this.props;
+    const { role, all, pagination, isDone } = this.props;
     const isChooseAll = selectedExamIds.length === all.length;
-    if (!role || !role.includes("ROLE_ADMIN")) return <Redirect to='/' />
+    if ((!role || !role.includes("ROLE_ADMIN")) && isDone) return <Redirect to='/' />
     return (
       <AdminContent>
         <div className="admin-home">
@@ -264,9 +264,10 @@ class AdminHome extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { account }, exam: { all, callingApi, pagination } } = state;
+  const { auth: { account, isDone }, exam: { all, callingApi, pagination } } = state;
   return {
     role: account.role,
+    isDone,
     all: all || [],
     pagination: pagination || {},
     callingApi,

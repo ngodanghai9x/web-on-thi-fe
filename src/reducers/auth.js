@@ -2,6 +2,7 @@ import { actionTypes } from '../constants/actionTypes';
 
 const initState = {
   accessToken: null,
+  isDone: false,
   account: {
     id: null,
     role: [],
@@ -29,6 +30,7 @@ const auth = (state = initState, action) => {
       return {
         ...state,
         accessToken: action.accessToken,
+        isDone: action.isDone,
         account: {
           ...state.account,
           role: action.role,

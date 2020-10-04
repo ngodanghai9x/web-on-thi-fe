@@ -44,9 +44,9 @@ class HighSchoolExamList extends React.Component {
             {`Thời gian làm đề: ${item.time} phút`}
           </div>
           <div className='amount'>
-            {`Tổng số câu: ${item.numQuestion}`}
+            {`Tổng số câu: ${item.numQuestion} câu`}
           </div>
-          <div className='wrapper-button d-flex justify-content-end'>
+          <div className='wrapper-button d-flex justify-content-end align-items-center'>
             <Link to={`/dai-hoc/${subject}/${item.id}`}>
               <button className='btn btn-info'>
                 Vào thi

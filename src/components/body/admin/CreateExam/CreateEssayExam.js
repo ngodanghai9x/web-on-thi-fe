@@ -3,7 +3,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
 import CKEditor from 'ckeditor4-react';
-import { createExam } from 'actions/examActions';
+import  {
+  createExam,
+  updateExam,
+  callApiExam,
+} from 'actions/examActions';
+import { withRouter } from 'react-router';
 
 class CreateEssayExam extends React.Component {
   constructor(props) {
@@ -17,13 +22,26 @@ class CreateEssayExam extends React.Component {
     this.props.changeStep(1);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { question0 } = this.props;
+    if (nextProps.question0 && nextProps.question0 !== question0) {
+      this.setState({ question: nextProps.question0.question || ''})
+    }
+
+    if (!nextProps.callingApi && this.props.callingApi === 'CreateEssayExam') {
+      nextProps.history.push('/admin');
+    }
+  }
+
+
   submit = e => {
-    const { name, image, subject, grade, description, time } = this.props.exam1;
+    const { name, image, subject, grade, description, time, id } = this.props.exam1;
     const { question0 } = this.props;
     const { question } = this.state;
     const listQuestion = [{
+      id: question0 && question0.id || 0,
       image: null,
-      question: question || question0 ? question0.question : '',
+      question: question || '',
       option1: null,
       option2: null,
       option3: null,
@@ -31,18 +49,28 @@ class CreateEssayExam extends React.Component {
       correctAnswer: null,
       suggestion: null,
     }];
-
+    this.props.callApiExam('CreateEssayExam');
+    if (id && question0) {
+      return this.props.updateExam(name, image, subject, grade, description, time, listQuestion, id);
+    }
     this.props.createExam(name, image, subject, grade, description, time, listQuestion);
+  }
+
+  onEditorChange = (evt) => {
+    this.setState(state => ({
+      question: evt.editor.getData(),
+    }));
   }
 
   render() {
     const { isShow, question0 } = this.props;
     const { question } = this.state;
+    if (!isShow) return null;
     return (
       <React.Fragment>
         <div className={`CreateEssayExam ${!isShow ? 'd-none' : ''}`}>
           <CKEditor
-            data={(question0 ? question0.question : question) || ''}
+            data={question}
             // data={''}
             onChange={e => this.onEditorChange(e)}
             config={{
@@ -67,9 +95,19 @@ class CreateEssayExam extends React.Component {
   }
 }
 
-export default connect(
-  null,
+const mapStateToProps = (state, ownProps) => {
+  const { auth: { account }, exam: { callingApi } } = state;
+  return {
+    role: account.role,
+    callingApi,
+  }
+}
+
+export default withRouter(connect(
+  mapStateToProps,
   {
     createExam,
+    updateExam,
+    callApiExam,
   }
-)(CreateEssayExam);
+)(CreateEssayExam));

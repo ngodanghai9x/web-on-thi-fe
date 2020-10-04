@@ -17,21 +17,24 @@ import RankList from './RankList';
 class MultipleChoiceResult extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      listQ: [],
+    };
   }
 
   componentDidMount() {
     const { match } = this.props;
     const { id } = match.params; // type, môn học
-    // this.fetchDetailExam(id);
+    this.fetchDetailExam(id);
     this.props.getResultExam(id);
   }
 
   fetchDetailExam = (_id) => {
+    console.log("MultipleChoiceResult -> fetchDetailExam -> _id", _id)
     this.props.getDetailExam(_id, false).then(({ data, code, message }) => {
       if (data && code === 200) {
         const { id, name, image, subject, grade, description, time, canDelete, examQuestions } = data.exam;
-        this.setState({ id, name, image, subject, grade, description, time: time * 60, canDelete, examQuestions });
+        this.setState({ id, name, image, subject, grade, description, time, canDelete, listQ: examQuestions || [] });
       }
       if (code === 400) {
       }
@@ -69,7 +72,7 @@ class MultipleChoiceResult extends React.Component {
             </div>
           </div>
           <div className="row-infor-panel">
-            <div className="exam-label">Thời gian làm bài</div>
+            <div className="exam-label">Thời gian đã làm</div>
             <div className="exam-result">
               {getMinute(result.doTime)}
             </div>
@@ -100,9 +103,9 @@ class MultipleChoiceResult extends React.Component {
   }
 
   render() {// cái kết quả mới là trang này
-    const { accessToken, result, location, match, exam } = this.props;
+    const { accessToken, result, location, match, exam, isDone } = this.props;
     const { id } = match.params; // type, môn học
-    // const { name, image, subject, grade, description, time, canDelete, examQuestions } = this.state;
+    const { name, image, subject, grade, description, time, listQ } = this.state;
     const { 
       examName,
       examDescription,
@@ -113,7 +116,13 @@ class MultipleChoiceResult extends React.Component {
       totalQuestion,
       examQuestions,
     } = result;
-    // if (!accessToken) return <Redirect to='/' />
+    if (!accessToken && isDone) return <Redirect to='/' />
+    if (match.params.subject === 'van') {
+      if (location.pathname.includes('lop-10')) {
+        return <Redirect to={`/lop-10/mon/van/${id}`} />
+      }
+      return <Redirect to={`/dai-hoc/mon/van/${id}`} />
+    }
     return (
       <MainContent>
         <div className='MultipleChoiceResult container'>
@@ -121,9 +130,9 @@ class MultipleChoiceResult extends React.Component {
             <div className="col-8">
 
               <div className="exam-infor-panel" >
-                <div className="Mul-title" >{examName} </div>
+                <div className="Mul-title" >{examName || name} </div>
                 <div className="description">
-                  {examDescription}
+                  {examDescription || description}
                 </div>
                 <div className="item-infor-panel">
                   <div className="item-label">
@@ -133,7 +142,7 @@ class MultipleChoiceResult extends React.Component {
                     <div className="label" > Số câu hỏi </div>
                   </div>
                   <div className="gwt-HTML" >
-                    {`${totalQuestion ? totalQuestion : 0} Câu`}
+                    {`${totalQuestion ? totalQuestion : listQ.length} Câu`}
                   </div>
                 </div>
                 <div className="item-infor-panel" >
@@ -144,7 +153,7 @@ class MultipleChoiceResult extends React.Component {
                     <div className="label" > Thời gian làm bài </div>
                   </div>
                   <div className="gwt-HTML" >
-                    {`${totalTime} Phút`}
+                    {`${totalTime || time} Phút`}
                   </div>
                 </div>
                 {/* <div className="item-infor-panel" >
@@ -201,8 +210,9 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user: auth.user,
     accessToken: auth.accessToken,
-    result,
+    result: result || {},
     exam:  result && result.exam || {},
+    isDone: auth.isDone,
   };
 };
 

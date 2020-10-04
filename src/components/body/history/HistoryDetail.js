@@ -108,13 +108,13 @@ class HistoryDetail extends React.Component {
   }
 
   render() {
-    const { accessToken, examQuestions, doTime } = this.props;
+    const { accessToken, examQuestions, doTime, isDone } = this.props;
     const arrVal = Object.values(this.state);
     const numOption1 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option1');
     const numOption2 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option2');
     const numOption3 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option3');
     const numOption4 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option4');
-    // if (!accessToken) return <Redirect to='/' />
+    if (!accessToken && isDone) return <Redirect to='/' />
     return (
       // <MainContent>
       <div className="container MultipleChoiceExam">
@@ -167,6 +167,7 @@ const mapStateToProps = (state, ownProps) => {
     user: auth.user,
     accessToken: auth.accessToken,
     result,
+    isDone: auth.isDone,
     // historyExam,
     // paginationHistory,
   };
