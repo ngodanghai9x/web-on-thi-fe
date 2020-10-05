@@ -232,6 +232,31 @@ export const getAvatar = () => (dispatch, getState) => {
     });
 }
 
+export const sendMessage = (message) => (dispatch, getState) => {
+  const reqBody = {
+    body: {
+      message,
+    }
+  }
+  return callApi('chat', { method: 'POST', data: reqBody })
+    .then(({ data, code, message }) => {
+      if (data && code === 200) {
+        // dispatch({
+        //   type: actionTypes.UPDATE_AVATAR_USER,
+        //   avatar: data.message,
+        // });
+        // window.noti.success('Thay đổi ảnh đại diện thành công');
+        return data.message;
+      }
+      if (code === 400) {
+        // window.noti.success('Thay đổi ảnh đại diện thất bại');
+      }
+    })
+    .catch(err => {
+
+    });
+}
+
 export const changeLayout = (layout) => (dispatch, getState) => {
   dispatch({
     type: 'CHANGE_LAYOUT',

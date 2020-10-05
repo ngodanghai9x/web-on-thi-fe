@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
 
-
+import { sendMessage } from 'actions/userActions';
 
 
 
@@ -47,6 +47,7 @@ class ChatBot extends React.Component {
       ]
     };
   }
+
   componentDidUpdate() {
     if (document.getElementById(`mes-${this.state.lastIndex}`)) {
       document.getElementById(`mes-${this.state.lastIndex}`).scrollIntoView({
@@ -61,19 +62,28 @@ class ChatBot extends React.Component {
     // document.removeEventListener('keydown', this.onEnter, false);
   }
 
-  onEnter = (e) => {
-    if (e.keyCode === 13) {
+  onEnter = (e, pressed) => {
+    if (e.keyCode === 13 || pressed) {
       const text = e.target.value.trim();
       if (!text) {
         this.setState({ input: '' });
         return;
       }
+
       const temp = [...this.state.messages, { mes: text }];
       this.setState(pre => ({
         messages: temp,
         input: '',
         lastIndex: temp.length - 1,
       }));
+
+      this.props.sendMessage(text).then(message => {
+        const temp1 = [...this.state.messages, { isChatBot: true, mes: message }];
+        this.setState(pre => ({
+          messages: temp1,
+          lastIndex: temp1.length - 1,
+        }));
+      })
     }
   }
 
@@ -128,8 +138,8 @@ class ChatBot extends React.Component {
                   onKeyDown={this.onEnter}
                 // onBlur={e => this.onBlurNotNull('errorPassword', e.target.value)}
                 />
-                <div className="icon">
-                  ??
+                <div className="icon" onClick={(e) => this.onEnter(e, true)}>
+                  <sendIcon />
               </div>
               </div>
             </div>
@@ -149,5 +159,12 @@ export default connect(
   null,
   {
     // logout,
+    sendMessage,
   }
 )(ChatBot);
+
+const sendIcon = () => {
+  return (
+    <svg width={26} height={26} viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24.1346 4.43119L11.4106 13.3809" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><path d="M24.1346 4.43118L13.8072 22.9337L11.4106 13.3809L3.23024 7.89622L24.1346 4.43118Z" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+  );
+}
