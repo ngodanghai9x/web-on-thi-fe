@@ -79,12 +79,12 @@ class ForgotPassword extends React.Component {
   }
 
   nextStep = e => {
-    const { phone, username } = this.state;
-    if ((phone && phone.trim()) || (username && username.trim())) {
+    const { email, username } = this.state;
+    if ((email && email.trim()) || (username && username.trim())) {
       this.setState({ step: 2 });
       this.getOTP();
     } else {
-      window.noti.error('Nhập tài khoản hoặc số điện thoại để đến bước tiếp theo')
+      window.noti.error('Nhập tài khoản hoặc email để sang bước tiếp theo')
     }
   }
 

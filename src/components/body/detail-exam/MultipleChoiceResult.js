@@ -46,10 +46,9 @@ class MultipleChoiceResult extends React.Component {
     return (
       <React.Fragment>
         <div className="exam-result-panel">
-          <div className="emoji-result">
-            {/* sửa lại đường dẫn chỗ này bằng icon1.jpg trong thư mục images */}
+          <div className="emoji-result d-flex justify-content-center">
             {/* <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg" id="exam-images"></img> */}
-            <img src={`${process.env.PUBLIC_URL}/images/icon1.jpg`} alt='subject' />
+            {/* <img src={`${process.env.PUBLIC_URL}/images/icon1.jpg`} alt='subject' /> */}
             <div className="score">
               {getScore(result.numCorrectAns / result.totalQuestion).score}
             </div>
@@ -196,7 +195,7 @@ class MultipleChoiceResult extends React.Component {
                   </div>
                 )}
               </div>
-              {Object.keys(result).length > 0 && this.renderResult(result, location)}
+              {Object.keys(result).length > 0 || true && this.renderResult({}, location)}
             </div>
             <div className="col-4">
               <RankList />

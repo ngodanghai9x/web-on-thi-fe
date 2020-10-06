@@ -1,7 +1,7 @@
 .MultipleChoiceResult {
   color: blue;
 
-// VIẾT VÀO TRONG NGOẶC
+  // VIẾT VÀO TRONG NGOẶC
   #exam-images {
     display: block;
     max-width: 100px;
@@ -20,12 +20,18 @@
       justify-content: center;
       .score {
         font-weight: 600;
-        font-size: 30px;
+        font-size: 35px;
         color: pink;
+        border-radius: 50%;
+        background: green;
+        height: 60px;
+        width: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
   }
-
 
   .row-infor-panel {
     display: flex;
@@ -61,117 +67,70 @@
     font-weight: normal;
   }
 
-// viết từ đây
-.exam-infor-panel {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  color: #333;
-}
+  // viết từ đây
+  .exam-infor-panel {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: #333;
+  }
 
-.Mul-title {
-  font-size: 30px;
-  margin-top: 20px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  text-transform: capitalize;
-}
+  .Mul-title {
+    font-size: 30px;
+    margin-top: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+  }
 
-.description {
-  margin-bottom: 15px;
-}
+  .description {
+    margin-bottom: 15px;
+  }
 
-.item-infor-panel {
-  display: flex;
-  align-items: center;
-  width: 350px;
-  justify-content: space-between;
+  .item-infor-panel {
+    display: flex;
+    align-items: center;
+    width: 350px;
+    justify-content: space-between;
 
-  .icon {
+    .icon {
       padding-right: 5px;
       margin-bottom: 10px;
-  }
+    }
 
-  .label {
+    .label {
       padding-right: 30px;
-  }
+    }
 
-  .gtw-HTML {
+    .gtw-HTML {
       text-align: end;
       padding-left: 10px;
+    }
   }
-}
 
-.item-label {
-  display: flex;
-  width: 60%;
-}
+  .item-label {
+    display: flex;
+    width: 60%;
+  }
 
-.gwt-HTML {
-  width: 40%;
-}
+  .gwt-HTML {
+    width: 40%;
+  }
 
-.btn-info {
-  align-items: center;
-  text-transform: uppercase;
-}
+  .btn-info {
+    align-items: center;
+    text-transform: uppercase;
+  }
 
-.button {
-  margin: 25px 0;
-  position: relative;
-  top: 50%;
-  left: 50%;
-}
+  .button {
+    margin: 25px 0;
+    position: relative;
+    top: 50%;
+    left: 50%;
+  }
 
-@media (max-width: 768px) {
-  .submit-button {
+  @media (max-width: 768px) {
+    .submit-button {
       padding: 7px 10px !important;
+    }
   }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

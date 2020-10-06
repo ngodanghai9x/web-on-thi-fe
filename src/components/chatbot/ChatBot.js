@@ -20,30 +20,6 @@ class ChatBot extends React.Component {
           isChatBot: true,
           mes: 'Chào bạn ! Tôi có thể giúp gì cho bạn ?',
         },
-        {
-          isChatBot: false,
-          mes: 'Bạn tên là gì ',
-        },
-        {
-          isChatBot: true,
-          mes: 'Tôi tên là ....',
-        },
-        {
-          isChatBot: false,
-          mes: 'Bạn tên là gì ',
-        },
-        {
-          isChatBot: true,
-          mes: 'Tôi tên là ....',
-        },
-        {
-          isChatBot: false,
-          mes: 'Bạn tên là gì ',
-        },
-        {
-          isChatBot: true,
-          mes: 'Tôi tên là ....',
-        },
       ]
     };
   }
@@ -64,7 +40,8 @@ class ChatBot extends React.Component {
 
   onEnter = (e, pressed) => {
     if (e.keyCode === 13 || pressed) {
-      const text = e.target.value.trim();
+      // const text = e.target.value.trim();
+      const text = this.state.input;
       if (!text) {
         this.setState({ input: '' });
         return;
@@ -123,6 +100,8 @@ class ChatBot extends React.Component {
 
   render() {
     const { isOpen, input } = this.state;
+    const { layout } = this.props;
+    if (layout === 1) return null;
     return (
       <React.Fragment>
         <div className="ChatBot h-25 w-25">
@@ -138,9 +117,9 @@ class ChatBot extends React.Component {
                   onKeyDown={this.onEnter}
                 // onBlur={e => this.onBlurNotNull('errorPassword', e.target.value)}
                 />
-                <div className="icon" onClick={(e) => this.onEnter(e, true)}>
-                  <sendIcon />
-              </div>
+                <div className="icon d-flex align-items-center justify-content-center" onClick={(e) => this.onEnter(e, true)}>
+                  <svg width={26} height={26} viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24.1346 4.43119L11.4106 13.3809" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><path d="M24.1346 4.43118L13.8072 22.9337L11.4106 13.3809L3.23024 7.89622L24.1346 4.43118Z" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </div>
               </div>
             </div>
           </div>
@@ -151,12 +130,14 @@ class ChatBot extends React.Component {
 }
 
 
-// const mapStateToProps = (state, ownProps) => {
-
-// };
+const mapStateToProps = (state, ownProps) => {
+  return {
+    layout: state.auth.layout,
+  }
+};
 
 export default connect(
-  null,
+  mapStateToProps,
   {
     // logout,
     sendMessage,

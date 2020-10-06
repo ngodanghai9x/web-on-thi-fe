@@ -103,7 +103,7 @@ export const changePassword = (username, newPassword, oldPassword) => (dispatch,
 };
 
 export const changeForgotPassword = (username, email, password, otp, selected) => (dispatch, getState) => {
-  const temp = { email, password, otp };
+  const temp = { password, otp };
   let body = {};
   if (selected === 0) {
     body = { username, ...temp };
@@ -123,7 +123,7 @@ export const changeForgotPassword = (username, email, password, otp, selected) =
         window.noti.success('Đổi mật khẩu thành công');
       }
       if (code === 400) {
-        if (message === 'OTP Invalid') return window.noti.error('Đổi mật khẩu thất bại, mã OTP không đúng');
+        if (message === 'OTP Invalid') return window.noti.error('Mã OTP không đúng! Đổi mật khẩu thất bại');
         window.noti.error('Đổi mật khẩu thất bại');
       }
     })
@@ -197,11 +197,12 @@ export const changeAvatar = (imgBase64, typeFile) => (dispatch, getState) => {
   return callApi('api/profile/upload-img', { method: 'POST', data: reqBody })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
+        dispatch(getAvatar())
         dispatch({
           type: actionTypes.UPDATE_AVATAR,
           avatar: imgBase64,
         });
-        window.noti.success('Thay đổi ảnh đại diện thành công');
+        // window.noti.success('Thay đổi ảnh đại diện thành công');
       }
       if (code === 400) {
         window.noti.success('Thay đổi ảnh đại diện thất bại');
