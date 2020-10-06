@@ -103,7 +103,7 @@ export const changePassword = (username, newPassword, oldPassword) => (dispatch,
 };
 
 export const changeForgotPassword = (username, email, password, otp, selected) => (dispatch, getState) => {
-  const temp = { password, otp };
+  const temp = { password, otp: Number(otp) };
   let body = {};
   if (selected === 0) {
     body = { username, ...temp };
