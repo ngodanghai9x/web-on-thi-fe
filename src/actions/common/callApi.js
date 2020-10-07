@@ -41,7 +41,9 @@ const callApi = function callApi(pathUrl, options) {
       },
       (error) => {
         console.log(options.url, "callApi -> error=", error);
-        if (options.method && options.method.toUpperCase() !== 'GET') window.noti.error('Có lỗi xảy ra, vui lòng thao tác lại');
+        if (options.method && options.url && (options.method.toUpperCase() !== 'GET' && !String(options.url).includes('get'))) {
+          window.noti.error('Có lỗi xảy ra, vui lòng thao tác lại');
+        }
         return error;
       },
     )

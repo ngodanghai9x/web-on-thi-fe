@@ -147,9 +147,9 @@ class CreateQuestion extends React.Component {
               // data={''}
               onChange={e => this.onEditorChange(e)}
               config={{
-                height: 82,
-                resize_maxHeight: 334,
-                resize_minHeight: 186,
+                height: 128,
+                resize_maxHeight: 374,
+                resize_minHeight: 232,
               }}
             />
           </div>

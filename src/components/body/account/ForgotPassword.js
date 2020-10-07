@@ -5,10 +5,15 @@ import * as CommonIcon from 'components/icons/common';
 
 
 
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import UserContent from 'components/body/layout/UserContent';
 import { errorText, regex } from 'constants/regexError';
-import { changeForgotPassword, getOtpCode } from 'actions/userActions';
+import {
+  updateUserInfo,
+  callApiUser,
+  changeForgotPassword,
+  getOtpCode,
+} from 'actions/userActions';
 
 import './styles/ForgotPassword.scss';
 
@@ -26,6 +31,12 @@ class ForgotPassword extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.timeInterval);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.callUser && this.props.callUser === 'ForgotPassword') {
+      nextProps.history.push('/dang-nhap');
+    }
   }
 
   onBlurNotNull = (key, val, text) => {
@@ -56,8 +67,9 @@ class ForgotPassword extends React.Component {
   submit = e => {
     const { username, otp, password, errorOTP, errorPassword, selected, email
     } = this.state;
-    const isCanSubmit = !errorOTP && !errorPassword && (username || email);
+    const isCanSubmit = !errorOTP && !errorPassword && (username || email) && password && otp;
     if (!isCanSubmit) return window.noti.error('Bạn cần nhập đủ thông tin để lấy lại mật khẩu');
+    this.props.callApiUser('ForgotPassword');
     this.props.changeForgotPassword(username, email, password, otp, selected);
   }
 
@@ -136,6 +148,8 @@ class ForgotPassword extends React.Component {
   renderStep2 = () => {
     const { password, otp, errorPassword, errorOTP, countDown
     } = this.state;
+
+    const { callUser } = this.props;
     return (
       <React.Fragment>
         <h5 className="title-left">
@@ -170,16 +184,16 @@ class ForgotPassword extends React.Component {
           <div className="input-row last">
             {
               countDown === 0 ? (
-                <span className='a d-block' onClick={() => this.getOTP()}>Gửi lại OTP</span>
+                <span className='a d-block' onClick={() => callUser !== 'ForgotPassword' && this.getOTP()}>Gửi lại OTP</span>
               ) : (
                   <span className="d-block">{`Gửi lại sau ${countDown}s`}</span>
                 )
             }
           </div>
-          <button className="btn btn-info w-100 mb-2" onClick={() => this.submit()} >
+          <button className={`btn btn-info w-100 mb-2 ${callUser === 'ForgotPassword' ? 'disable' : ''} `} onClick={() => callUser !== 'ForgotPassword' && this.submit()}  >
             Đổi mật khẩu
           </button>
-          <span className="a mb-3 text-center" onClick={() => {clearInterval(this.timeInterval); this.setState({ step: 1 }) }}>
+          <span className="a mb-3 text-center" onClick={() => { clearInterval(this.timeInterval); this.setState({ step: 1 }) }}>
             Quay lại
           </span>
         </div>
@@ -199,18 +213,22 @@ class ForgotPassword extends React.Component {
   }
 }
 
-
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { user, account } } = state;
+  const { auth } = state;
   return {
-    user,
-    account,
-  }
+    user: auth.user,
+    callUser: auth.callUser,
+    account: auth.account,
+  };
+
 };
-export default connect(
+
+export default withRouter(connect(
   mapStateToProps,
   {
+    updateUserInfo,
+    callApiUser,
     changeForgotPassword,
     getOtpCode,
-  }
-)(ForgotPassword);
+  },
+)(ForgotPassword));

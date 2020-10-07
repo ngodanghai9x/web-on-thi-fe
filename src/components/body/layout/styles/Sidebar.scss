@@ -11,12 +11,13 @@ $primary: #40aaf4;
   line-height: 1.8;
   font-weight: normal;
   color: lighten(black, 50%);
-  min-width: 0px;
+  // min-width: 0px;
+  // height: 100vh;
   width: 230px;
   background: #202d3f;
-  height: 100vh;
   display: block;
   z-index: 1002;
+  transition: all 0.7s;
   a {
     transition: 0.3s all ease;
     color: $primary;
@@ -43,8 +44,8 @@ $primary: #40aaf4;
   }
 
   #sidebar {
-    min-width: 0px;
     max-width: 230px;
+    width: 230px;
     background: #202d3f;
     color: #fff;
     transition: all 0.3s;

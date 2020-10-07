@@ -102,8 +102,8 @@ export const changePassword = (username, newPassword, oldPassword) => (dispatch,
     });
 };
 
-export const changeForgotPassword = (username, email, password, otp, selected) => (dispatch, getState) => {
-  const temp = { password, otp: Number(otp) };
+export const changeForgotPassword = (username, email, newPassword, otp, selected) => (dispatch, getState) => {
+  const temp = { newPassword, otp: Number(otp) };
   let body = {};
   if (selected === 0) {
     body = { username, ...temp };
@@ -121,6 +121,7 @@ export const changeForgotPassword = (username, email, password, otp, selected) =
     .then(({ data, code, message }) => {
       if (data && code === 200) {
         window.noti.success('Đổi mật khẩu thành công');
+        dispatch(callApiUser());
       }
       if (code === 400) {
         if (message === 'OTP Invalid') return window.noti.error('Mã OTP không đúng! Đổi mật khẩu thất bại');

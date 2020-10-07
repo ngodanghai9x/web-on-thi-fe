@@ -29,7 +29,9 @@ class Sidebar extends React.Component {
                 <span className="sr-only">Toggle Menu</span>
               </button>
             </div> */}
-            <div className="d-flex justify-content-center">Project Name</div>
+            <div className="d-flex justify-content-center">
+              <img src="/images/logo.png" alt="logo" />
+            </div>
             <ul className="list-unstyled components mb-5">
               <li className={``}  onClick={() => this.props.changeLayout(0)}>
                 <Link  to='/' >
