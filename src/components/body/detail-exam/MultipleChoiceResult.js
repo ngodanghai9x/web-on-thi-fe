@@ -20,6 +20,7 @@ class MultipleChoiceResult extends React.Component {
     super(props);
     this.state = {
       listQ: [],
+      numPeopleDid: 0,
     };
   }
 
@@ -34,8 +35,8 @@ class MultipleChoiceResult extends React.Component {
     console.log("MultipleChoiceResult -> fetchDetailExam -> _id", _id)
     this.props.getDetailExam(_id, false).then(({ data, code, message }) => {
       if (data && code === 200) {
-        const { id, name, image, subject, grade, description, time, canDelete, examQuestions } = data.exam;
-        this.setState({ id, name, image, subject, grade, description, time, canDelete, listQ: examQuestions || [] });
+        const { id, name, image, subject, grade, description, time, canDelete, examQuestions, numPeopleDid } = data.exam;
+        this.setState({ id, name, image, subject, grade, description, time, canDelete, listQ: examQuestions || [], numPeopleDid });
       }
       if (code === 400) {
       }
@@ -109,7 +110,7 @@ class MultipleChoiceResult extends React.Component {
   render() {// cái kết quả mới là trang này
     const { accessToken, result, location, match, exam, isDone } = this.props;
     const { id } = match.params; // type, môn học
-    const { name, image, subject, grade, description, time, listQ } = this.state;
+    const { name, image, subject, grade, description, time, listQ, numPeopleDid } = this.state;
     const { 
       examName,
       examDescription,
@@ -138,6 +139,7 @@ class MultipleChoiceResult extends React.Component {
                 <div className="description">
                   {examDescription || description}
                 </div>
+
                 <div className="item-infor-panel">
                   <div className="item-label">
                     <div className="icon">
@@ -149,6 +151,7 @@ class MultipleChoiceResult extends React.Component {
                     {`${totalQuestion ? totalQuestion : listQ.length} Câu`}
                   </div>
                 </div>
+
                 <div className="item-infor-panel" >
                   <div className="item-label" >
                     <div className="icon" >
@@ -157,7 +160,7 @@ class MultipleChoiceResult extends React.Component {
                     <div className="label" > Thời gian làm bài </div>
                   </div>
                   <div className="gwt-HTML" >
-                    {`${totalTime || time} Phút`}
+                    {`${totalTime || time} phút`}
                   </div>
                 </div>
                 {/* <div className="item-infor-panel" >
@@ -177,7 +180,7 @@ class MultipleChoiceResult extends React.Component {
                     <div className="label" >  </div>
                   </div>
                   <div className="gwt-HTML" >0 / Không giới hạn</div>
-                </div>
+                </div> */}
                 <div className="item-infor-panel" >
                   <div className="item-label" >
                     <div className="icon" >
@@ -185,8 +188,10 @@ class MultipleChoiceResult extends React.Component {
                     </div>
                     <div className="label" > Số người đã tham gia </div>
                   </div>
-                  <div className="gwt-HTML" > 1331 </div>
-                </div> */}
+                  <div className="gwt-HTML" >
+                    {`${numPeopleDid} người`}
+                  </div>
+                </div> 
                 {Object.keys(result).length > 0 ? null : (
                   <div className="button" >
                     <Link to={`${location.pathname.replace('/ket-qua/', '/')}`}>
