@@ -216,6 +216,7 @@ export const doExam = (id, time, examAnswer) => (dispatch, getState) => {
   return callApi('api/profile/do-exam', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
+        // dispatch(getRankList(id));
         dispatch(receiveResultExam(data.result));
         window.noti.success('Nộp bài thành công');
       }

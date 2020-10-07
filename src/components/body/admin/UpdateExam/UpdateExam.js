@@ -7,7 +7,7 @@ import UpdateQuestion from './UpdateQuestion';
 import { getObjLevel, getObjSubject, subjects2 } from 'actions/common/getInfo';
 import { getAvatar, changeLayout } from 'actions/userActions';
 import './UpdateExam.scss';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import CreateEssayExam from '../CreateExam/CreateEssayExam';
 import {
   getAllExam,
@@ -222,8 +222,13 @@ class UpdateExam extends React.Component {
                 </div>
               </div> */}
               <div className="profile-row d-flex justify-content-center">
+                <Link to='/admin'>
+                  <button className="btn btn-outline-info" style={{ margin: '0 10px'}}>
+                    Hủy
+                  </button>
+                </Link>
                 <button className="btn btn-info" onClick={() => this.changeStep(2)}>
-                  Next
+                  Tiếp tục
                 </button>
               </div>
 

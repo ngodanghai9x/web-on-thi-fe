@@ -30,9 +30,9 @@ class HistoryList extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { pagination } = this.props;
-    if (nextProps.pagination && nextProps.pagination !== pagination) {
+    if (pagination && nextProps.pagination && nextProps.pagination.currentPage !== pagination.currentPage) {
       this.setState({
-        activePage: pagination.activePage,
+        activePage: pagination.currentPage,
       })
     }
   }
@@ -82,7 +82,8 @@ class HistoryList extends React.Component {
 
   getScreen = screen => {
     const { pagination, historyExam } = this.props;
-    const { examQuestions, doTime, activePage } = this.state;
+    const { examQuestions, doTime } = this.state;
+    const activePage = pagination && pagination.currentPage || 1;
     if (screen === 'detail') {
       return (
         <MainContent>

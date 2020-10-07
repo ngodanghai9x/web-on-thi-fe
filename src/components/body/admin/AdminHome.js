@@ -53,8 +53,10 @@ class AdminHome extends React.Component {
   }
 
   handlePageChange = (pageNumber) => {
-    this.setState({ activePage: pageNumber }, () => this.reload());
-    this.props.changeActivePage(pageNumber);
+    this.setState({ activePage: pageNumber }, () => {
+      this.props.changeActivePage(pageNumber);
+      this.reload()
+    });
   }
 
   seeDetailExam = (e, id) => {

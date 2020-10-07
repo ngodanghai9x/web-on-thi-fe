@@ -9,7 +9,7 @@ import { getAvatar, changeLayout } from 'actions/userActions';
 import { changeHeader } from 'actions/examActions';
 // import CreateExamInfo from './CreateExamInfo';
 import './CreateExam.scss';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import CreateEssayExam from './CreateEssayExam';
 
 class CreateExam extends React.Component {
@@ -29,7 +29,7 @@ class CreateExam extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { location: {pathname} } = this.props;
+    const { location: { pathname } } = this.props;
     if (nextProps.location.pathname !== pathname) {
       this.setState({
         grade: 1,
@@ -40,7 +40,7 @@ class CreateExam extends React.Component {
 
   changeStep = (step) => {
     if (step === 1) {
-      return this.setState({ step: 1});
+      return this.setState({ step: 1 });
     }
     if (this.state.subject === 'Ngữ Văn') {
       this.setState({ step: 3 });
@@ -56,7 +56,7 @@ class CreateExam extends React.Component {
     }
     else {
       if (key === 'grade') {
-        return this.setState({ grade: val, subject: 'Toán Học'})
+        return this.setState({ grade: val, subject: 'Toán Học' })
       }
       this.setState({ [key]: val, [error]: '' });
     }
@@ -189,7 +189,7 @@ class CreateExam extends React.Component {
               <div className="profile-row">
                 <div className="key">
                   Thời gian làm
-                  <br/>
+                  <br />
                   (phút)
                 </div>
                 <div className="value">
@@ -219,8 +219,13 @@ class CreateExam extends React.Component {
                 </div>
               </div> */}
               <div className="profile-row d-flex justify-content-center">
+                <Link to='/admin'>
+                  <button className="btn btn-outline-info" style={{ margin: '0 10px'}}>
+                    Hủy
+                  </button>
+                </Link>
                 <button className="btn btn-info" onClick={() => this.changeStep()}>
-                  Next
+                  Tiếp tục
                 </button>
               </div>
 
@@ -238,7 +243,7 @@ class CreateExam extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { account, isDone}} = state;
+  const { auth: { account, isDone } } = state;
   return {
     role: account.role,
     isDone,
@@ -251,4 +256,4 @@ export default withRouter(connect(
     changeLayout,
     changeHeader,
   }
-  )(CreateExam)) ;
+)(CreateExam));
