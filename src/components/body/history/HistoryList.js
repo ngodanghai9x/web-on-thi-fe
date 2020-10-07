@@ -11,6 +11,7 @@ import TittleUserInfo from '../user/TittleUserInfo';
 import MainContent from '../layout/MainContent';
 import HistoryDetail from './HistoryDetail';
 import Pagination from 'react-js-pagination';
+import { getMinute } from 'actions/common/utils';
 
 const SIZE = 10;
 class HistoryList extends React.Component {
@@ -69,8 +70,8 @@ class HistoryList extends React.Component {
       return (
         <tr onClick={(e) => this.seeDetailExam(e, item.id)}>
           <td className="col col-name">{item.examName}</td>
-          <td className="col col-date">{`${item.doTime}/${item.totalTime}`}</td>
-          <td className="col col-result">{`${item.numAns}/${item.totalQuestion}`}</td>
+          <td className="col col-date">{getMinute(item.doTime)}</td>
+          <td className="col col-result">{`${item.numAnswer}/${item.totalQuestion}`}</td>
           <td className="col col-point">
             {parseFloat(item.numCorrectAns * 10 / item.totalQuestion).toFixed(2)}
           </td>
