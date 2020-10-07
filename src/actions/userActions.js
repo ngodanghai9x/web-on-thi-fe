@@ -91,6 +91,7 @@ export const changePassword = (username, newPassword, oldPassword) => (dispatch,
     .then(({ data, code, message }) => {
       if (data && code === 200) {
         window.noti.success('Đổi mật khẩu thành công');
+        dispatch(callApiUser());
       }
       if (code === 400) {
         // if (message === 'OTP Invalid') return window.noti.error('Đổi mật khẩu thất bại, mã OTP không đúng');

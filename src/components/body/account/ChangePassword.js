@@ -8,7 +8,8 @@ import { regex, errorText } from 'constants/regexError';
 import TittleUserInfo from 'components/body/user/TittleUserInfo';
 import UserContent from '../layout/UserContent';
 import { hideEmail, hidePhone } from 'actions/common/utils';
-import { changePassword, getOtpCode } from 'actions/userActions';
+import { changePassword, getOtpCode, callApiUser, } from 'actions/userActions';
+import { withRouter } from 'react-router';
 
 class ChangePassword extends React.Component {
   constructor(props) {
@@ -33,11 +34,13 @@ class ChangePassword extends React.Component {
     clearInterval(this.timeInterval);
   }
 
-  changePassword = password => {
-    if (password === '123') {
-      this.setState({ errorPassword: true, password });
-    } else {
-      this.setState({ errorPassword: false, password });
+  onChangeMax255 = (key, val, error) => {
+    if (val && val.length >= 255) {
+      this.setState({ [error]: 'Bạn nhập quá 255 kí tự' });
+      return window.noti.error('Bạn nhập quá 255 kí tự');
+    }
+    else {
+      this.setState({ [key]: val, [error]: '' });
     }
   }
 
@@ -60,6 +63,9 @@ class ChangePassword extends React.Component {
       if (!regex.password.test(val)) {
         this.setState({ [key]: text });
       }
+      if (val === this.state.oldPassword) {
+        this.setState({ [key]: 'Mật khẩu mới không được trùng với mật khẩu cũ'})
+      }
     }
   }
 
@@ -79,14 +85,22 @@ class ChangePassword extends React.Component {
     this.doInterval();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.callUser && this.props.callUser === 'ChangePassword') {
+      nextProps.history.push('/');
+    }
+  }
+
   submit = () => {
     const { password, otp, errorOtp, errorPassword, oldPassword, errorOldPassword } = this.state;
-    if (errorPassword || errorOldPassword) return;
+    if (errorPassword || errorOldPassword || !password || !oldPassword) return window.noti.error('Bạn chưa điền đủ thông tin');
+    if (password === oldPassword) return window.noti.error('Mật khẩu mới không được trùng với mật khẩu cũ');
+    this.props.callApiUser('ChangePassword');
     this.props.changePassword(this.props.account.username, password, oldPassword);
   }
 
   render() {
-    const { user } = this.props;
+    const { user, callUser } = this.props;
     const { password, oldPassword, errorOldPassword, errorPassword, countDown } = this.state;
     return (
       <React.Fragment>
@@ -94,13 +108,28 @@ class ChangePassword extends React.Component {
           <div className="UserInfo ChangePassword">
             <TittleUserInfo
               title='Đổi Mật Khẩu'
-              description='Để cập nhật mật khẩu mới, vui lòng xác nhận bằng cách nhập mã OTP'
+              description='Để cập nhật mật khẩu mới, vui lòng xác nhận bằng cách nhập mật khẩu cũ'
             />
             <div className="content ChangeMail" style={{ margin: '15px 10% 25px 10%' }}>
-              <div className="profile-row">
+              {/* <div className="profile-row">
                 <div className="key">Địa chỉ hòm thư</div>
                 <div className="value">{hideEmail(user.email)}</div>
+              </div> */}
+              
+              <div className="profile-row">
+                <div className="key">Mật khẩu cũ</div>
+                <div className="value">
+                  <input
+                    type="password" value={oldPassword}
+                    className={errorOldPassword ? 'error' : ''}
+                    title={errorOldPassword}
+                    style={{ width: 350 }}
+                    onChange={(e) => this.onChangeMax255('oldPassword', e.target.value, 'errorOldPassword')}
+                    onBlur={e => this.onBlurNotNull('errorOldPassword', e.target.value, errorText.password)}
+                  />
+                </div>
               </div>
+
               <div className="profile-row">
                 <div className="key">Mật khẩu mới</div>
                 <div className="value">
@@ -109,21 +138,8 @@ class ChangePassword extends React.Component {
                     className={errorPassword ? 'error' : ''}
                     title={errorPassword}
                     style={{ width: 350 }}
-                    onChange={(e) => this.changePassword(e.target.value)}
-                    onBlur={e => this.onBlurNotNull('errorPassword1', e.target.value, errorText.password)}
-                  />
-                </div>
-              </div>
-              <div className="profile-row">
-                <div className="key">Mật khẩu cũ</div>
-                <div className="value">
-                  <input
-                    type="text" value={oldPassword}
-                    className={errorOldPassword ? 'error' : ''}
-                    title={errorOldPassword}
-                    style={{ width: 350 }}
-                    onChange={(e) => this.setState({ oldPassword: e.target.value })}
-                    onBlur={e => this.onBlurNotNull('errorOldPassword', e.target.value, errorText.password)}
+                    onChange={(e) => this.onChangeMax255('password', e.target.value, 'errorPassword')}
+                    onBlur={e => this.onBlurNotNull('errorPassword', e.target.value, errorText.password)}
                   />
                 </div>
               </div>
@@ -142,7 +158,7 @@ class ChangePassword extends React.Component {
               <div className="profile-row">
                 <div className="key"></div>
                 <div className="value">
-                  <button className="btn btn-info mr-2" onClick={e => this.submit()} >
+                  <button className={`btn btn-info mr-2 ${callUser === 'ForgotPassword' ? 'disable' : ''}`} onClick={e => callUser !== 'ForgotPassword' && this.submit()} >
                     Xác nhận
                   </button>
                 </div>
@@ -157,16 +173,18 @@ class ChangePassword extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { user, account } } = state;
+  const { auth: { user, account, callUser } } = state;
   return {
     user,
     account,
+    callUser,
   }
 };
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   {
     changePassword,
     getOtpCode,
+    callApiUser,
   }
-)(ChangePassword);
+)(ChangePassword))
