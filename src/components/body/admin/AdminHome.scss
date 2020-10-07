@@ -41,7 +41,7 @@
       width: 120px;
       .d-flex {
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
       }
     }
@@ -66,9 +66,9 @@
       .col-action {
         padding-left: 5px;
         .toggle-icon {
-          margin-left: 5px;
+          margin-left: 12px;
           svg {
-            transform: scale(1.5);
+            transform: scale(1.6);
           }
         }
       }

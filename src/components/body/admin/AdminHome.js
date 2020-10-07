@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import * as CommonIcon from 'components/icons/common';
 import { getAvatar, changeLayout } from 'actions/userActions';
-import  {
+import {
   getAllExam,
   changeHeader,
   changeActiveExam,
@@ -89,7 +89,7 @@ class AdminHome extends React.Component {
       if (confirm('Kích hoạt đề để mọi người có thể làm đề, nhưng sẽ không thể xóa đề được nữa kể cả có tắt kích hoạt, bạn có chắc chắn kích hoạt ?')) {
         this.props.changeActiveExam(id, isActive);
       }
-    } 
+    }
     else {
       this.props.changeActiveExam(id, isActive);
     }
@@ -148,7 +148,7 @@ class AdminHome extends React.Component {
     // id, name, image, subject, grade, description, time, canDelete, examQuestions
     return all.map(item => {
       return (
-        <tr onClick={(e) => this.seeDetailExam(e, item.id)} key={'admin-home'+item.id}>
+        <tr onClick={(e) => this.seeDetailExam(e, item.id)} key={'admin-home' + item.id}>
           <td className="col col-checkbox">
             <div className="wrapper-icon checkbox" onClick={(e) => this.selectOne(e, item.id)}>
               <input type="checkbox"
@@ -167,12 +167,16 @@ class AdminHome extends React.Component {
               <div className="wrapper-icon" title="Chỉnh sửa" onClick={(e) => this.seeDetailExam(e, item.id)}>
                 <CommonIcon.edit />
               </div>
-              <div
-                className={`wrapper-icon ${item.canDelete ? '' : 'disable'}`} title={`${item.canDelete ? 'Xóa' : 'Không thẻ xóa đề đã có người làm'}`}
-                onClick={(e) => this.deleteExam(e, item.id, item.canDelete)}
-              >
-                <CommonIcon.remove />
-              </div>
+              {
+                item.canDelete ? (
+                  <div
+                    className={`wrapper-icon ${item.canDelete ? '' : 'disable'}`} title={`${item.canDelete ? 'Xóa' : 'Không thẻ xóa đề đã có người làm'}`}
+                    onClick={(e) => this.deleteExam(e, item.id, item.canDelete)}
+                  >
+                    <CommonIcon.remove />
+                  </div>
+                ) : null
+              }
               {
                 item.isActive ? (
                   <div className="toggle-icon" title="Ngưng kích hoạt" onClick={(e) => this.changeActiveExam(e, item.id, item.isActive)}>
@@ -225,7 +229,7 @@ class AdminHome extends React.Component {
                     title="Chọn tất cả"
                     onClick={() => this.selectAll()}
                   >
-                    <input type="checkbox" 
+                    <input type="checkbox"
                       checked={isChooseAll}
                       readOnly
                     />

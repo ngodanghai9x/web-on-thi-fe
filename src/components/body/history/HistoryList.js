@@ -68,7 +68,7 @@ class HistoryList extends React.Component {
   renderBody = (historyExam) => {
     return historyExam.map(item => {
       return (
-        <tr onClick={(e) => this.seeDetailExam(e, item.id)}>
+        <tr onClick={(e) => this.seeDetailExam(e, item.examQuestions, item.doTime)}>
           <td className="col col-name">{item.examName}</td>
           <td className="col col-date">{getMinute(item.doTime)}</td>
           <td className="col col-result">{`${item.numAnswer}/${item.totalQuestion}`}</td>

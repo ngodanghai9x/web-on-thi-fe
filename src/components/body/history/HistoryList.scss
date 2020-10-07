@@ -15,5 +15,10 @@
       text-align: center;
       width: 70px;
     }
+    tbody {
+      tr {
+        cursor: pointer;
+      }
+    }
   }
 }

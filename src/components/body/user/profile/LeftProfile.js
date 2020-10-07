@@ -26,12 +26,13 @@ class LeftProfile extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.user) {
-      const { name, email, phone, school, gender, birthday } = nextProps.user;
-      this.setState({ name, email, phone, school, gender, birthday });
-    }
     if (!nextProps.callUser && this.props.callUser === 'LeftProfile') {
       nextProps.history.push('/');
+      return;
+    }
+    if (nextProps.user !== this.props.user) {
+      const { name, email, phone, school, gender, birthday } = nextProps.user;
+      this.setState({ name, email, phone, school, gender, birthday });
     }
   }
 
@@ -41,7 +42,7 @@ class LeftProfile extends React.Component {
 
   resetState = action => {
     const { name, email, phone, school, gender, birthday } = this.props.user;
-    this.setState({ name, email, phone, school, gender, birthday, errorName: '' });
+    this.setState({ name, email, phone, school, gender, birthday, errorName: '', errorPhone: '' });
     if (action === 'cancel') {
       this.props.history.push('/');
     }
@@ -80,17 +81,33 @@ class LeftProfile extends React.Component {
     this.setState({ birthday });
   }
 
+  changePhone = (phone) => {
+    if (phone && phone.length > 15) {
+      this.setState({ errorPhone: 'Số điện thoại tối đa 15 kí tự'})
+    } else {
+      this.setState({ phone, errorPhone: '' });
+    }
+  }
+
+  onBlurPhone = () => {
+    const { phone } = this.state;
+    if (!phone) return;
+    if (!regex.phone.test(phone)) {
+      this.setState({ errorPhone: errorText.phone });
+    }
+  }
+
   submit = e => {
-    const { name, email, phone, gender, birthday, school, errorName } = this.state;
+    const { name, email, phone, gender, birthday, school, errorName, errorPhone } = this.state;
     this.props.callApiUser('LeftProfile');
-    // if (errorName) return window.noti.error('Hãy hoàn thiệt thông tin trước khi lưu');name, phone, birthday, gender, school
+    if (errorName || errorPhone) return window.noti.error('Thông tin bạn điền không đúng định dạng');
     this.props.updateUserInfo(name, phone, birthday, gender, school);
     // this.props.updateUserInfo(name, phone, '2020-09ab', gender, school);
   }
 
   render() {
     const genders = ['nam', 'nữ', 'khác'];
-    const { name, email, phone, gender, birthday, school, errorName } = this.state;
+    const { name, email, phone, gender, birthday, school, errorName, errorPhone } = this.state;
     const { user, changeScreen } = this.props;
     return (
       <div className="profile-left d-flex flex-column">
@@ -119,13 +136,22 @@ class LeftProfile extends React.Component {
         <div className="profile-row">
           <div className="key">Số điện thoại</div>
           <div className="value">
-            <span>{hidePhone(phone)}</span>
+            <input
+              type="text"
+              value={phone || ''}
+              title={errorPhone}
+              className={errorPhone ? 'error' : ''}
+              placeholder="Nhập số điện thoại"
+              onChange={(e) => this.changePhone(e.target.value)}
+              onBlur={e => this.onBlurPhone(e)}
+              />
+            {/*<span>{hidePhone(phone)}</span>
             <Link
               exact to='/thong-tin-ca-nhan'
               onClick={() => changeScreen('index', 'phone')}
               title={user && !user.email ? 'Hãy thêm email trước khi thêm số điện thoại' : ''}
             >
-              {phone ? 'Thay đổi' : 'Thêm mới'}</Link>
+              {phone ? 'Thay đổi' : 'Thêm mới'}</Link> */}
           </div>
         </div>
         <div className="profile-row">
@@ -155,10 +181,10 @@ class LeftProfile extends React.Component {
             <DatePicker
               selected={birthday}
               onChange={(e) => this.changeBirthday(e)}
-              // dateFormat="dd/MM/yyyy"
-              dateFormat="yyyy-MM-dd"
+              dateFormat="dd/MM/yyyy"
+              // dateFormat="yyyy-MM-dd"
               placeholder="Nhập họ và tên"
-              // locale="vi"
+            // locale="vi"
             />
           </div>
         </div>

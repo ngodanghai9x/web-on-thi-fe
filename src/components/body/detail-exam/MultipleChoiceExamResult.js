@@ -11,7 +11,7 @@ import {
 } from 'actions/examActions';
 import MainContent from '../layout/MainContent';
 import './styles/MultipleChoiceExam.scss';
-import { Redirect } from 'react-router';
+import { Redirect, withRouter } from 'react-router';
 import { getMinute } from 'actions/common/utils';
 
 class MultipleChoiceExamResult extends React.Component {
@@ -113,8 +113,9 @@ class MultipleChoiceExamResult extends React.Component {
   }
 
   render() {// file này là trang bài làm
-    const { accessToken, result, match, location, isDone } = this.props;
+    const { accessToken, result, match, location, isDone, } = this.props;
     const { id, subject } = match.params;
+    const backPath = location.pathname.replace('/chi-tiet', '');
     const { examQuestions } = result;
     const examQuestions1 = [
       {
@@ -191,10 +192,10 @@ class MultipleChoiceExamResult extends React.Component {
                 </div>
               </div>
               {/* <div className="btn-group"> */}
-              <button type="button" className="btn btn-primary submit-btn disable"
+              <button type="button" className="btn btn-primary submit-btn" onClick={() => this.props.history.push(backPath)}
               >
-                Nộp Bài
-                </button>
+                Quay lại
+              </button>
               {/* </div> */}
             </div>
           </div>
@@ -215,8 +216,8 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, {
+export default withRouter(connect(mapStateToProps, {
   doExam,
   getDetailExam,
   getResultExam,
-})(MultipleChoiceExamResult);
+})(MultipleChoiceExamResult));

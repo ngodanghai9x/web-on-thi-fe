@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
 
-
+import { updateUserInfo, callApiUser } from 'actions/userActions';
 
 
 // import './styles/ChangeMail.scss';
 import TittleUserInfo from './TittleUserInfo';
+import { withRouter } from 'react-router';
 
 class ChangePhone extends React.Component {
   constructor(props) {
@@ -39,14 +40,6 @@ class ChangePhone extends React.Component {
         this.setState({ countDown: this.state.countDown - 1 });
       }
     }, 1000);
-  }
-
-  changePassword = password => {
-    if (password === '123') {
-      this.setState({ errorPassword: true, password });
-    } else {
-      this.setState({ errorPassword: false, password });
-    }
   }
 
   changePhone = phone => {
@@ -108,7 +101,7 @@ class ChangePhone extends React.Component {
               />
             </div>
           </div>
-          <div className="profile-row">
+          {/* <div className="profile-row">
             <div className="key">Mật khẩu</div>
             <div className="value">
               <input
@@ -116,10 +109,9 @@ class ChangePhone extends React.Component {
                 className={errorPassword ? 'error' : ''}
                 title={errorPassword}
                 style={{ width: 350 }}
-                onChange={(e) => this.changePassword(e.target.value)}
               />
             </div>
-          </div>
+          </div> */}
 
           {/* <div className="profile-row">
             <div className="key">Địa chỉ hòm thư</div>
@@ -167,4 +159,19 @@ class ChangePhone extends React.Component {
   }
 }
 
-export default ChangePhone;
+const mapStateToProps = (state, ownProps) => {
+  const { auth } = state;
+  return {
+    user: auth.user,
+    callUser: auth.callUser,
+  };
+
+};
+
+export default withRouter(connect(
+  mapStateToProps,
+  {
+    updateUserInfo,
+    callApiUser,
+  },
+)(ChangePhone));
