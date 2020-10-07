@@ -50,7 +50,7 @@ class MultipleChoiceResult extends React.Component {
             {/* <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg" id="exam-images"></img> */}
             {/* <img src={`${process.env.PUBLIC_URL}/images/icon1.jpg`} alt='subject' /> */}
             <div className="score">
-              {getScore(result.numCorrectAns / result.totalQuestion).score}
+              {getScore((result.numCorrectAns / result.totalQuestion) * 10).score}
             </div>
           </div>
           <div className="row-infor-panel">
@@ -195,7 +195,7 @@ class MultipleChoiceResult extends React.Component {
                   </div>
                 )}
               </div>
-              {Object.keys(result).length > 0 || true && this.renderResult({}, location)}
+              {Object.keys(result).length > 0 && this.renderResult(result, location)}
             </div>
             <div className="col-4">
               <RankList />

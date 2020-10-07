@@ -60,61 +60,68 @@ export const getInfo = (pathname, subjectParam) => {
 }
 
 export const getScore = (_score10) => {
+  console.log("getScore -> _score10", _score10)
   const score10 = Number(parseFloat(_score10).toFixed(1));
-  switch (score10) {
-    case score10 >= 9.0 && score10 <= 10:
-      return {
-        score10,
-        score4: 4.0,
-        score: 'A+',
-      };
-    case score10 >= 8.5 && score10 <= 8.9:
-      return {
-        score10,
-        score4: 3.8,
-        score: 'A',
-      };
-    case score10 >= 7.8 && score10 <= 8.4:
-      return {
-        score10,
-        score4: 3.5,
-        score: 'B+',
-      };
-    case score10 >= 7.0 && score10 <= 7.7:
-      return {
-        score10,
-        score4: 3.0,
-        score: 'B',
-      };
-    case score10 >= 6.3 && score10 <= 6.9:
-      return {
-        score10,
-        score4: 2.5,
-        score: 'C+',
-      };
-    case score10 >= 5.5 && score10 <= 6.2:
-      return {
-        score10,
-        score4: 2.0,
-        score: 'C',
-      };
-    case score10 >= 4.8 && score10 <= 5.4:
-      return {
-        score10,
-        score4: 1.5,
-        score: 'D+',
-      };
-    case score10 >= 4.0 && score10 <= 4.7:
-      return {
-        score10,
-        score4: 1.0,
-        score: 'D',
-      };
-    default:
-      return {
-        score10,
-        score4: 0,
-        score: 'F',
-      };
+  debugger
+  if (score10 >= 9.0 && score10 <= 10) {
+    return {
+      score10,
+      score4: 4.0,
+      score: 'A+',
+    };
   }
+  if (score10 >= 8.5 && score10 <= 8.9) {
+    return {
+      score10,
+      score4: 3.8,
+      score: 'A',
+    };
+  }
+  if (score10 >= 7.8 && score10 <= 8.4) {
+    return {
+      score10,
+      score4: 3.5,
+      score: 'B+',
+    };
+  }
+  if (score10 >= 7.0 && score10 <= 7.7) {
+    return {
+      score10,
+      score4: 3.0,
+      score: 'B',
+    };
+  }
+  if (score10 >= 6.3 && score10 <= 6.9) {
+    return {
+      score10,
+      score4: 2.5,
+      score: 'C+',
+    };
+  }
+  if (score10 >= 5.5 && score10 <= 6.2) {
+    return {
+      score10,
+      score4: 2.0,
+      score: 'C',
+    };
+  }
+  if (score10 >= 4.8 && score10 <= 5.4) {
+    return {
+      score10,
+      score4: 1.5,
+      score: 'D+',
+    };
+  }
+  if (score10 >= 4.0 && score10 <= 4.7) {
+    return {
+      score10,
+      score4: 1.0,
+      score: 'D',
+    };
+  }
+  return {
+    score10,
+    score4: 0,
+    score: 'F',
+  };
 }

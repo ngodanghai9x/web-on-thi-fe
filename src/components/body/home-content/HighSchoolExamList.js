@@ -15,6 +15,7 @@ import { getInfo, subjects2, getObjSubject } from 'actions/common/getInfo';
 
 import '../styles/ExamList.scss';
 import { Link } from 'react-router-dom';
+import exam from 'reducers/exam';
 
 class HighSchoolExamList extends React.Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class HighSchoolExamList extends React.Component {
   renderExam = (exams) => {
     const { match, location } = this.props;
     const { subject } = match.params; // type, môn học
+    if (!exams || exams.length === 0) return <p className="no-data">Chưa có dữ liệu</p>;
     return exams.map((item, i) => {
       return (
         <div className='exam' style={i === exams.length -1 ? { border: 'none' } : {}}>
@@ -103,8 +105,8 @@ class HighSchoolExamList extends React.Component {
               {this.renderExam(highSchool.all)}
             </div>
             <div className='col-lg-4 col-md-12'>
-              <CompletedExam />
               <Ads />
+              <CompletedExam />
             </div>
           </div>
         </div>

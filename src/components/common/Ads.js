@@ -21,7 +21,7 @@ class Ads extends React.Component {
     return list.map((item, i) => {
       if (item && i < 4) {
         return (
-          <Link className='item d-block' to={`${path}/${getObjSubject(item.subject).en}/${item.id}`} key={`${item.id}-suggestion-exam`}>
+          <Link className='item d-block' to={`/${path}/${getObjSubject(item.subject).en}/ket-qua/${item.id}`} key={`${item.id}-suggestion-exam`}>
             {`> ${item.name}`}
           </Link>
         )
@@ -40,7 +40,6 @@ class Ads extends React.Component {
     } else {
       list = college.all;
       path = 'dai-hoc';
-
     }
     return (
       <React.Fragment>
@@ -57,6 +56,7 @@ class Ads extends React.Component {
             </h6>
               <div className='exam-suggestion'>
                 {this.renderExams(list, path)}
+                {/* {this.renderExams(list, '')} */}
               </div>
             </React.Fragment>
           ) : null}

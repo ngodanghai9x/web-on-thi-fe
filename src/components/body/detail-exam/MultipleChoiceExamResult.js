@@ -210,7 +210,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user: auth.user,
     accessToken: auth.accessToken,
-    result,
+    result: result || {},
     isDone: auth.isDone,
   };
 };

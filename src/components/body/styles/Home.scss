@@ -4,22 +4,33 @@
     justify-content: space-between;
     // padding: 0 15px;
     .img-btn-item {
-      background: aquamarine;
-      border: 2px solid transparent;
-      width: calc(50% - 20px);
+      // background: aquamarine;
+      border: 1px solid #fff;
+      // width: calc(50% - 20px);
+      width: 540px;
       padding: 15px;
       border-radius: 5px;
-      height: 180px;
+      height: 227px;
       cursor: pointer;
+      background-size: cover;
+      &.highSchool {
+        background-image: url('/images/highSchool.png');
+      }
+      &.college {
+        background-image: url('/images/college.png');
+      }
       &:hover {
-        border: 2px solid #0084FF;
+        // border: 2px solid #17a2b8;
+        box-shadow: 0 0 10px 1px #061a1d;
         .d-table-cell {
-          color: #0084FF;
+          // color: #0084FF;
+          color: transparent;
         }
       }
       .d-table-cell {
         vertical-align: bottom;
-        color: #FFF;
+        color: transparent;
+        // color: #FFF;
         font-size: 24px;
         font-weight: 500;
         text-transform: capitalize;
@@ -42,7 +53,6 @@
         .btn-link-sub {
           border-radius: 1px;
           margin: 1px;
-
           &.active {
             // background: aquamarine !important;
           }

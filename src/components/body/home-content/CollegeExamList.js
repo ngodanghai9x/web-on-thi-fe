@@ -31,6 +31,7 @@ class CollegeExamList extends React.Component {
   renderExam = (exams) => {
     const { match, location } = this.props;
     const { subject } = match.params; // type, môn học
+    if (!exams || exams.length === 0) return <p className="no-data">Chưa có dữ liệu</p>;
     return exams.map((item, i) => {
       return (
         <div className='exam' style={i === exams.length-1 ? { border: 'none' } : {}}>
@@ -77,7 +78,7 @@ class CollegeExamList extends React.Component {
         <div className='exam-list college'>
           <div className='path-button d-flex'>
             {subjects2.map((item, idx) => {
-              if (idx < 3) {
+              if (item) {
                 return (
                   <Link to={`/dai-hoc/${item.en}`} >
                     <button type="button"
@@ -103,8 +104,8 @@ class CollegeExamList extends React.Component {
               {this.renderExam(college.all)}
             </div>
             <div className='col-lg-4 col-md-12'>
-              <CompletedExam />
               <Ads />
+              <CompletedExam />
             </div>
           </div>
         </div>

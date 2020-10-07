@@ -40,19 +40,19 @@ class Home extends React.Component {
         {/* <Link  to='/admin' onClick={() => this.props.changeLayout(1)}>Admin</Link> */}
         <div className='home'>
           <div className='img-btn d-flex'>
-            <div className='img-btn-item d-table' onClick={() => history.push(`/lop-10`)}>
+            <div className='img-btn-item d-table highSchool' onClick={() => history.push(`/lop-10`)}>
               <div className='d-table-cell'>
                 Ôn thi
-                  <br />
-                  vào lớp 10
-                </div>
+                <br />
+                vào lớp 10
+              </div>
             </div>
-            <div className='img-btn-item d-table' onClick={() =>  history.push(`/dai-hoc`)}>
+            <div className='img-btn-item d-table college' onClick={() =>  history.push(`/dai-hoc`)}>
               <div className='d-table-cell'>
                 Luyện đề
-                  <br />
-                  THPT Quốc Gia
-                </div>
+                <br />
+                THPT Quốc Gia
+              </div>
             </div>
           </div>
 

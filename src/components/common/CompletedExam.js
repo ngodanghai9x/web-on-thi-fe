@@ -31,7 +31,7 @@ class CompletedExam extends React.Component {
     return list.map((item, i) => {
       if (item && i < 4) {
         return (
-          <Link className='item d-block' to={`${path}/subject/${item.id}`} key={`${item.id}-completed-exam`}>
+          <Link className='item d-block' to={`${path}/subject/ket-qua/${item.id}`} key={`${item.id}-completed-exam`}>
             {`> ${item.name}`}
           </Link>
         )

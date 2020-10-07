@@ -29,7 +29,7 @@ class Sidebar extends React.Component {
                 <span className="sr-only">Toggle Menu</span>
               </button>
             </div> */}
-            <div className="d-flex justify-content-center">
+            <div className="div-logo d-flex justify-content-center">
               <img src="/images/logo.png" alt="logo" />
             </div>
             <ul className="list-unstyled components mb-5">
