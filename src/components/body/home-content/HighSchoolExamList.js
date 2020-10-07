@@ -26,7 +26,7 @@ class HighSchoolExamList extends React.Component {
   componentDidMount() {
     const { match, location } = this.props;
     const { subject } = match.params; // type, môn học
-    this.props.getExamBySubject(subject, 'Đại học');
+    this.getExamBySubject(subject);
   }
 
   renderExam = (exams) => {
@@ -105,8 +105,8 @@ class HighSchoolExamList extends React.Component {
               {this.renderExam(highSchool.all)}
             </div>
             <div className='col-lg-4 col-md-12'>
-              <Ads />
               <CompletedExam />
+              <Ads />
             </div>
           </div>
         </div>
