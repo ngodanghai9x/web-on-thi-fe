@@ -9,7 +9,7 @@ import TittleUserInfo from 'components/body/user/TittleUserInfo';
 import UserContent from '../layout/UserContent';
 import { hideEmail, hidePhone } from 'actions/common/utils';
 import { changePassword, getOtpCode, callApiUser, } from 'actions/userActions';
-import { withRouter } from 'react-router';
+import { Redirect, withRouter } from 'react-router';
 
 class ChangePassword extends React.Component {
   constructor(props) {
@@ -100,8 +100,11 @@ class ChangePassword extends React.Component {
   }
 
   render() {
-    const { user, callUser } = this.props;
+    const { user, callUser, accessToken, isDone } = this.props;
     const { password, oldPassword, errorOldPassword, errorPassword, countDown } = this.state;
+
+    if (!accessToken && isDone) return <Redirect to='/' />;
+
     return (
       <React.Fragment>
         <UserContent>
@@ -173,11 +176,13 @@ class ChangePassword extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { user, account, callUser } } = state;
+  const { auth: { user, account, callUser, accessToken, isDone } } = state;
   return {
     user,
     account,
     callUser,
+    accessToken,
+    isDone,
   }
 };
 export default withRouter(connect(

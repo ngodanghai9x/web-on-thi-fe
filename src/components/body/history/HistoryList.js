@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { getListHistoryExam } from 'actions/examActions';
 import { logout, changeLayout, init } from 'actions/userActions';
@@ -81,9 +81,12 @@ class HistoryList extends React.Component {
   }
 
   getScreen = screen => {
-    const { pagination, historyExam } = this.props;
+    const { pagination, historyExam, accessToken, isDone } = this.props;
     const { examQuestions, doTime } = this.state;
     const activePage = pagination && pagination.currentPage || 1;
+
+    if (!accessToken && isDone) return <Redirect to='/' />;
+    
     if (screen === 'detail') {
       return (
         <MainContent>
@@ -91,6 +94,7 @@ class HistoryList extends React.Component {
         </MainContent>
       );
     }
+
     return (
       <UserContent>
         <TittleUserInfo
@@ -146,6 +150,7 @@ const mapStateToProps = (state, ownProps) => {
       layout,
       accessToken,
       account,
+      isDone,
       user: { name, avatar, examHistories },
     },
     exam: { historyExam, paginationHistory },
@@ -154,6 +159,7 @@ const mapStateToProps = (state, ownProps) => {
     name,
     role: account.role,
     avatar,
+    isDone,
     layout,
     accessToken,
     historyExam,
