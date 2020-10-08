@@ -73,7 +73,7 @@ class Header extends React.Component {
             alt="not found"
             onError={e => this.onError(e)}
           />
-          <div className='name d-flex align-items-center'>{arrName[arrName.length -1]}</div>
+          <div className='name d-flex align-items-center'>{arrName[arrName.length - 1]}</div>
         </div>
         <Link to='/thong-tin-ca-nhan'>
           <div className='dropdown-item'>
@@ -85,13 +85,13 @@ class Header extends React.Component {
             Lịch sử thi
         </div>
         </Link>
-        {/* {!role || !role.includes("ROLE_ADMIN") ? null : ( */}
-        <Link to='/admin' onClick={() => this.props.changeLayout(1)}>
-          <div className='dropdown-item'>
-            Trang quản lý
+        {!role || !role.includes("ROLE_ADMIN") ? null : (
+          <Link to='/admin' onClick={() => this.props.changeLayout(1)}>
+            <div className='dropdown-item'>
+              Trang quản lý
         </div>
-        </Link>
-        {/* )} */}
+          </Link>
+        )}
         <Link to='/doi-mat-khau'>
           <div className='dropdown-item'>
             Đổi mật khẩu
