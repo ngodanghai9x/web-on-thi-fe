@@ -121,7 +121,7 @@ class MultipleChoiceResult extends React.Component {
       totalQuestion,
       examQuestions,
     } = result;
-    if (!accessToken && isDone) return <Redirect to='/' />
+    // if (!accessToken && isDone) return <Redirect to='/' />
     if (match.params.subject === 'van') {
       if (location.pathname.includes('lop-10')) {
         return <Redirect to={`/lop-10/mon/van/${id}`} />
