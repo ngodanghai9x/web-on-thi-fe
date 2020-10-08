@@ -66,6 +66,7 @@ class RouterList extends React.Component {
         <Route exact path="/admin/create-exam" component={CreateExam} />
         <Route exact path="/admin/update-exam/:id" component={UpdateExam} />
 
+        <Redirect from="/*" to="/" />
       </Switch>
     )
   }
