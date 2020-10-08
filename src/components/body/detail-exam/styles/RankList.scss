@@ -1,27 +1,47 @@
 .RankList {
   margin-top: 50px;
   table {
-    .col-stt {
-      width: 55px;
-    }
-    .col-point {
-      width: 65px;
-    }
-    .col-name {
-      width: calc(100% - 120px);
+    tr {
+      width: 100%;
+      .col-stt,
+      .col-point,
+      .col-name {
+        padding-right: 0;
+        padding-left: 7px;
+      }
+      .col-stt {
+        width: 42px;
+      }
+      .col-point {
+        width: 55px;
+      }
+      .col-name {
+        width: calc(100% - 42px - 55px);
+        .wrapper-info {
+          .name {
+            width: calc(100% - 45px);
+            display: block;
+          }
+          img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 5px;
+          }
+        }
+      }
     }
     thead {
-
     }
     tbody {
       tr:nth-child(1) {
-        color: #ff6a00 ;
+        color: #ff6a00;
       }
       tr:nth-child(2) {
-        color: #d800ff ;
+        color: #d800ff;
       }
       tr:nth-child(3) {
-        color: #0400ff ;
+        color: #0400ff;
       }
     }
   }

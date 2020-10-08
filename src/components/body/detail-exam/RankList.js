@@ -26,7 +26,7 @@ class RankList extends React.Component {
 
   render() {
     const { accessToken, rankList } = this.props;
-    const rankList1 = [1,2,3,4,5];
+    const rankList1 = [1, 2, 3, 4, 5];
     // if (!accessToken) return <Redirect to='/' />
     return (
       <div className='RankList'>
@@ -39,11 +39,18 @@ class RankList extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {rankList.length === 0 && <tr><td colSpan="3" style={{ color: "#212529"}}>Chưa có dữ liệu</td></tr>}
+            {rankList.length === 0 && <tr><td colSpan="3" style={{ color: "#212529" }}>Chưa có dữ liệu</td></tr>}
             {rankList.map((item, i) => (
               <tr className="tr">
                 <td className="col-stt">{i + 1}</td>
-                <td className="col-name text-ellipsis">{item.fullName}</td>
+                <td className="col-name">
+                  <div className="wrapper-info d-flex align-items-center">
+                    <img src={`${item.avatarBase64 ? `data:image/png;base64,${item.avatarBase64}` : '/images/default-avatar.jpg'}`} alt='avt' />
+                    <span className="name text-ellipsis">
+                      {item.fullName}
+                    </span>
+                  </div>
+                </td>
                 <td className="col-point">
                   {parseFloat(item.numCorrectAns * 10 / item.totalQuestion).toFixed(2)}
                 </td>
