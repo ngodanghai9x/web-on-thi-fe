@@ -217,8 +217,8 @@ export const doExam = (id, time, examAnswer) => (dispatch, getState) => {
     .then(({ data, code, message }) => {
       if (data && code === 200) {
         // dispatch(getRankList(id));
-        dispatch(receiveResultExam(data.result));
         window.noti.success('Nộp bài thành công');
+        // setTimeout(() => dispatch(receiveResultExam(data.result)), 2500);
       }
       if (code === 400) {
         // dispatch(receiveResultExam({}));

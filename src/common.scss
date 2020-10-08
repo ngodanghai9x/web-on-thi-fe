@@ -9,7 +9,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   // height: 100vh;
 }
-
+* {
+  word-break: break-word;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
