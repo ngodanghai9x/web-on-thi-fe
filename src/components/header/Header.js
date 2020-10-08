@@ -62,7 +62,7 @@ class Header extends React.Component {
   }
 
   renderDropDown3 = () => {
-    const { role, avatar, name } = this.props;
+    const { role, avatar, name, isDone } = this.props;
     const arrName = name && name.split(' ') || [{}];
     return (
       <div className='avatar-dropdown dropdown'>
@@ -85,7 +85,7 @@ class Header extends React.Component {
             Lịch sử thi
         </div>
         </Link>
-        {!role || !role.includes("ROLE_ADMIN") ? null : (
+        {((!role || !role.includes("ROLE_ADMIN")) && isDone) ? null : (
           <Link to='/admin' onClick={() => this.props.changeLayout(1)}>
             <div className='dropdown-item'>
               Trang quản lý
@@ -164,18 +164,22 @@ class Header extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: {
-    user: { name, avatar },
-    layout,
-    accessToken,
-    account
-  } } = state;
+  const {
+    auth: {
+      user: { name, avatar },
+      layout,
+      accessToken,
+      account,
+      isDone,
+    }
+  } = state;
   return {
     name,
     role: account.role,
     avatar,
     layout,
     accessToken,
+    isDone,
   };
 };
 
