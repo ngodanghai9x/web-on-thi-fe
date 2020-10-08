@@ -82,8 +82,8 @@ class LeftProfile extends React.Component {
   }
 
   changePhone = (phone) => {
-    if (phone && phone.length > 15) {
-      this.setState({ errorPhone: 'Số điện thoại tối đa 15 kí tự'})
+    if (phone && phone.length > 10) {
+      this.setState({ errorPhone: 'Số điện thoại tối đa 10 kí tự'})
     } else {
       this.setState({ phone, errorPhone: '' });
     }
