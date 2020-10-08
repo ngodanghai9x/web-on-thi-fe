@@ -172,7 +172,7 @@ class MultipleChoiceResult extends React.Component {
                     <div className="label" >Số lần làm lại</div>
                   </div>
                   <div className="gwt-HTML" >
-                    {`${numRework || 0}/Không giới hạn`}
+                    {`${numRework || 0} / Không giới hạn`}
                   </div>
                 </div>
 
