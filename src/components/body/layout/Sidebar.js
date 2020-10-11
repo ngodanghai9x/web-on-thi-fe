@@ -40,7 +40,7 @@ class Sidebar extends React.Component {
               </li>
               <li className={`${pathname === '/admin' ? 'active' : ''}`} >
                 <Link  to='/admin' >
-                  <span className="fa fa-user mr-3"></span> Danh sách đề
+                  <span className="fa fa-table mr-3"></span> Danh sách đề
                 </Link>
               </li>
               <li className={`${pathname === '/admin/create-exam' ? 'active' : ''}`} >
@@ -50,12 +50,12 @@ class Sidebar extends React.Component {
               </li>
               <li className={``}  onClick={() => this.props.changeLayout(0)}>
                 <Link  to='/thong-tin-ca-nhan'>
-                  <span className="fa fa-sticky-note mr-3"></span> Tài khoản
+                  <span className="fa fa-user mr-3"></span> Tài khoản
                 </Link>
               </li>
               <li className={``} onClick={() => this.props.logout()}>
                 <Link  to='' >
-                  <span className="fa fa-paper-plane mr-3"></span> Đăng xuất
+                  <span className="fa fa-sign-out-alt mr-3"></span> Đăng xuất
                 </Link>
               </li>
             </ul>
