@@ -28,12 +28,12 @@ class Header extends React.Component {
 
   renderDropDown1 = () => {
     return subjects1.map(item => (
-      <Link to={`/lop-10/${item.en}`}>
-        <div className='dropdown-item' key={`/lop-10/${item.en}`}>
-          <a>
+      <Link to={`/lop-10/${item.en}`} key={`sub1-${item.en}`}>
+        <div className='dropdown-item'>
+          <span>
             {item.vn}
             <CommonIcon.chevronRight />
-          </a>
+          </span>
         </div>
       </Link>
     ));
@@ -41,12 +41,12 @@ class Header extends React.Component {
 
   renderDropDown2 = () => {
     return subjects2.map(item => (
-      <Link to={`/dai-hoc/${item.en}`}>
+      <Link to={`/dai-hoc/${item.en}`} key={item.en}>
         <div className='dropdown-item' key={`/dai-hoc/${item.en}`}>
-          <a>
+          <span>
             {item.vn}
             <CommonIcon.chevronRight />
-          </a>
+          </span>
         </div>
       </Link>
     ));

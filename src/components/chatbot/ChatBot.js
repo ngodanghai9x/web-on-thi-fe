@@ -83,7 +83,7 @@ class ChatBot extends React.Component {
     if (messages) {
       return messages.map((item, i) => {
         return (
-          <React.Fragment>
+          <React.Fragment key={`mes-${i}`}>
             <div className="">
               <span className={`name ${!item.isChatBot ? 'd-none' : ''}`}>Windy</span>
               <div id={`mes-${i}`} className={`message ${!item.isChatBot ? 'notchatbot' : ''}`}>

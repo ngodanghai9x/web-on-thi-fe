@@ -34,7 +34,7 @@ class CollegeExamList extends React.Component {
     if (!exams || exams.length === 0) return <p className="no-data">Chưa có dữ liệu</p>;
     return exams.map((item, i) => {
       return (
-        <div className='exam' style={i === exams.length - 1 ? { border: 'none' } : {}}>
+        <div className='exam' key={`CL-exam-${item.id}`} style={i === exams.length - 1 ? { border: 'none' } : {}}>
           <div className='name'>
             {item.name}
           </div>

@@ -60,7 +60,7 @@ class HighSchoolTable extends React.Component {
               {subjects2.map((item, idx) => {
                 if (idx < 3) {
                   return (
-                    <button type="button"
+                    <button type="button" key={`btn2-${idx}-${item.en}`}
                       className={`btn btn-info btn-link-sub ${activeHSSub === item.en ? 'active' : ''}`}
                       onClick={() => this.getExam(item.en)}
                     >

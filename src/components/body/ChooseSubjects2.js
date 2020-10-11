@@ -23,7 +23,7 @@ class ChooseSubjects2 extends React.Component {
     const { location } = this.props;
     const btnSub = subjects2.map((item, i) => {
       return (
-        <Link to={`/dai-hoc/${item.en}`}>
+        <Link to={`/dai-hoc/${item.en}`} key={`CS2-${item.en}`}>
           <div className='subject' onClick={() => this.changeSubject(item.en)}>
             {/* <img src={`${process.env.PUBLIC_URL}/images/${item.eng}.jpg`} alt='subject' /> */}
             <img src={`/images/${item.eng}.jpg`} alt='subject' />

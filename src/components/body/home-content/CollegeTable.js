@@ -59,7 +59,7 @@ class CollegeTable extends React.Component {
             <div className="btn-group" role="group" aria-label="Basic example">
               {subjects2.map((item, idx) => {
                 return (
-                  <button type="button"
+                  <button type="button" key={`btn-${idx}-${item.en}`}
                     className={`btn btn-info btn-link-sub ${activeCollegeSub === item.en ? 'active' : ''}`}
                     onClick={() => this.getExamBySubject(item.en)}
                   >

@@ -34,7 +34,7 @@ class MultipleChoiceExam extends React.Component {
       if (data && code === 200) {
         const { id, name, image, subject, grade, description, time, canDelete, examQuestions } = data.exam;
         // console.log("MultipleChoiceExamResult -> fetchDetailExam -> exam", data.exam)
-        this.setState({ examId: id, name, image, subject, grade, description, examTime: time, examTotalTime: time, canDelete, examQuestions });
+        this.setState({ examId: id, name, image, subject, grade, description, examTime: time * 60, examTotalTime: time * 60, canDelete, examQuestions });
       }
       if (code === 400) {
       }
@@ -54,6 +54,12 @@ class MultipleChoiceExam extends React.Component {
   componentWillReceiveProps() {
     if (false) {
       this.setState({ examId: 1, })
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.examTime === 1) {
+      this.submit();
     }
   }
 
@@ -114,7 +120,7 @@ class MultipleChoiceExam extends React.Component {
     const { examTime, examId, examTotalTime } = this.state;
     const { location, history, match } = this.props;
     const idx = location.pathname.lastIndexOf('/');
-    if (examTime === 0) return;
+    // if (examTime === 0) return;
     const examAnswer = Object.values(this.state).filter(item => item && item.questionId && item.answerOP && item.answer);
     // const examAnswer = arrVal.map(item => ({}));
     // console.log("MultipleChoiceExam -> submit -> examAnswer", examAnswer)
