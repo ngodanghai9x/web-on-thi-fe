@@ -224,7 +224,8 @@ class MultipleChoiceExam extends React.Component {
 
             <div className="col-3">
               <div className="multiple-choice">
-                <div className="result-timer" style={{ textAlign: 'center', margin: '8px auto' }}>
+                <div className="result-timer d-flex justify-content-center align-items-center" style={{ margin: '8px auto' }}>
+                  <img src='/images/hourglass.gif' alt='oclock' width='30' height='24' />
                   {getMinute(examTime)}
                 </div>
                 <div className="a123 d-flex">
