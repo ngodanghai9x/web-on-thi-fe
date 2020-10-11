@@ -45,7 +45,7 @@ class RankList extends React.Component {
                 <td className="col-stt">{i + 1}</td>
                 <td className="col-name">
                   <div className="wrapper-info d-flex align-items-center">
-                    {/* <img src={`${item.avatarBase64 ? `data:image/png;base64,${item.avatarBase64}` : '/images/default-avatar.jpg'}`} alt='avt' /> */}
+                    <img src={`${item.avatarBase64 ? `data:image/png;base64,${item.avatarBase64}` : '/images/default-avatar.jpg'}`} alt='avt' />
                     <span className="name text-ellipsis">
                       {item.fullName}
                     </span>
