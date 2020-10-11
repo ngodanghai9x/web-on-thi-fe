@@ -36,7 +36,7 @@ input[type="password"],
 input[type="email"],
 input[type="search"],
 input[type="number"],
-select {
+select, textarea {
   outline: none;
   border-radius: 5px;
   border: 2px solid transparent;

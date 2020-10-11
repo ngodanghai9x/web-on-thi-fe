@@ -37,7 +37,7 @@ export const login = (username, password) => (dispatch, getState) => {
         window.location.pathname = '/';
       }
       if (code === 400) {
-        window.noti.error('Tài khoản hoặc mật khẩu (mã OTP) không đúng');
+        window.noti.error('Tài khoản hoặc mật khẩu không đúng');
       }
     })
     .catch(err => {

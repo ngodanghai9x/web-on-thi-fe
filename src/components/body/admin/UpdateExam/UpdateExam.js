@@ -145,12 +145,11 @@ class UpdateExam extends React.Component {
               <div className="profile-row">
                 <div className="key">Mô tả đề</div>
                 <div className="value">
-                  <input
+                  <textarea
                     type="text" value={description || ''}
                     className={false ? 'error' : ''}
-                    placeholder="Nhập tên đề"
+                    placeholder="Nhập mô tả"
                     // title={errorName}
-                    required
                     // onBlur={e => this.onBlurName(e)}
                     onChange={(e) => this.onChangeMax255('description', e.target.value, 'a')}
                   />
@@ -197,7 +196,7 @@ class UpdateExam extends React.Component {
                   <input
                     type="number" value={time || ''}
                     className={errorTime ? 'error' : ''}
-                    placeholder="Nhập tên đề"
+                    placeholder="Nhập thời gian"
                     min="1" max="500"
                     title={errorTime}
                     required
@@ -223,7 +222,7 @@ class UpdateExam extends React.Component {
               </div> */}
               <div className="profile-row d-flex justify-content-center">
                 <Link to='/admin'>
-                  <button className="btn btn-outline-info" style={{ margin: '0 10px'}}>
+                  <button className="btn btn-outline-info" style={{ margin: '0 10px' }}>
                     Hủy
                   </button>
                 </Link>

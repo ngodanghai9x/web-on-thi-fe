@@ -144,12 +144,11 @@ class CreateExam extends React.Component {
               <div className="profile-row">
                 <div className="key">Mô tả đề</div>
                 <div className="value">
-                  <input
+                  <textarea
                     type="text" value={description || ''}
                     className={false ? 'error' : ''}
-                    placeholder="Nhập tên đề"
+                    placeholder="Nhập mô tả"
                     // title={errorName}
-                    required
                     // onBlur={e => this.onBlurName(e)}
                     onChange={(e) => this.onChangeMax255('description', e.target.value, 'a')}
                   />
@@ -196,7 +195,7 @@ class CreateExam extends React.Component {
                   <input
                     type="number" value={time || ''}
                     className={errorTime ? 'error' : ''}
-                    placeholder="Nhập tên đề"
+                    placeholder="Nhập thời gian"
                     title={errorTime}
                     required
                     // onBlur={e => this.onBlurName(e)}

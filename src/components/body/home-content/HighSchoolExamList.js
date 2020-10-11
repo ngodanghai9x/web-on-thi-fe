@@ -35,7 +35,7 @@ class HighSchoolExamList extends React.Component {
     if (!exams || exams.length === 0) return <p className="no-data">Chưa có dữ liệu</p>;
     return exams.map((item, i) => {
       return (
-        <div className='exam' style={i === exams.length -1 ? { border: 'none' } : {}}>
+        <div className='exam' style={i === exams.length - 1 ? { border: 'none' } : {}}>
           <div className='name'>
             {item.name}
           </div>
@@ -45,9 +45,11 @@ class HighSchoolExamList extends React.Component {
           <div className='time'>
             {`Thời gian làm đề: ${item.time} phút`}
           </div>
-          <div className='amount'>
-            {`Tổng số câu: ${item.numQuestion} câu`}
-          </div>
+          {subject === 'van' ? null : (
+            <div className='amount'>
+              {`Tổng số câu: ${item.numQuestion} câu`}
+            </div>
+          )}
           <div className='wrapper-button d-flex justify-content-end align-items-center'>
             <Link to={`/dai-hoc/${subject}/${item.id}`}>
               <button className='btn btn-info'>
@@ -81,7 +83,7 @@ class HighSchoolExamList extends React.Component {
             {subjects2.map((item, idx) => {
               if (idx < 3) {
                 return (
-                  <Link  to={`/lop-10/${item.en}`} >
+                  <Link to={`/lop-10/${item.en}`} >
                     <button type="button"
                       className={`btn btn-outline-info btn-link-sub ${activeHSSub === item.en ? 'active' : ''}`}
                       onClick={() => this.getExamBySubject(item.en)}

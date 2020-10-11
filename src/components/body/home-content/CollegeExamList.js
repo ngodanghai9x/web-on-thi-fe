@@ -34,7 +34,7 @@ class CollegeExamList extends React.Component {
     if (!exams || exams.length === 0) return <p className="no-data">Chưa có dữ liệu</p>;
     return exams.map((item, i) => {
       return (
-        <div className='exam' style={i === exams.length-1 ? { border: 'none' } : {}}>
+        <div className='exam' style={i === exams.length - 1 ? { border: 'none' } : {}}>
           <div className='name'>
             {item.name}
           </div>
@@ -44,9 +44,11 @@ class CollegeExamList extends React.Component {
           <div className='time'>
             {`Thời gian làm đề: ${item.time} phút`}
           </div>
-          <div className='amount'>
-            {`Tổng số câu: ${item.numQuestion} câu`}
-          </div>
+          {subject === 'van' ? null : (
+            <div className='amount'>
+              {`Tổng số câu: ${item.numQuestion} câu`}
+            </div>
+          )}
           <div className='wrapper-button d-flex justify-content-end align-items-center'>
             <Link to={`/dai-hoc/${subject}/${item.id}`}>
               <button className='btn btn-info'>
