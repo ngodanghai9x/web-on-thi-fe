@@ -1,5 +1,6 @@
 import callApi from "./common/callApi";
 import { actionTypes } from "../constants/actionTypes";
+import { getCookie, setCookie } from "./common/utils";
 
 
 export const getUserInfo = () => (dispatch, getState) => {
@@ -30,6 +31,7 @@ export const login = (username, password) => (dispatch, getState) => {
         //   role: obj.ROLE,
         // });
         localStorage.setItem('accessToken', accessToken);
+        setCookie('_accessToken', accessToken, 5);
         dispatch(init())
         window.noti.success('Đăng nhập thành công');
         window.location.pathname = '/';
@@ -45,6 +47,7 @@ export const login = (username, password) => (dispatch, getState) => {
 export const logout = () => (dispatch, getState) => {
   const accessToken = '';
   localStorage.removeItem('accessToken');
+  setCookie('_accessToken', '', 1);
   dispatch({
     type: actionTypes.RECEIVE_ACCESS_TOKEN,
     accessToken,
@@ -275,6 +278,8 @@ export const toggleSidebar = () => (dispatch, getState) => {
 
 export const init = () => dispatch => {
   const accessToken = localStorage.getItem('accessToken');
+  const accessToken1 = getCookie('_accessToken');
+  console.log("accessToken1", accessToken1);
   let obj = {};
   try {
     obj = JSON.parse(atob(accessToken.split('.')[1]));
@@ -286,7 +291,7 @@ export const init = () => dispatch => {
   dispatch({
     type: actionTypes.RECEIVE_ACCESS_TOKEN,
     accessToken,
-    role: obj.ROLE,
+    role: obj.ROLE || '',
     fullname: obj.fullname,
     isDone: true,
   });
