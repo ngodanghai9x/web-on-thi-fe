@@ -218,17 +218,20 @@ class QuestionList extends React.Component {
         <div className="admin-home">
           <div className="wrapper-search d-flex">
             <div className="w-75 d-flex">
+              <button className="btn btn-outline-info mr-2" onClick={() => this.toggleModal()}>
+                Thêm vào đề
+              </button>
               <button className="btn btn-outline-info mr-2" onClick={(e) => this.deleteExamList(e)}>
                 Xóa nhiều
               </button>
-              <input className="w-75" type="search" placeholder="Tìm kiếm"
+              <input style={{ width: 'calc(100% - 240px)'}} type="search" placeholder="Tìm kiếm"
                 value={inputSearch} onChange={(e) => this.setState({ inputSearch: e.target.value })}
                 onBlur={e => this.reload()}
               />
             </div>
             <div className="w-25 d-flex justify-content-end">
               {/* <Link to='/admin/create-question' > */}
-                <button className="btn btn-info" onClick={() => this.toggleModal()}>Thêm mới câu hỏi</button>
+                <button className="btn btn-info">Thêm mới câu hỏi</button>
               {/* </Link> */}
             </div>
           </div>

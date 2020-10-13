@@ -54,15 +54,15 @@ class MultipleChoiceExamResult extends React.Component {
               {opt.map(option => {
                 return (
                   <div className={`input-group-prepend 
-                    ${item.correctAnswer && item[option] === item.correctAnswer ? 'true' : ''}
-                    ${item.answerOP && item[option] === item.answerOP ? 'chosen' : ''}
-                    ${item.answer && item[option] === item.answer ? 'active' : ''}
+                  ${item.correctAnswer && item.correctAnswer.includes(item[option]) ? 'true' : ''}
+                  ${item.answer && item.answer.includes(item[option]) ? 'active' : ''}
                   `}
                   >
                     <div className="input-group-text">
-                      <input type="radio" name={item.id} className="input-items disable"
+                      <input type="radio" className="input-items disable"
+                      // name={item.id}
                         onChange={() => { }} readOnly
-                        checked={item.answer && item[option] === item.answer}
+                        checked={item.answer && item.answer.includes(item[option])}
 
                       />
                     </div>
@@ -93,13 +93,11 @@ class MultipleChoiceExamResult extends React.Component {
               opt.map(option => {
                 return (
                   <div className={`edf disable
-                    ${item.correctAnswer && item[option] === item.correctAnswer ? 'true' : ''}
-                    ${item.answer && item[option] === item.answer ? 'active' : ''}
-                    ${this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP ? 'active' : ''}
+                    ${item.correctAnswer && item.correctAnswer.includes(item[option]) ? 'true' : ''}
+                    ${item.answer && item.answer.includes(item[option]) ? 'active' : ''}
                     `}
-                  // onClick={() => this.choose(i, item.id, item[option], option)}
-                  // onClick={() => this.choose(i, item.id, option)}
-                  // ${this.state[`Q${i}`] && item[option] === this.state[`Q${i}`].answerOP ? 'active' : ''}
+                    // ${item.answer && item[option] === item.answer ? 'active' : ''}
+                    // ${this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP ? 'active' : ''}
                   >
                     {key[option]}
                   </div>
@@ -117,43 +115,6 @@ class MultipleChoiceExamResult extends React.Component {
     const { id, subject } = match.params;
     const backPath = location.pathname.replace('/chi-tiet', '');
     const { examQuestions } = result;
-    const examQuestions1 = [
-      {
-        "id": 1,
-        "image": "",
-        "question": "<p>Trong m?t ph?ng oxy cho ???ng th?ng <em>d: 2x - y + 1 = 0. </em>?? ph&eacute;p t?nh ti?n vector v bi?n ???ng th?ng d th&agrave;nh ch&iacute;nh n&oacute; th&igrave; vector v&nbsp;ph?i l&agrave; vecto n&agrave;o trong c&aacute;c vecto sau?</p>",
-        "option1": "<p><strong>(2; -1)</strong></p>",
-        "option2": "<p><strong>(3; -2)</strong></p>",
-        "option3": "<p><strong>(7; 4)</strong></p>",
-        "option4": "<p><strong>(1; -1)</strong></p>"
-      },
-      {
-        "id": 2,
-        "image": "",
-        "question": "<p>Trong m?t ph?ng oxy cho ???ng th?ng <em>d: 2x - y + 1 = 0. </em>?? ph&eacute;p t?nh ti?n vector v bi?n ???ng th?ng d th&agrave;nh ch&iacute;nh n&oacute; th&igrave; vector v&nbsp;ph?i l&agrave; vecto n&agrave;o trong c&aacute;c vecto sau?</p>",
-        "option1": "<p><strong>(2; -1)</strong></p>",
-        "option2": "<p><strong>(3; -2)</strong></p>",
-        "option3": "<p><strong>(2; -10)</strong></p>",
-        "option4": "<p><strong>(-2; -1)</strong></p>"
-      },
-      {
-        "id": 3,
-        "image": "",
-        "question": "<p>Trong m?t ph?ng oxy cho ???ng th?ng <em>d: 2x - y + 1 = 0. </em>?? ph&eacute;p t?nh ti?n vector v bi?n ???ng th?ng d th&agrave;nh ch&iacute;nh n&oacute; th&igrave; vector v&nbsp;ph?i l&agrave; vecto n&agrave;o trong c&aacute;c vecto sau?</p>",
-        "option1": "<p><strong>(2; -1)</strong></p>",
-        "option2": "<p><strong>(1; -1)</strong></p>",
-        "option3": "<p><strong>(7; -1)</strong></p>",
-        "option4": "<p><strong>(12; -1)</strong></p>"
-      },
-      {
-        "id": 4,
-        "image": "",
-        "question": "<p>Trong m?t ph?ng oxy cho ???ng th?ng <em>d: 2x - y + 1 = 0. </em>?? ph&eacute;p t?nh ti?n vector v bi?n ???ng th?ng d th&agrave;nh ch&iacute;nh n&oacute; th&igrave; vector v&nbsp;ph?i l&agrave; vecto n&agrave;o trong c&aacute;c vecto sau?</p>",
-        "option1": "<p><strong>(2; -1)</strong></p>",
-        "option2": "<p><strong>(4; -1)</strong></p>",
-        "option3": "<p><strong>(5; -1)</strong></p>",
-        "option4": "<p><strong>(8; -1)</strong></p>"
-      }]
     const { examTime } = this.state;
     const arrVal = Object.values(this.state);
     const numOption1 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option1');

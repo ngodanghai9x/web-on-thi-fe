@@ -26,9 +26,9 @@ class AdminContent extends React.Component {
           <Sidebar />
           <div className="wrapper-content">
             <div className="header-admin-layout">
-              {/* <div className="wrapper-icon btn-toggle" onClick={() => this.props.toggleSidebar()}>
+              <div className="wrapper-icon btn-toggle" onClick={() => this.props.toggleSidebar()}>
                 <i className="fa fa-bars"></i>
-              </div> */}
+              </div>
               {header}
             </div>
             <div className='wrapper-admin-layout' style={{ style }}>

@@ -33,7 +33,6 @@ class MultipleChoiceExam extends React.Component {
     this.props.getDetailExam(_id, false).then(({ data, code, message }) => {
       if (data && code === 200) {
         const { id, name, image, subject, grade, description, time, canDelete, examQuestions } = data.exam;
-        // console.log("MultipleChoiceExamResult -> fetchDetailExam -> exam", data.exam)
         this.setState({ examId: id, name, image, subject, grade, description, examTime: time * 60, examTotalTime: time * 60, canDelete, examQuestions });
       }
       if (code === 400) {
@@ -81,19 +80,22 @@ class MultipleChoiceExam extends React.Component {
             </div>
             <div className="group-checkbox">
               {opt.map(option => {
+                //  ${item.correctAnswer && item[option] === item.correctAnswer ? 'true' : ''}
+                //  ${item.answerOP && item[option] === item.answerOP ? 'chosen' : ''}
+                // ${this.state[`Q${i}`] && this.state[`Q${i}`].answerOP && this.state[`Q${i}`].answerOP.includes(option)  ? 'active' : ''}
                 return (
                   <div className={`input-group-prepend 
-                    ${item.correctAnswer && item[option] === item.correctAnswer ? 'true' : ''}
-                    ${item.answerOP && item[option] === item.answerOP ? 'chosen' : ''}
+                    ${item.correctAnswer && item.correctAnswer.includes(item[option]) ? 'true' : ''}
                   `}
+
                   >
                     <div className="input-group-text">
-                      <input type="radio" name={item.id} className="input-items"
+                      <input type="radio" className="input-items"
+                        // name={item.id}
                         onChange={() => { }} readOnly
                         onClick={() => this.choose(i, item.id, item[option], option)}
-                        checked={this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP}
-                      // onClick={() => this.setState({ [`Q${i}`]: { questionId: item.id, answerOP: item[option] } })}
-                      // checked={this.state[`Q${i}`] && item[option] === this.state[`Q${i}`].answerOP}
+                        checked={this.state[`Q${i}`] && this.state[`Q${i}`].answerOP && this.state[`Q${i}`].answerOP.includes(option)}
+                      // checked={this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP}
                       />
                     </div>
                     <div className="input-content">
@@ -109,10 +111,29 @@ class MultipleChoiceExam extends React.Component {
     })
   }
 
-  choose = (i, questionId, answer, answerOP) => {
-    this.setState({
-      [`Q${i}`]: { questionId, answer, answerOP }
-      // [`Q${i}`]: { questionId: item.id, answerOP: item[option] }
+  choose = (i, questionId, answer, answerOP, itemQ) => {
+    this.setState(state => {
+      const oldAnswerOP = state[`Q${i}`] && state[`Q${i}`].answerOP ? state[`Q${i}`].answerOP : [];
+      const oldAnswer = state[`Q${i}`] && state[`Q${i}`].answer ? state[`Q${i}`].answer : [];
+      if (oldAnswerOP.includes(answerOP)) {
+        return ({
+          [`Q${i}`]: {
+            // questionId,
+            answerOP: oldAnswerOP.filter(item => item !== answerOP),
+            answer: oldAnswer.filter(item => item !== answer),
+            ...itemQ,
+          }
+          // [`Q${i}`]: { questionId, answer, answerOP }
+        });
+      }
+      return ({
+        [`Q${i}`]: {
+          // questionId,
+          answerOP: [...oldAnswerOP, answerOP], answer: [...oldAnswer, answer], ...itemQ
+        }
+        // [`Q${i}`]: { questionId, answer, answerOP }
+      });
+
     })
   }
 
@@ -121,12 +142,36 @@ class MultipleChoiceExam extends React.Component {
     const { location, history, match } = this.props;
     const idx = location.pathname.lastIndexOf('/');
     // if (examTime === 0) return;
-    const examAnswer = Object.values(this.state).filter(item => item && item.questionId && item.answerOP && item.answer);
+    const examAnswer1 = Object.values(this.state).filter(item => item && item.id && item.answerOP && item.answer);
+    const listId = examAnswer1.map(item => item.id);
+    const examAnswer2 = this.state.examQuestions.filter(item => item && !listId.includes(item.id));
+    //   {
+    //   if (item && !listId.includes(item.id)) return { 
+    //     questionId: item.id,
+    //     answer: null,
+    //     answerOP: null,
+    //     ...item,
+    //   };
+    //   return null;
+    // }
+    const arrVal = Object.values(this.state).filter(item => item && item.id && item.answer && item.answerOP);
+    const numOption1 = arrVal.filter(item => item.answerOP.includes('option1'));
+    const numOption2 = arrVal.filter(item => item.answerOP.includes('option2'));
+    const numOption3 = arrVal.filter(item => item.answerOP.includes('option3'));
+    const numOption4 = arrVal.filter(item => item.answerOP.includes('option4'));
+    const listNum = [
+      numOption1 ? numOption1.length : 0,
+      numOption2 ? numOption2.length : 0,
+      numOption3 ? numOption3.length : 0,
+      numOption4 ? numOption4.length : 0,
+    ];
+    const examAnswer = [...examAnswer1, ...examAnswer2];
+    console.log("submit -> examAnswer", examAnswer, listNum)
     // const examAnswer = arrVal.map(item => ({}));
-    // console.log("MultipleChoiceExam -> submit -> examAnswer", examAnswer)
-    this.props.doExam(examId, examTotalTime - examTime, examAnswer);
-    clearInterval(this.timeInterval);
-    history.push(`${location.pathname.substr(0, idx)}/ket-qua/${match.params.id}`);
+
+    // this.props.doExam(examId, examTotalTime - examTime, examAnswer);
+    // clearInterval(this.timeInterval);
+    // history.push(`${location.pathname.substr(0, idx)}/ket-qua/${match.params.id}`);
 
   }
 
@@ -142,10 +187,10 @@ class MultipleChoiceExam extends React.Component {
               opt.map(option => {
                 return (
                   <div className={`edf 
-                    ${item.correctAnswer && item[option] === item.correctAnswer ? 'true' : ''}
-                    ${this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP ? 'active' : ''}
+                    ${item.correctAnswer && item.correctAnswer.includes(item[option]) ? 'true' : ''}
+                    ${this.state[`Q${i}`] && this.state[`Q${i}`].answerOP && this.state[`Q${i}`].answerOP.includes(option) ? 'active' : ''}
                     `}
-                    onClick={() => this.choose(i, item.id, item[option], option)}
+                    onClick={() => this.choose(i, item.id, item[option], option, item)}
                   // onClick={() => this.choose(i, item.id, option)}
                   // ${this.state[`Q${i}`] && item[option] === this.state[`Q${i}`].answerOP ? 'active' : ''}
                   >
@@ -164,49 +209,12 @@ class MultipleChoiceExam extends React.Component {
     const { accessToken, match, location, isDone } = this.props;
     const { id, subject } = match.params;
     const { examQuestions } = this.state;
-    const examQuestions1 = [
-      {
-        "id": 1,
-        "image": "",
-        "question": "<p>Trong m?t ph?ng oxy cho ???ng th?ng <em>d: 2x - y + 1 = 0. </em>?? ph&eacute;p t?nh ti?n vector v bi?n ???ng th?ng d th&agrave;nh ch&iacute;nh n&oacute; th&igrave; vector v&nbsp;ph?i l&agrave; vecto n&agrave;o trong c&aacute;c vecto sau?</p>",
-        "option1": "<p><strong>(2; -1)</strong></p>",
-        "option2": "<p><strong>(3; -2)</strong></p>",
-        "option3": "<p><strong>(7; 4)</strong></p>",
-        "option4": "<p><strong>(1; -1)</strong></p>"
-      },
-      {
-        "id": 2,
-        "image": "",
-        "question": "<p>Trong m?t ph?ng oxy cho ???ng th?ng <em>d: 2x - y + 1 = 0. </em>?? ph&eacute;p t?nh ti?n vector v bi?n ???ng th?ng d th&agrave;nh ch&iacute;nh n&oacute; th&igrave; vector v&nbsp;ph?i l&agrave; vecto n&agrave;o trong c&aacute;c vecto sau?</p>",
-        "option1": "<p><strong>(2; -1)</strong></p>",
-        "option2": "<p><strong>(3; -2)</strong></p>",
-        "option3": "<p><strong>(2; -10)</strong></p>",
-        "option4": "<p><strong>(-2; -1)</strong></p>"
-      },
-      {
-        "id": 3,
-        "image": "",
-        "question": "<p>Trong m?t ph?ng oxy cho ???ng th?ng <em>d: 2x - y + 1 = 0. </em>?? ph&eacute;p t?nh ti?n vector v bi?n ???ng th?ng d th&agrave;nh ch&iacute;nh n&oacute; th&igrave; vector v&nbsp;ph?i l&agrave; vecto n&agrave;o trong c&aacute;c vecto sau?</p>",
-        "option1": "<p><strong>(2; -1)</strong></p>",
-        "option2": "<p><strong>(1; -1)</strong></p>",
-        "option3": "<p><strong>(7; -1)</strong></p>",
-        "option4": "<p><strong>(12; -1)</strong></p>"
-      },
-      {
-        "id": 4,
-        "image": "",
-        "question": "<p>Trong m?t ph?ng oxy cho ???ng th?ng <em>d: 2x - y + 1 = 0. </em>?? ph&eacute;p t?nh ti?n vector v bi?n ???ng th?ng d th&agrave;nh ch&iacute;nh n&oacute; th&igrave; vector v&nbsp;ph?i l&agrave; vecto n&agrave;o trong c&aacute;c vecto sau?</p>",
-        "option1": "<p><strong>(2; -1)</strong></p>",
-        "option2": "<p><strong>(4; -1)</strong></p>",
-        "option3": "<p><strong>(5; -1)</strong></p>",
-        "option4": "<p><strong>(8; -1)</strong></p>"
-      }]
     const { examTime } = this.state;
-    const arrVal = Object.values(this.state);
-    const numOption1 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option1');
-    const numOption2 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option2');
-    const numOption3 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option3');
-    const numOption4 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option4');
+    const arrVal = Object.values(this.state).filter(item => item && item.id && item.answer && item.answerOP);
+    const numOption1 = arrVal.filter(item => item.answerOP.includes('option1'));
+    const numOption2 = arrVal.filter(item => item.answerOP.includes('option2'));
+    const numOption3 = arrVal.filter(item => item.answerOP.includes('option3'));
+    const numOption4 = arrVal.filter(item => item.answerOP.includes('option4'));
     if (!accessToken && isDone) return <Redirect to='/' />
     if (subject === 'van') {
       if (location.pathname.includes('lop-10')) {

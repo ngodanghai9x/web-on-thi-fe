@@ -49,8 +49,7 @@ export const logout = () => (dispatch, getState) => {
   localStorage.removeItem('accessToken');
   setCookie('_accessToken', '', 1);
   dispatch({
-    type: actionTypes.RECEIVE_ACCESS_TOKEN,
-    accessToken,
+    type: 'LOG_OUT',
   })
 };
 

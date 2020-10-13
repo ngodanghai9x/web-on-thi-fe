@@ -8,20 +8,57 @@
     .modal-body {
       .modal-bd-content {
         .exams-suggest {
-          min-height: 200px;
-          max-height: 200px;
-          height: 200px;
+          min-height: 190px;
+          max-height: 190px;
+          height: 190px;
           border-radius: 5px;
           border: 1px solid rgba(0, 0, 0, 0.14);
           padding: 2px 0;
           margin-top: 2px;
           .exam-item {
-            padding: 4px 8px;
-            background-color: burlywood;
+            padding: 7px 10px;
+            background-color: transparent;
             border-radius: 2px;
             margin-bottom: 2px;
+            border-bottom: 1px dashed #c4c4c4;
             &:hover {
               background-color: #c3e5fc;
+            }
+            .code {
+              margin-right: 10px;
+              font-weight: 500;
+              width: 75px;
+              text-transform: uppercase;
+            }
+            .name {
+              cursor: pointer;
+              width: calc(100% - 85px);
+            }
+          }
+
+          .current-exam {
+            border: #c4c4c4 1px solid;
+            background-color: #f6f5f5;
+            border-radius: 5px;
+            margin: 20px 10px;
+            padding: 12px 16px;
+            .profile-row {
+              display: flex;
+              flex-flow: row;
+              align-items: center;
+              .key {
+                width: 60px;
+                text-align: left;
+                margin-right: 10px;
+                color: rgba(48, 48, 48, 0.8);
+                text-transform: capitalize;
+                font-size: 14px;
+              }
+              .value {
+                width: calc(100% - 70px);
+                justify-content: start;
+                display: flex;
+              }
             }
           }
         }

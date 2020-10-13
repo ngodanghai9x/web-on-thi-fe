@@ -49,12 +49,12 @@ class Sidebar extends React.Component {
                 </Link>
               </li>
               <li className={`${pathname === '/admin/question-list' ? 'active' : ''}`} >
-                <Link  to='/admin' >
+                <Link  to='/admin/question-list' >
                   <span className="fa fa-table mr-3"></span> Danh sách câu hỏi
                 </Link>
               </li>
               <li className={`${pathname === '/admin/question-detail/0' ? 'active' : ''}`} >
-                <Link  to='/admin/create-exam' >
+                <Link  to='/admin/question-detail/0' >
                   <span className="fa fa-sticky-note mr-3"></span> Thêm mới câu hỏi
                 </Link>
               </li>

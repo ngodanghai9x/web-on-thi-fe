@@ -26,6 +26,16 @@ const initState = {
 
 const auth = (state = initState, action) => {
   switch (action.type) {
+    case 'LOG_OUT':
+      return {
+        ...state,
+        accessToken: null,
+        account: {
+          id: null,
+          role: [],
+          username: null,
+        },
+      }
     case actionTypes.RECEIVE_ACCESS_TOKEN:
       console.log("auth -> role", action.role)
       return {

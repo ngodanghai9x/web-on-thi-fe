@@ -92,7 +92,7 @@ export const createExam = (name, image, subject, grade, description, time, examQ
     body: {
       exam: {
         name,
-        image,
+        // image,
         subject: obj.en,
         grade: ob.en,
         description,

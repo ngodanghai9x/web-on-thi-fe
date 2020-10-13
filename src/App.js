@@ -49,7 +49,7 @@ function App(props) {
           <Header />
           {/* <MainContent /> */}
           <RouterList />
-          <ChatBot />
+          {/* <ChatBot /> */}
           <Footer />
         </Router>
       </Provider>
