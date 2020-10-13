@@ -27,6 +27,8 @@ import UpdateExam from 'components/body/admin/UpdateExam/UpdateExam';
 import MultipleChoiceExamResult from 'components/body/detail-exam/MultipleChoiceExamResult';
 import HistoryList from 'components/body/history/HistoryList';
 import HistoryDetail from 'components/body/history/HistoryDetail';
+import QuestionList from 'components/body/admin/question/QuestionList';
+import QuestionDetail from 'components/body/admin/question/QuestionDetail';
 
 
 class RouterList extends React.Component {
@@ -63,6 +65,8 @@ class RouterList extends React.Component {
         <Route exact path="/dai-hoc/mon/van/:id" component={EssayExam} />
 
         <Route exact path="/admin" component={AdminHome} />
+        <Route exact path="/admin/question-list" component={QuestionList} />
+        <Route exact path="/admin/question-detail/:id" component={QuestionDetail} />
         <Route exact path="/admin/create-exam" component={CreateExam} />
         <Route exact path="/admin/update-exam/:id" component={UpdateExam} />
 

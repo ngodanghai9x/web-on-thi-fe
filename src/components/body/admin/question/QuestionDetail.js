@@ -1,20 +1,21 @@
+/* eslint-disable no-loop-func */
 
 import React from 'react';
 import { connect } from 'react-redux';
 import CKEditor from 'ckeditor4-react';
 import * as CommonIcon from 'components/icons/common';
-import { createExam, callApiExam } from 'actions/examActions';
+import { updateExam, callApiExam } from 'actions/examActions';
 import { withRouter } from 'react-router';
 
 // import './styles/CreateExam.scss';
 const total = 100;
-class CreateQuestion extends React.Component {
+class QuestionDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       listQ: {
         Q0: {
-          question: '',
+          question: 'ab',
           option1: '',
           option2: '',
           option3: '',
@@ -22,7 +23,7 @@ class CreateQuestion extends React.Component {
           correctAnswer: 'option1',
         }
       },
-      pointer: 0,
+      pointer: -1,
     };
   }
 
@@ -31,8 +32,35 @@ class CreateQuestion extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.callingApi && this.props.callingApi === 'CreateQuestion') {
+    if (!nextProps.callingApi && this.props.callingApi === 'QuestionDetail') {
       nextProps.history.push('/admin');
+    }
+    //for update
+    const { listQuestion } = this.props;
+    if (nextProps.listQuestion && nextProps.listQuestion !== listQuestion) {
+      // { id, image, question, option1, suggestion, correctAnswer}
+      nextProps.listQuestion.forEach((item, i) => {
+        if (item.correctAnswer === item.option1) {
+          item.correctAnswer = 'option1';
+        }
+        if (item.correctAnswer === item.option2) {
+          item.correctAnswer = 'option2';
+        }
+        if (item.correctAnswer === item.option3) {
+          item.correctAnswer = 'option3';
+        }
+        if (item.correctAnswer === item.option4) {
+          item.correctAnswer = 'option4';
+        }
+        this.setState(state => ({
+          listQ: {
+            ...state.listQ,
+            [`Q${i}`]: { ...item },
+          },
+          pointer: 0,
+        }))
+      });
+      // this.setState({ pointer: 0})
     }
   }
 
@@ -75,8 +103,9 @@ class CreateQuestion extends React.Component {
     }
   }
 
-  back = (can) => {
-    console.log('can', can);
+  back = (can, can2) => {
+    console.log("back -> can", can, can2)
+    if (!can2) return;
     if (!can) return this.props.changeStep(1);
     this.setState(state => ({
       pointer: state.pointer - 1,
@@ -93,23 +122,21 @@ class CreateQuestion extends React.Component {
 
   save = (can) => {
     if (!can) return;
-    const { exam1, callingApi } = this.props;
-    const { name, image, subject, grade, description, time } = exam1;
+    const { name, image, subject, grade, description, time, id } = this.props.exam1;
     const { listQ } = this.state;
     const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`];
-    if ( !lastQ.question || !lastQ.option1 || !lastQ.option2
+    if (!lastQ.question || !lastQ.option1 || !lastQ.option2
       || !lastQ.question.trim() || !lastQ.option1.trim() || !lastQ.option2.trim()
     ) {
       return window.noti.error('Bạn chưa điền đủ thông tin cho câu hỏi cuối cùng');
     }
-    this.props.callApiExam('CreateQuestion');
+    this.props.callApiExam('UpdateQuestion');
     const listQuestion = Object.values(listQ).map(item => ({
       ...item,
-      type: 'one',
       correctAnswer: item[item.correctAnswer],
     }));
-    console.log("save -> listQuestion", listQuestion);
-    this.props.createExam(name, image, subject, grade, description, time, listQuestion);
+    console.log("save -> listQuestion", listQuestion)
+    this.props.updateExam(name, image, subject, grade, description, time, listQuestion, id);
   }
 
   add = (can) => {
@@ -136,6 +163,9 @@ class CreateQuestion extends React.Component {
 
   renderQuestion = () => {
     const { listQ, pointer } = this.state;
+    const data = listQ[`Q${pointer}`] ? listQ[`Q${pointer}`].question : '';
+    console.log("renderQuestion -> data", data)
+    // debugger;
     return (
       <div className="wrapper-question">
         <h6 className="title-left">
@@ -144,8 +174,9 @@ class CreateQuestion extends React.Component {
         <div className="question d-flex">
           <div className="left">
             <CKEditor
-              data={listQ[`Q${pointer}`].question || ''}
-              // data={''}
+              data={data}
+              // data={listQ[`Q${pointer}`] && listQ[`Q${pointer}`].question || ''}
+              // data={listQ[`Q${pointer}`] ? listQ[`Q${pointer}`].question : ''}
               onChange={e => this.onEditorChange(e)}
               config={{
                 height: 128,
@@ -153,6 +184,7 @@ class CreateQuestion extends React.Component {
                 resize_minHeight: 232,
               }}
             />
+            {/* <input value={data} type="text" /> */}
           </div>
           <div className="right  d-flex justify-content-between flex-column">
             {[1, 2, 3, 4].map(item => (
@@ -162,11 +194,12 @@ class CreateQuestion extends React.Component {
                 </div>
                 <input type="text"
                   className=""
-                  value={listQ[`Q${pointer}`][`option${item}`] || ''}
+                  value={listQ[`Q${pointer}`] && listQ[`Q${pointer}`][`option${item}`] || ''}
                   onChange={(e) => this.onChangeMax255(`option${item}`, e.target.value, `errorOption${item}`)}
                 />
                 <input type="radio" name="radio-btn-exam"
-                  checked={`option${item}` === listQ[`Q${pointer}`].correctAnswer}
+                  checked={listQ[`Q${pointer}`] && `option${item}` === listQ[`Q${pointer}`].correctAnswer
+                    || listQ[`Q${pointer}`] && listQ[`Q${pointer}`].correctAnswer === listQ[`Q${pointer}`][`option${item}`]}
                   onClick={() => this.setState(state => ({
                     listQ: {
                       ...state.listQ,
@@ -189,30 +222,29 @@ class CreateQuestion extends React.Component {
 
   render() {
     const { listQ, pointer } = this.state;
+    console.log("render -> pointer", pointer)
     const { isShow, callingApi } = this.props;
-    const canBack = callingApi !== 'CreateQuestion' && Object.keys(listQ).length > 1 && pointer > 0;
-    const canNext = callingApi !== 'CreateQuestion' && pointer < Object.keys(listQ).length - 1;
-    const canAdd = callingApi !== 'CreateQuestion' && Object.keys(listQ).length < total && pointer < total;
-    const canSave = callingApi !== 'CreateQuestion' && Object.keys(listQ).length >= 1;
-
+    const canBack = Object.keys(listQ).length > 1 && pointer > 0;
+    const canNext = callingApi !== 'UpdateQuestion' && pointer < Object.keys(listQ).length - 1;
+    const canAdd = callingApi !== 'UpdateQuestion' && Object.keys(listQ).length < total && pointer < total;
+    const canSave = callingApi !== 'UpdateQuestion' && Object.keys(listQ).length >= 1;
     if (!isShow) return null;
-
     return (
       <React.Fragment>
-        <div className={`CreateQuestion ${!isShow ? 'd-none' : ''}`}>
+        <div className={`UpdateQuestion ${!isShow ? 'd-none' : ''}`}>
           {this.renderQuestion()}
 
           <div className="wrapper-btn d-flex justify-content-between align-items-center">
-            <span className="a" onClick={() => this.back(canBack)}>
+            <span className={`a ${callingApi !== 'UpdateQuestion' ? '' : 'disable'}`} onClick={() => this.back(canBack, callingApi !== 'UpdateQuestion')}>
               {`<< Back`}
             </span>
-            <button className="btn btn-outline-info" onClick={() => this.save(canSave)}>
+            <button className={`btn btn-outline-info ${canSave ? '' : 'disable'}`} onClick={() => this.save(canSave)}>
               {`Lưu`}
             </button>
-            <button className="btn btn-info" onClick={() => this.add(canAdd)}>
+            <button className={`btn btn-info ${canAdd ? '' : 'disable'}`} onClick={() => this.add(canAdd)}>
               {`Thêm câu hỏi`}
             </button>
-            <span className="a" onClick={() => this.next(canNext)}>
+            <span className={`a ${canNext ? '' : 'disable'}`} onClick={() => this.next(canNext)}>
               {`Next >>`}
             </span>
           </div>
@@ -233,7 +265,7 @@ const mapStateToProps = (state, ownProps) => {
 export default withRouter(connect(
   mapStateToProps,
   {
-    createExam,
+    updateExam,
     callApiExam,
   }
-)(CreateQuestion));
+)(QuestionDetail));

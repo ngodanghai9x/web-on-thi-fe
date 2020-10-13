@@ -3,11 +3,8 @@ import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
 
 
-
-
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { hideEmail, hidePhone } from 'actions/common/utils';
-import DatePicker from "react-datepicker";
 import UserContent from '../layout/UserContent';
 import "react-datepicker/dist/react-datepicker.css";
 import './styles/UserInfo.scss';
