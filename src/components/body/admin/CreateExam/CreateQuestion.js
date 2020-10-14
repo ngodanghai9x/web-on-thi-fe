@@ -20,6 +20,8 @@ class CreateQuestion extends React.Component {
           option3: '',
           option4: '',
           correctAnswer: 'option1',
+          type: 'one',
+          mode: 'Dễ'
         }
       },
       pointer: 0,
@@ -27,7 +29,20 @@ class CreateQuestion extends React.Component {
   }
 
   componentDidMount() {
-
+    const { exam1 } = this.props;
+    if (exam1 && exam1.mode) {
+      this.setState(state => {
+        return ({
+          listQ: {
+            ...state.listQ,
+            Q0: {
+              ...state.lastQ.Q0,
+              mode: exam1.mode,
+            }
+          },
+        })
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -94,10 +109,10 @@ class CreateQuestion extends React.Component {
   save = (can) => {
     if (!can) return;
     const { exam1, callingApi } = this.props;
-    const { name, image, subject, grade, description, time } = exam1;
+    const { name, image, subject, grade, description, time, mode } = exam1;
     const { listQ } = this.state;
     const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`];
-    if ( !lastQ.question || !lastQ.option1 || !lastQ.option2
+    if (!lastQ.question || !lastQ.option1 || !lastQ.option2
       || !lastQ.question.trim() || !lastQ.option1.trim() || !lastQ.option2.trim()
     ) {
       return window.noti.error('Bạn chưa điền đủ thông tin cho câu hỏi cuối cùng');
@@ -105,8 +120,9 @@ class CreateQuestion extends React.Component {
     this.props.callApiExam('CreateQuestion');
     const listQuestion = Object.values(listQ).map(item => ({
       ...item,
-      type: 'one',
       correctAnswer: item[item.correctAnswer],
+      grade,
+      subject,
     }));
     console.log("save -> listQuestion", listQuestion);
     this.props.createExam(name, image, subject, grade, description, time, listQuestion);
@@ -114,6 +130,8 @@ class CreateQuestion extends React.Component {
 
   add = (can) => {
     if (!can) return;
+    const { exam1, callingApi } = this.props;
+    const { subject, grade, mode, } = exam1;
     const length = Object.keys(this.state.listQ).length;
     this.setState(state => {
       return ({
@@ -128,6 +146,10 @@ class CreateQuestion extends React.Component {
             option3: '',
             option4: '',
             correctAnswer: 'option1',
+            type: 'one',
+            // grade,
+            // subject,
+            // mode,
           }
         },
       })
@@ -139,7 +161,7 @@ class CreateQuestion extends React.Component {
     return (
       <div className="wrapper-question">
         <h6 className="title-left">
-          {`Câu ${pointer + 1}`}
+          {`Câu ${pointer + 1} : ${listQ[`Q${pointer}`].mode}`}
         </h6>
         <div className="question d-flex">
           <div className="left">

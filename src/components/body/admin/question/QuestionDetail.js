@@ -6,9 +6,15 @@ import CKEditor from 'ckeditor4-react';
 import * as CommonIcon from 'components/icons/common';
 import { updateExam, callApiExam } from 'actions/examActions';
 import { withRouter } from 'react-router';
-
-// import './styles/CreateExam.scss';
+import AdminContent from 'components/body/layout/AdminContent';
+import { getObjLevel, getObjSubject, subjects2 } from 'actions/common/getInfo';
+import {
+  changeHeader,
+} from 'actions/examActions';
+import './style.scss';
 const total = 100;
+const MODE = ['Dễ', 'Trung bình', 'Khó'];
+
 class QuestionDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -23,12 +29,18 @@ class QuestionDetail extends React.Component {
           correctAnswer: 'option1',
         }
       },
-      pointer: -1,
+      filter: {
+        mode: 'Dễ',
+        grade: 'Lớp 10',
+        subject: 'Toán',
+      },
     };
   }
 
   componentDidMount() {
-
+    const { match: { params: {id} } } = this.props;
+    const text = !id || Number(id) === 0 ? 'Thêm mới câu hỏi' : 'Chi tiết câu hỏi';
+    this.props.changeHeader(text);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -103,23 +115,6 @@ class QuestionDetail extends React.Component {
     }
   }
 
-  back = (can, can2) => {
-    console.log("back -> can", can, can2)
-    if (!can2) return;
-    if (!can) return this.props.changeStep(1);
-    this.setState(state => ({
-      pointer: state.pointer - 1,
-    }));
-  }
-
-  next = (can) => {
-    console.log('can', can);
-    if (!can) return;
-    this.setState(state => ({
-      pointer: state.pointer + 1,
-    }));
-  }
-
   save = (can) => {
     if (!can) return;
     const { name, image, subject, grade, description, time, id } = this.props.exam1;
@@ -130,53 +125,48 @@ class QuestionDetail extends React.Component {
     ) {
       return window.noti.error('Bạn chưa điền đủ thông tin cho câu hỏi cuối cùng');
     }
-    this.props.callApiExam('UpdateQuestion');
+    this.props.callApiExam('QuestionDetail');
     const listQuestion = Object.values(listQ).map(item => ({
       ...item,
+      type: 'one',
       correctAnswer: item[item.correctAnswer],
     }));
     console.log("save -> listQuestion", listQuestion)
     this.props.updateExam(name, image, subject, grade, description, time, listQuestion, id);
   }
 
-  add = (can) => {
-    if (!can) return;
-    const length = Object.keys(this.state.listQ).length;
-    this.setState(state => {
-      return ({
-        pointer: length,
-        listQ: {
-          ...state.listQ,
-          [`Q${length}`]: {
-            // number: length,
-            question: '',
-            option1: '',
-            option2: '',
-            option3: '',
-            option4: '',
-            correctAnswer: 'option1',
-          }
-        },
-      })
-    });
+  onChangeFilter = (key, val, error) => {
+    if (key === 'grade') {
+      return this.setState(state => ({
+        filter: {
+          ...state.filter,
+          grade: val,
+          subject: 'Toán Học',
+        }
+      }))
+    }
+    this.setState(state => ({
+      filter: {
+        ...state.filter,
+        [key]: val,
+      }
+    }))
   }
 
   renderQuestion = () => {
-    const { listQ, pointer } = this.state;
+    const { listQ, pointer, filter } = this.state;
     const data = listQ[`Q${pointer}`] ? listQ[`Q${pointer}`].question : '';
     console.log("renderQuestion -> data", data)
     // debugger;
     return (
-      <div className="wrapper-question">
+      <div className="wrapper-question QuestionDetail">
         <h6 className="title-left">
-          {`Câu ${pointer + 1}`}
+          {`Câu hỏi`}
         </h6>
         <div className="question d-flex">
           <div className="left">
             <CKEditor
               data={data}
-              // data={listQ[`Q${pointer}`] && listQ[`Q${pointer}`].question || ''}
-              // data={listQ[`Q${pointer}`] ? listQ[`Q${pointer}`].question : ''}
               onChange={e => this.onEditorChange(e)}
               config={{
                 height: 128,
@@ -184,9 +174,8 @@ class QuestionDetail extends React.Component {
                 resize_minHeight: 232,
               }}
             />
-            {/* <input value={data} type="text" /> */}
           </div>
-          <div className="right  d-flex justify-content-between flex-column">
+          <div className="right  d-flex flex-column">
             {[1, 2, 3, 4].map(item => (
               <div className="row-option d-flex justify-content-between align-items-center">
                 <div className="text">
@@ -214,6 +203,41 @@ class QuestionDetail extends React.Component {
                 />
               </div>
             ))}
+            <div className="row-option d-flex justify-content-between align-items-center">
+              <div className="text">
+                  Loại câu hỏi
+              </div>
+              <div className="question-type d-flex align-items-center justify-content-between">
+                <select defaultValue={filter.grade} onChange={(e) => this.onChangeFilter('grade', e.target.value, 'errorName')}>
+                  <option value="Lớp 10">Lớp 10</option>
+                  <option value="Đại học">Đại học</option>
+                </select>
+
+                <select value={filter.subject} onChange={(e) => this.onChangeFilter('subject', e.target.value, 'errorName')}>
+                  {subjects2.map((item, i) => {
+                    if (filter.grade === 'Lớp 10') {
+                      if (i < 3) {
+                        return (
+                          <option value={item.vn}>{item.vn}</option>
+                        );
+                      }
+                      return null;
+                    } else {
+                      return (
+                        <option value={item.vn}>{item.vn}</option>
+                      );
+                    }
+                  }
+                  )}
+                </select>
+
+                <select defaultValue={filter.mode} onChange={(e) => this.onChangeFilter('mode', e.target.value, 'errorName')}>
+                  {MODE.map(item => ((
+                    <option value={item}>{item}</option>
+                  )))}
+                </select>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -224,32 +248,23 @@ class QuestionDetail extends React.Component {
     const { listQ, pointer } = this.state;
     console.log("render -> pointer", pointer)
     const { isShow, callingApi } = this.props;
-    const canBack = Object.keys(listQ).length > 1 && pointer > 0;
-    const canNext = callingApi !== 'UpdateQuestion' && pointer < Object.keys(listQ).length - 1;
-    const canAdd = callingApi !== 'UpdateQuestion' && Object.keys(listQ).length < total && pointer < total;
-    const canSave = callingApi !== 'UpdateQuestion' && Object.keys(listQ).length >= 1;
-    if (!isShow) return null;
+    const canSave = callingApi !== 'QuestionDetail' && Object.keys(listQ).length >= 1;
+    // if ((!role || !role.includes("ROLE_ADMIN")) && isDone) return <Redirect to='/' />
     return (
-      <React.Fragment>
-        <div className={`UpdateQuestion ${!isShow ? 'd-none' : ''}`}>
-          {this.renderQuestion()}
+      <AdminContent>
+        <div className="QuestionDetail">
 
-          <div className="wrapper-btn d-flex justify-content-between align-items-center">
-            <span className={`a ${callingApi !== 'UpdateQuestion' ? '' : 'disable'}`} onClick={() => this.back(canBack, callingApi !== 'UpdateQuestion')}>
-              {`<< Back`}
-            </span>
-            <button className={`btn btn-outline-info ${canSave ? '' : 'disable'}`} onClick={() => this.save(canSave)}>
-              {`Lưu`}
-            </button>
-            <button className={`btn btn-info ${canAdd ? '' : 'disable'}`} onClick={() => this.add(canAdd)}>
-              {`Thêm câu hỏi`}
-            </button>
-            <span className={`a ${canNext ? '' : 'disable'}`} onClick={() => this.next(canNext)}>
-              {`Next >>`}
-            </span>
+          <div >
+            {this.renderQuestion()}
+
+            <div className="wrapper-btn d-flex justify-content-between align-items-center">
+              <button className={`btn btn-outline-info ${canSave ? '' : 'disable'}`} onClick={() => this.save(canSave)}>
+                {`Lưu`}
+              </button>
+            </div>
           </div>
         </div>
-      </React.Fragment>
+      </AdminContent>
     );
   }
 }
@@ -265,7 +280,6 @@ const mapStateToProps = (state, ownProps) => {
 export default withRouter(connect(
   mapStateToProps,
   {
-    updateExam,
-    callApiExam,
+    changeHeader,
   }
 )(QuestionDetail));

@@ -238,8 +238,6 @@ class UpdateExam extends React.Component {
           <CreateEssayExam isShow={step === 3} changeStep={this.changeStep} exam1={exam} question0={question0} />
         </div>
       </AdminContent>
-
-
     );
   }
 }
