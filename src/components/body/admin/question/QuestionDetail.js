@@ -12,6 +12,7 @@ import {
   changeHeader,
 } from 'actions/examActions';
 import './style.scss';
+import { Link } from 'react-router-dom';
 const total = 100;
 const MODE = ['Dễ', 'Trung bình', 'Khó'];
 
@@ -176,9 +177,9 @@ class QuestionDetail extends React.Component {
               data={currentQuestion.question || ''}
               onChange={e => this.onEditorChange(e)}
               config={{
-                height: 128,
-                resize_maxHeight: 374,
-                resize_minHeight: 232,
+                height: 136,
+                resize_maxHeight: 382,
+                resize_minHeight: 240,
               }}
             />
           </div>
@@ -256,9 +257,14 @@ class QuestionDetail extends React.Component {
           <div >
             {this.renderQuestion()}
 
-            <div className="wrapper-btn d-flex justify-content-between align-items-center">
-              <button className={`btn btn-outline-info ${canSave ? '' : 'disable'}`} onClick={() => this.save(canSave)}>
-                {`Lưu`}
+            <div className="wrapper-btn d-flex justify-content-center align-items-center">
+              <button className={`btn btn-outline-info`}>
+                <Link to="/admin/question-list">
+                  Hủy
+                </Link>
+              </button>
+              <button className={`btn btn-info ${canSave ? '' : 'disable'}`} onClick={() => this.save(canSave)}>
+                {`Lưu câu hỏi`}
               </button>
             </div>
           </div>

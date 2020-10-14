@@ -189,7 +189,7 @@
   .wrapper-question {
     border-radius: 6px;
     background: azure;
-    padding: 15px 20px 25px 20px;
+    padding: 15px 20px 15px 20px;
     margin-bottom: 15px;
     .question {
       .left {
@@ -224,6 +224,11 @@
 
   .wrapper-btn {
     margin: 15px auto;
-    width: 360px;
+    button {
+      margin: 0 8px;
+      a {
+        color: inherit;
+      }
+    }
   }
 }

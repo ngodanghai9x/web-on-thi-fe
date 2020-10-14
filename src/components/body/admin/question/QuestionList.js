@@ -265,7 +265,7 @@ class QuestionList extends React.Component {
           <div className="ql-left-body">
             <div className="wrapper-btn">
               <button className="btn btn-info">
-                <Link to='/admin/create-question' >
+                <Link to='/admin/question-detail/0' >
                   Thêm câu hỏi
                 </Link>
               </button>
