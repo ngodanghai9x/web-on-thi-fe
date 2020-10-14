@@ -113,7 +113,7 @@ class ForgotPassword extends React.Component {
           </p>
         <div className="form-FP">
           <div className="input-row d-flex">
-            <input type="radio" name="form-FP" checked={selected === 0} readOnly />
+            <input type="radio" name="form-FP" checked={selected === 0}  onClick={e => this.onClick(0)} onChange={() => {}}/>
             <input
               type="text" value={username || ''}
               // className={errorUsername && errorPhone ? 'error' : ''}
@@ -125,7 +125,7 @@ class ForgotPassword extends React.Component {
             />
           </div>
           <div className="input-row d-flex">
-            <input type="radio" name="form-FP" checked={selected === 1} readOnly />
+            <input type="radio" name="form-FP" checked={selected === 1} onClick={e => this.onClick(1)} onChange={() => {}}/>
             <input
               type="text" value={email || ''}
               // className={errorPhone && errorUsername ? 'error' : ''}

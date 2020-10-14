@@ -19,15 +19,13 @@ class QuestionDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listQ: {
-        Q0: {
-          question: 'ab',
-          option1: '',
-          option2: '',
-          option3: '',
-          option4: '',
-          correctAnswer: 'option1',
-        }
+      currentQuestion: {
+        question: '',
+        option1: '',
+        option2: '',
+        option3: '',
+        option4: '',
+        correctAnswer: ['option1'],
       },
       filter: {
         mode: 'Dễ',
@@ -38,101 +36,92 @@ class QuestionDetail extends React.Component {
   }
 
   componentDidMount() {
-    const { match: { params: {id} } } = this.props;
+    const { match: { params: { id } } } = this.props;
     const text = !id || Number(id) === 0 ? 'Thêm mới câu hỏi' : 'Chi tiết câu hỏi';
     this.props.changeHeader(text);
   }
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.callingApi && this.props.callingApi === 'QuestionDetail') {
-      nextProps.history.push('/admin');
+      nextProps.history.push('/admin/question-list');
     }
     //for update
-    const { listQuestion } = this.props;
-    if (nextProps.listQuestion && nextProps.listQuestion !== listQuestion) {
-      // { id, image, question, option1, suggestion, correctAnswer}
-      nextProps.listQuestion.forEach((item, i) => {
-        if (item.correctAnswer === item.option1) {
-          item.correctAnswer = 'option1';
-        }
-        if (item.correctAnswer === item.option2) {
-          item.correctAnswer = 'option2';
-        }
-        if (item.correctAnswer === item.option3) {
-          item.correctAnswer = 'option3';
-        }
-        if (item.correctAnswer === item.option4) {
-          item.correctAnswer = 'option4';
-        }
-        this.setState(state => ({
-          listQ: {
-            ...state.listQ,
-            [`Q${i}`]: { ...item },
-          },
-          pointer: 0,
-        }))
-      });
-      // this.setState({ pointer: 0})
+    const { question } = this.props;
+    if (nextProps.question !== question) {
+      const {
+        id, question, option1, option2, option3, option4, correctAnswer,
+        mode, grade, subject,
+      } = nextProps.question;
+      const correctAnswerOP = [];
+      if (correctAnswer.includes(option1)) {
+        correctAnswer.push('option1');
+      }
+      if (correctAnswer.includes(option2)) {
+        correctAnswer.push('option2');
+      }
+      if (correctAnswer.includes(option3)) {
+        correctAnswer.push('option3');
+      }
+      if (correctAnswer.includes(option4)) {
+        correctAnswer.push('option4');
+      }
+      this.setState(state => ({
+        currentQuestion: {
+          id,
+          question,
+          option1,
+          option2,
+          option3,
+          option4,
+          correctAnswer: correctAnswerOP,
+        },
+        filter: {
+          mode, grade, subject,
+        },
+      }))
     }
   }
 
   onEditorChange = (evt) => {
     this.setState(state => ({
-      listQ: {
-        ...state.listQ,
-        [`Q${state.pointer}`]: {
-          ...state.listQ[`Q${state.pointer}`],
-          question: evt.editor.getData(),
-        }
-      }
+      currentQuestion: {
+        ...state.currentQuestion,
+        question: evt.editor.getData(),
+      },
     }));
   }
 
   onChangeMax255 = (key, val, error) => {
     if (val && val.length >= 255) {
       this.setState(state => ({
-        listQ: {
-          ...state.listQ,
-          [`Q${state.pointer}`]: {
-            ...state.listQ[`Q${state.pointer}`],
-            [error]: 'Độ dài tối đa là 255 kí tự',
-          }
-        }
-
+        currentQuestion: {
+          ...state.currentQuestion,
+          // [error]: 'Độ dài tối đa là 255 kí tự',
+        },
       }));
       return window.noti.error('Bạn nhập quá 255 kí tự');
     }
     else {
       this.setState(state => ({
-        listQ: {
-          ...state.listQ,
-          [`Q${state.pointer}`]: {
-            ...state.listQ[`Q${state.pointer}`],
-            [key]: val,
-          }
-        }
+        currentQuestion: {
+          ...state.currentQuestion,
+          [key]: val,
+          // [error]: '',
+        },
       }));
     }
   }
 
   save = (can) => {
     if (!can) return;
-    const { name, image, subject, grade, description, time, id } = this.props.exam1;
-    const { listQ } = this.state;
-    const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`];
-    if (!lastQ.question || !lastQ.option1 || !lastQ.option2
-      || !lastQ.question.trim() || !lastQ.option1.trim() || !lastQ.option2.trim()
-    ) {
-      return window.noti.error('Bạn chưa điền đủ thông tin cho câu hỏi cuối cùng');
+    const { currentQuestion, filter } = this.state;
+    const correctAnswer = currentQuestion.correctAnswer.map(item => currentQuestion[item]);
+    const questionDTO = {
+      ...currentQuestion,
+      ...filter,
+      correctAnswer,
     }
-    this.props.callApiExam('QuestionDetail');
-    const listQuestion = Object.values(listQ).map(item => ({
-      ...item,
-      type: 'one',
-      correctAnswer: item[item.correctAnswer],
-    }));
-    console.log("save -> listQuestion", listQuestion)
-    this.props.updateExam(name, image, subject, grade, description, time, listQuestion, id);
+    console.log("save -> questionDTO", questionDTO)
   }
 
   onChangeFilter = (key, val, error) => {
@@ -153,11 +142,29 @@ class QuestionDetail extends React.Component {
     }))
   }
 
+  choose = (correctAnswer) => {
+    this.setState(state => {
+      const oldCorrectAnswer = state.currentQuestion && state.currentQuestion.correctAnswer ? state.currentQuestion.correctAnswer : [];
+      if (oldCorrectAnswer.includes(correctAnswer)) {
+        return ({
+          currentQuestion: {
+            ...state.currentQuestion,
+            correctAnswer: oldCorrectAnswer.filter(item => item !== correctAnswer),
+          }
+        });
+      }
+      return ({
+        currentQuestion: {
+          ...state.currentQuestion,
+          correctAnswer: [...oldCorrectAnswer, correctAnswer],
+        }
+      });
+    });
+  }
+
   renderQuestion = () => {
-    const { listQ, pointer, filter } = this.state;
-    const data = listQ[`Q${pointer}`] ? listQ[`Q${pointer}`].question : '';
-    console.log("renderQuestion -> data", data)
-    // debugger;
+    const { pointer, filter } = this.state;
+    const currentQuestion = this.state.currentQuestion || {};
     return (
       <div className="wrapper-question QuestionDetail">
         <h6 className="title-left">
@@ -166,7 +173,7 @@ class QuestionDetail extends React.Component {
         <div className="question d-flex">
           <div className="left">
             <CKEditor
-              data={data}
+              data={currentQuestion.question || ''}
               onChange={e => this.onEditorChange(e)}
               config={{
                 height: 128,
@@ -183,21 +190,14 @@ class QuestionDetail extends React.Component {
                 </div>
                 <input type="text"
                   className=""
-                  value={listQ[`Q${pointer}`] && listQ[`Q${pointer}`][`option${item}`] || ''}
+                  value={currentQuestion[`option${item}`] || ''}
                   onChange={(e) => this.onChangeMax255(`option${item}`, e.target.value, `errorOption${item}`)}
                 />
-                <input type="radio" name="radio-btn-exam"
-                  checked={listQ[`Q${pointer}`] && `option${item}` === listQ[`Q${pointer}`].correctAnswer
-                    || listQ[`Q${pointer}`] && listQ[`Q${pointer}`].correctAnswer === listQ[`Q${pointer}`][`option${item}`]}
-                  onClick={() => this.setState(state => ({
-                    listQ: {
-                      ...state.listQ,
-                      [`Q${state.pointer}`]: {
-                        ...state.listQ[`Q${state.pointer}`],
-                        correctAnswer: `option${item}`,
-                      }
-                    },
-                  }))}
+                <input type="checkbox"
+                  // name="radio-btn-exam"
+                  checked={currentQuestion.correctAnswer.includes(`option${item}`)
+                    || currentQuestion.correctAnswer.includes(currentQuestion[`option${item}`])}
+                  onClick={() => this.choose(`option${item}`)}
                   title="Đánh dấu đáp án đúng"
                   onChange={() => { }}
                 />
@@ -205,7 +205,7 @@ class QuestionDetail extends React.Component {
             ))}
             <div className="row-option d-flex justify-content-between align-items-center">
               <div className="text">
-                  Loại câu hỏi
+                Loại câu hỏi
               </div>
               <div className="question-type d-flex align-items-center justify-content-between">
                 <select defaultValue={filter.grade} onChange={(e) => this.onChangeFilter('grade', e.target.value, 'errorName')}>
@@ -246,9 +246,8 @@ class QuestionDetail extends React.Component {
 
   render() {
     const { listQ, pointer } = this.state;
-    console.log("render -> pointer", pointer)
     const { isShow, callingApi } = this.props;
-    const canSave = callingApi !== 'QuestionDetail' && Object.keys(listQ).length >= 1;
+    const canSave = true;
     // if ((!role || !role.includes("ROLE_ADMIN")) && isDone) return <Redirect to='/' />
     return (
       <AdminContent>

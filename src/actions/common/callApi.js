@@ -40,10 +40,10 @@ const callApi = function callApi(pathUrl, options) {
         };
       },
       (error) => {
-        if (options.method && options.url && (options.method.toUpperCase() !== 'GET' && !String(options.url).includes('get'))) {
-          console.log(options.url, "callApi -> error=", error);
-          window.noti.error('Có lỗi xảy ra, vui lòng thao tác lại');
-        }
+        console.log(options.url, "callApi -> error=", error);
+        // if (options.method && options.url && (options.method.toUpperCase() !== 'GET' && !String(options.url).includes('get'))) {
+        //   window.noti.error('Có lỗi xảy ra, vui lòng thao tác lại');
+        // }
         return error;
       },
     )

@@ -281,10 +281,15 @@ class QuestionList extends React.Component {
           <div className="ql-right-body">
             <div className="wrapper-search-filter">
               <div className="filter d-flex align-items-center">
+                <input style={{ width: 'calc(100% - 500px)' }} type="search" placeholder="Tìm kiếm"
+                  value={inputSearch} onChange={(e) => this.setState({ inputSearch: e.target.value })}
+                  onBlur={e => this.reload()}
+                />
+
                 <select defaultValue={filter.grade} onChange={(e) => this.onChangeFilter('grade', e.target.value, 'errorName')}>
                   <option value="Lớp 10">Lớp 10</option>
                   <option value="Đại học">Đại học</option>
-                </select> 
+                </select>
 
                 <select value={filter.subject} onChange={(e) => this.onChangeFilter('subject', e.target.value, 'errorName')}>
                   {subjects2.map((item, i) => {
@@ -315,12 +320,12 @@ class QuestionList extends React.Component {
                 </button>
               </div>
 
-              <div className="search">
+              {/* <div className="search">
                 <input style={{ width: 'calc(100% - 240px)' }} type="search" placeholder="Tìm kiếm"
                   value={inputSearch} onChange={(e) => this.setState({ inputSearch: e.target.value })}
                   onBlur={e => this.reload()}
                 />
-              </div>
+              </div> */}
 
             </div>
 
@@ -371,7 +376,7 @@ class QuestionList extends React.Component {
 
 
         </div>
-        <AddIntoExamModal isOpenModal={isOpenModal} toggleModal={this.toggleModal} />
+        <AddIntoExamModal isOpenModal={isOpenModal} toggleModal={this.toggleModal} filterQuestion={filter} />
       </AdminContent>
 
 

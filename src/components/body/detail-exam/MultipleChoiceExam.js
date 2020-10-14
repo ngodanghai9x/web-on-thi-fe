@@ -133,8 +133,7 @@ class MultipleChoiceExam extends React.Component {
         }
         // [`Q${i}`]: { questionId, answer, answerOP }
       });
-
-    })
+    });
   }
 
   submit = () => {
