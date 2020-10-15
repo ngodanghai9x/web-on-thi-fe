@@ -77,6 +77,7 @@ class AdminHome extends React.Component {
     e.stopPropagation();
     const { all } = this.props;
     const { selectedExamIds } = this.state;
+    if (!selectedExamIds || selectedExamIds.length === 0) return;
     const notDelete = all.find(item => selectedExamIds.includes(item.id) && !item.canDelete);
     if (notDelete) {
       return window.noti.error('Không thể xóa đề đã kích hoạt và đã có người làm');
@@ -200,7 +201,7 @@ class AdminHome extends React.Component {
   render() {
     const { activePage, inputSearch, selectedExamIds } = this.state;
     const { role, all, pagination, isDone } = this.props;
-    const isChooseAll = selectedExamIds.length === all.length;
+    const isChooseAll = selectedExamIds.length === all.length && all.length !== 0;
     if ((!role || !role.includes("ROLE_ADMIN")) && isDone) return <Redirect to='/' />
     return (
       <AdminContent>

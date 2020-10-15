@@ -5,12 +5,19 @@ import { connect } from 'react-redux';
 import CKEditor from 'ckeditor4-react';
 import * as CommonIcon from 'components/icons/common';
 import { updateExam, callApiExam } from 'actions/examActions';
-import { withRouter } from 'react-router';
+import { Redirect, withRouter } from 'react-router';
 import AdminContent from 'components/body/layout/AdminContent';
 import { getObjLevel, getObjSubject, subjects2 } from 'actions/common/getInfo';
 import {
   changeHeader,
 } from 'actions/examActions';
+import {
+  getQuestionList,
+  callApiQuestion,
+  createQuestion,
+  updateQuestion,
+  deleteQuestion,
+} from 'actions/questionActions';
 import './style.scss';
 import { Link } from 'react-router-dom';
 const total = 100;
@@ -122,8 +129,14 @@ class QuestionDetail extends React.Component {
       ...filter,
       correctAnswer,
     }
-    console.log("save -> questionDTO", questionDTO)
+    console.log("save -> questionDTO", questionDTO);
+    if (currentQuestion && currentQuestion.id) {
+      this.props.updateExam(questionDTO, 'QuestionDetail');
+      return;
+    }
+    this.props.createQuestion(questionDTO, 'QuestionDetail');
   }
+
 
   onChangeFilter = (key, val, error) => {
     if (key === 'grade') {
@@ -246,10 +259,10 @@ class QuestionDetail extends React.Component {
   }
 
   render() {
-    const { listQ, pointer } = this.state;
-    const { isShow, callingApi } = this.props;
+    const { currentQuestion, pointer } = this.state;
+    const { isShow, callingApi, role, isDone } = this.props;
     const canSave = true;
-    // if ((!role || !role.includes("ROLE_ADMIN")) && isDone) return <Redirect to='/' />
+    if ((!role || !role.includes("ROLE_ADMIN")) && isDone) return <Redirect to='/' />
     return (
       <AdminContent>
         <div className="QuestionDetail">
@@ -266,6 +279,16 @@ class QuestionDetail extends React.Component {
               <button className={`btn btn-info ${canSave ? '' : 'disable'}`} onClick={() => this.save(canSave)}>
                 {`Lưu câu hỏi`}
               </button>
+              {
+                currentQuestion && currentQuestion.id ? (
+                  <button className={`btn btn-outline-danger`} onClick={() => this.props.deleteQuestion([currentQuestion.id], 'QuestionDetail')}>
+                    <Link to="/admin/question-list">
+                      Xóa
+                  </Link>
+                  </button>
+                ) : null
+              }
+
             </div>
           </div>
         </div>
@@ -275,16 +298,26 @@ class QuestionDetail extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { account }, exam: { callingApi } } = state;
+  const {
+    auth: { account, isDone },
+    question: { question, callingApiQ, pagination },
+  } = state;
   return {
     role: account.role,
-    callingApi,
+    isDone,
+    question: question || [],
+    pagination: pagination || {},
+    callingApiQ,
   }
 }
 
 export default withRouter(connect(
   mapStateToProps,
   {
-    changeHeader,
+    getQuestionList,
+    callApiQuestion,
+    createQuestion,
+    updateQuestion,
+    deleteQuestion,
   }
 )(QuestionDetail));

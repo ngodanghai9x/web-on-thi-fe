@@ -40,24 +40,24 @@ class Sidebar extends React.Component {
               </li>
               <li className={`${pathname === '/admin' ? 'active' : ''}`} >
                 <Link  to='/admin' >
-                  <span className="fa fa-table mr-3"></span> Danh sách đề
+                  <span className="fa fa-table mr-3"></span> Quản lý đề thi
                 </Link>
               </li>
-              <li className={`${pathname === '/admin/create-exam' ? 'active' : ''}`} >
+              {/* <li className={`${pathname === '/admin/create-exam' ? 'active' : ''}`} >
                 <Link  to='/admin/create-exam' >
                   <span className="fa fa-sticky-note mr-3"></span> Thêm mới đề
                 </Link>
-              </li>
+              </li> */}
               <li className={`${pathname === '/admin/question-list' ? 'active' : ''}`} >
                 <Link  to='/admin/question-list' >
-                  <span className="fa fa-table mr-3"></span> Danh sách câu hỏi
+                  <span className="fa fa-table mr-3"></span> Quản lý câu hỏi
                 </Link>
               </li>
-              <li className={`${pathname === '/admin/question-detail/0' ? 'active' : ''}`} >
+              {/* <li className={`${pathname === '/admin/question-detail/0' ? 'active' : ''}`} >
                 <Link  to='/admin/question-detail/0' >
                   <span className="fa fa-sticky-note mr-3"></span> Thêm mới câu hỏi
                 </Link>
-              </li>
+              </li> */}
               <li className={``}  onClick={() => this.props.changeLayout(0)}>
                 <Link  to='/thong-tin-ca-nhan'>
                   <span className="fa fa-user mr-3"></span> Tài khoản

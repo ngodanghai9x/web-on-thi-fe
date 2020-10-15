@@ -77,7 +77,7 @@ class Header extends React.Component {
         </div>
         <Link to='/thong-tin-ca-nhan'>
           <div className='dropdown-item'>
-            Thông tin cá nhân
+            Tài khoản cá nhân
         </div>
         </Link>
         <Link to='/lich-su'>

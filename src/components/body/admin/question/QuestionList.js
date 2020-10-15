@@ -26,16 +26,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import * as CommonIcon from 'components/icons/common';
-import { getAvatar, changeLayout } from 'actions/userActions';
+import { changeLayout } from 'actions/userActions';
 import {
-  getAllExam,
-  changeHeader,
-  changeActiveExam,
-  deleteExam,
-  getDetailExam,
-  changeActivePage,
-} from 'actions/examActions';
-
+  getQuestionList,
+  callApiQuestion,
+  createQuestion,
+  updateQuestion,
+  deleteQuestion,
+} from 'actions/questionActions';
+import { changeHeader } from 'actions/examActions';
 import AdminContent from 'components/body/layout/AdminContent';
 import './style.scss';
 import Pagination from 'react-js-pagination';
@@ -44,7 +43,7 @@ import AddIntoExamModal from './AddIntoExamModal';
 import { Modal, Button } from 'react-bootstrap';
 
 
-const SIZE = 10;
+const SIZE = 30;
 const MODE = ['Dễ', 'Trung bình', 'Khó'];
 class QuestionList extends React.Component {
   constructor(props) {
@@ -52,7 +51,7 @@ class QuestionList extends React.Component {
     this.state = {
       activePage: 1,
       inputSearch: '',
-      selectedExamIds: [],
+      selectedQuestionIds: [],
       isOpenModal: false,
       filter: {
         mode: 'Dễ',
@@ -78,8 +77,8 @@ class QuestionList extends React.Component {
   }
 
   reload = () => {
-    let { activePage, inputSearch } = this.state;
-    this.props.getAllExam(inputSearch, activePage, SIZE);
+    let { activePage, inputSearch, filter } = this.state;
+    this.props.getQuestionList(inputSearch, filter, activePage, SIZE);
     // if (inputSearch === '' || inputSearch == null) this.apiGetPage(activePage, SIZE);
     // else this.apiSearchPage(activePage, SIZE, inputSearch);
   }
@@ -107,14 +106,15 @@ class QuestionList extends React.Component {
 
   deleteExamList = (e) => {
     e.stopPropagation();
-    const { all } = this.props;
-    const { selectedExamIds } = this.state;
-    const notDelete = all.find(item => selectedExamIds.includes(item.id) && !item.canDelete);
-    if (notDelete) {
-      return window.noti.error('Không thể xóa đề đã kích hoạt và đã có người làm');
-    }
+    const { questions } = this.props;
+    const { selectedQuestionIds } = this.state;
+    if (!selectedQuestionIds || selectedQuestionIds.length === 0) return;
+    // const notDelete = questions.find(item => selectedQuestionIds.includes(item.id) && !item.canDelete);
+    // if (notDelete) {
+    //   return window.noti.error('Không thể xóa đề đã kích hoạt và đã có người làm');
+    // }
     if (confirm('Thao tác này không thể khôi phục, bạn có chắc chắn xóa ?')) {
-      this.props.deleteExam(selectedExamIds);
+      this.props.deleteQuestion(selectedQuestionIds);
     }
   }
 
@@ -131,25 +131,25 @@ class QuestionList extends React.Component {
   }
 
   selectAll = () => {
-    let { selectedExamIds } = this.state;
-    if (selectedExamIds.length === this.props.all.length) {
-      selectedExamIds = [];
-      this.setState({ selectedExamIds });
+    let { selectedQuestionIds } = this.state;
+    if (selectedQuestionIds.length === this.props.questions.length) {
+      selectedQuestionIds = [];
+      this.setState({ selectedQuestionIds });
     } else {
-      selectedExamIds = [];
-      for (let index = 0; index < this.props.all.length; index++) {
-        selectedExamIds.push(this.props.all[index].id);
+      selectedQuestionIds = [];
+      for (let index = 0; index < this.props.questions.length; index++) {
+        selectedQuestionIds.push(this.props.questions[index].id);
       }
-      this.setState({ selectedExamIds });
+      this.setState({ selectedQuestionIds });
     }
   };
 
   isChoose = (id) => {
-    const { selectedExamIds } = this.state;
+    const { selectedQuestionIds } = this.state;
     let exist = false;
-    if (selectedExamIds.length !== 0) {
-      for (let index = 0; index < selectedExamIds.length; index++) {
-        if (selectedExamIds[index] === id) {
+    if (selectedQuestionIds.length !== 0) {
+      for (let index = 0; index < selectedQuestionIds.length; index++) {
+        if (selectedQuestionIds[index] === id) {
           exist = true;
           break;
         }
@@ -160,21 +160,21 @@ class QuestionList extends React.Component {
 
   selectOne = (e, id) => {
     e.stopPropagation();
-    const { selectedExamIds } = this.state;
+    const { selectedQuestionIds } = this.state;
     let exist = false;
-    if (selectedExamIds.length !== 0) {
-      for (let index = 0; index < selectedExamIds.length; index++) {
-        if (selectedExamIds[index] === id) {
+    if (selectedQuestionIds.length !== 0) {
+      for (let index = 0; index < selectedQuestionIds.length; index++) {
+        if (selectedQuestionIds[index] === id) {
           exist = true;
-          selectedExamIds.splice(index, 1);
+          selectedQuestionIds.splice(index, 1);
           break;
         }
       }
     }
     if (!exist) {
-      selectedExamIds.push(id);
+      selectedQuestionIds.push(id);
     }
-    this.setState({ selectedExamIds });
+    this.setState({ selectedQuestionIds });
   };
 
   toggleModal = (isClose) => {
@@ -185,9 +185,9 @@ class QuestionList extends React.Component {
     this.setState(state => ({ isOpenModal: !state.isOpenModal }))
   }
 
-  renderBody = (all) => {
+  renderBody = (questions) => {
     // id, name, image, subject, grade, description, time, canDelete, examQuestions
-    return all.map(item => {
+    return questions.map(item => {
       return (
         <tr onClick={(e) => this.seeDetailExam(e, item.id)} key={'admin-home' + item.id}>
           <td className="col col-checkbox">
@@ -255,9 +255,9 @@ class QuestionList extends React.Component {
   }
 
   render() {
-    const { activePage, inputSearch, selectedExamIds, isOpenModal, filter } = this.state;
-    const { role, all, pagination, isDone } = this.props;
-    const isChooseAll = selectedExamIds.length === all.length;
+    const { activePage, inputSearch, selectedQuestionIds, isOpenModal, filter } = this.state;
+    const { role, questions, pagination, isDone } = this.props;
+    const isChooseAll = selectedQuestionIds.length === questions.length && questions.length !== 0;
     if ((!role || !role.includes("ROLE_ADMIN")) && isDone) return <Redirect to='/' />
     return (
       <AdminContent>
@@ -354,7 +354,7 @@ class QuestionList extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.renderBody(all)}
+                  {this.renderBody(questions)}
                 </tbody>
               </table>
             </div>
@@ -370,13 +370,9 @@ class QuestionList extends React.Component {
                 linkClass={"page-link"}
               />
             </div>
-
-
           </div>
-
-
         </div>
-        <AddIntoExamModal isOpenModal={isOpenModal} toggleModal={this.toggleModal} filterQuestion={filter} />
+        <AddIntoExamModal isOpenModal={isOpenModal} toggleModal={this.toggleModal} filterQuestion={filter} questionIds={selectedQuestionIds}/>
       </AdminContent>
 
 
@@ -385,25 +381,25 @@ class QuestionList extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { account, isDone }, exam: { all, callingApi, pagination } } = state;
+  const {
+    auth: { account, isDone },
+    question: { questions, callingApiQ, pagination },
+  } = state;
   return {
     role: account.role,
     isDone,
-    all: all || [],
+    // questions: questions || [],
+    questions: [{ id:1 }, { id:2 }, { id:3 }],
     pagination: pagination || {},
-    callingApi,
+    callingApiQ,
   }
 }
 
 export default withRouter(connect(
   mapStateToProps,
   {
-    changeLayout,
-    getAllExam,
+    getQuestionList,
     changeHeader,
-    changeActiveExam,
-    deleteExam,
-    getDetailExam,
-    changeActivePage,
+    changeLayout,
   }
 )(QuestionList));

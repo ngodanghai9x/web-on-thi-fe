@@ -3,9 +3,16 @@ import { connect } from 'react-redux';
 import * as CommonIcon from 'components/icons/common';
 
 import { getAllExam } from 'actions/examActions';
+import {
+  getQuestionList,
+  callApiQuestion,
+  createQuestion,
+  updateQuestion,
+  deleteQuestion,
+  addQuestionsIntoExam,
+} from 'actions/questionActions';
 import { Modal, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import exam from 'reducers/exam';
+import { Link, withRouter } from 'react-router-dom';
 
 const SIZE = 15;
 class AddIntoExamModal extends React.Component {
@@ -23,12 +30,7 @@ class AddIntoExamModal extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pagination } = this.props;
-    if (nextProps.pagination && nextProps.pagination !== pagination) {
-      this.setState({
-        activePage: pagination.activePage,
-      })
-    }
+    
   }
 
   componentWillUnmount() {
@@ -52,7 +54,10 @@ class AddIntoExamModal extends React.Component {
   }
 
   save = () => {
-
+    const { questionIds } = this.props;
+    const { currentExam } = this.state;
+    if (!currentExam || !currentExam.id || !questionIds || questionIds.length === 0) return;
+    this.props.addQuestionsIntoExam(currentExam.id, questionIds);
   }
 
   selectExam = currentExam => {
@@ -79,7 +84,7 @@ class AddIntoExamModal extends React.Component {
 
   render() {
     const { inputSearch, isOpenSearch, currentExam } = this.state;
-    const { layout, isOpenModal, toggleModal, all1 } = this.props;
+    const { layout, isOpenModal, toggleModal, all1, questionIds } = this.props;
     const all = [{ id: 1, code: 'made001', name: 'abcasfsafsagasgsagsagsagas' }];
     return (
       <Modal className="AddIntoExamModal" show={isOpenModal} onHide={() => toggleModal(true)} animation={true}>
@@ -147,22 +152,28 @@ class AddIntoExamModal extends React.Component {
   }
 }
 
-
 const mapStateToProps = (state, ownProps) => {
-  const { auth: { account, isDone }, exam: { all, callingApi, pagination } } = state;
+  const {
+    auth: { account, isDone },
+    question: { question, callingApiQ, pagination },
+    exam,
+  } = state;
   return {
     role: account.role,
     isDone,
-    all: all || [],
+    question: question || [],
     pagination: pagination || {},
-    callingApi,
+    callingApiQ,
+    paginationE: exam.pagination,
+    all: exam.all,
   }
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   {
-    // logout,
+    getQuestionList,
+    addQuestionsIntoExam,
     getAllExam,
   }
-)(AddIntoExamModal);
+)(AddIntoExamModal));
