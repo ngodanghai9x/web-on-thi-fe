@@ -106,7 +106,29 @@ class UpdateQuestion extends React.Component {
   back = (can, can2) => {
     console.log("back -> can", can, can2)
     if (!can2) return;
-    if (!can) return this.props.changeStep(1);
+    if (!can) {
+      const { name, image, subject, grade, description, time, id, mode } = this.props.exam1;
+      const { listQ } = this.state;
+      const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`];
+      if (!lastQ.question || !lastQ.option1 || !lastQ.option2
+        || !lastQ.question.trim() || !lastQ.option1.trim() || !lastQ.option2.trim()
+      ) {
+        return window.noti.error('Bạn chưa điền đủ thông tin cho câu hỏi cuối cùng');
+      }
+      this.props.callApiExam('UpdateQuestion');
+      const listQuestion = Object.values(listQ).map(item => ({
+        ...item,
+        // type: 'one',
+        correctAnswer: item[item.correctAnswer],
+        // grade,
+        // subject,
+        // mode,
+      }));
+      console.log("save -> listQuestion", listQuestion)
+      this.props.setList(listQuestion);
+      this.props.changeStep(1);
+      return;
+    }
     this.setState(state => ({
       pointer: state.pointer - 1,
     }));

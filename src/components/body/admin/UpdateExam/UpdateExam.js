@@ -15,6 +15,7 @@ import {
   changeActiveExam,
   deleteExam,
   getDetailExam,
+  updateExam,
 } from 'actions/examActions';
 
 const total = 1000;
@@ -26,6 +27,7 @@ class UpdateExam extends React.Component {
       grade: "Lớp 10",
       subject: "Toán học",
       examQuestions: [],
+      listQuestion: [],
     };
   }
 
@@ -114,6 +116,15 @@ class UpdateExam extends React.Component {
       this.setState({ [key]: 'Giá trị tối đa là 1000' });
       // return window.noti.error('Giá trị tối đa là 1000');
     }
+  }
+
+  save = () => {
+    const { name, image, subject, grade, description, time, total , listQuestion, id } = this.state;
+    this.props.updateExam(name, image, subject, grade, description, time, listQuestion, id);
+  }
+
+  setList = (listQuestion) => {
+    this.setState({ listQuestion });
   }
 
   render() {
@@ -226,6 +237,11 @@ class UpdateExam extends React.Component {
                     Hủy
                   </button>
                 </Link>
+                <Link to='/admin'>
+                  <button className="btn btn-info" onClick={() => this.save()}>
+                    Lưu
+                </button>
+                </Link>
                 <button className="btn btn-info" onClick={() => this.changeStep(2)}>
                   Tiếp tục
                 </button>
@@ -234,7 +250,7 @@ class UpdateExam extends React.Component {
             </div>
           </div>
           {/* <CreateExamInfo isShow={step === 1} changeStep={this.changeStep} /> */}
-          <UpdateQuestion isShow={step === 2} changeStep={this.changeStep} exam1={exam} listQuestion={examQuestions} />
+          <UpdateQuestion isShow={step === 2} changeStep={this.changeStep} exam1={exam} listQuestion={examQuestions} setList={this.setList} />
           <CreateEssayExam isShow={step === 3} changeStep={this.changeStep} exam1={exam} question0={question0} />
         </div>
       </AdminContent>
@@ -256,5 +272,6 @@ export default withRouter(connect(
     changeLayout,
     changeHeader,
     getDetailExam,
+    updateExam,
   }
 )(UpdateExam));

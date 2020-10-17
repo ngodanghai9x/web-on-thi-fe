@@ -28,12 +28,13 @@ class QuestionDetail extends React.Component {
     super(props);
     this.state = {
       currentQuestion: {
+        id: 0,
         question: '',
-        option1: '',
+        option1: 'đáp án 1',
         option2: '',
         option3: '',
         option4: '',
-        correctAnswer: ['option1'],
+        correctAnswer: ['đáp án 1'],
       },
       filter: {
         mode: 'Dễ',

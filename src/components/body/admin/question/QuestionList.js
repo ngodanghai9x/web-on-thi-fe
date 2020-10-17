@@ -119,15 +119,15 @@ class QuestionList extends React.Component {
   }
 
   changeActiveExam = (e, id, isActive) => {
-    if (!isActive) {
-      if (confirm('Kích hoạt đề để mọi người có thể làm đề, nhưng sẽ không thể xóa đề được nữa kể cả có tắt kích hoạt, bạn có chắc chắn kích hoạt ?')) {
-        this.props.changeActiveExam(id, isActive);
-      }
-    }
-    else {
-      this.props.changeActiveExam(id, isActive);
-    }
-    e.stopPropagation();
+    // if (!isActive) {
+    //   if (confirm('Kích hoạt đề để mọi người có thể làm đề, nhưng sẽ không thể xóa đề được nữa kể cả có tắt kích hoạt, bạn có chắc chắn kích hoạt ?')) {
+    //     this.props.changeActiveExam(id, isActive);
+    //   }
+    // }
+    // else {
+    //   this.props.changeActiveExam(id, isActive);
+    // }
+    // e.stopPropagation();
   }
 
   selectAll = () => {
@@ -189,7 +189,7 @@ class QuestionList extends React.Component {
     // id, name, image, subject, grade, description, time, canDelete, examQuestions
     return questions.map(item => {
       return (
-        <tr onClick={(e) => this.seeDetailExam(e, item.id)} key={'admin-home' + item.id}>
+        <tr onClick={(e) => this.seeDetailExam(e, item.id)} key={'questions-home' + item.id}>
           <td className="col col-checkbox">
             <div className="wrapper-icon checkbox" onClick={(e) => this.selectOne(e, item.id)}>
               <input type="checkbox"

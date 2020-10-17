@@ -6,7 +6,8 @@ import AdminContent from 'components/body/layout/AdminContent';
 import CreateQuestion from './CreateQuestion';
 import { getObjSubject, subjects2 } from 'actions/common/getInfo';
 import { getAvatar, changeLayout } from 'actions/userActions';
-import { changeHeader } from 'actions/examActions';
+import { createExam, callApiExam, changeHeader } from 'actions/examActions';
+
 // import CreateExamInfo from './CreateExamInfo';
 import './CreateExam.scss';
 import { Link, Redirect, withRouter } from 'react-router-dom';
@@ -20,6 +21,7 @@ class CreateExam extends React.Component {
       grade: "Lớp 10",
       subject: "Toán học",
       time: 45,
+      listQuestion: [],
     };
   }
 
@@ -114,6 +116,15 @@ class CreateExam extends React.Component {
     //     this.setState({ [key]: text });
     //   }
     // }
+  }
+
+  save = () => {
+    const { name, image, subject, grade, description, time, total , listQuestion } = this.state;
+    this.props.createExam(name, image, subject, grade, description, time, listQuestion);
+  }
+
+  setList = (listQuestion) => {
+    this.setState({ listQuestion });
   }
 
   render() {
@@ -219,10 +230,17 @@ class CreateExam extends React.Component {
               </div> */}
               <div className="profile-row d-flex justify-content-center">
                 <Link to='/admin'>
-                  <button className="btn btn-outline-info" style={{ margin: '0 10px'}}>
+                  <button className="btn btn-outline-info" style={{ margin: '0 10px' }}>
                     Hủy
                   </button>
                 </Link>
+
+                <Link to='/admin'>
+                  <button className="btn btn-info" onClick={() => this.save()}>
+                    Lưu
+                </button>
+                </Link>
+
                 <button className="btn btn-info" onClick={() => this.changeStep()}>
                   Tiếp tục
                 </button>
@@ -231,7 +249,7 @@ class CreateExam extends React.Component {
             </div>
           </div>
           {/* <CreateExamInfo isShow={step === 1} changeStep={this.changeStep} /> */}
-          <CreateQuestion isShow={step === 2} changeStep={this.changeStep} exam1={exam1} />
+          <CreateQuestion isShow={step === 2} changeStep={this.changeStep} exam1={exam1} setList={this.setList}/>
           <CreateEssayExam isShow={step === 3} changeStep={this.changeStep} exam1={exam1} />
         </div>
       </AdminContent>
@@ -254,5 +272,6 @@ export default withRouter(connect(
   {
     changeLayout,
     changeHeader,
+    createExam,
   }
 )(CreateExam));
