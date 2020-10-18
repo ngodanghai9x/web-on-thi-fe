@@ -114,27 +114,37 @@ class Comment extends React.Component {
       // Nếu chưa khởi show thì mới khởi show list comment cũ đó
       if (!fetchAllComment) {
         for (let i = 0; i < message.length; i++) {
-          this.fetchMessage(message[i], false);
+          this.fetchMessage(message[i]);
         }
         fetchAllComment = true;
       }
     } else {
-      this.fetchMessage(message, false)
+      this.fetchMessage(message)
     }
   }
 
-  fetchMessage = (message, isReply) => {
+  fetchMessage = (message) => {
     const { messageList } = this.state;
-    const arrId = messageList.map(item => item.id);
-    if (message && arrId.includes(message.parentId)) {
+    if (message && message.parentId) {
       this.setState(state => ({
-        messageList: [...state.messageList, message],
+        messageList: this.addNewChild(state.messageList, message),
       }));
     } else {
       this.setState(state => ({
         messageList: [...state.messageList, message],
       }));
     }
+  }
+
+  addNewChild = (list, message) => {
+    list.forEach(item => {
+      if (item.id == message.parentId) {
+        if (item.replyComment && item.replyComment.length > 0)
+          item.replyComment = item.replyComment.filter(item => item.id != message.id);
+        item.replyComment.push(message);
+      }
+    })
+    return list;
   }
 
   onError = (error) => {
