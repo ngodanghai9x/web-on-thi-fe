@@ -131,13 +131,13 @@
         .col-grade {
           width: 120px;
         }
-        .col-time {
+        .col-mode {
           width: 120px;
         }
         .col-subject {
           width: 120px;
         }
-        .col-action {
+        .col-type {
           width: 120px;
           .d-flex {
             flex-direction: row;
@@ -163,7 +163,7 @@
           }
         }
         tbody {
-          .col-action {
+          .col-type {
             padding-left: 5px;
             .toggle-icon {
               margin-left: 12px;

@@ -193,6 +193,17 @@ class QuestionList extends React.Component {
     this.setState(state => ({ isOpenModal: !state.isOpenModal }))
   }
 
+  getType = (type) => {
+    switch (type) {
+      case 'one':
+        return 'Một đáp án';
+      case 'multi':
+        return 'Nhiều đáp án';
+      default:
+        return '';
+    }
+  }
+
   renderBody = (questions) => {
     // id, name, image, subject, grade, description, time, canDelete, examQuestions
     return questions.map(item => {
@@ -207,37 +218,12 @@ class QuestionList extends React.Component {
               />
             </div>
           </td>
-          <td className="col col-name">{item.name}</td>
+          <td className="col col-name">{item.question}</td>
           <td className="col col-subject">{getObjSubject(item.subject).vn}</td>
           <td className="col col-grade">{getObjLevel(item.grade).vn}</td>
-          <td className="col col-time">{`${item.time} phút`}</td>
-          <td className="col col-action">
-            <div className="d-flex">
-              <div className="wrapper-icon" title="Chỉnh sửa" onClick={(e) => this.seeDetailExam(e, item.id)}>
-                <CommonIcon.edit />
-              </div>
-              {
-                item.canDelete ? (
-                  <div
-                    className={`wrapper-icon ${item.canDelete ? '' : 'disable'}`} title={`${item.canDelete ? 'Xóa' : 'Không thẻ xóa đề đã có người làm'}`}
-                    onClick={(e) => this.deleteExam(e, item.id, item.canDelete)}
-                  >
-                    <CommonIcon.remove />
-                  </div>
-                ) : null
-              }
-              {
-                item.isActive ? (
-                  <div className="toggle-icon" title="Ngưng kích hoạt" onClick={(e) => this.changeActiveExam(e, item.id, item.isActive)}>
-                    <CommonIcon.toggleOn />
-                  </div>
-                ) : (
-                    <div className="toggle-icon" title="Kích hoạt" onClick={(e) => this.changeActiveExam(e, item.id, item.isActive)}>
-                      <CommonIcon.toggleOff />
-                    </div>
-                  )
-              }
-            </div>
+          <td className="col col-mode">{item.mode}</td>
+          <td className="col col-type">
+            {this.getType(item.type)}
           </td>
         </tr>
       )
@@ -320,7 +306,7 @@ class QuestionList extends React.Component {
                 </select>
 
                 <select defaultValue={filter.mode} onChange={(e) => this.onChangeFilter('mode', e.target.value, 'errorName')}>
-                  <option value="">Chọn mức độ</option>
+                  <option value="">Chọn độ khó</option>
                   {MODE.map(item => ((
                     <option value={item}>{item}</option>
                   )))}
@@ -357,11 +343,11 @@ class QuestionList extends React.Component {
                         <CommonIcon.caretDownFill />
                       </div>
                     </th>
-                    <th className="col col-name">Tên đề</th>
+                    <th className="col col-name">Câu hỏi</th>
                     <th className="col col-subject">Môn học</th>
                     <th className="col col-grade">Cấp bậc</th>
-                    <th className="col col-time">Thời gian</th>
-                    <th className="col col-action">Thao tác</th>
+                    <th className="col col-mode">Độ khó</th>
+                    <th className="col col-type">Thể loại</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -383,7 +369,7 @@ class QuestionList extends React.Component {
             </div>
           </div>
         </div>
-        <AddIntoExamModal isOpenModal={isOpenModal} toggleModal={this.toggleModal} filterQuestion={filter} questionIds={selectedQuestionIds}/>
+        <AddIntoExamModal isOpenModal={isOpenModal} toggleModal={this.toggleModal} filterQuestion={filter} questionIds={selectedQuestionIds} />
       </AdminContent>
 
 
