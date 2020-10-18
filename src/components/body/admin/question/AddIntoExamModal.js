@@ -46,8 +46,9 @@ class AddIntoExamModal extends React.Component {
   }
 
   reload = () => {
+    const { filterQuestion } = this.props;
     let { inputSearch } = this.state;
-    this.props.getAllExam(inputSearch, 1, SIZE);
+    this.props.getAllExam(inputSearch, 1, SIZE, filterQuestion);
     this.setState({ isTyping: false })
     // if (inputSearch === '' || inputSearch == null) this.apiGetPage(activePage, SIZE);
     // else this.apiSearchPage(activePage, SIZE, inputSearch);
@@ -56,8 +57,9 @@ class AddIntoExamModal extends React.Component {
   save = () => {
     const { questionIds } = this.props;
     const { currentExam } = this.state;
-    if (!currentExam || !currentExam.id || !questionIds || questionIds.length === 0) return;
+    if (!currentExam || !currentExam.id || !questionIds || questionIds.length === 0) return window.noti.error('Bạn chưa chọn đề hoặc chọn câu hỏi');
     this.props.addQuestionsIntoExam(currentExam.id, questionIds);
+    this.props.toggleModal(true);
   }
 
   selectExam = currentExam => {

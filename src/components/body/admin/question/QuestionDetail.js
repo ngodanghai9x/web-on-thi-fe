@@ -31,17 +31,16 @@ class QuestionDetail extends React.Component {
       currentQuestion: {
         id: 0,
         question: '',
-        option1: 'đáp án 1',
+        option1: '',
         option2: '',
         option3: '',
         option4: '',
-        correctAnswer: ['đáp án 1'],
+        correctAnswer: ['option1'],
       },
       filter: {
         mode: 'Dễ',
         grade: 'Lớp 10',
         subject: 'Toán',
-        type: 'one',
       },
     };
   }
@@ -88,7 +87,7 @@ class QuestionDetail extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.callingApi && this.props.callingApi === 'QuestionDetail') {
+    if (!nextProps.callingApiQ && this.props.callingApiQ === 'QuestionDetail') {
       nextProps.history.push('/admin/question-list');
     }
     //for update
@@ -162,10 +161,12 @@ class QuestionDetail extends React.Component {
     if (!can) return;
     const { currentQuestion, filter } = this.state;
     const correctAnswer = currentQuestion.correctAnswer.map(item => currentQuestion[item]);
+    const type = correctAnswer && correctAnswer.length > 1 ? 'multi' : 'one';
     const questionDTO = {
       ...currentQuestion,
       ...filter,
       correctAnswer,
+      type,
     }
     console.log("save -> questionDTO", questionDTO);
     if (currentQuestion && currentQuestion.id) {

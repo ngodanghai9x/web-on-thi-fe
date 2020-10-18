@@ -36,11 +36,9 @@ class CreateEssayExam extends React.Component {
 
   submit = e => {
     const { question0, exam1 } = this.props;
-    const { name, image, subject, grade, description, time, id, isActive, canDelete } = exam1;
+    const { name, image, subject, grade, description, time, id, isActive, canDelete, code } = exam1;
     const { question } = this.state;
-    const listQuestion = [{
-      id: question0 && question0.id || 0,
-      image: null,
+    const obj = {
       question: question || '',
       option1: null,
       option2: null,
@@ -49,15 +47,19 @@ class CreateEssayExam extends React.Component {
       correctAnswer: [],
       mode: 'Không xác định',
       type: 'essay',
-      // subject,
-      // grade,
+      subject,
+      grade,
       suggestion: null,
-    }];
+    };
+    if (question0 && question0.id !== 0) {
+      obj.id = question0.id;
+    }
+    const listQuestion = [obj];
     this.props.callApiExam('CreateEssayExam');
     if (id && question0) {
       return this.props.updateExam(exam1, listQuestion);
     }
-    this.props.createExam(name, image, subject, grade, description, time, listQuestion);
+    this.props.createExam(name, image, subject, grade, description, time, listQuestion, code);
   }
 
   onEditorChange = (evt) => {

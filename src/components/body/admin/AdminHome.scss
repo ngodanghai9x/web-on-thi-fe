@@ -26,16 +26,19 @@
       }
     }
     .col-name {
-      width: calc(100% - 480px - 60px);
+      width: calc(100% - 420px - 60px - 120px);
+    }
+    .col-code {
+      width: 120px;
     }
     .col-grade {
-      width: 120px;
+      width: 100px;
     }
     .col-time {
-      width: 120px;
+      width: 100px;
     }
     .col-subject {
-      width: 120px;
+      width: 100px;
     }
     .col-action {
       width: 120px;

@@ -265,12 +265,12 @@ class QuestionList extends React.Component {
                   Thêm câu hỏi
                 </Link>
               </button>
-              <button className="btn btn-outline-info mr-2" onClick={() => this.toggleModal()}>
+              <button className="btn btn-outline-info mr-2" onClick={() => selectedQuestionIds.length > 0 && this.toggleModal()}>
                 Thêm vào đề
               </button>
-              <button className="btn btn-outline-info mr-2" onClick={(e) => this.deleteExamList(e)}>
+              {/* <button className="btn btn-outline-info mr-2" onClick={(e) => this.deleteExamList(e)}>
                 Xóa nhiều
-              </button>
+              </button> */}
             </div>
           </div>
 
@@ -314,7 +314,7 @@ class QuestionList extends React.Component {
                   )))}
                 </select>
 
-                <button className="btn btn-info">
+                <button className="btn btn-info" onClick={e => this.reload()}>
                   Tìm kiếm
                 </button>
               </div>

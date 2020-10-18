@@ -94,24 +94,23 @@ class CreateQuestion extends React.Component {
     console.log('can', can);
     if (!can) {
       const { exam1, callingApi } = this.props;
-    const { name, image, subject, grade, description, time, mode } = exam1;
-    const { listQ } = this.state;
-    const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`];
-    if (!lastQ.question || !lastQ.option1 || !lastQ.option2
-      || !lastQ.question.trim() || !lastQ.option1.trim() || !lastQ.option2.trim()
-    ) {
-      return window.noti.error('Bạn chưa điền đủ thông tin cho câu hỏi cuối cùng');
-    }
-    this.props.callApiExam('CreateQuestion');
-    const listQuestion = Object.values(listQ).map(item => ({
-      ...item,
-      correctAnswer: item[item.correctAnswer],
-      type: 'one',
-      mode: 'Dễ',
-      // grade,
-      // subject,
-    }));
-    console.log("save -> listQuestion", listQuestion);
+      const { name, image, subject, grade, description, time, mode } = exam1;
+      const { listQ } = this.state;
+      const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`];
+      if (!lastQ.question || !lastQ.option1 || !lastQ.option2
+        || !lastQ.question.trim() || !lastQ.option1.trim() || !lastQ.option2.trim()
+      ) {
+        return window.noti.error('Bạn chưa điền đủ thông tin cho câu hỏi cuối cùng');
+      }
+      const listQuestion = Object.values(listQ).map(item => ({
+        ...item,
+        correctAnswer: [item[item.correctAnswer]],
+        type: 'one',
+        mode: 'Dễ',
+        // grade,
+        // subject,
+      }));
+      console.log("save -> listQuestion", listQuestion);
       this.props.setList(listQuestion);
       this.props.changeStep(1);
       return;
@@ -132,7 +131,7 @@ class CreateQuestion extends React.Component {
   save = (can) => {
     if (!can) return;
     const { exam1, callingApi } = this.props;
-    const { name, image, subject, grade, description, time, mode } = exam1;
+    const { name, image, subject, grade, description, time, mode, code } = exam1;
     const { listQ } = this.state;
     const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`];
     if (!lastQ.question || !lastQ.option1 || !lastQ.option2
@@ -143,14 +142,14 @@ class CreateQuestion extends React.Component {
     this.props.callApiExam('CreateQuestion');
     const listQuestion = Object.values(listQ).map(item => ({
       ...item,
-      correctAnswer: item[item.correctAnswer],
+      correctAnswer: [item[item.correctAnswer]],
       type: 'one',
       mode: 'Dễ',
       // grade,
       // subject,
     }));
     console.log("save -> listQuestion", listQuestion);
-    this.props.createExam(name, image, subject, grade, description, time, listQuestion);
+    this.props.createExam(name, image, subject, grade, description, time, listQuestion , code);
   }
 
   add = (can) => {
@@ -172,6 +171,7 @@ class CreateQuestion extends React.Component {
             option4: '',
             correctAnswer: 'option1',
             type: 'one',
+            mode: 'Dễ',
             // grade,
             // subject,
             // mode,

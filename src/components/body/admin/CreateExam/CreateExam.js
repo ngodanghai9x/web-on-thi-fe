@@ -31,12 +31,8 @@ class CreateExam extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { location: { pathname } } = this.props;
-    if (nextProps.location.pathname !== pathname) {
-      this.setState({
-        grade: 1,
-        subject: 2,
-      });
+    if (!nextProps.callingApi && this.props.callingApi === 'CreateExam') {
+      nextProps.history.push('/admin');
     }
   }
 
@@ -85,42 +81,15 @@ class CreateExam extends React.Component {
   }
 
   onBlurNotNull = (key, val, text) => {
-    if (!val || val.trim().length === 0) {
+    if (!val || !val.trim()) {
       this.setState({ [key]: 'Trường này không để để trống' });
     }
-    if (val < 1) {
-      this.setState({ [key]: 'Giá trị tối thiểu là 1' });
-      // return window.noti.error('Giá trị tối đa là 1000');
-    }
-    else if (val >= 1000) {
-      this.setState({ [key]: 'Giá trị tối đa là 1000' });
-      // return window.noti.error('Giá trị tối đa là 1000');
-    }
-    // if (key === 'errorUsername') {
-    //   if (regex.username.test(val)) {
-    //     this.setState({ [key]: text });
-    //   }
-    // }
-    // if (key === 'errorPassword1') {
-    //   if (!regex.password.test(val)) {
-    //     this.setState({ [key]: text });
-    //   }
-    // }
-    // if (key === 'errorPassword2') {
-    //   if (val !== this.state.password1) {
-    //     this.setState({ [key]: text });
-    //   }
-    // }
-    // if (key === 'errorEmail') {
-    //   if (!regex.email.test(val)) {
-    //     this.setState({ [key]: text });
-    //   }
-    // }
   }
 
   save = () => {
-    const { name, image, subject, grade, description, time, total , listQuestion } = this.state;
-    this.props.createExam(name, image, subject, grade, description, time, listQuestion);
+    const { name, image, subject, grade, description, time, total , listQuestion, code } = this.state;
+    this.props.callApiExam('CreateExam');
+    this.props.createExam(name, image, subject, grade, description, time, listQuestion, code);
   }
 
   setList = (listQuestion) => {
@@ -128,10 +97,10 @@ class CreateExam extends React.Component {
   }
 
   render() {
-    const { step, name, image, subject, grade, description, time, total,
-      errorName, errorSubject, errorTime, errorTotal,
+    const { step, name, image, subject, grade, description, time, total, code,
+      errorName, errorSubject, errorTime, errorTotal, errorCode
     } = this.state;
-    const exam1 = { name, image, subject, grade, description, time, total };
+    const exam1 = { name, image, subject, grade, description, time, total, code };
     const { role, isDone } = this.props;
     if ((!role || !role.includes("ROLE_ADMIN")) && isDone) return <Redirect to='/' />
     return (
@@ -140,6 +109,19 @@ class CreateExam extends React.Component {
           <div className={`CreateExamInfo ${step !== 1 ? 'd-none' : ''}`}>
             <div className="form-create-exam d-flex flex-column">
               <div className="profile-row">
+                <div className="key">Mã đề</div>
+                <div className="value">
+                  <input
+                    type="text" value={code || ''}
+                    className={errorCode ? 'error' : ''}
+                    placeholder="Nhập mã đề (ví dụ: DE0001)"
+                    title={errorCode}
+                    onBlur={e => this.onBlurNotNull('errorCode', e.target.value)}
+                    onChange={(e) => this.onChangeMax255('code', e.target.value, 'errorCode')}
+                  />
+                </div>
+              </div>
+              <div className="profile-row">
                 <div className="key">Tên đề</div>
                 <div className="value">
                   <input
@@ -147,11 +129,12 @@ class CreateExam extends React.Component {
                     className={errorName ? 'error' : ''}
                     placeholder="Nhập tên đề"
                     title={errorName}
-                    onBlur={e => this.onBlurNotNull(errorName, e.target.value)}
+                    onBlur={e => this.onBlurNotNull('errorName', e.target.value)}
                     onChange={(e) => this.onChangeMax255('name', e.target.value, 'errorName')}
                   />
                 </div>
               </div>
+
               <div className="profile-row">
                 <div className="key">Mô tả đề</div>
                 <div className="value">
@@ -230,18 +213,20 @@ class CreateExam extends React.Component {
               </div> */}
               <div className="profile-row d-flex justify-content-center">
                 <Link to='/admin'>
-                  <button className="btn btn-outline-info" style={{ margin: '0 10px' }}>
+                  <button className="btn btn-outline-secondary" style={{ marginRight: 10 }} >
                     Hủy
                   </button>
                 </Link>
 
-                <Link to='/admin'>
-                  <button className="btn btn-info" onClick={() => this.save()}>
-                    Lưu
-                </button>
-                </Link>
+                {
+                  getObjSubject(subject).en !== 'van' ? (
+                    <button className="btn btn-outline-info" onClick={() => this.save()} style={{ marginRight: 10 }}>
+                      Lưu
+                    </button>
+                  ) : null
+                }
 
-                <button className="btn btn-info" onClick={() => this.changeStep()}>
+                <button className="btn btn-info" onClick={() => this.changeStep()} style={{ marginRight: 10 }}>
                   Tiếp tục
                 </button>
               </div>
@@ -264,6 +249,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     role: account.role,
     isDone,
+    callingApi: state.exam.callingApi,
   }
 }
 
@@ -273,5 +259,6 @@ export default withRouter(connect(
     changeLayout,
     changeHeader,
     createExam,
+    callApiExam,
   }
 )(CreateExam));

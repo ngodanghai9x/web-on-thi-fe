@@ -35,7 +35,9 @@ export const createQuestion = (question, keyword) => (dispatch, getState) => {
 export const updateQuestion = (question, keyword) => (dispatch, getState) => {
   dispatch(callApiQuestion(keyword));
   const req = {
-    question,
+    body: {
+      question,
+    }
   };
   return callApi('api/question/save', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
@@ -131,33 +133,31 @@ export const getDetailQuestion = (id) => (dispatch, getState) => {
     }
   };
   return callApi('api/question/get', { method: 'POST', data: req })
-    // .then(({ data, code, message }) => {
-    //   if (data && code === 200) {
-    //     return data;
-    //   }
-    //   if (code === 400) {
-    //     return {};
-    //     // window.noti.error('Xóa câu hỏi thất bại');
-    //     // dispatch(callApiQuestion());
-    //   }
-    // })
-    // .catch(err => {
-    //   return {};
-    //   // dispatch(callApiQuestion());
-    // });
+  // .then(({ data, code, message }) => {
+  //   if (data && code === 200) {
+  //     return data;
+  //   }
+  //   if (code === 400) {
+  //     return {};
+  //     // window.noti.error('Xóa câu hỏi thất bại');
+  //     // dispatch(callApiQuestion());
+  //   }
+  // })
+  // .catch(err => {
+  //   return {};
+  //   // dispatch(callApiQuestion());
+  // });
 };
 export const addQuestionsIntoExam = (examId, questionIds) => (dispatch, getState) => {
   const req = {
-    examId, 
-    questionIds,
+    body: {
+      examId,
+      questionIds,
+    }
   };
   return callApi('api/question/add-to-exam', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
-        dispatch({
-          type: actionTypes.DELETE_QUESTION,
-          questions: data.questions,
-        });
         window.noti.success('Thêm câu hỏi vào đề thành công');
         // dispatch(callApiQuestion());
       }
@@ -173,7 +173,7 @@ export const addQuestionsIntoExam = (examId, questionIds) => (dispatch, getState
 
 export const callApiQuestion = (kind = null) => (dispatch) => {
   dispatch({
-    type: actionTypes.CALL_API_EXAM,
+    type: actionTypes.CALL_API_QUESTION,
     kind,
   });
 }
