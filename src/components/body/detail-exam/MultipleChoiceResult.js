@@ -209,6 +209,9 @@ class MultipleChoiceResult extends React.Component {
               {/*Ông truyền examId vào username vào component kia hộ t nhé*/}
               <Comment />
             </div>
+            <div className="col-4">
+
+            </div>
           </div>
         </div>
       </MainContent>

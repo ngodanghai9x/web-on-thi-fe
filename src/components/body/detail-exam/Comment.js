@@ -47,7 +47,7 @@ class Comment extends React.Component {
 
     stompClient = Stomp.over(SockJS);
     stompClient.connect({}, this.onConnected, this.onError);
-    stompClient.debug = null
+    // stompClient.debug = null;
   }
 
   onConnected = () => {
@@ -82,16 +82,16 @@ class Comment extends React.Component {
       // Nếu chưa khởi show thì mới khởi show list comment cũ đó
       if (!fetchAllComment) {
         for (let i = 0; i < message.length; i++) {
-          this.fetchMessage(message[i], false);
+          this.fetchMessage(message[i]);
         }
         fetchAllComment = true;
       }
     } else {
-      this.fetchMessage(message, false)
+      this.fetchMessage(message)
     }
   }
 
-  fetchMessage = (message, isReply) => {
+  fetchMessage = (message) => {
     console.log('comment',message);
   }
 
