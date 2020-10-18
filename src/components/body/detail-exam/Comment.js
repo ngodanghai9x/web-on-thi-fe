@@ -12,7 +12,7 @@ import MainContent from '../layout/MainContent';
 import './styles/Comment.scss';
 import { Redirect, withRouter } from 'react-router';
 
-var fetchAllComment = false;
+
 class Comment extends React.Component {
   constructor(props) {
     super(props);
@@ -24,12 +24,14 @@ class Comment extends React.Component {
       updatedDate: '',
       textSend: '',
       textReply: '',
+      fetchAllComment: false,
     };
     this.stompClient = null
   }
 
   componentDidMount() {
     this.connect(this.props.username);
+    console.log("Comment -> componentDidMount -> connect", this.stompClient )
   }
 
   connect = (username) => {
@@ -112,11 +114,11 @@ class Comment extends React.Component {
     if (Array.isArray(message)) {
       // Khởi tạo các cmt cũ, do mỗi lần client kết nối đến socket thì đều call getComment nên nó sẽ trả luôn cả list về socket.
       // Nếu chưa khởi show thì mới khởi show list comment cũ đó
-      if (!fetchAllComment) {
+      if (!this.state.fetchAllComment) {
         for (let i = 0; i < message.length; i++) {
           this.fetchMessage(message[i]);
         }
-        fetchAllComment = true;
+        this.setState({ fetchAllComment: true})
       }
     } else {
       this.fetchMessage(message)

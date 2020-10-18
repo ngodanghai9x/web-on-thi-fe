@@ -200,7 +200,7 @@ class QuestionList extends React.Component {
       case 'multi':
         return 'Nhiều đáp án';
       default:
-        return '';
+        return 'Không xác định';
     }
   }
 
@@ -384,10 +384,11 @@ const mapStateToProps = (state, ownProps) => {
     auth: { account, isDone },
     question: { questions, callingApiQ, pagination },
   } = state;
+  const list = questions ? questions.filter(item => item.type !== 'essay') : []
   return {
     role: account.role,
     isDone,
-    questions: questions || [],
+    questions: list,
     // questions: [{ id:1 }, { id:2 }, { id:3 }],
     pagination: pagination || {},
     callingApiQ,
