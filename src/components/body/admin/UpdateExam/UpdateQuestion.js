@@ -118,8 +118,8 @@ class UpdateQuestion extends React.Component {
       this.props.callApiExam('UpdateQuestion');
       const listQuestion = Object.values(listQ).map(item => ({
         ...item,
-        // type: 'one',
         correctAnswer: item[item.correctAnswer],
+        // type: 'one',
         // grade,
         // subject,
         // mode,
@@ -155,8 +155,8 @@ class UpdateQuestion extends React.Component {
     this.props.callApiExam('UpdateQuestion');
     const listQuestion = Object.values(listQ).map(item => ({
       ...item,
-      type: 'one',
       correctAnswer: item[item.correctAnswer],
+      // type: 'one',
       // grade,
       // subject,
       // mode,

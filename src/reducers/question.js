@@ -6,7 +6,9 @@ const initState = {
   callingApiQ: null,
   pagination: {
     activePage: 1,
-    
+    pageSize: 20,
+    totalElements: 1,
+    totalPages: 1,
   }
 };
 
@@ -17,10 +19,19 @@ const question = (state = initState, action) => {
         ...state,
         callingApiQ: action.kind,
       };
+    case actionTypes.CHANGE_ACTIVE_PAGE_Q:
+      return {
+        ...state,
+        pagination: {
+          ...state.pagination,
+          activePage: action.activePage,
+        },
+      };
     case actionTypes.GET_QUESTION_LIST:
       return {
         ...state,
         questions: action.questions,
+        pagination: action.pagination,
       };
     case actionTypes.GET_QUESTION_DETAIL:
       return {

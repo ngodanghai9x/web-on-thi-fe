@@ -107,8 +107,9 @@ class CreateQuestion extends React.Component {
       ...item,
       correctAnswer: item[item.correctAnswer],
       type: 'one',
-      grade,
-      subject,
+      mode: 'Dễ',
+      // grade,
+      // subject,
     }));
     console.log("save -> listQuestion", listQuestion);
       this.props.setList(listQuestion);
@@ -144,8 +145,9 @@ class CreateQuestion extends React.Component {
       ...item,
       correctAnswer: item[item.correctAnswer],
       type: 'one',
-      grade,
-      subject,
+      mode: 'Dễ',
+      // grade,
+      // subject,
     }));
     console.log("save -> listQuestion", listQuestion);
     this.props.createExam(name, image, subject, grade, description, time, listQuestion);

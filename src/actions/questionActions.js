@@ -79,16 +79,32 @@ export const deleteQuestion = (deletedIds, keyword) => (dispatch, getState) => {
     });
 };
 
-export const getQuestionList = (inputSearch, filter, activePage, size) => (dispatch, getState) => {
+export const changeActivePageQ = (activePage) => ({
+  type: actionTypes.CHANGE_ACTIVE_PAGE_Q,
+  activePage,
+})
+
+export const getQuestionList = (inputSearch, filter, activePage, pageSize) => (dispatch, getState) => {
+  dispatch(changeActivePageQ(activePage));
   const req = {
-    // deletedIds,
+    pageNumber: activePage,
+    pageSize,
+    question: inputSearch,
+    ...filter,
   };
-  return callApi('api/exam/add', { method: 'POST', data: req })
+  return callApi('api/question/get-all', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
+        const pagination = {
+          activePage,
+          pageSize,
+          totalElements: data.questions.totalElements,
+          totalPages: data.questions.totalPages,
+        }
         dispatch({
           type: actionTypes.DELETE_QUESTION,
-          questions: data.questions,
+          questions: data.questions.content,
+          pagination,
         });
         // window.noti.success('Xóa câu hỏi thành công');
         // dispatch(callApiQuestion());

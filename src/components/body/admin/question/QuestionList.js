@@ -43,21 +43,27 @@ import AddIntoExamModal from './AddIntoExamModal';
 import { Modal, Button } from 'react-bootstrap';
 
 
-const SIZE = 30;
+const SIZE = 20;
 const MODE = ['Dễ', 'Trung bình', 'Khó'];
 class QuestionList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activePage: 1,
+      // activePage: 1,
       inputSearch: '',
       selectedQuestionIds: [],
       isOpenModal: false,
       filter: {
-        mode: 'Dễ',
-        grade: 'Lớp 10',
-        subject: 'Toán',
-      }
+        mode: '',
+        grade: '',
+        subject: '',
+        type: '',
+      },
+      // filter: {
+      //   mode: 'Dễ',
+      //   grade: 'Lớp 10',
+      //   subject: 'Toán',
+      // },
     };
   }
 
@@ -68,26 +74,28 @@ class QuestionList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pagination } = this.props;
-    if (nextProps.pagination && nextProps.pagination !== pagination) {
-      this.setState({
-        activePage: pagination.activePage,
-      })
-    }
+    // const { pagination } = this.props;
+    // if (nextProps.pagination && nextProps.pagination !== pagination) {
+    //   this.setState({
+    //     activePage: pagination.activePage,
+    //   })
+    // }
   }
 
   reload = () => {
     let { activePage, inputSearch, filter } = this.state;
-    this.props.getQuestionList(inputSearch, filter, activePage, SIZE);
+    const { pagination } = this.props;
+    this.props.getQuestionList(inputSearch, filter, pagination.activePage, SIZE);
     // if (inputSearch === '' || inputSearch == null) this.apiGetPage(activePage, SIZE);
     // else this.apiSearchPage(activePage, SIZE, inputSearch);
   }
 
   handlePageChange = (pageNumber) => {
-    this.setState({ activePage: pageNumber }, () => {
-      this.props.changeActivePage(pageNumber);
-      this.reload()
-    });
+    this.reload();
+    // this.setState({ activePage: pageNumber }, () => {
+    //   // this.props.changeActivePage(pageNumber);
+    //   this.reload();
+    // });
   }
 
   seeDetailExam = (e, id) => {
@@ -287,11 +295,13 @@ class QuestionList extends React.Component {
                 />
 
                 <select defaultValue={filter.grade} onChange={(e) => this.onChangeFilter('grade', e.target.value, 'errorName')}>
+                  <option value="">Chọn cấp</option>
                   <option value="Lớp 10">Lớp 10</option>
                   <option value="Đại học">Đại học</option>
                 </select>
 
                 <select value={filter.subject} onChange={(e) => this.onChangeFilter('subject', e.target.value, 'errorName')}>
+                  <option value="">Chọn môn</option>
                   {subjects2.map((item, i) => {
                     if (filter.grade === 'Lớp 10') {
                       if (i < 3) {
@@ -310,6 +320,7 @@ class QuestionList extends React.Component {
                 </select>
 
                 <select defaultValue={filter.mode} onChange={(e) => this.onChangeFilter('mode', e.target.value, 'errorName')}>
+                  <option value="">Chọn mức độ</option>
                   {MODE.map(item => ((
                     <option value={item}>{item}</option>
                   )))}
@@ -361,7 +372,7 @@ class QuestionList extends React.Component {
 
             <div className='pagination d-flex justify-content-center'>
               <Pagination
-                activePage={activePage}
+                activePage={pagination.activePage}
                 itemsCountPerPage={SIZE}
                 totalItemsCount={pagination.totalElements}
                 pageRangeDisplayed={5}  // số nút hiển thị
@@ -388,8 +399,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     role: account.role,
     isDone,
-    // questions: questions || [],
-    questions: [{ id:1 }, { id:2 }, { id:3 }],
+    questions: questions || [],
+    // questions: [{ id:1 }, { id:2 }, { id:3 }],
     pagination: pagination || {},
     callingApiQ,
   }
