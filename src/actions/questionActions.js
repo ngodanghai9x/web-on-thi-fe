@@ -7,9 +7,11 @@ import { getObjLevel, getObjSubject } from "./common/getInfo";
 export const createQuestion = (question, keyword) => (dispatch, getState) => {
   dispatch(callApiQuestion(keyword));
   const req = {
-    question: {
-      ...question,
-      id: null,
+    body: {
+      question: {
+        ...question,
+        id: null,
+      },
     },
   };
   return callApi('api/question/save', { method: 'POST', data: req })

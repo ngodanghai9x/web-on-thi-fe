@@ -292,12 +292,11 @@ export const init = () => dispatch => {
     accessToken,
     role: obj.ROLE || '',
     fullname: obj.fullname,
+    username: obj.sub,
     isDone: true,
   });
   dispatch(getAvatar());
-  console.log("getAvatar")
   dispatch(getUserInfo());
-  console.log("getUserInfo")
 }
 
 export const receiveUserInfo = (user) => ({

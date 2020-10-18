@@ -60,7 +60,6 @@ export const getInfo = (pathname, subjectParam) => {
 }
 
 export const getScore = (_score10) => {
-  console.log("getScore -> _score10", _score10)
   const score10 = Number(parseFloat(_score10).toFixed(1));
   if (score10 >= 9.0 && score10 <= 10) {
     return {

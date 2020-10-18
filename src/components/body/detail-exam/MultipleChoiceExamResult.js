@@ -59,7 +59,7 @@ class MultipleChoiceExamResult extends React.Component {
                   `}
                   >
                     <div className="input-group-text">
-                      <input type="radio" className="input-items disable"
+                      <input type={item.type === 'one' ? 'radio' : 'checkbox'} className="input-items disable"
                         // name={item.id}
                         onChange={() => { }} readOnly
                         checked={item.answer && item.answer.includes(item[option])}

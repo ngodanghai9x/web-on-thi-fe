@@ -37,7 +37,6 @@ const auth = (state = initState, action) => {
         },
       }
     case actionTypes.RECEIVE_ACCESS_TOKEN:
-      console.log("auth -> role", action.role)
       return {
         ...state,
         accessToken: action.accessToken,
@@ -45,6 +44,7 @@ const auth = (state = initState, action) => {
         account: {
           ...state.account,
           role: action.role,
+          username: action.username,
         },
         user: {
           ...state.user,
