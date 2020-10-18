@@ -65,10 +65,11 @@ class RouterList extends React.Component {
         <Route exact path="/dai-hoc/mon/van/:id" component={EssayExam} />
 
         <Route exact path="/admin" component={AdminHome} />
-        <Route exact path="/admin/question-list" component={QuestionList} />
-        <Route exact path="/admin/question-detail/:id" component={QuestionDetail} />
         <Route exact path="/admin/create-exam" component={CreateExam} />
         <Route exact path="/admin/update-exam/:id" component={UpdateExam} />
+        
+        <Route exact path="/admin/question-list" component={QuestionList} />
+        <Route exact path="/admin/question-detail/:id" component={QuestionDetail} />
 
         <Redirect from="/*" to="/" />
       </Switch>

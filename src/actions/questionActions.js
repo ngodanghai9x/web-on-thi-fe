@@ -87,10 +87,12 @@ export const changeActivePageQ = (activePage) => ({
 export const getQuestionList = (inputSearch, filter, activePage, pageSize) => (dispatch, getState) => {
   dispatch(changeActivePageQ(activePage));
   const req = {
-    pageNumber: activePage,
-    pageSize,
-    question: inputSearch,
-    ...filter,
+    body: {
+      pageNumber: activePage - 1,
+      pageSize,
+      question: inputSearch,
+      ...filter,
+    },
   };
   return callApi('api/question/get-all', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
@@ -102,7 +104,7 @@ export const getQuestionList = (inputSearch, filter, activePage, pageSize) => (d
           totalPages: data.questions.totalPages,
         }
         dispatch({
-          type: actionTypes.DELETE_QUESTION,
+          type: actionTypes.GET_QUESTION_LIST,
           questions: data.questions.content,
           pagination,
         });
@@ -119,6 +121,28 @@ export const getQuestionList = (inputSearch, filter, activePage, pageSize) => (d
     });
 };
 
+export const getDetailQuestion = (id) => (dispatch, getState) => {
+  const req = {
+    body: {
+      id,
+    }
+  };
+  return callApi('api/question/get', { method: 'POST', data: req })
+    // .then(({ data, code, message }) => {
+    //   if (data && code === 200) {
+    //     return data;
+    //   }
+    //   if (code === 400) {
+    //     return {};
+    //     // window.noti.error('Xóa câu hỏi thất bại');
+    //     // dispatch(callApiQuestion());
+    //   }
+    // })
+    // .catch(err => {
+    //   return {};
+    //   // dispatch(callApiQuestion());
+    // });
+};
 export const addQuestionsIntoExam = (examId, questionIds) => (dispatch, getState) => {
   const req = {
     examId, questionIds,
@@ -142,8 +166,6 @@ export const addQuestionsIntoExam = (examId, questionIds) => (dispatch, getState
       // dispatch(callApiQuestion());
     });
 };
-
-
 
 export const callApiQuestion = (kind = null) => (dispatch) => {
   dispatch({

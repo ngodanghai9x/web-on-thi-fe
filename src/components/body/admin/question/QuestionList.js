@@ -98,10 +98,10 @@ class QuestionList extends React.Component {
     // });
   }
 
-  seeDetailExam = (e, id) => {
+  seeDetailQuestion = (e, id) => {
     e.stopPropagation();
     const { history } = this.props;
-    history.push(`/admin/update-exam/${id}`);
+    history.push(`/admin/question-detail/${id}`)
   }
 
   deleteExam = (e, id, canDelete) => {
@@ -208,7 +208,7 @@ class QuestionList extends React.Component {
     // id, name, image, subject, grade, description, time, canDelete, examQuestions
     return questions.map(item => {
       return (
-        <tr onClick={(e) => this.seeDetailExam(e, item.id)} key={'questions-home' + item.id}>
+        <tr onClick={(e) => this.seeDetailQuestion(e, item.id)} key={'questions-home' + item.id}>
           <td className="col col-checkbox">
             <div className="wrapper-icon checkbox" onClick={(e) => this.selectOne(e, item.id)}>
               <input type="checkbox"
@@ -218,9 +218,11 @@ class QuestionList extends React.Component {
               />
             </div>
           </td>
-          <td className="col col-name">{item.question}</td>
-          <td className="col col-subject">{getObjSubject(item.subject).vn}</td>
+          <td className="col col-name">
+            <div className="wrapper-name" dangerouslySetInnerHTML={{ __html: item.question }} />
+          </td>
           <td className="col col-grade">{getObjLevel(item.grade).vn}</td>
+          <td className="col col-subject">{getObjSubject(item.subject).vn}</td>
           <td className="col col-mode">{item.mode}</td>
           <td className="col col-type">
             {this.getType(item.type)}
@@ -275,7 +277,7 @@ class QuestionList extends React.Component {
           <div className="ql-right-body">
             <div className="wrapper-search-filter">
               <div className="filter d-flex align-items-center">
-                <input style={{ width: 'calc(100% - 500px)' }} type="search" placeholder="Tìm kiếm"
+                <input style={{ width: 'calc(100% - 525px)' }} type="search" placeholder="Tìm kiếm"
                   value={inputSearch} onChange={(e) => this.setState({ inputSearch: e.target.value })}
                   onBlur={e => this.reload()}
                 />

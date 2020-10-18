@@ -17,6 +17,7 @@ import {
   createQuestion,
   updateQuestion,
   deleteQuestion,
+  getDetailQuestion,
 } from 'actions/questionActions';
 import './style.scss';
 import { Link } from 'react-router-dom';
@@ -40,6 +41,7 @@ class QuestionDetail extends React.Component {
         mode: 'Dễ',
         grade: 'Lớp 10',
         subject: 'Toán',
+        type: 'one',
       },
     };
   }
@@ -48,6 +50,45 @@ class QuestionDetail extends React.Component {
     const { match: { params: { id } } } = this.props;
     const text = !id || Number(id) === 0 ? 'Thêm mới câu hỏi' : 'Chi tiết câu hỏi';
     this.props.changeHeader(text);
+    if (id) {
+      this.fetchData(id);
+    }
+  }
+
+  fetchData = (id) => {
+    this.props.getDetailQuestion(id).then(({ data, code, message }) => {
+      if (data && code === 200) {
+        const { id, question, type, option1, option2, option3, option4, mode, grade, subject, correctAnswer } = data.question;
+        const correctAnswerOP = [];
+        if (correctAnswer.includes(option1)) {
+          correctAnswerOP.push('option1');
+        }
+        if (correctAnswer.includes(option2)) {
+          correctAnswerOP.push('option2');
+        }
+        if (correctAnswer.includes(option3)) {
+          correctAnswerOP.push('option3');
+        }
+        if (correctAnswer.includes(option4)) {
+          correctAnswerOP.push('option4');
+        }
+        this.setState({
+          currentQuestion: {
+            id, question, option1, option2, option3, option4, correctAnswer: correctAnswerOP,
+          },
+          filter: {
+            mode, grade, subject: getObjSubject(subject).vn, type,
+          },
+        });
+        setTimeout(() => {
+          this.forceUpdate();
+          console.log("QuestionDetail -> fetchData -> forceUpdate", this)
+        }, 200);
+      }
+      if (code === 400) {
+      }
+    })
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -56,39 +97,39 @@ class QuestionDetail extends React.Component {
     }
     //for update
     const { question } = this.props;
-    if (nextProps.question !== question) {
-      const {
-        id, question, option1, option2, option3, option4, correctAnswer,
-        mode, grade, subject,
-      } = nextProps.question;
-      const correctAnswerOP = [];
-      if (correctAnswer.includes(option1)) {
-        correctAnswer.push('option1');
-      }
-      if (correctAnswer.includes(option2)) {
-        correctAnswer.push('option2');
-      }
-      if (correctAnswer.includes(option3)) {
-        correctAnswer.push('option3');
-      }
-      if (correctAnswer.includes(option4)) {
-        correctAnswer.push('option4');
-      }
-      this.setState(state => ({
-        currentQuestion: {
-          id,
-          question,
-          option1,
-          option2,
-          option3,
-          option4,
-          correctAnswer: correctAnswerOP,
-        },
-        filter: {
-          mode, grade, subject,
-        },
-      }))
-    }
+    // if (nextProps.question !== question) {
+    //   const {
+    //     id, question, option1, option2, option3, option4, correctAnswer,
+    //     mode, grade, subject,
+    //   } = nextProps.question;
+    //   const correctAnswerOP = [];
+    //   if (correctAnswer.includes(option1)) {
+    //     correctAnswerOP.push('option1');
+    //   }
+    //   if (correctAnswer.includes(option2)) {
+    //     correctAnswerOP.push('option2');
+    //   }
+    //   if (correctAnswer.includes(option3)) {
+    //     correctAnswerOP.push('option3');
+    //   }
+    //   if (correctAnswer.includes(option4)) {
+    //     correctAnswerOP.push('option4');
+    //   }
+    //   this.setState(state => ({
+    //     currentQuestion: {
+    //       id,
+    //       question,
+    //       option1,
+    //       option2,
+    //       option3,
+    //       option4,
+    //       correctAnswer: correctAnswerOP,
+    //     },
+    //     filter: {
+    //       mode, grade, subject,
+    //     },
+    //   }))
+    // }
   }
 
   onEditorChange = (evt) => {
@@ -180,6 +221,7 @@ class QuestionDetail extends React.Component {
   renderQuestion = () => {
     const { pointer, filter } = this.state;
     const currentQuestion = this.state.currentQuestion || {};
+    const { match: { params: { id } } } = this.props;
     return (
       <div className="wrapper-question QuestionDetail">
         <h6 className="title-left">
@@ -187,15 +229,19 @@ class QuestionDetail extends React.Component {
         </h6>
         <div className="question d-flex">
           <div className="left">
-            <CKEditor
-              data={currentQuestion.question || ''}
-              onChange={e => this.onEditorChange(e)}
-              config={{
-                height: 136,
-                resize_maxHeight: 382,
-                resize_minHeight: 240,
-              }}
-            />
+            {
+              currentQuestion.question || Number(id) === 0 ? (
+                <CKEditor
+                  data={currentQuestion.question}
+                  onChange={e => this.onEditorChange(e)}
+                  config={{
+                    height: 136,
+                    resize_maxHeight: 382,
+                    resize_minHeight: 240,
+                  }}
+                />
+              ) : null
+            }
           </div>
           <div className="right  d-flex flex-column">
             {[1, 2, 3, 4].map(item => (
@@ -320,5 +366,7 @@ export default withRouter(connect(
     createQuestion,
     updateQuestion,
     deleteQuestion,
+    changeHeader,
+    getDetailQuestion,
   }
 )(QuestionDetail));

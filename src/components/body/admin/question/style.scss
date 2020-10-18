@@ -127,6 +127,11 @@
         }
         .col-name {
           width: calc(100% - 480px - 60px);
+          .wrapper-name {
+            p {
+              margin-bottom: 0;
+            }
+          }
         }
         .col-grade {
           width: 120px;
