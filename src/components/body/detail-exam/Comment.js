@@ -143,17 +143,32 @@ class Comment extends React.Component {
     })
   }
 
+  getDate = (date) => {
+    if (!date) return '';
+    return new Date(date).toUTCString();
+  }
+
   render() {
     const { messageList } = this.state;
-    const { examId, username } = this.props;
+    const { examId, avatar } = this.props;
     return (
       <div className="Comment">
-        <div className="input d-flex align-items-center">
-          <input type="text" id={`exam-${examId}`} />
-          <div className="icon" onClick={(e) => this.sendMessage(examId)}>
-            <svg width={26} height={26} viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24.1346 4.43119L11.4106 13.3809" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><path d="M24.1346 4.43118L13.8072 22.9337L11.4106 13.3809L3.23024 7.89622L24.1346 4.43118Z" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        <div className="comment-area d-flex align-items-center">
+          <div className="avatar">
+            <img
+              className="img img-rounded"
+              src={avatar ? `data:image/png;base64,${avatar}` : '/images/default-avatar.jpg'}
+              alt="avt"
+            />
+          </div>
+          <div className="input d-flex align-items-center">
+            <input type="text" id={`exam-${examId}`} />
+            <div className="icon" onClick={(e) => this.sendMessage(examId)}>
+              <svg width={26} height={26} viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24.1346 4.43119L11.4106 13.3809" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><path d="M24.1346 4.43118L13.8072 22.9337L11.4106 13.3809L3.23024 7.89622L24.1346 4.43118Z" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </div>
           </div>
         </div>
+
         {messageList.map(item => ((
           <div className="comment d-flex align-items-start" key={item.id}>
             <div className="avatar">
@@ -178,21 +193,25 @@ class Comment extends React.Component {
                   <span className="a">
                     Thích
                   </span>
-                  <span className="a">
+                  <span className="a" onClick={e => this.setState(state => ({ [item.id]: !state[item.id] }))}>
                     Trả lời
                   </span>
                 </div>
                 <div className="time">
-                  {item.updatedDate || item.createdDate}
+                  {this.getDate(item.updatedDate || item.createdDate)}
                 </div>
               </div>
+              {
+                this.state[item.id] ? (
+                  <div className="input d-flex align-items-center">
+                    <input type="text" id={`cmt-${item.id}`} />
+                    <div className="icon" onClick={(e) => this.replyMessage1(item.id, item.id)}>
+                      <svg width={26} height={26} viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24.1346 4.43119L11.4106 13.3809" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><path d="M24.1346 4.43118L13.8072 22.9337L11.4106 13.3809L3.23024 7.89622L24.1346 4.43118Z" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    </div>
+                  </div>
+                ) : null
+              }
 
-              <div className="input d-flex align-items-center">
-                <input type="text" id={`cmt-${item.id}`} />
-                <div className="icon" onClick={(e) => this.replyMessage1(item.id, item.id)}>
-                  <svg width={26} height={26} viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24.1346 4.43119L11.4106 13.3809" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><path d="M24.1346 4.43118L13.8072 22.9337L11.4106 13.3809L3.23024 7.89622L24.1346 4.43118Z" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                </div>
-              </div>
 
               {item.replyComment && item.replyComment.map(rep => ((
                 <div className="comment2 d-flex align-items-start" key={rep.id}>
@@ -218,21 +237,26 @@ class Comment extends React.Component {
                         <span className="a">
                           Thích
                         </span>
-                        <span className="a">
+                        <span className="a" onClick={e => this.setState(state => ({ [rep.id]: !state[rep.id] }))}>
                           Trả lời
                         </span>
                       </div>
                       <div className="time">
-                        {item.updatedDate || item.createdDate}
+                        {this.getDate(rep.updatedDate || rep.createdDate)}
                       </div>
                     </div>
 
-                    <div className="input d-flex align-items-center">
-                      <input type="text" id={`rep-${rep}`} />
-                      <div className="icon" onClick={(e) => this.replyMessage2(item.id, rep.id)}>
-                        <svg width={26} height={26} viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24.1346 4.43119L11.4106 13.3809" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><path d="M24.1346 4.43118L13.8072 22.9337L11.4106 13.3809L3.23024 7.89622L24.1346 4.43118Z" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                      </div>
-                    </div>
+                    {
+                      this.state[rep.id] ? (
+                        <div className="input d-flex align-items-center">
+                          <input type="text" id={`rep-${rep.id}`} />
+                          <div className="icon" onClick={(e) => this.replyMessage2(item.id, rep.id)}>
+                            <svg width={26} height={26} viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24.1346 4.43119L11.4106 13.3809" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><path d="M24.1346 4.43118L13.8072 22.9337L11.4106 13.3809L3.23024 7.89622L24.1346 4.43118Z" stroke="#0088FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                          </div>
+                        </div>
+                      ) : null
+                    }
+
                   </div>
                 </div>
               )))}
@@ -251,12 +275,13 @@ class Comment extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   const { match } = ownProps;
   const { id } = match.params;
-  const { auth: { account }, exam: { callingApi } } = state;
+  const { auth: { account, user }, exam: { callingApi } } = state;
   return {
     role: account.role,
     callingApi,
     username: account.username,
     examId: id,
+    avatar: user.avatar,
   }
 }
 

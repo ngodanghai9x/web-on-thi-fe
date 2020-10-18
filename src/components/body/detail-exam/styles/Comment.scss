@@ -3,7 +3,22 @@
     width: 94%;
     margin: 5px 3%;
   }
-  
+  .comment-area {
+    padding: 10px 0;
+    border-top: 1px solid #c4c4c4;
+    .avatar {
+      width: 45px;
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+    }
+    .input {
+      width: calc(100% - 45px);
+    }
+  }
+
   .input {
     border: 1px solid #c4c4c4;
     border-radius: 2px;
@@ -39,11 +54,12 @@
       .name-content {
         padding: 2px 0;
         .name {
+          font-weight: 500;
           max-width: 200px;
-          margin-right: 5px;
+          margin-right: 10px;
         }
         .content {
-          max-width: calc(100% - 205px);
+          max-width: calc(100% - 210px);
         }
       }
 
@@ -51,8 +67,12 @@
         padding: 2px 0;
         .div-btn {
           .a {
-            margin-right: 5px;
+            margin-right: 9px;
           }
+        }
+        .time {
+          font-size: 14px;
+          color: #4c4c4c;
         }
       }
 
