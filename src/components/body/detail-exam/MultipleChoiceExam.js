@@ -168,9 +168,9 @@ class MultipleChoiceExam extends React.Component {
     console.log("submit -> examAnswer", examAnswer, listNum)
     // const examAnswer = arrVal.map(item => ({}));
 
-    // this.props.doExam(examId, examTotalTime - examTime, examAnswer);
-    // clearInterval(this.timeInterval);
-    // history.push(`${location.pathname.substr(0, idx)}/ket-qua/${match.params.id}`);
+    this.props.doExam(examId, examTotalTime - examTime, examAnswer, listNum);
+    clearInterval(this.timeInterval);
+    history.push(`${location.pathname.substr(0, idx)}/ket-qua/${match.params.id}`);
 
   }
 

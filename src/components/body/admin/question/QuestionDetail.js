@@ -80,10 +80,6 @@ class QuestionDetail extends React.Component {
             mode, grade, subject: getObjSubject(subject).vn, type,
           },
         });
-        setTimeout(() => {
-          this.forceUpdate();
-          console.log("QuestionDetail -> fetchData -> forceUpdate", this)
-        }, 200);
       }
       if (code === 400) {
       }

@@ -6,6 +6,7 @@
       }
     }
     .modal-body {
+      // padding: 0.9rem 1rem;
       .modal-bd-content {
         .exams-suggest {
           min-height: 190px;
@@ -40,24 +41,25 @@
             border: #c4c4c4 1px solid;
             background-color: #f6f5f5;
             border-radius: 5px;
-            margin: 20px 10px;
-            padding: 12px 16px;
+            margin: 10px 0;
+            padding: 8px 15px;
             .profile-row {
               display: flex;
               flex-flow: row;
-              align-items: center;
+              align-items: flex-start;
+              margin-bottom: 3px;
               .key {
-                width: 60px;
+                width: 50px;
                 text-align: left;
-                margin-right: 10px;
+                margin-right: 6px;
                 color: rgba(48, 48, 48, 0.8);
                 text-transform: capitalize;
                 font-size: 14px;
               }
               .value {
-                width: calc(100% - 70px);
-                justify-content: start;
-                display: flex;
+                width: calc(100% - 56px);
+                // justify-content: start;
+                // display: flex;
               }
             }
           }

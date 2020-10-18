@@ -209,10 +209,10 @@ export const deleteExam = (examIds) => (dispatch, getState) => {
     .catch(err => {
     });
 };
-export const doExam = (id, time, examAnswer) => (dispatch, getState) => {
+export const doExam = (id, time, questionAnswer, numOptionPicked) => (dispatch, getState) => {
   const req = {
     body: {
-      id, time, examAnswer
+      id, time, questionAnswer, numOptionPicked
     }
   };
   return callApi('api/profile/do-exam', { method: 'POST', data: req })

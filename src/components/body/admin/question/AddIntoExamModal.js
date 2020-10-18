@@ -84,8 +84,8 @@ class AddIntoExamModal extends React.Component {
 
   render() {
     const { inputSearch, isOpenSearch, currentExam } = this.state;
-    const { layout, isOpenModal, toggleModal, all1, questionIds } = this.props;
-    const all = [{ id: 1, code: 'made001', name: 'abcasfsafsagasgsagsagsagas' }];
+    const { layout, isOpenModal, toggleModal, all, questionIds } = this.props;
+    // const all = [{ id: 1, code: 'made001', name: 'abcasfsafsagasgsagsagsagas' }];
     return (
       <Modal className="AddIntoExamModal" show={isOpenModal} onHide={() => toggleModal(true)} animation={true}>
         <Modal.Header closeButton>
@@ -112,7 +112,7 @@ class AddIntoExamModal extends React.Component {
                         <div className="key">
                           Mã đề
                         </div>
-                        <div className="value">
+                        <div className="value text-ellipsis">
                           {currentExam.code}
                         </div>
                       </div>
@@ -120,7 +120,7 @@ class AddIntoExamModal extends React.Component {
                         <div className="key">
                           Tên đề
                         </div>
-                        <div className="value">
+                        <div className="value text-ellipsis">
                         {currentExam.name}
                         </div>
                       </div>
@@ -128,7 +128,7 @@ class AddIntoExamModal extends React.Component {
                         <div className="key">
                           Mô tả
                         </div>
-                        <div className="value">
+                        <div className="value text-ellipsis-line-clamp-4">
                         {currentExam.description}
                         </div>
                       </div>

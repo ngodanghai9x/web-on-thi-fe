@@ -25,7 +25,8 @@ $primary: #40aaf4;
 		margin-bottom: 3px;
 		border-radius: 3px;
 		&.active {
-			background-color: #c4c4c4;
+			// background-color: #c4c4c4;
+			background-color: #f27979;
 		}
 		&.true {
 			background-color: #83f07c;
@@ -60,9 +61,9 @@ $primary: #40aaf4;
 		margin: 5px;
 	}
 	.a123 .a123-stt {
-		width: 28px;
-		max-width: 28px;
-		min-width: 28px;
+		width: 33px;
+		max-width: 33px;
+		min-width: 33px;
 		margin-right: 3px;
 		overflow: hidden;
 	}
@@ -98,8 +99,8 @@ $primary: #40aaf4;
 		cursor: pointer;
 	}
 	.abc .edf.active {
-		background-color: #808080;
-		// background-color: #a94442;
+		// background-color: #808080;
+		background-color: #f27979;
 		color: #FFF;
 	}
 	.abc .edf.true {

@@ -84,6 +84,15 @@ a.d-block {
   white-space: nowrap;
 }
 
+.text-ellipsis-line-clamp-4 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  height: inherit;
+}
+
 .text-ellipsis-line-clamp-3 {
   overflow: hidden;
   text-overflow: ellipsis;

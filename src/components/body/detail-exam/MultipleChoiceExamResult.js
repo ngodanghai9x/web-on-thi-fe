@@ -60,7 +60,7 @@ class MultipleChoiceExamResult extends React.Component {
                   >
                     <div className="input-group-text">
                       <input type="radio" className="input-items disable"
-                      // name={item.id}
+                        // name={item.id}
                         onChange={() => { }} readOnly
                         checked={item.answer && item.answer.includes(item[option])}
 
@@ -96,8 +96,8 @@ class MultipleChoiceExamResult extends React.Component {
                     ${item.correctAnswer && item.correctAnswer.includes(item[option]) ? 'true' : ''}
                     ${item.answer && item.answer.includes(item[option]) ? 'active' : ''}
                     `}
-                    // ${item.answer && item[option] === item.answer ? 'active' : ''}
-                    // ${this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP ? 'active' : ''}
+                  // ${item.answer && item[option] === item.answer ? 'active' : ''}
+                  // ${this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP ? 'active' : ''}
                   >
                     {key[option]}
                   </div>
@@ -114,7 +114,8 @@ class MultipleChoiceExamResult extends React.Component {
     const { accessToken, result, match, location, isDone, } = this.props;
     const { id, subject } = match.params;
     const backPath = location.pathname.replace('/chi-tiet', '');
-    const { examQuestions } = result;
+    const { questionResult } = result;
+    const numOptionPicked = result.numOptionPicked || [0, 0, 0, 0];
     const { examTime } = this.state;
     const arrVal = Object.values(this.state);
     const numOption1 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option1');
@@ -133,7 +134,7 @@ class MultipleChoiceExamResult extends React.Component {
         <div className="container MultipleChoiceExam">
           <div className="row">
             <div className="col-9">
-              {this.renderQuestion(examQuestions)}
+              {this.renderQuestion(questionResult)}
             </div>
 
             <div className="col-3">
@@ -143,13 +144,15 @@ class MultipleChoiceExamResult extends React.Component {
                 </div>
                 <div className="a123 d-flex">
                   <div className="a123-stt">STT</div>
-                  <div className="a123-number">{numOption1 ? numOption1.length : 0}</div>
-                  <div className="a123-number">{numOption2 ? numOption2.length : 0}</div>
+                  {numOptionPicked.map(num => ((
+                    <div className="a123-number">{num}</div>
+                  )))}
+                  {/* <div className="a123-number">{numOption2 ? numOption2.length : 0}</div>
                   <div className="a123-number">{numOption3 ? numOption3.length : 0}</div>
-                  <div className="a123-number">{numOption4 ? numOption4.length : 0}</div>
+                  <div className="a123-number">{numOption4 ? numOption4.length : 0}</div> */}
                 </div>
                 <div className="wrapper-table-choice list-overflow-auto">
-                  {this.renderChoiceTable(examQuestions)}
+                  {this.renderChoiceTable(questionResult)}
                 </div>
               </div>
               {/* <div className="btn-group"> */}

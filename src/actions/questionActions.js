@@ -7,9 +7,12 @@ import { getObjLevel, getObjSubject } from "./common/getInfo";
 export const createQuestion = (question, keyword) => (dispatch, getState) => {
   dispatch(callApiQuestion(keyword));
   const req = {
-    question,
+    question: {
+      ...question,
+      id: null,
+    },
   };
-  return callApi('api/exam/add', { method: 'POST', data: req })
+  return callApi('api/question/save', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
         dispatch({
@@ -34,7 +37,7 @@ export const updateQuestion = (question, keyword) => (dispatch, getState) => {
   const req = {
     question,
   };
-  return callApi('api/exam/add', { method: 'POST', data: req })
+  return callApi('api/question/save', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
         dispatch({
@@ -59,7 +62,7 @@ export const deleteQuestion = (deletedIds, keyword) => (dispatch, getState) => {
   const req = {
     deletedIds,
   };
-  return callApi('api/exam/add', { method: 'POST', data: req })
+  return callApi('api', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
         dispatch({
@@ -145,9 +148,10 @@ export const getDetailQuestion = (id) => (dispatch, getState) => {
 };
 export const addQuestionsIntoExam = (examId, questionIds) => (dispatch, getState) => {
   const req = {
-    examId, questionIds,
+    examId, 
+    questionIds,
   };
-  return callApi('api/exam/add', { method: 'POST', data: req })
+  return callApi('api/question/add-to-exam', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
         dispatch({
