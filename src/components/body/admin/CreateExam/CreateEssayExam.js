@@ -47,8 +47,8 @@ class CreateEssayExam extends React.Component {
       correctAnswer: [],
       mode: 'Không xác định',
       type: 'essay',
-      // subject,
-      // grade,
+      subject,
+      grade,
       suggestion: null,
     };
     if (question0 && question0.id !== 0) {

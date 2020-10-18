@@ -238,18 +238,21 @@ class UpdateExam extends React.Component {
               </div> */}
               <div className="profile-row d-flex justify-content-center">
                 <Link to='/admin'>
-                  <button className="btn btn-outline-secondary" >
+                  <button className="btn btn-outline-secondary" style={{ marginRight: 10 }} >
                     Hủy
                   </button>
                 </Link>
-                {/* <Link to='/admin'> */}
-                  <button className="btn btn-outline-info" onClick={() => this.save()} style={{ margin: '0 10px' }}>
-                    Lưu
-                </button>
-                {/* </Link> */}
+                {
+                  getObjSubject(subject).en !== 'van' ? (
+                    <button className="btn btn-outline-info" onClick={() => this.save()} style={{ marginRight: 10 }}>
+                      Lưu
+                    </button>
+                  ) : null
+                }
+
                 {
                   examQuestions && examQuestions.length > 0 ? (
-                    <button className="btn btn-info" onClick={() => this.changeStep(2)}>
+                    <button className="btn btn-info" onClick={() => this.changeStep(2)} style={{ marginRight: 10 }}>
                       Tiếp tục
                     </button>
                   ) : null

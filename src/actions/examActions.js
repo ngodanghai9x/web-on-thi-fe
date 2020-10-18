@@ -99,6 +99,7 @@ export const createExam = (name, image, subject, grade, description, time, examQ
         description,
         time,
         examQuestions,
+        numQuestion: examQuestions.length,
       }
     }
   };
@@ -136,6 +137,7 @@ export const updateExam = (examInfo, examQuestions) => (dispatch, getState) => {
         grade: ob.en,
         mixedQuestion: true,
         examQuestions,
+        numQuestion: examQuestions.length,
       }
     }
   };
