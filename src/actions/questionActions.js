@@ -64,9 +64,11 @@ export const updateQuestion = (question, keyword) => (dispatch, getState) => {
 export const deleteQuestion = (deletedIds, keyword) => (dispatch, getState) => {
   dispatch(callApiQuestion(keyword));
   const req = {
-    deletedIds,
+    body: {
+      questionIds: deletedIds,
+    },
   };
-  return callApi('api', { method: 'POST', data: req })
+  return callApi('api/question/delete', { method: 'POST', data: req })
     .then(({ data, code, message }) => {
       if (data && code === 200) {
         dispatch({

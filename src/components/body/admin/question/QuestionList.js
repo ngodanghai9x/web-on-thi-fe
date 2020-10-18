@@ -268,9 +268,9 @@ class QuestionList extends React.Component {
               <button className="btn btn-outline-info mr-2" onClick={() => selectedQuestionIds.length > 0 && this.toggleModal()}>
                 Thêm vào đề
               </button>
-              {/* <button className="btn btn-outline-info mr-2" onClick={(e) => this.deleteExamList(e)}>
+              <button className="btn btn-outline-info mr-2" onClick={(e) => this.deleteExamList(e)}>
                 Xóa nhiều
-              </button> */}
+              </button>
             </div>
           </div>
 
@@ -400,5 +400,6 @@ export default withRouter(connect(
     getQuestionList,
     changeHeader,
     changeLayout,
+    deleteQuestion,
   }
 )(QuestionList));
