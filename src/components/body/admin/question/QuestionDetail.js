@@ -132,7 +132,7 @@ class QuestionDetail extends React.Component {
     }
     console.log("save -> questionDTO", questionDTO);
     if (currentQuestion && currentQuestion.id) {
-      this.props.updateExam(questionDTO, 'QuestionDetail');
+      this.props.updateQuestion(questionDTO, 'QuestionDetail');
       return;
     }
     this.props.createQuestion(questionDTO, 'QuestionDetail');

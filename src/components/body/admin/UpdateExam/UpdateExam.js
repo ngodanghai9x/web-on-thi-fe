@@ -42,8 +42,8 @@ class UpdateExam extends React.Component {
   fetchDetailExam = (_id) => {
     this.props.getDetailExam(_id, true).then(({ data, code, message }) => {
       if (data && code === 200) {
-        const { id, name, image, subject, grade, description, time, canDelete, examQuestions } = data.exam;
-        this.setState({ id, name, image, subject: getObjSubject(subject).vn, grade, description, time, canDelete, examQuestions });
+        const { id, name, subject, grade, description, time, isActive, canDelete, examQuestions } = data.exam;
+        this.setState({ id, name, subject: getObjSubject(subject).vn, grade, description, time, isActive, canDelete, examQuestions, examInfo: data.exam });
       }
       if (code === 400) {
       }
@@ -119,8 +119,8 @@ class UpdateExam extends React.Component {
   }
 
   save = () => {
-    const { name, image, subject, grade, description, time, total , listQuestion, id } = this.state;
-    this.props.updateExam(name, image, subject, grade, description, time, listQuestion, id);
+    const { examInfo, listQuestion } = this.state;
+    this.props.updateExam(examInfo, listQuestion);
   }
 
   setList = (listQuestion) => {

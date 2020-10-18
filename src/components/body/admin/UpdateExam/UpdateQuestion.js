@@ -162,7 +162,7 @@ class UpdateQuestion extends React.Component {
       // mode,
     }));
     console.log("save -> listQuestion", listQuestion)
-    this.props.updateExam(name, image, subject, grade, description, time, listQuestion, id);
+    this.props.updateExam(this.props.exam1, listQuestion);
   }
 
   add = (can) => {

@@ -95,6 +95,7 @@ export const createExam = (name, image, subject, grade, description, time, examQ
         // image,
         subject: obj.en,
         grade: ob.en,
+        mixedQuestion: true,
         description,
         time,
         examQuestions,
@@ -123,17 +124,18 @@ export const createExam = (name, image, subject, grade, description, time, examQ
     });
 };
 
-export const updateExam = (name, image, subject, grade, description, time, examQuestions, id) => (dispatch, getState) => {
-  const obj = getObjSubject(subject);
-  const ob = getObjLevel(grade);
+export const updateExam = (examInfo, examQuestions) => (dispatch, getState) => {
+  const obj = getObjSubject(examInfo.subject);
+  const ob = getObjLevel(examInfo.grade);
   const req = {
     body: {
       exam: {
-        id,
-        name, image,
+        ...examInfo,
+        // image,
         subject: obj.en,
         grade: ob.en,
-        description, time, examQuestions
+        mixedQuestion: true,
+        examQuestions,
       }
     }
   };
