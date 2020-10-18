@@ -161,7 +161,16 @@ class AdminHome extends React.Component {
               />
             </div>
           </td>
-          <td className="col col-name">{item.name}</td>
+          <td className="col col-code">
+            <div className="text-ellipsis-line-clamp-2">
+              {item.code}
+            </div>
+          </td>
+          <td className="col col-name">
+            <div className="text-ellipsis-line-clamp-2">
+              {item.name}
+            </div>
+          </td>
           <td className="col col-subject">{getObjSubject(item.subject).vn}</td>
           <td className="col col-grade">{getObjLevel(item.grade).vn}</td>
           <td className="col col-time">{`${item.time} phút`}</td>
@@ -239,6 +248,7 @@ class AdminHome extends React.Component {
                     <CommonIcon.caretDownFill />
                   </div>
                 </th>
+                <th className="col col-code">Mã đề</th>
                 <th className="col col-name">Tên đề</th>
                 <th className="col col-subject">Môn học</th>
                 <th className="col col-grade">Cấp bậc</th>

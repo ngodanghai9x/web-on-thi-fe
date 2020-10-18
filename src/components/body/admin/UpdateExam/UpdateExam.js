@@ -12,7 +12,7 @@ import CreateEssayExam from '../CreateExam/CreateEssayExam';
 import {
   getAllExam,
   changeHeader,
-  changeActiveExam,
+  callApiExam,
   deleteExam,
   getDetailExam,
   updateExam,
@@ -39,25 +39,21 @@ class UpdateExam extends React.Component {
 
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.callingApi && this.props.callingApi === 'UpdateExam') {
+      nextProps.history.push('/admin');
+    }
+  }
+
   fetchDetailExam = (_id) => {
     this.props.getDetailExam(_id, true).then(({ data, code, message }) => {
       if (data && code === 200) {
-        const { id, name, subject, grade, description, time, isActive, canDelete, examQuestions } = data.exam;
-        this.setState({ id, name, subject: getObjSubject(subject).vn, grade, description, time, isActive, canDelete, examQuestions, examInfo: data.exam });
+        const { id, name, subject, grade, description, time, isActive, canDelete, examQuestions, code } = data.exam;
+        this.setState({ id, name, subject: getObjSubject(subject).vn, grade, description, time, isActive, canDelete, examQuestions, code });
       }
       if (code === 400) {
       }
     })
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { location: { pathname } } = this.props;
-    if (nextProps.location.pathname !== pathname) {
-      this.setState({
-        grade: 1,
-        subject: 2,
-      });
-    }
   }
 
   changeStep = (step) => {
@@ -105,22 +101,17 @@ class UpdateExam extends React.Component {
   }
 
   onBlurNotNull = (key, val, text) => {
-    if (!val || val.trim().length === 0) {
+    if (!val || !val.trim()) {
       this.setState({ [key]: 'Trường này không để để trống' });
-    }
-    if (val < 1) {
-      this.setState({ [key]: 'Giá trị tối thiểu là 1' });
-      // return window.noti.error('Giá trị tối đa là 1000');
-    }
-    else if (val >= 1000) {
-      this.setState({ [key]: 'Giá trị tối đa là 1000' });
-      // return window.noti.error('Giá trị tối đa là 1000');
     }
   }
 
   save = () => {
-    const { examInfo, listQuestion } = this.state;
-    this.props.updateExam(examInfo, listQuestion);
+    const { id, name, subject, grade, description, time, isActive, canDelete, examQuestions, code, listQuestion, } = this.state;
+    const examInfo = { id, name, subject, grade, description, time, isActive, canDelete, code };
+    const list = !listQuestion || listQuestion.length === 0 ? examQuestions : listQuestion;
+    this.props.callApiExam('UpdateExam');
+    this.props.updateExam(examInfo, list);
   }
 
   setList = (listQuestion) => {
@@ -128,10 +119,10 @@ class UpdateExam extends React.Component {
   }
 
   render() {
-    const { step, id, name, image, subject, grade, description, time, canDelete, examQuestions,
-      errorName, errorSubject, errorTime, errorTotal,
+    const { step, id, name, image, subject, grade, description, time, canDelete, examQuestions, code,
+      errorName, errorSubject, errorTime, errorTotal, errorCode, examInfo
     } = this.state;
-    const exam = { id, name, image, subject, grade, description, time, canDelete };
+    const exam = { id, name, image, subject, grade, description, time, canDelete, code };
     const question0 = examQuestions ? examQuestions[0] : '';
     const { role, isDone } = this.props;
     if ((!role || !role.includes("ROLE_ADMIN")) && isDone) return <Redirect to='/' />
@@ -141,6 +132,20 @@ class UpdateExam extends React.Component {
           <div className={`UpdateExamInfo ${step !== 1 ? 'd-none' : ''}`}>
             <div className="form-create-exam d-flex flex-column">
               <div className="profile-row">
+                <div className="key">Mã đề</div>
+                <div className="value">
+                  <input
+                    type="text" value={code || ''}
+                    className={`disable ${errorCode ? 'error' : ''}`}
+                    placeholder="Nhập mã đề"
+                    title={errorCode}
+                    readOnly
+                  // onBlur={e => this.onBlurNotNull(errorCode, e.target.value)}
+                  // onChange={(e) => this.onChangeMax255('name', e.target.value, 'errorCode')}
+                  />
+                </div>
+              </div>
+              <div className="profile-row">
                 <div className="key">Tên đề</div>
                 <div className="value">
                   <input
@@ -148,7 +153,7 @@ class UpdateExam extends React.Component {
                     className={errorName ? 'error' : ''}
                     placeholder="Nhập tên đề"
                     title={errorName}
-                    onBlur={e => this.onBlurNotNull(errorName, e.target.value)}
+                    onBlur={e => this.onBlurNotNull('errorName', e.target.value)}
                     onChange={(e) => this.onChangeMax255('name', e.target.value, 'errorName')}
                   />
                 </div>
@@ -233,18 +238,22 @@ class UpdateExam extends React.Component {
               </div> */}
               <div className="profile-row d-flex justify-content-center">
                 <Link to='/admin'>
-                  <button className="btn btn-outline-info" style={{ margin: '0 10px' }}>
+                  <button className="btn btn-outline-secondary" >
                     Hủy
                   </button>
                 </Link>
-                <Link to='/admin'>
-                  <button className="btn btn-info" onClick={() => this.save()}>
+                {/* <Link to='/admin'> */}
+                  <button className="btn btn-outline-info" onClick={() => this.save()} style={{ margin: '0 10px' }}>
                     Lưu
                 </button>
-                </Link>
-                <button className="btn btn-info" onClick={() => this.changeStep(2)}>
-                  Tiếp tục
-                </button>
+                {/* </Link> */}
+                {
+                  examQuestions && examQuestions.length > 0 ? (
+                    <button className="btn btn-info" onClick={() => this.changeStep(2)}>
+                      Tiếp tục
+                    </button>
+                  ) : null
+                }
               </div>
 
             </div>
@@ -263,6 +272,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     role: account.role,
     isDone,
+    callingApi: state.exam.callingApi,
+
   }
 }
 
@@ -273,5 +284,6 @@ export default withRouter(connect(
     changeHeader,
     getDetailExam,
     updateExam,
+    callApiExam,
   }
 )(UpdateExam));

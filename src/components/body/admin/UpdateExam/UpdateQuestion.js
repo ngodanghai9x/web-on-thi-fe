@@ -23,7 +23,7 @@ class UpdateQuestion extends React.Component {
         //   correctAnswer: 'option1',
         // }
       },
-      pointer: -1,
+      pointer: 0,
     };
   }
 
@@ -109,16 +109,15 @@ class UpdateQuestion extends React.Component {
     if (!can) {
       const { name, image, subject, grade, description, time, id, mode } = this.props.exam1;
       const { listQ } = this.state;
-      const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`];
+      const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`] || {};
       if (!lastQ.question || !lastQ.option1 || !lastQ.option2
         || !lastQ.question.trim() || !lastQ.option1.trim() || !lastQ.option2.trim()
       ) {
         return window.noti.error('Bạn chưa điền đủ thông tin cho câu hỏi cuối cùng');
       }
-      this.props.callApiExam('UpdateQuestion');
       const listQuestion = Object.values(listQ).map(item => ({
         ...item,
-        correctAnswer: item[item.correctAnswer],
+        correctAnswer: [item[item.correctAnswer]],
         // type: 'one',
         // grade,
         // subject,
@@ -146,7 +145,7 @@ class UpdateQuestion extends React.Component {
     if (!can) return;
     const { name, image, subject, grade, description, time, id, mode } = this.props.exam1;
     const { listQ } = this.state;
-    const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`];
+    const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`] || {};
     if (!lastQ.question || !lastQ.option1 || !lastQ.option2
       || !lastQ.question.trim() || !lastQ.option1.trim() || !lastQ.option2.trim()
     ) {
@@ -155,7 +154,7 @@ class UpdateQuestion extends React.Component {
     this.props.callApiExam('UpdateQuestion');
     const listQuestion = Object.values(listQ).map(item => ({
       ...item,
-      correctAnswer: item[item.correctAnswer],
+      correctAnswer: [item[item.correctAnswer]],
       // type: 'one',
       // grade,
       // subject,
@@ -194,12 +193,13 @@ class UpdateQuestion extends React.Component {
   renderQuestion = () => {
     const { listQ, pointer } = this.state;
     const data = listQ[`Q${pointer}`] ? listQ[`Q${pointer}`].question : '';
+    const mode = listQ[`Q${pointer}`] ? listQ[`Q${pointer}`].mode : '';
     console.log("renderQuestion -> data", data)
     // debugger;
     return (
       <div className="wrapper-question">
         <h6 className="title-left">
-          {`Câu ${pointer + 1}`}
+          {`Câu ${pointer + 1} : ${mode || ''}`}
         </h6>
         <div className="question d-flex">
           <div className="left">

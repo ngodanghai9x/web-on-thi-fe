@@ -85,14 +85,14 @@ export const changeHeader = (header) => (dispatch, getState) => {
   })
 };
 
-export const createExam = (name, image, subject, grade, description, time, examQuestions) => (dispatch, getState) => {
+export const createExam = (name, image, subject, grade, description, time, examQuestions, code) => (dispatch, getState) => {
   const obj = getObjSubject(subject);
   const ob = getObjLevel(grade);
   const req = {
     body: {
       exam: {
         name,
-        // image,
+        code,
         subject: obj.en,
         grade: ob.en,
         mixedQuestion: true,
@@ -304,12 +304,14 @@ export const getHistoryExam = (historyId) => (dispatch, getState) => {
     });
 };
 
-export const getAllExam = (inputSearch = '', pageNumber = 1, pageSize = 10) => (dispatch, getState) => {
+export const getAllExam = (inputSearch = '', pageNumber = 1, pageSize = 10, filter) => (dispatch, getState) => {
   const req = {
     body: {
       pageSize,
       pageNumber: pageNumber -1,
       inputSearch,
+      grade: filter ? filter.grade : '',
+      subject: filter ? filter.subject : '',
     }
   };
   return callApi('api/exam/get-all', { method: 'POST', data: req })
