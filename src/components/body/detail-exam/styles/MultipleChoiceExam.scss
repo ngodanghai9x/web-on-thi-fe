@@ -6,6 +6,10 @@ $primary: #40aaf4;
 		border-top: 1px solid #c4c4c4;
 	}
 
+	input[type='checkbox'] {
+		transform: scale(1);
+	}
+
 	.game-code-view {
 		padding: 10px;
 		position: relative;
@@ -102,6 +106,9 @@ $primary: #40aaf4;
 		// background-color: #808080;
 		background-color: #f27979;
 		color: #FFF;
+	}
+	.abc .edf.select.active {
+		background-color: #808080;
 	}
 	.abc .edf.true {
 		background: #83f07c;

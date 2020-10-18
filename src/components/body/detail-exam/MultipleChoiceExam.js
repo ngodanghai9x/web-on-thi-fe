@@ -90,7 +90,7 @@ class MultipleChoiceExam extends React.Component {
 
                   >
                     <div className="input-group-text">
-                      <input type="radio" className="input-items"
+                      <input type={item.type === 'one' ? 'radio' : 'checkbox'} className="input-items"
                         // name={item.id}
                         onChange={() => { }} readOnly
                         onClick={() => this.choose(i, item.id, item[option], option)}
@@ -185,7 +185,7 @@ class MultipleChoiceExam extends React.Component {
             {
               opt.map(option => {
                 return (
-                  <div className={`edf 
+                  <div className={`edf select
                     ${item.correctAnswer && item.correctAnswer.includes(item[option]) ? 'true' : ''}
                     ${this.state[`Q${i}`] && this.state[`Q${i}`].answerOP && this.state[`Q${i}`].answerOP.includes(option) ? 'active' : ''}
                     `}

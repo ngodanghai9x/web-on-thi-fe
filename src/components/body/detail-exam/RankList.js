@@ -6,8 +6,6 @@ import {
   getRankList,
 } from 'actions/examActions';
 
-
-
 import MainContent from '../layout/MainContent';
 import './styles/RankList.scss';
 import { Redirect, withRouter } from 'react-router';
