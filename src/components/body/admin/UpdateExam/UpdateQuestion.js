@@ -143,7 +143,8 @@ class UpdateQuestion extends React.Component {
 
   save = (can) => {
     if (!can) return;
-    const { name, image, subject, grade, description, time, id, mode } = this.props.exam1;
+    const { exam1, listQuestion } = this.props;
+    const { name, image, subject, grade, description, time, id, mode } = exam1;
     const { listQ } = this.state;
     const lastQ = listQ[`Q${Object.keys(listQ).length - 1}`] || {};
     if (!lastQ.question || !lastQ.option1 || !lastQ.option2
@@ -152,7 +153,7 @@ class UpdateQuestion extends React.Component {
       return window.noti.error('Bạn chưa điền đủ thông tin cho câu hỏi cuối cùng');
     }
     this.props.callApiExam('UpdateQuestion');
-    const listQuestion = Object.values(listQ).map(item => ({
+    const listQuestion1 = Object.values(listQ).map(item => ({
       ...item,
       correctAnswer: [item[item.correctAnswer]],
       // type: 'one',
@@ -160,8 +161,8 @@ class UpdateQuestion extends React.Component {
       // subject,
       // mode,
     }));
-    console.log("save -> listQuestion", listQuestion)
-    this.props.updateExam(this.props.exam1, listQuestion);
+    console.log("save -> listQuestion", listQuestion1)
+    this.props.updateExam(exam1, listQuestion);
   }
 
   add = (can) => {
@@ -205,9 +206,10 @@ class UpdateQuestion extends React.Component {
           <div className="left">
             <CKEditor
               data={data}
+              readOnly
               // data={listQ[`Q${pointer}`] && listQ[`Q${pointer}`].question || ''}
               // data={listQ[`Q${pointer}`] ? listQ[`Q${pointer}`].question : ''}
-              onChange={e => this.onEditorChange(e)}
+              // onChange={e => this.onEditorChange(e)}
               config={{
                 height: 128,
                 resize_maxHeight: 374,
@@ -224,21 +226,26 @@ class UpdateQuestion extends React.Component {
                 </div>
                 <input type="text"
                   className=""
+                  readOnly
                   value={listQ[`Q${pointer}`] && listQ[`Q${pointer}`][`option${item}`] || ''}
-                  onChange={(e) => this.onChangeMax255(`option${item}`, e.target.value, `errorOption${item}`)}
+                  // onChange={(e) => this.onChangeMax255(`option${item}`, e.target.value, `errorOption${item}`)}
                 />
-                <input type="radio" name="radio-btn-exam"
-                  checked={listQ[`Q${pointer}`] && `option${item}` === listQ[`Q${pointer}`].correctAnswer
-                    || listQ[`Q${pointer}`] && listQ[`Q${pointer}`].correctAnswer === listQ[`Q${pointer}`][`option${item}`]}
-                  onClick={() => this.setState(state => ({
-                    listQ: {
-                      ...state.listQ,
-                      [`Q${state.pointer}`]: {
-                        ...state.listQ[`Q${state.pointer}`],
-                        correctAnswer: `option${item}`,
-                      }
-                    },
-                  }))}
+                <input
+                  type="checkbox"
+                  // name="radio-btn-exam"
+                  readOnly
+                  checked={listQ[`Q${pointer}`] && listQ[`Q${pointer}`].correctAnswer
+                    && (listQ[`Q${pointer}`].correctAnswer.includes(`option${item}`)
+                      || listQ[`Q${pointer}`].correctAnswer.includes(listQ[`Q${pointer}`][`option${item}`]))}
+                  // onClick={() => this.setState(state => ({
+                  //   listQ: {
+                  //     ...state.listQ,
+                  //     [`Q${state.pointer}`]: {
+                  //       ...state.listQ[`Q${state.pointer}`],
+                  //       correctAnswer: `option${item}`,
+                  //     }
+                  //   },
+                  // }))}
                   title="Đánh dấu đáp án đúng"
                   onChange={() => { }}
                 />
@@ -269,11 +276,11 @@ class UpdateQuestion extends React.Component {
               {`<< Back`}
             </span>
             <button className={`btn btn-outline-info ${canSave ? '' : 'disable'}`} onClick={() => this.save(canSave)}>
-              {`Lưu`}
+              Lưu
             </button>
-            <button className={`btn btn-info ${canAdd ? '' : 'disable'}`} onClick={() => this.add(canAdd)}>
-              {`Thêm câu hỏi`}
-            </button>
+            {/* <button className={`btn btn-info ${canAdd ? '' : 'disable'}`} onClick={() => this.add(canAdd)}>
+              Thêm câu hỏi
+            </button> */}
             <span className={`a ${canNext ? '' : 'disable'}`} onClick={() => this.next(canNext)}>
               {`Next >>`}
             </span>
