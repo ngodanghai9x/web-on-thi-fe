@@ -14,6 +14,7 @@ import { Redirect, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import RankList from './RankList';
 import { getScore } from 'actions/common/getInfo';
+import Comment from "./Comment";
 
 class MultipleChoiceResult extends React.Component {
   constructor(props) {
@@ -203,6 +204,12 @@ class MultipleChoiceResult extends React.Component {
             </div>
           </div>
 
+          <div className="row">
+            <div className="col-8">
+              {/*Ông truyền examId vào username vào component kia hộ t nhé*/}
+              <Comment />
+            </div>
+          </div>
         </div>
       </MainContent>
     );
