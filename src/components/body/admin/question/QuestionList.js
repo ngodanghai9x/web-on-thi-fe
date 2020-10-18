@@ -290,7 +290,7 @@ class QuestionList extends React.Component {
 
                 <select value={filter.subject} onChange={(e) => this.onChangeFilter('subject', e.target.value, 'errorName')}>
                   <option value="">Chọn môn</option>
-                  {subjects2.map((item, i) => {
+                  {subjects2.filter(sub => sub.en !== 'van').map((item, i) => {
                     if (filter.grade === 'Lớp 10') {
                       if (i < 3) {
                         return (

@@ -28,7 +28,7 @@ class RankList extends React.Component {
     // if (!accessToken) return <Redirect to='/' />
     return (
       <div className='RankList'>
-        <table class="table table-hover">
+        <table className="table table-hover">
           <thead>
             <tr>
               <th className="col-stt">STT</th>
