@@ -346,8 +346,8 @@ class QuestionList extends React.Component {
                       </div>
                     </th>
                     <th className="col col-name">Câu hỏi</th>
-                    <th className="col col-subject">Môn học</th>
                     <th className="col col-grade">Cấp bậc</th>
+                    <th className="col col-subject">Môn học</th>
                     <th className="col col-mode">Độ khó</th>
                     <th className="col col-type">Thể loại</th>
                   </tr>

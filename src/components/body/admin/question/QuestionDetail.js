@@ -40,7 +40,7 @@ class QuestionDetail extends React.Component {
       filter: {
         mode: 'Dễ',
         grade: 'Lớp 10',
-        subject: 'Toán',
+        subject: 'Toán Học',
       },
     };
   }
@@ -76,7 +76,7 @@ class QuestionDetail extends React.Component {
             id, question, option1, option2, option3, option4, correctAnswer: correctAnswerOP,
           },
           filter: {
-            mode, grade, subject: getObjSubject(subject).vn, type,
+            mode, grade: getObjLevel(grade).vn, subject: getObjSubject(subject).vn, type,
           },
         });
       }
@@ -266,12 +266,12 @@ class QuestionDetail extends React.Component {
                 Loại câu hỏi
               </div>
               <div className="question-type d-flex align-items-center justify-content-between">
-                <select defaultValue={filter.grade} onChange={(e) => this.onChangeFilter('grade', e.target.value, 'errorName')}>
+                <select value={getObjLevel(filter.grade).vn} onChange={(e) => this.onChangeFilter('grade', e.target.value, 'errorName')}>
                   <option value="Lớp 10">Lớp 10</option>
                   <option value="Đại học">Đại học</option>
                 </select>
 
-                <select value={filter.subject} onChange={(e) => this.onChangeFilter('subject', e.target.value, 'errorName')}>
+                <select value={getObjSubject(filter.subject).vn} onChange={(e) => this.onChangeFilter('subject', e.target.value, 'errorName')}>
                   {subjects2.map((item, i) => {
                     if (filter.grade === 'Lớp 10') {
                       if (i < 3) {
@@ -289,7 +289,7 @@ class QuestionDetail extends React.Component {
                   )}
                 </select>
 
-                <select defaultValue={filter.mode} onChange={(e) => this.onChangeFilter('mode', e.target.value, 'errorName')}>
+                <select value={filter.mode} onChange={(e) => this.onChangeFilter('mode', e.target.value, 'errorName')}>
                   {MODE.map(item => ((
                     <option value={item}>{item}</option>
                   )))}

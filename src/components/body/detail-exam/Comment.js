@@ -5,7 +5,7 @@ import {
   getResultExam,
   getRankList,
 } from 'actions/examActions';
-
+import moment from 'moment'
 
 
 import MainContent from '../layout/MainContent';
@@ -155,7 +155,7 @@ class Comment extends React.Component {
 
   getDate = (date) => {
     if (!date) return '';
-    return new Date(date).toUTCString();
+    return moment(date).format('DD-MM-YYYY, HH:mm:ss');;
   }
 
   render() {
