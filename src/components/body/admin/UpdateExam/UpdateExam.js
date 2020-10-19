@@ -73,9 +73,9 @@ class UpdateExam extends React.Component {
       return window.noti.error('Bạn nhập quá 255 kí tự');
     }
     else {
-      if (key === 'grade') {
-        return this.setState({ grade: val, subject: 'Toán Học' })
-      }
+      // if (key === 'grade') {
+      //   return this.setState({ grade: val, subject: 'Toán Học' })
+      // }
       this.setState({ [key]: val, [error]: '' });
     }
   }

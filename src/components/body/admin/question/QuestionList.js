@@ -200,7 +200,7 @@ class QuestionList extends React.Component {
       case 'multi':
         return 'Nhiều đáp án';
       default:
-        return '';
+        return 'Không xác định';
     }
   }
 
@@ -346,8 +346,8 @@ class QuestionList extends React.Component {
                       </div>
                     </th>
                     <th className="col col-name">Câu hỏi</th>
-                    <th className="col col-subject">Môn học</th>
                     <th className="col col-grade">Cấp bậc</th>
+                    <th className="col col-subject">Môn học</th>
                     <th className="col col-mode">Độ khó</th>
                     <th className="col col-type">Thể loại</th>
                   </tr>
@@ -384,10 +384,11 @@ const mapStateToProps = (state, ownProps) => {
     auth: { account, isDone },
     question: { questions, callingApiQ, pagination },
   } = state;
+  const list = questions ? questions.filter(item => item.type !== 'essay') : []
   return {
     role: account.role,
     isDone,
-    questions: questions || [],
+    questions: list,
     // questions: [{ id:1 }, { id:2 }, { id:3 }],
     pagination: pagination || {},
     callingApiQ,
