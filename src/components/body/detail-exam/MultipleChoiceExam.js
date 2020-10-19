@@ -93,7 +93,7 @@ class MultipleChoiceExam extends React.Component {
                       <input type={item.type === 'one' ? 'radio' : 'checkbox'} className="input-items"
                         // name={item.id}
                         onChange={() => { }} readOnly
-                        onClick={() => this.choose(i, item.id, item[option], option)}
+                        onClick={() => this.choose(i, item.id, item[option], option, item)}
                         checked={this.state[`Q${i}`] && this.state[`Q${i}`].answerOP && this.state[`Q${i}`].answerOP.includes(option)}
                       // checked={this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP}
                       />

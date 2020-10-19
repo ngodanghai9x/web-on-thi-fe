@@ -49,15 +49,17 @@ class HistoryDetail extends React.Component {
               {opt.map(option => {
                 return (
                   <div className={`input-group-prepend 
-                    ${item.correctAnswer && item[option] === item.correctAnswer ? 'true' : ''}
-                    ${item.answerOP && item[option] === item.answerOP ? 'chosen' : ''}
-                    ${item.answer && item[option] === item.answer ? 'active' : ''}
+                    ${item.correctAnswer && item.correctAnswer.includes(item[option]) ? 'true' : ''}
+                    ${item.answer && item.answer.includes(item[option]) ? 'active' : ''}
+                    ${this.state[`Q${i}`] && this.state[`Q${i}`].answerOP.includes(option) ? 'active' : ''}
                   `}
                   >
                     <div className="input-group-text">
-                      <input type="radio" name={item.id} className="input-items disable"
+                      <input type={item.type === 'one' ? 'radio' : 'checkbox'}
+                        // name={item.id} 
+                        className="input-items disable"
                         onChange={() => { }} readOnly
-                        checked={item.answer && item[option] === item.answer}
+                        checked={item.answer && item.answer.includes(item[option])}
 
                       />
                     </div>
@@ -88,9 +90,9 @@ class HistoryDetail extends React.Component {
               opt.map(option => {
                 return (
                   <div className={`edf disable
-                    ${item.correctAnswer && item[option] === item.correctAnswer ? 'true' : ''}
-                    ${item.answer && item[option] === item.answer ? 'active' : ''}
-                    ${this.state[`Q${i}`] && option === this.state[`Q${i}`].answerOP ? 'active' : ''}
+                    ${item.correctAnswer && item.correctAnswer.includes(item[option]) ? 'true' : ''}
+                    ${item.answer && item.answer.includes(item[option]) ? 'active' : ''}
+                    ${this.state[`Q${i}`] && this.state[`Q${i}`].answerOP.includes(option) ? 'active' : ''}
                     `}
                   // onClick={() => this.choose(i, item.id, item[option], option)}
                   // onClick={() => this.choose(i, item.id, option)}
@@ -108,7 +110,7 @@ class HistoryDetail extends React.Component {
   }
 
   render() {
-    const { accessToken, examQuestions, doTime, isDone } = this.props;
+    const { accessToken, examQuestions, doTime, isDone, examInfo } = this.props;
     const arrVal = Object.values(this.state);
     const numOption1 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option1');
     const numOption2 = arrVal.filter(item => item && item.questionId && item.answer && item.answerOP === 'option2');
@@ -125,15 +127,14 @@ class HistoryDetail extends React.Component {
 
           <div className="col-3">
             <div className="multiple-choice">
-              <div className="result-timer" style={{ textAlign: 'center', margin: '8px auto'}}>
+              <div className="result-timer" style={{ textAlign: 'center', margin: '8px auto' }}>
                 {getMinute(doTime)}
               </div>
               <div className="a123 d-flex">
                 <div className="a123-stt">STT</div>
-                <div className="a123-number">{numOption1 ? numOption1.length : 0}</div>
-                <div className="a123-number">{numOption2 ? numOption2.length : 0}</div>
-                <div className="a123-number">{numOption3 ? numOption3.length : 0}</div>
-                <div className="a123-number">{numOption4 ? numOption4.length : 0}</div>
+                {examInfo.numOptionPicked.map(num => ((
+                  <div className="a123-number">{num}</div>
+                )))}
               </div>
               <div className="wrapper-table-choice list-overflow-auto">
                 {this.renderChoiceTable(examQuestions)}

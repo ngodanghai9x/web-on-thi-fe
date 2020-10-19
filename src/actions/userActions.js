@@ -61,7 +61,7 @@ export const createAccount = (name, username, password1, email) => (dispatch, ge
         fullname: name,
         password: password1,
         email,
-        phone: '0967362612',
+        // phone: '0967362612',
       }
     }
   }

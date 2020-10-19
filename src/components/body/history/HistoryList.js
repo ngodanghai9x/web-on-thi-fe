@@ -50,11 +50,12 @@ class HistoryList extends React.Component {
     this.props.getListHistoryExam(activePage, SIZE);
   }
 
-  seeDetailExam = (e, examQuestions, doTime) => {
+  seeDetailExam = (e, item, doTime) => {
     e.stopPropagation();
     this.setState({
       screen: 'detail',
-      examQuestions,
+      examQuestions: item.questionResult,
+      examInfo: item,
       doTime,
     });
     const { history } = this.props;
@@ -68,7 +69,7 @@ class HistoryList extends React.Component {
   renderBody = (historyExam) => {
     return historyExam.map(item => {
       return (
-        <tr onClick={(e) => this.seeDetailExam(e, item.examQuestions, item.doTime)}>
+        <tr onClick={(e) => this.seeDetailExam(e, item, item.doTime)}>
           <td className="col col-name">{item.examName}</td>
           <td className="col col-date">{getMinute(item.doTime)}</td>
           <td className="col col-result">{`${item.numAnswer}/${item.totalQuestion}`}</td>
@@ -82,7 +83,7 @@ class HistoryList extends React.Component {
 
   getScreen = screen => {
     const { pagination, historyExam, accessToken, isDone } = this.props;
-    const { examQuestions, doTime } = this.state;
+    const { examQuestions, doTime, examInfo } = this.state;
     const activePage = pagination && pagination.currentPage || 1;
 
     if (!accessToken && isDone) return <Redirect to='/' />;
@@ -90,7 +91,7 @@ class HistoryList extends React.Component {
     if (screen === 'detail') {
       return (
         <MainContent>
-          <HistoryDetail examQuestions={examQuestions} doTime={doTime} back={this.resetState}/>
+          <HistoryDetail examInfo={examInfo} examQuestions={examQuestions} doTime={doTime} back={this.resetState}/>
         </MainContent>
       );
     }
