@@ -106,6 +106,18 @@ class Comment extends React.Component {
     }
   }
 
+  likeComment = (commentId, type) => {
+    const { examId, username } = this.props;
+    if (username && this.stompClient) {
+      var likeMessage = {
+        commentId,
+        username,
+        type: 1
+      }
+      this.stompClient.send("/exam/" + examId + "/like", {}, JSON.stringify(likeMessage));
+    }
+  }
+
   onMessageReceived = (payload) => {
     var message = JSON.parse(payload.body);
     console.log("Comment -> onMessageReceived -> message", message)
@@ -124,7 +136,6 @@ class Comment extends React.Component {
   }
 
   fetchMessage = (message) => {
-    const { messageList } = this.state;
     if (message && message.parentId) {
       this.setState(state => ({
         messageList: this.addNewChild(state.messageList, message),
