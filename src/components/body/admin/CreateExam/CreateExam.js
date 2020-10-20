@@ -37,6 +37,8 @@ class CreateExam extends React.Component {
   }
 
   changeStep = (step) => {
+    const { code, name, errorCode, errorName } = this.state;
+    if (!code || !name || errorCode || errorName) return window.noti.error("Bạn chưa điền đủ thông tin");
     if (step === 1) {
       return this.setState({ step: 1 });
     }

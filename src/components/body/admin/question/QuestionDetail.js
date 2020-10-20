@@ -160,6 +160,8 @@ class QuestionDetail extends React.Component {
   save = (can) => {
     if (!can) return;
     const { currentQuestion, filter } = this.state;
+    if (!currentQuestion || !currentQuestion.correctAnswer || currentQuestion.correctAnswer.length === 0
+      || !currentQuestion.question || !currentQuestion.option1 || !currentQuestion.option2) return window.noti.error('Bạn chưa nhập đủ thông tin');
     const correctAnswer = currentQuestion.correctAnswer.map(item => currentQuestion[item]);
     const type = correctAnswer && correctAnswer.length > 1 ? 'multi' : 'one';
     const questionDTO = {

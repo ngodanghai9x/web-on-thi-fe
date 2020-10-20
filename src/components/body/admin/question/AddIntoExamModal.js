@@ -13,6 +13,7 @@ import {
 } from 'actions/questionActions';
 import { Modal, Button } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
+import { getObjSubject } from 'actions/common/getInfo';
 
 const SIZE = 15;
 class AddIntoExamModal extends React.Component {
@@ -167,7 +168,7 @@ const mapStateToProps = (state, ownProps) => {
     pagination: pagination || {},
     callingApiQ,
     paginationE: exam.pagination,
-    all: exam.all,
+    all: exam && exam.all ? exam.all.filter(item => getObjSubject(item.subject).en !== 'van') : [],
   }
 }
 

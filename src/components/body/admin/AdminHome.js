@@ -195,7 +195,15 @@ class AdminHome extends React.Component {
                     <CommonIcon.toggleOn />
                   </div>
                 ) : (
-                    <div className="toggle-icon" title="Kích hoạt" onClick={(e) => this.changeActiveExam(e, item.id, item.isActive)}>
+                    <div className="toggle-icon" title="Kích hoạt" 
+                    onClick={(e) => {
+                      if (item.examQuestions && item.examQuestions.length > 0) this.changeActiveExam(e, item.id, item.isActive)
+                      else {
+                        e.stopPropagation();
+                        window.noti.error('Đề này chưa có câu hỏi');
+                      }
+                    }}
+                    >
                       <CommonIcon.toggleOff />
                     </div>
                   )
