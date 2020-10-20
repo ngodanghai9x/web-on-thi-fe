@@ -30,8 +30,8 @@ export const login = (username, password) => (dispatch, getState) => {
         //   accessToken,
         //   role: obj.ROLE,
         // });
-        localStorage.setItem('accessToken', accessToken);
-        setCookie('_accessToken', accessToken, 5);
+        // localStorage.setItem('accessToken', accessToken);
+        setCookie('_accessToken', accessToken, 4);
         dispatch(init())
         window.noti.success('Đăng nhập thành công');
         window.location.pathname = '/';
@@ -276,8 +276,8 @@ export const toggleSidebar = () => (dispatch, getState) => {
 }
 
 export const init = () => dispatch => {
-  const accessToken = localStorage.getItem('accessToken');
-  const accessToken1 = getCookie('_accessToken');
+  const accessToken1 = localStorage.getItem('accessToken');
+  const accessToken = getCookie('_accessToken');
   console.log("accessToken1", accessToken1);
   let obj = {};
   try {
