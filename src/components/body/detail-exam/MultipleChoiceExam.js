@@ -83,6 +83,7 @@ class MultipleChoiceExam extends React.Component {
                 //  ${item.correctAnswer && item[option] === item.correctAnswer ? 'true' : ''}
                 //  ${item.answerOP && item[option] === item.answerOP ? 'chosen' : ''}
                 // ${this.state[`Q${i}`] && this.state[`Q${i}`].answerOP && this.state[`Q${i}`].answerOP.includes(option)  ? 'active' : ''}
+                if (!item[option]) return null;
                 return (
                   <div className={`input-group-prepend 
                     ${item.correctAnswer && item.correctAnswer.includes(item[option]) ? 'true' : ''}
@@ -184,6 +185,7 @@ class MultipleChoiceExam extends React.Component {
             <div className="stt">{i + 1}</div>
             {
               opt.map(option => {
+                if (!item[option]) return null;
                 return (
                   <div className={`edf select
                     ${item.correctAnswer && item.correctAnswer.includes(item[option]) ? 'true' : ''}

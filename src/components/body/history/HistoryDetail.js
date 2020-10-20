@@ -47,6 +47,7 @@ class HistoryDetail extends React.Component {
             </div>
             <div className="group-checkbox">
               {opt.map(option => {
+                if (!item[option]) return null;
                 return (
                   <div className={`input-group-prepend 
                     ${item.correctAnswer && item.correctAnswer.includes(item[option]) ? 'true' : ''}
@@ -88,6 +89,7 @@ class HistoryDetail extends React.Component {
             <div className="stt">{i + 1}</div>
             {
               opt.map(option => {
+                if (!item[option]) return null;
                 return (
                   <div className={`edf disable
                     ${item.correctAnswer && item.correctAnswer.includes(item[option]) ? 'true' : ''}
