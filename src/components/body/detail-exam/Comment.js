@@ -43,7 +43,7 @@ class Comment extends React.Component {
 
     this.stompClient = Stomp.over(SockJS);
     this.stompClient.connect({}, this.onConnected, this.onError);
-    this.stompClient.debug = null
+   // this.stompClient.debug = null
   }
 
   onConnected = () => {

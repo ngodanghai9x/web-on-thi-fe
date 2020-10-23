@@ -30,7 +30,7 @@ class QuestionDetail extends React.Component {
     this.state = {
       currentQuestion: {
         id: 0,
-        question: '',
+        question: null,
         option1: '',
         option2: '',
         option3: '',
@@ -229,9 +229,9 @@ class QuestionDetail extends React.Component {
         <div className="question d-flex">
           <div className="left">
             {
-              currentQuestion.question || Number(id) === 0 ? (
+              currentQuestion.question !== null || Number(id) === 0 ? (
                 <CKEditor
-                  data={currentQuestion.question}
+                  data={currentQuestion.question || ''}
                   onChange={e => this.onEditorChange(e)}
                   config={{
                     height: 136,

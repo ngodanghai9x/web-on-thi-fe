@@ -85,6 +85,7 @@ class ForgotPassword extends React.Component {
 
   getOTP = () => {
     const { username, email, selected } = this.state;
+    console.log("ForgotPassword -> getOTP -> this.state", this.state)
     this.props.getOtpCode(username, 0, email, selected);
     this.setState({ countDown: 60 });
     this.doInterval();
@@ -165,7 +166,6 @@ class ForgotPassword extends React.Component {
               className={errorPassword ? 'error' : ''}
               placeholder="Nhập mật khẩu mới"
               title={errorPassword}
-              onClick={e => this.onClick(0)}
               onChange={(e) => this.onChangeMax255('password', e.target.value, 'errorPassword')}
               onBlur={e => this.onBlurNotNull('errorPassword', e.target.value, errorText.password)}
             />
@@ -176,7 +176,6 @@ class ForgotPassword extends React.Component {
               className={errorOTP ? 'error' : ''}
               placeholder="Nhập mã xác nhận OTP"
               title={errorOTP}
-              onClick={e => this.onClick(1)}
               onChange={(e) => this.onChangeMax255('otp', e.target.value, 'errorOTP')}
               onBlur={e => this.onBlurNotNull('errorOTP', e.target.value)}
             />

@@ -98,20 +98,23 @@ export const changePassword = (username, newPassword, oldPassword) => (dispatch,
       if (code === 400) {
         // if (message === 'OTP Invalid') return window.noti.error('Đổi mật khẩu thất bại, mã OTP không đúng');
         window.noti.error('Đổi mật khẩu thất bại');
+        dispatch(callApiUser());
       }
     })
     .catch(err => {
+      dispatch(callApiUser());
       // window.noti.error('Đổi mật khẩu thất bại');
     });
 };
 
 export const changeForgotPassword = (username, email, newPassword, otp, selected) => (dispatch, getState) => {
+  debugger
   const temp = { newPassword, otp: Number(otp) };
   let body = {};
-  if (selected === 0) {
+  if (selected == 0) {
     body = { username, ...temp };
   }
-  else if (selected === 1) {
+  else if (selected == 1) {
     body = { email, ...temp };
   }
   else {
@@ -129,20 +132,23 @@ export const changeForgotPassword = (username, email, newPassword, otp, selected
       if (code === 400) {
         if (message === 'OTP Invalid') return window.noti.error('Mã OTP không đúng! Đổi mật khẩu thất bại');
         window.noti.error('Đổi mật khẩu thất bại');
+        dispatch(callApiUser());
       }
     })
     .catch(err => {
+      dispatch(callApiUser());
       // window.noti.error('Đổi mật khẩu thất bại');
     });
 };
 
 export const getOtpCode = (username, type, email, selected) => (dispatch, getState) => {
-  const pathUrl = type === 1 ? 'generate-otp' : 'forgot-password';
+  const pathUrl = type == 1 ? 'generate-otp' : 'forgot-password';
+  debugger
   let body = {};
-  if (selected === 0) {
+  if (selected == 0) {
     body = { username };
   }
-  else if (selected === 1) {
+  else if (selected == 1) {
     body = { email };
   }
   const reqBody = {
@@ -184,10 +190,12 @@ export const updateUserInfo = (name, phone, birthday, gender, school) => (dispat
       }
       if (code === 400) {
         window.noti.error('Cập nhật thông tin tài khoản thất bại')
+        dispatch(callApiUser());
       }
     })
     .catch(err => {
       console.log("createAccount -> err=", err);
+      dispatch(callApiUser());
     });
 };
 

@@ -219,7 +219,7 @@ class QuestionList extends React.Component {
             </div>
           </td>
           <td className="col col-name">
-            <div className="wrapper-name" dangerouslySetInnerHTML={{ __html: item.question }} />
+            <div className="wrapper-name text-ellipsis-line-clamp-3" dangerouslySetInnerHTML={{ __html: item.question }} />
           </td>
           <td className="col col-grade">{getObjLevel(item.grade).vn}</td>
           <td className="col col-subject">{getObjSubject(item.subject).vn}</td>

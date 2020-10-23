@@ -70,10 +70,10 @@ class LeftProfile extends React.Component {
   }
 
   changeSchool = (name) => {
-    if (name && name.length <= 255) {
-      this.setState({ school: name });
+    if (name && name.length > 255) {
+      window.noti.error('Tên trường quá 255 kí tự');
     } else {
-      return window.noti.error('Tên trường quá 255 kí tự');
+      this.setState({ school: name || '' });
     }
   }
 
@@ -100,7 +100,7 @@ class LeftProfile extends React.Component {
   submit = e => {
     const { name, email, phone, gender, birthday, school, errorName, errorPhone } = this.state;
     this.props.callApiUser('LeftProfile');
-    if (errorName || errorPhone) return window.noti.error('Thông tin bạn điền không đúng định dạng');
+    if (errorName || errorPhone) return window.noti.error('Hãy kiểm tra lại thông tin bạn điền');
     this.props.updateUserInfo(name, phone, birthday, gender, school);
     // this.props.updateUserInfo(name, phone, '2020-09ab', gender, school);
   }
