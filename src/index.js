@@ -10,9 +10,9 @@ import App from './App';
 // import * as serviceWorker from './serviceWorker';
 import { store } from 'react-notifications-component';
 import callApi from './actions/common/callApi';
-import runtimeEnv from '@mars/heroku-js-runtime-env';
-const env = runtimeEnv();
-if (env) process.env = env;
+// import runtimeEnv from '@mars/heroku-js-runtime-env';
+// const env = runtimeEnv();
+// if (env) process.env = env;
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
