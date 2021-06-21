@@ -13,6 +13,10 @@ import './styles/Comment.scss';
 import { Redirect, withRouter } from 'react-router';
 
 
+// const domain = 'http://localhost:8888/';
+const domain = 'https://web-on-thi-spring-boot.herokuapp.com:8888/';
+// const domain = 'http://127.0.0.1:8888/';
+
 class Comment extends React.Component {
   constructor(props) {
     super(props);
@@ -31,7 +35,7 @@ class Comment extends React.Component {
 
   componentDidMount() {
     this.connect(this.props.username);
-    console.log("Comment -> componentDidMount -> connect", this.stompClient )
+    console.log("Comment -> componentDidMount -> connect", this.stompClient)
   }
 
   connect = (username) => {
@@ -39,11 +43,11 @@ class Comment extends React.Component {
 
     var SockJS = require('sockjs-client')
 
-    SockJS = new SockJS('http://localhost:8888/comment')
+    SockJS = new SockJS(domain)
 
     this.stompClient = Stomp.over(SockJS);
     this.stompClient.connect({}, this.onConnected, this.onError);
-   // this.stompClient.debug = null
+    // this.stompClient.debug = null
   }
 
   onConnected = () => {
@@ -125,7 +129,7 @@ class Comment extends React.Component {
         for (let i = 0; i < message.length; i++) {
           this.fetchMessage(message[i]);
         }
-        this.setState({ fetchAllComment: true})
+        this.setState({ fetchAllComment: true })
       }
     } else {
       this.fetchMessage(message)
@@ -242,7 +246,7 @@ class Comment extends React.Component {
                 <div className="div-btn">
                   <span className="a" onClick={(e) => this.likeComment(item.id, this.handleCheckMyLike(item.userLiked) ? 0 : 1)}>
                     {this.handleCheckMyLike(item.userLiked) ? ('Bỏ thích') : 'Thích'}
-                    {item.userLiked.length > 0 ? ' (' + item.userLiked.length + ')' : '' }
+                    {item.userLiked.length > 0 ? ' (' + item.userLiked.length + ')' : ''}
                   </span>
                   <span className="a" onClick={e => this.setState(state => ({ [item.id]: !state[item.id] }))}>
                     Trả lời
@@ -287,7 +291,7 @@ class Comment extends React.Component {
                       <div className="div-btn">
                         <span className="a" onClick={(e) => this.likeComment(rep.id, this.handleCheckMyLike(rep.userLiked) ? 0 : 1)}>
                           {this.handleCheckMyLike(rep.userLiked) ? ('Bỏ thích') : 'Thích'}
-                          {rep.userLiked.length > 0 ? ' (' + rep.userLiked.length + ')' : '' }
+                          {rep.userLiked.length > 0 ? ' (' + rep.userLiked.length + ')' : ''}
                         </span>
                       </div>
                       <div className="time">

@@ -4,7 +4,8 @@ import { getCookie } from './utils';
 const callApi = function callApi(pathUrl, options) {
   // const accessToken = localStorage.getItem('accessToken');
   const accessToken = getCookie('_accessToken');
-  const domain = 'http://localhost:8888/';
+  // const domain = 'http://localhost:8888/';
+  const domain = 'https://web-on-thi-spring-boot.herokuapp.com/';
   // const domain = 'http://127.0.0.1:8888/';
   options.mode = 'cors';
   if (accessToken) {
