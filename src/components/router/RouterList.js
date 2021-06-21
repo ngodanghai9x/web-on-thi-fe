@@ -45,7 +45,6 @@ class RouterList extends React.Component {
         <Route exact path="/doi-mat-khau" component={ChangePassword} />
         {/* <Route exact path="/" render={() => (<Redirect to="/home" />)} /> */}
         <Route exact path="/" component={Home} />
-        <Route exact path="" component={Home} />
         <Route exact path="/thong-tin-ca-nhan" component={UserInfo} />
         <Route exact path="/lich-su" component={HistoryList} />
         {/* <Route exact path="/lich-su/:id" component={HistoryDetail} /> */}
