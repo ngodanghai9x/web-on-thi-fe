@@ -1,6 +1,7 @@
 # Project web ôn thi frontend
   -  Đồ án cỡ nhỏ, làm khi mới học về React
-- Note:
+  -  Sử dụng: ReactJS, ReduxJS, React Router, SASS, Bootstrap, Axios, ...
+### Note:
   - save là master lâu nhất
   - tempt là nhánh lâu nhì (bị lỗi 2 layout)
 
