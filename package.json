@@ -34,6 +34,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -53,7 +55,11 @@
     ]
   },
   "engines": {
-    "node": "12.18.3",
-    "npm": "6.14.6"
+    "node": ">=12.18.3 <=14.17.1",
+    "npm": ">=6.14.6 <=6.14.13",
+    "yarn": ">=1.22.19"
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
   }
 }
